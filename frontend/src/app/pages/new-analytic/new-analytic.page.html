@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Nueva analítica</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" color ="light">
+  <ion-card color = "warning">
+    <ion-item color = "warning">
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-select [(ngModel)]="nombre" placeholder="Nombre">
+        <ion-select-option *ngFor="let item of nombres" value="{{ item.valor }}">{{ item.nombre }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item color = "warning">
+      <ion-label position="floating">Valor</ion-label>
+      <ion-input [(ngModel)]="valor" placeholder="Cantidad" type="text"></ion-input>
+    </ion-item>
+    <ion-item color = "warning">
+      <ion-label position="floating">Umbral Alto</ion-label>
+      <ion-input [(ngModel)]="umbralAlto" placeholder="Valor alto a no superar" type="text"></ion-input>
+    </ion-item>
+    <ion-item style = "padding-bottom: 5%" color = "warning">
+      <ion-label position="floating">Umbral Bajo</ion-label>
+      <ion-input [(ngModel)]="umbralBajo" placeholder="Valor bajo a no superar" type="text"></ion-input>
+    </ion-item>
+    
+    <ion-button  color="dark" expand="block" (click)="newAnalytic()">
+      Crear analítica
+    </ion-button>
+  </ion-card>
+  
+
+  <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
+    <ion-fab-button  color = "secondary" [routerLink]="['']">
+      <ion-icon name="arrow-back-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

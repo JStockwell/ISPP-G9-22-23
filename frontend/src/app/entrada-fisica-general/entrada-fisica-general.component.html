@@ -1,0 +1,30 @@
+<ion-card color="medium">
+  <ion-card-header>
+    <ion-card-title style="text-align: center; font-weight: bold; font-size: xx-large;">
+      {{date}}
+    </ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <div>
+      <b style="font-weight: bold;">
+        Estado físico
+      </b>
+      <img src="/assets/{{state}}.png">
+    </div>
+    <div *ngIf="bodyPartsNotEmpty(); then renderBodyParts"></div>
+    <ng-template #renderBodyParts>
+      <b style="font-weight: bold;">
+        ¿Qué me duele?
+      </b>
+      <b *ngFor="let bodyPart of bodyParts;">
+        <img src="/assets/{{bodyPart}}.png">
+      </b>
+    </ng-template>
+    <p style="text-align: center; font-weight: bold; font-size: large;">
+      Notas
+    </p>
+    <p>
+      {{notes}}
+    </p>
+  </ion-card-content>
+</ion-card>
