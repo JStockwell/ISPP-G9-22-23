@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar color = "primary">
+    <ion-title> Sección Física </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color = "light">
+  <div *ngIf="existsEntradas(); then renderEntradas else noEntradas"></div>
+  <ng-template #renderEntradas>
+    <div *ngFor="let entrada of entradas" style="overflow-y: scroll">
+      <app-entrada-fisica-general
+        [date]="entrada.date.toDateString()"
+        [state]="entrada.state"
+        [bodyParts]="entrada.bodyParts"
+        [notes]="entrada.notes"
+      ></app-entrada-fisica-general>
+    </div>
+  </ng-template>
+  <ng-template #noEntradas>
+    <div style="font-weight: bold; font-size: x-large; text-align: center">
+      No hay entradas todavía
+    </div>
+  </ng-template>
+  <div class="footer">
+    <ion-button style = "padding-inline-end: 2.5%;"color = "secondary"shape="round">Crear Entrada</ion-button>
+  </div>
+</ion-content>

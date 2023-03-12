@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Analíticas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color = "light">
+  <ion-card color="warning">
+    <ion-card-title class="title">{{nombreAnalitica}}</ion-card-title>
+    <div class="tabs">
+      <button color = "tertiary" class="tab-button" (click)="changeTab($event, 'Datos')" id="default">Datos</button>
+      <button color = "primary" class="tab-button" (click)="changeTab($event, 'Grafica')">Gráfica</button>
+    </div>
+    <br>
+    <div class="tabcontent" id="Datos">
+      <div *ngFor="let analitica of datos">
+        <div class="display-datos">
+          {{analitica.value}} {{analitica.unit}} ({{analitica.date.toLocaleTimeString() + " " + analitica.date.toDateString()}})
+        </div>
+        <br>
+      </div>
+    </div>
+    <div class="tabcontent" id="Grafica">
+      Aquí la gráfica
+    </div>
+  </ion-card>
+</ion-content>
