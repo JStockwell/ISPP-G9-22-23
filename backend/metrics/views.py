@@ -74,7 +74,6 @@ class MeasureCreate(APIView):
                 if not Metric.objects.filter(name = metricName).exists():
                     return Response({"error":"No existe ninguna metrica con dicho nombre"}, status=status.HTTP_400_BAD_REQUEST)
                 else:
-                    print("hola")
                     patient = self.get_patient_by_tlf()
                     measeure = Measure(date = date, unit = unit)
                     measeure.user = patient

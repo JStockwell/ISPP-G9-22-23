@@ -1,11 +1,12 @@
 from django.contrib.auth.models import User
 from rest_framework.test import APITestCase, APIClient
 from rest_framework.views import status
+from users.models import Patient, Profile
 from metrics.models import Metric, Measure
 from metrics.serializer import MetricSerializer, MeasureSerializer
 from rest_framework.test import APIRequestFactory
 from rest_framework.test import force_authenticate
-from metrics.views import MetrictList, MeasureList, MetricCreate, MeasureCreate, MetrictId, MeasureId
+from metrics.views import MetricList, MeasureList, MetricCreate, MeasureCreate, MetricId, MeasureId
 from django.urls import reverse
 
 class MetricListTest(APITestCase):
@@ -68,8 +69,8 @@ class MeasureListTest(APITestCase):
         request = self.factory.get('metrics/measures/list/')
         force_authenticate(request, self.admin)
         response = self.view(request)
-        measures = Measure.objects.all()
-        serializer = MeasureSerializer(measeure, many=True)
+        measure = Measure.objects.all()
+        serializer = MeasureSerializer(measure, many=True)
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -93,7 +94,7 @@ class MetricCreateTest(APITestCase):
         self.factory = APIRequestFactory()
         self.view = MetricCreate.as_view()
 
-    def test_create_correct_metric(sel):
+    def test_create_correct_metric(self):
         request = self.factory.post('/metrics/metrics/', self.metric_data, format='json')
         force_authenticate(request, self.admin)
         response = self.view(request)
@@ -102,7 +103,7 @@ class MetricCreateTest(APITestCase):
         self.assertEqual(response.data, self.metric_data)
 
     def test_create_wrong_metric(self):
-        equest = self.factory.post('/metrics/metrics/', {}, format='json')
+        request = self.factory.post('/metrics/metrics/', {}, format='json')
         force_authenticate(request, self.admin)
         response = self.view(request)
 
@@ -149,7 +150,7 @@ class MeasureCreateTest(APITestCase):
         self.factory = APIRequestFactory()
         self.view = MeasureCreate.as_view()
 
-    def test_create_correct_measure(sel):
+    def test_create_correct_measure(self):
         request = self.factory.post('/metrics/metrics/', self.measure_data, format='json')
         force_authenticate(request, self.admin)
         response = self.view(request)
@@ -158,14 +159,14 @@ class MeasureCreateTest(APITestCase):
         self.assertEqual(response.data, self.metric_data)
 
     def test_create_wrong_measure(self):
-        equest = self.factory.post('/metrics/measures/', {}, format='json')
+        request = self.factory.post('/metrics/measures/', {}, format='json')
         force_authenticate(request, self.admin)
         response = self.view(request)
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_metricName_no_found(self):
-        equest = self.factory.post('/metrics/measures/', self.metricName_no_found, format='json')
+        request = self.factory.post('/metrics/measures/', self.metricName_no_found, format='json')
         force_authenticate(request, self.admin)
         response = self.view(request)
 
@@ -173,7 +174,7 @@ class MeasureCreateTest(APITestCase):
         self.assertEqual(response.data["error"],"No existe ninguna metrica con dicho nombre")
 
     def test_username_no_found(self):
-        equest = self.factory.post('/metrics/measures/', self.tlf_no_found, format='json')
+        request = self.factory.post('/metrics/measures/', self.tlf_no_found, format='json')
         force_authenticate(request, self.admin)
         response = self.view(request)
 
