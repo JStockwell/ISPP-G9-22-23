@@ -74,6 +74,7 @@ class MeasureCreate(APIView):
                 if not Metric.objects.filter(name = metricName).exists():
                     return Response({"error":"No existe ninguna metrica con dicho nombre"}, status=status.HTTP_400_BAD_REQUEST)
                 else:
+                    print("encuentra patient y metric")
                     patient = self.get_patient_by_tlf()
                     measeure = Measure(date = date, unit = unit)
                     measeure.user = patient
@@ -82,7 +83,7 @@ class MeasureCreate(APIView):
                     measeure.save()
                     return Response(serializer.data, status=status.HTTP_200_OK)
         else:
-            return Response(serializer.error, status=HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class MeasureId(APIView):
     def get(self, request, *arg, **kwargs):
