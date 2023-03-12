@@ -1,6 +1,7 @@
 from django.db import models
 from enum import Enum
 from django.utils.translation import gettext_lazy as _
+from users.models import Patient
 
 
 class State(models.TextChoices):
@@ -40,6 +41,7 @@ class DiaryEntry(models.Model):
     state = models.CharField(choices=State.choices, max_length=15)
     notes = models.TextField(max_length=1024)
     date = models.DateField()
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.state) + " " + str(self.date)

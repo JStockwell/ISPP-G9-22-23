@@ -7,6 +7,7 @@ from rest_framework.test import APIRequestFactory
 from rest_framework.test import force_authenticate
 from diary_entries.views import PhysicalEntryList, MentalEntryList, PhysicalEntryCreate, MentalEntryCreate, PhysicalEntryId, MentalEntryId
 from django.urls import reverse
+from users.models import Patient
 
 
 class PhysicalEntryListTest(APITestCase):
@@ -15,9 +16,16 @@ class PhysicalEntryListTest(APITestCase):
         self.admin.set_password("passAdmin")
         self.admin.is_superuser = True
         self.admin.save()
+
+        user1 = User.objects.create(username="user1", email="user1@email.com", first_name="nameUser1", last_name="lastUser1")
+        user1.set_password("passUser1")
+        user1.save()
         
-        physical_entry1 = PhysicalEntry.objects.create(date = "2023-01-29", state = "VG", body_parts = "HEAD", notes = "Lorem ipsum dolor")
-        physical_entry2 = PhysicalEntry.objects.create(date = "2022-06-29", state = "VB", body_parts = "TORSO", notes = "sit amet")
+        patient1 = Patient.objects.create(user=user1, tel='1234567890', birthdate='1990-01-01')
+        patient1.save()
+        
+        physical_entry1 = PhysicalEntry.objects.create(date = "2023-01-29", state = "VG", body_parts = "HEAD", notes = "Lorem ipsum dolor", patient = patient1)
+        physical_entry2 = PhysicalEntry.objects.create(date = "2022-06-29", state = "VB", body_parts = "TORSO", notes = "sit amet", patient = patient1)
         physical_entry1.save()
         physical_entry2.save()
 
@@ -26,7 +34,7 @@ class PhysicalEntryListTest(APITestCase):
         self.view = PhysicalEntryList.as_view()
 
     def test_get_all_physical_entries(self):
-        request = self.factory.get('/diary_entries/physical_entry/list')
+        request = self.factory.get('/diary_entries/physical_entry/list/')
         force_authenticate(request, self.admin)
         response = self.view(request)
 
@@ -41,9 +49,16 @@ class MentalEntryListTest(APITestCase):
         self.admin.set_password("passAdmin")
         self.admin.is_superuser = True
         self.admin.save()
+
+        user1 = User.objects.create(username="user1", email="user1@email.com", first_name="nameUser1", last_name="lastUser1")
+        user1.set_password("passUser1")
+        user1.save()
         
-        mental_entry1 = MentalEntry.objects.create(date = "2023-01-29", state = "VG", weather = "STORMY", food = "FAST", sleep = "LIGHT", positive_thoughts = "lorem ipsum", negative_thoughts = "dolor sit", notes = "amet")
-        mental_entry2 = MentalEntry.objects.create(date = "2022-06-29", state = "VB", weather = "SUNNY", food = "HEALTHY", sleep = "NONE", positive_thoughts = "lorem ipsum", negative_thoughts = "dolor sit", notes = "amet")
+        patient1 = Patient.objects.create(user=user1, tel='1234567890', birthdate='1990-01-01')
+        patient1.save()
+        
+        mental_entry1 = MentalEntry.objects.create(date = "2023-01-29", state = "VG", weather = "STORMY", food = "FAST", sleep = "LIGHT", positive_thoughts = "lorem ipsum", negative_thoughts = "dolor sit", notes = "amet", patient = patient1)
+        mental_entry2 = MentalEntry.objects.create(date = "2022-06-29", state = "VB", weather = "SUNNY", food = "HEALTHY", sleep = "NONE", positive_thoughts = "lorem ipsum", negative_thoughts = "dolor sit", notes = "amet", patient = patient1)
         mental_entry1.save()
         mental_entry2.save()
         
@@ -52,7 +67,7 @@ class MentalEntryListTest(APITestCase):
         self.view = MentalEntryList.as_view()
 
     def test_get_all_mental_entries(self):
-        request = self.factory.get('diary_entries/mental_entry/list')
+        request = self.factory.get('diary_entries/mental_entry/list/')
         force_authenticate(request, self.admin)
         response = self.view(request)
 
@@ -69,49 +84,59 @@ class PhysicalEntryCreateTest(APITestCase):
         self.admin.is_superuser = True
         self.admin.save()
 
-        physical_entry1 = PhysicalEntry.objects.create(date = "2023-01-29", state = "VG", body_parts = "HEAD", notes = "Lorem ipsum dolor")
-        physical_entry1.save()
+        user1 = User.objects.create(username="user1", email="user1@email.com", first_name="nameUser1", last_name="lastUser1")
+        user1.set_password("passUser1")
+        user1.save()
+        
+        patient1 = Patient.objects.create(user=user1, tel='1234567890', birthdate='1990-01-01')
+        patient1.save()
 
         self.correct_entry_data = {
             "date": "2023-01-30",
             "state": "G",
             "body_parts": "TORSO",
-            "notes": "good day"
+            "notes": "good day",
+            "patient_id":patient1.id
         }
 
         self.correct_entry_data_multiple_body_parts = {
             "date": "2023-01-30",
             "state": "G",
             "body_parts": "TORSO, HEAD",
-            "notes": "good day"
+            "notes": "good day",
+            "patient_id":patient1.id
         }
 
         self.repeated_body_part_data = {
             "date": "2023-01-30",
             "state": "G",
             "body_parts": "TORSO, TORSO",
-            "notes": "good day"
+            "notes": "good day",
+            "patient_id":patient1.id
         }
 
         self.incorrect_body_part_data = {
             "date": "2023-01-30",
             "state": "G",
             "body_parts": "torso",
-            "notes": "good day"
+            "notes": "good day",
+            "patient_id":patient1.id
         }
 
         self.incorrect_state_data = {
             "date": "2023-01-30",
             "state": "GDay",
             "body_parts": "torso",
-            "notes": "good day"
+            "notes": "good day",
+            "patient_id":patient1.id
         }
 
         self.incorrect_date_format = {
             "date": "30-10-2021",
             "state": "G",
             "body_parts": "torso",
-            "notes": "good day"
+            "notes": "good day",
+            "patient_id":patient1.id
         }
 
         #Establecer factory (siempre igual) y vista a testear
@@ -120,7 +145,7 @@ class PhysicalEntryCreateTest(APITestCase):
 
     def test_create_correct_physical_entry(self):
         # create user
-        request = self.factory.post('/diary_entries/physical_entry', self.correct_entry_data, format='json')
+        request = self.factory.post('/diary_entries/physical_entry/', self.correct_entry_data, format='json')
         force_authenticate(request, self.admin)
         response = self.view(request)
 
@@ -129,7 +154,7 @@ class PhysicalEntryCreateTest(APITestCase):
 
     def test_create_correct_physical_entry_multiple_body_parts(self):
         # create user
-        request = self.factory.post('/diary_entries/physical_entry', self.correct_entry_data_multiple_body_parts, format='json')
+        request = self.factory.post('/diary_entries/physical_entry/', self.correct_entry_data_multiple_body_parts, format='json')
         force_authenticate(request, self.admin)
         response = self.view(request)
 
@@ -137,14 +162,14 @@ class PhysicalEntryCreateTest(APITestCase):
         self.assertEqual(response.data, self.correct_entry_data_multiple_body_parts)
 
     def test_create_wrong(self):
-        request = self.factory.post('/diary_entries/physical_entry', {}, format='json')
+        request = self.factory.post('/diary_entries/physical_entry/', {}, format='json')
         force_authenticate(request, self.admin)
         response = self.view(request)
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_create_repeated_body_part(self):
-        request = self.factory.post('/diary_entries/physical_entry', self.repeated_body_part_data, format='json')
+        request = self.factory.post('/diary_entries/physical_entry/', self.repeated_body_part_data, format='json')
         force_authenticate(request, self.admin)
         response = self.view(request)
 
@@ -152,7 +177,7 @@ class PhysicalEntryCreateTest(APITestCase):
         self.assertEqual(response.data["body_parts"][0],"Recuerda no repetir partes del cuerpo")
 
     def test_create_incorrect_body_part(self):
-        request = self.factory.post('/diary_entries/physical_entry', self.incorrect_body_part_data, format='json')
+        request = self.factory.post('/diary_entries/physical_entry/', self.incorrect_body_part_data, format='json')
         force_authenticate(request, self.admin)
         response = self.view(request)
 
@@ -160,7 +185,7 @@ class PhysicalEntryCreateTest(APITestCase):
         self.assertEqual(response.data["body_parts"][0],"Elige partes del cuerpo válidas (HEAD, TORSO, LEFT_ARM, RIGHT_ARM, LEFT_LEG, RIGHT_LEG)")
 
     def test_create_incorrect_state(self):
-        request = self.factory.post('/diary_entries/physical_entry', self.incorrect_state_data, format='json')
+        request = self.factory.post('/diary_entries/physical_entry/', self.incorrect_state_data, format='json')
         force_authenticate(request, self.admin)
         response = self.view(request)
 
@@ -168,7 +193,7 @@ class PhysicalEntryCreateTest(APITestCase):
 ##        self.assertEqual(response.data["state"][0],'\"GDay\"no es una elección válida.')
 
     def test_create_incorrect_date_format(self):
-        request = self.factory.post('/diary_entries/physical_entry', self.incorrect_date_format, format='json')
+        request = self.factory.post('/diary_entries/physical_entry/', self.incorrect_date_format, format='json')
         force_authenticate(request, self.admin)
         response = self.view(request)
 
@@ -182,8 +207,13 @@ class MentalEntryCreateTest(APITestCase):
         self.admin.is_superuser = True
         self.admin.save()
 
-        mental_entry1 = MentalEntry.objects.create(date = "2022-06-29", state = "VB", weather = "SUNNY", food = "HEALTHY", sleep = "NONE", positive_thoughts = "lorem ipsum", negative_thoughts = "dolor sit", notes = "amet")
-        mental_entry1.save()
+        user1 = User.objects.create(username="user1", email="user1@email.com", first_name="nameUser1", last_name="lastUser1")
+        user1.set_password("passUser1")
+        user1.save()
+        
+        patient1 = Patient.objects.create(user=user1, tel='1234567890', birthdate='1990-01-01')
+        patient1.save()
+
 
         self.correct_data = {
             "date": "2022-07-31",
@@ -193,7 +223,8 @@ class MentalEntryCreateTest(APITestCase):
             "sleep": "LIGHT",
             "positive_thoughts": "im doing very well at math",
             "negative_thoughts": "this is taking far too long",
-            "notes": "im sad and tired"
+            "notes": "im sad and tired",
+            "patient_id":patient1.id
         }
 
         self.incorrect_weather_data = {
@@ -204,7 +235,8 @@ class MentalEntryCreateTest(APITestCase):
             "sleep": "LIGHT",
             "positive_thoughts": "im doing very well at math",
             "negative_thoughts": "this is taking far too long",
-            "notes": "im sad and tired"
+            "notes": "im sad and tired",
+            "patient_id":patient1.id
         }
 
         self.incorrect_food_data = {
@@ -215,7 +247,8 @@ class MentalEntryCreateTest(APITestCase):
             "sleep": "LIGHT",
             "positive_thoughts": "im doing very well at math",
             "negative_thoughts": "this is taking far too long",
-            "notes": "im sad and tired"
+            "notes": "im sad and tired",
+            "patient_id":patient1.id
         }
 
         self.incorrect_sleep_data = {
@@ -226,7 +259,8 @@ class MentalEntryCreateTest(APITestCase):
             "sleep": "LIGHt",
             "positive_thoughts": "im doing very well at math",
             "negative_thoughts": "this is taking far too long",
-            "notes": "im sad and tired"
+            "notes": "im sad and tired",
+            "patient_id":patient1.id
         }
 
         #Establecer factory (siempre igual) y vista a testear
@@ -279,7 +313,15 @@ class PhysicalEntryIdTest(APITestCase):
         self.admin.is_superuser = True
         self.admin.save()
 
-        self.physical_entry1 = PhysicalEntry.objects.create(date = "2023-01-29", state = "VG", body_parts = "HEAD", notes = "Lorem ipsum dolor")
+        user1 = User.objects.create(username="user1", email="user1@email.com", first_name="nameUser1", last_name="lastUser1")
+        user1.set_password("passUser1")
+        user1.save()
+        
+        patient1 = Patient.objects.create(user=user1, tel='1234567890', birthdate='1990-01-01')
+        patient1.save()
+        
+
+        self.physical_entry1 = PhysicalEntry.objects.create(date = "2023-01-29", state = "VG", body_parts = "HEAD", notes = "Lorem ipsum dolor", patient=patient1)
         self.physical_entry1.save()
 
         #Establecer factory (siempre igual) y vista a testear
@@ -311,7 +353,14 @@ class MentalEntryIdTest(APITestCase):
         self.admin.is_superuser = True
         self.admin.save()
 
-        self.mental_entry1 = MentalEntry.objects.create(date = "2022-06-29", state = "VB", weather = "SUNNY", food = "HEALTHY", sleep = "NONE", positive_thoughts = "lorem ipsum", negative_thoughts = "dolor sit", notes = "amet")
+        user1 = User.objects.create(username="user1", email="user1@email.com", first_name="nameUser1", last_name="lastUser1")
+        user1.set_password("passUser1")
+        user1.save()
+        
+        patient1 = Patient.objects.create(user=user1, tel='1234567890', birthdate='1990-01-01')
+        patient1.save()
+
+        self.mental_entry1 = MentalEntry.objects.create(date = "2022-06-29", state = "VB", weather = "SUNNY", food = "HEALTHY", sleep = "NONE", positive_thoughts = "lorem ipsum", negative_thoughts = "dolor sit", notes = "amet", patient=patient1)
         self.mental_entry1.save()
 
         #Establecer factory (siempre igual) y vista a testear

@@ -4,20 +4,13 @@ from diary_entries.models import PhysicalEntry, MentalEntry
 from django.contrib.auth.models import User
 
 
-
-class CreateSerializer(serializers.Serializer):
-    id = serializers.IntegerField(read_only=True)
-    date = serializers.DateField()
-    state = serializers.CharField(max_length=64)
-    notes = serializers.CharField(max_length=1024)
-    
-
 class PhysicalEntrySerializer(serializers.ModelSerializer):
     body_parts = serializers.CharField(max_length=1024)
+    patient_id=serializers.IntegerField()
 
     class Meta:
         model = PhysicalEntry
-        fields = ['id', 'date', 'state', 'body_parts', 'notes']
+        fields = ['id', 'date', 'state', 'body_parts', 'notes', "patient_id"]
 
 
     def validate_body_parts(self, value):
@@ -41,9 +34,10 @@ class MentalEntrySerializer(serializers.ModelSerializer):
     sleep = serializers.CharField(max_length=64)
     positive_thoughts = serializers.CharField(max_length=1024)
     negative_thoughts = serializers.CharField(max_length=1024)
+    patient_id=serializers.IntegerField()
     class Meta:
         model = MentalEntry
-        fields = ['id', 'date', 'state', 'notes', 'weather', 'food', 'sleep', 'positive_thoughts', 'negative_thoughts']
+        fields = ['id', 'date', 'state', 'notes', 'weather', 'food', 'sleep', 'positive_thoughts', 'negative_thoughts', "patient_id"]
 
     def validate_weather(self, value):
         accepted_values = {"SNOWY", "RAINY", "CLOUDY", "STORMY", "SUNNY"}
