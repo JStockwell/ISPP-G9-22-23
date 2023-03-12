@@ -74,11 +74,16 @@ class MeasureCreate(APIView):
                 if not Metric.objects.filter(name = metricName).exists():
                     return Response({"error":"No existe ninguna metrica con dicho nombre"}, status=status.HTTP_400_BAD_REQUEST)
                 else:
-                    print("encuentra patient y metric")
-                    patient = self.get_patient_by_tlf()
-                    measeure = Measure(date = date, unit = unit)
+                    #print("encuentra patient y metric")
+                    patient = Patient.objects.get(tel=tlf)
+                    metric = Metric.objects.get(name=metricName)
+                    #print(patient.tel)
+                    measeure = Measure(date = date, value = value), 
+                    #measeure = Measure(date = date, value = value, name=metric.name, unit=metric.unit, min_value=metric.min_value, max_value=metric.max_value, username=patient.username, password), 
                     measeure.user = patient
-                    metric = self.get_metric_by_name()
+                    measeure.save()
+                    #metric = Metric.objects.get(name=metricName)
+                    #print(metric.name)
                     measeure.metric = metric
                     measeure.save()
                     return Response(serializer.data, status=status.HTTP_200_OK)

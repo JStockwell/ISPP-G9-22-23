@@ -156,7 +156,7 @@ class MeasureCreateTest(APITestCase):
         response = self.view(request)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data, self.metric_data)
+        self.assertEqual(response.data, self.measure_data)
 
     def test_create_wrong_measure(self):
         request = self.factory.post('/metrics/measures/', {}, format='json')
