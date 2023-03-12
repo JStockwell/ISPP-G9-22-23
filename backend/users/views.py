@@ -5,9 +5,15 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
-
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg.openapi import Parameter
+from drf_yasg import openapi
 
 class PatientList(APIView):
+    @swagger_auto_schema(
+        manual_parameters=[],
+        security=[],
+        responses={'200': PatientSerializer})
     def get(self, request):
         patients = Patient.objects.all()
         serializer = PatientSerializer(patients, many=True)
@@ -15,6 +21,21 @@ class PatientList(APIView):
 
 
 class PatientCreate(APIView):
+    @swagger_auto_schema(
+        manual_parameters=[],
+        security=[],
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT, properties={
+                'username': openapi.Schema(type=openapi.TYPE_STRING, description='Nombre de usuario, no debe existir previamente'),
+                'password': openapi.Schema(type=openapi.TYPE_STRING, description='Contraseña'),
+                'first_name': openapi.Schema(type=openapi.TYPE_STRING, description='Nombre, máximo 150 caracteres'),
+                'last_name': openapi.Schema(type=openapi.TYPE_STRING, description='Apellidos, máximo 150 caracteres'),
+                'email': openapi.Schema(type=openapi.TYPE_STRING, description='Email, no debe existir previamente'),
+                'tel': openapi.Schema(type=openapi.TYPE_STRING, description='Teléfono'),
+                'birthdate': openapi.Schema(type=openapi.TYPE_STRING, description='Fecha de nacimiento, formato YYYY-MM-DD'),
+            }
+        ),
+        responses={'200': PatientSerializer, "400": "Ya existe un usuario con ese nombre de usuario o email"})
     def post(self, request):
         serializer = CreateSerializer(data = request.data)
         
@@ -46,12 +67,20 @@ class PatientCreate(APIView):
         
 
 class PatientId(APIView):
+    @swagger_auto_schema(
+        manual_parameters=[],
+        security=[],
+        responses={'200': PatientSerializer, "404": "Paciente con ese ID no encontrado"})
     def get(self, request, *args, **kwargs):
         pk = self.kwargs.get('pk')
         patient = get_object_or_404(Patient, id=pk)
         serializer = PatientSerializer(patient)
         return Response(serializer.data)
     
+    @swagger_auto_schema(
+        manual_parameters=[],
+        security=[],
+        responses={'200': "Paciente borrado correctamente", "404": "Paciente con ese ID no encontrado"})
     def delete(self, request, *args, **kwargs):
         pk = self.kwargs.get('pk')
         patient = get_object_or_404(Patient, id=pk)
@@ -60,6 +89,10 @@ class PatientId(APIView):
 
 
 class MedicList(APIView):
+    @swagger_auto_schema(
+        manual_parameters=[],
+        security=[],
+        responses={'200': MedicSerializer})
     def get(self, request):
         medics = Medic.objects.all()
         serializer = MedicSerializer(medics, many=True)
@@ -67,6 +100,21 @@ class MedicList(APIView):
 
 
 class MedicCreate(APIView):
+    @swagger_auto_schema(
+        manual_parameters=[],
+        security=[],
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT, properties={
+                'username': openapi.Schema(type=openapi.TYPE_STRING, description='Nombre de usuario, no debe existir previamente'),
+                'password': openapi.Schema(type=openapi.TYPE_STRING, description='Contraseña'),
+                'first_name': openapi.Schema(type=openapi.TYPE_STRING, description='Nombre, máximo 150 caracteres'),
+                'last_name': openapi.Schema(type=openapi.TYPE_STRING, description='Apellidos, máximo 150 caracteres'),
+                'email': openapi.Schema(type=openapi.TYPE_STRING, description='Email, no debe existir previamente'),
+                'tel': openapi.Schema(type=openapi.TYPE_STRING, description='Teléfono'),
+                'birthdate': openapi.Schema(type=openapi.TYPE_STRING, description='Fecha de nacimiento, formato YYYY-MM-DD'),
+            }
+        ),
+        responses={'200': MedicSerializer, "400": "Ya existe un usuario con ese nombre de usuario o email"})
     def post(self, request):
         serializer = CreateSerializer(data = request.data)
         
@@ -98,12 +146,20 @@ class MedicCreate(APIView):
         
 
 class MedicId(APIView):
+    @swagger_auto_schema(
+        manual_parameters=[],
+        security=[],
+        responses={'200': MedicSerializer, "404": "Médico con ese ID no encontrado"})
     def get(self, request, *args, **kwargs):
         pk = self.kwargs.get('pk')
         medic = get_object_or_404(Medic, id=pk)
         serializer = MedicSerializer(medic)
         return Response(serializer.data)
     
+    @swagger_auto_schema(
+        manual_parameters=[],
+        security=[],
+        responses={'200': "Médico borrado correctamente", "404": "Médico con ese ID no encontrado"})
     def delete(self, request, *args, **kwargs):
         pk = self.kwargs.get('pk')
         medic = get_object_or_404(Medic, id=pk)
