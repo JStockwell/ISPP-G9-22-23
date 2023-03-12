@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Nueva entrada física</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" color ="light">
+  <ion-card color = "warning">
+    <ion-item color = "warning">
+      <ion-label position="floating">¿Qué tal te sientes hoy físicamente?</ion-label>
+      <form>
+        <div class="cc-selector">
+          <input [(ngModel)]="estadoFisico" id="muyfeliz" type="radio" name="caras" value="muyfeliz" />
+          <label class="image-cc muyfeliz" for="muyfeliz"></label>
+          <input [(ngModel)]="estadoFisico" id="feliz" type="radio" name="caras" value="feliz" />
+          <label class="image-cc feliz" for="feliz"></label>
+          <input [(ngModel)]="estadoFisico" id="neutral" type="radio" name="caras" value="neutral" />
+          <label class="image-cc neutral" for="neutral"></label>
+          <input [(ngModel)]="estadoFisico" id="triste" type="radio" name="caras" value="triste" />
+          <label class="image-cc triste" for="triste"></label>
+          <input [(ngModel)]="estadoFisico" id="muytriste" type="radio" name="caras" value="muytriste" />
+          <label class="image-cc muytriste" for="muytriste"></label>
+        </div>
+        <ion-label position="floating">¿Tienes dolores?</ion-label>
+        <div class="cc-selector">
+          <input [(ngModel)]="dolores" id="cabeza" type="checkbox" name="cuerpo" value="cabeza" />
+          <label class="image-cc cabeza" for="cabeza"></label>
+          <input [(ngModel)]="dolores" id="brazodcho" type="checkbox" name="cuerpo" value="brazodcho" />
+          <label class="image-cc brazodcho" for="brazodcho"></label>
+          <input [(ngModel)]="dolores" id="brazoizq" type="checkbox" name="cuerpo" value="brazoizq" />
+          <label class="image-cc brazoizq" for="brazoizq"></label>
+          <input [(ngModel)]="dolores" id="torso" type="checkbox" name="cuerpo" value="torso" />
+          <label class="image-cc torso" for="torso"></label>
+          <input [(ngModel)]="dolores" id="piernadcha" type="checkbox" name="cuerpo" value="piernadcha" />
+          <label class="image-cc piernadcha" for="piernadcha"></label>
+          <input [(ngModel)]="dolores" id="piernaizq" type="checkbox" name="cuerpo" value="piernaizq" />
+          <label class="image-cc piernaizq" for="piernaizq"></label>
+        </div>
+      </form>
+    </ion-item>
+    <ion-item color = "warning">
+      <ion-label position="floating">Notas</ion-label>
+      <ion-textarea [(ngModel)]="notas" placeholder="Desarrolla aquí tus notas de cómo te sientes hoy." type="text"></ion-textarea>
+    </ion-item>
+    
+    <ion-button color="dark" expand="block" (click)="nuevaEntrada()">
+      Crear entrada
+    </ion-button>
+  </ion-card>
+  
+
+  <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
+    <ion-fab-button  color = "secondary" [routerLink]="['']">
+      <ion-icon name="arrow-back-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

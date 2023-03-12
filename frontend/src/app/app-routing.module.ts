@@ -25,6 +25,11 @@ const routes: Routes = [
     path: 'Diario Emocional',
     loadChildren: () => import('./tab2/tab2.module').then(m => m.Tab2PageModule)
   },
+  {
+    path: 'nueva-entrada-fisica',
+    loadChildren: () => import('./pages/nueva-entrada-fisica/nueva-entrada-fisica.module').then( m => m.NuevaEntradaFisicaPageModule)
+  },
+
 
 ];
 @NgModule({
