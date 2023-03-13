@@ -6,15 +6,36 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg.openapi import Parameter
+from drf_yasg import openapi
 
 # Views from Metric
 class MetricList(APIView):
+    @swagger_auto_schema(
+            manual_parameters=[],
+            security=[],
+            responses={'200':MetricSerializer}
+    )
     def get(self, request):
         metrics = Metric.objects.all()
         serializer = MetricSerializer(metrics, many=True)
         return Response(serializer.data)
 
 class MetricCreate(APIView):
+    @swagger_auto_schema(
+            manual_parameters=[],
+            security=[],
+            request_body=openapi.Schema(
+                type=openapi.TYPE_OBJECT, properties={
+                    'name': openapi.Schema(type=openapi.TYPE_STRING, description="nombre de la métrica, debe ser único"),
+                    'unit': openapi.Schema(type=openapi.TYPE_STRING, description="Unidad en la que se mide la métrica"),
+                    'min_value': openapi.Schema(type=openapi.TYPE_NUMBER, description="Valor mínimo que puede tomar la métrica en un caso normal"),
+                    'max_value': openapi.Schema(type=openapi.TYPE_NUMBER, description="Valor máximo que puede tomar la métrica en un caso normal")
+                }
+            ),
+            responses={'200':MetricSerializer, '400':"Ya existe una metrica con ese nombre, o se ha introducido un par min/max value ilegal"}
+    )
     def post(self, request):
         serializer = CreateSerializerMetric(data = request.data)
         if serializer.is_valid():
@@ -33,12 +54,22 @@ class MetricCreate(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class MetricId(APIView):
+    @swagger_auto_schema(
+            manual_parameters=[],
+            security=[],
+            responses={'200':MetricSerializer, '404':"Métrica con ese ID no encontrada"}
+    )
     def get(self, request, *args, **kwargs):
         pk = self.kwargs.get('pk')
-        patient = get_object_or_404(Metric, id=pk)
-        serializer = MetricSerializer(patient)
+        metric = get_object_or_404(Metric, id=pk)
+        serializer = MetricSerializer(metric)
         return Response(serializer.data)
 
+    @swagger_auto_schema(
+            manual_parameters=[],
+            security=[],
+            responses={'200':"Métrica borrada correctamente", '404':"Métrica con ese ID no encontrada"}
+    )
     def delete(self, request, *args, **kwargs):
         pk = self.kwargs.get('pk')
         patient = get_object_or_404(Metric, id=pk)
@@ -47,20 +78,47 @@ class MetricId(APIView):
 
 #Views from Measure
 class MeasureList(APIView):
+    @swagger_auto_schema(
+            manual_parameters=[],
+            security=[],
+            responses={'200':MeasureSerializer}
+    )
     def get(self, request):
         measures = Measure.objects.all()
         serializer = MeasureSerializer(measures, many=True)
         return Response(serializer.data)
 
 class MeasureCreate(APIView):
+    # TODO ¿¿Esto qué pinta aquí?? Ni siquiera se le está dando un serializador??
     def get_patient_by_tlf(self):
            tlf= self.kwargs.get("tlf")
            return get_object_or_404(Patient, tel=tlf)
-
+    
+    # TODO ESTO NO TIENE SENTIDO QUE ESTÉ AQUÍ TAMPOCO, CRÉALE SU PROPIA URL Y SÁCALO DE ESTA CLASE
+    @swagger_auto_schema(
+            manual_parameters=[],
+            security=[],
+            responses={'200':MetricSerializer, '404':"Métrica con ese nombre no encontrada"}
+    )
     def get_metric_by_name(self):
-           metricName= self.kwargs.get("name")
-           return get_object_or_404(Metric, name=metricName)
+            metric_name= self.kwargs.get("name")
+            metric = get_object_or_404(Metric, name=metric_name)
+            serializer = MetricSerializer(metric)
+            return Response(serializer.data)
 
+    @swagger_auto_schema(
+            manual_parameters=[],
+            security=[],
+            request_body=openapi.Schema(
+                type=openapi.TYPE_OBJECT, properties={
+                    'date': openapi.Schema(type=openapi.TYPE_STRING, description="Fecha en la que se realiza la medida"),
+                    'value': openapi.Schema(type=openapi.TYPE_STRING, description="Valor medido para una métrica concreta"),
+                    'metric': openapi.Schema(type="foreign key", description="Clave ajena para relacionar la medida con una métrica"),
+                    'user': openapi.Schema(type="foreign key", description="Clave ajena para relacionar la medida con un paciente")
+                }
+            ),
+            responses={'200':MeasureSerializer, '400':"Bad request"}
+    )
     def post(self, request):
         serializer = CreateSerializerMeasure(data = request.data)
         if serializer.is_valid():
@@ -91,12 +149,22 @@ class MeasureCreate(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class MeasureId(APIView):
+    @swagger_auto_schema(
+            manual_parameters=[],
+            security=[],
+            responses={'200':MeasureSerializer, '404':"Medida con ese ID no encontrada"}
+    )
     def get(self, request, *arg, **kwargs):
         pk = self.kwargs.get('pk')
         measeure = get_object_or_404(Measure, id = pk)
         serializer = MeasureSerializer(measeure)
         return Response(serializer.data)
 
+    @swagger_auto_schema(
+        manual_parameters=[],
+        security=[],
+        responses={'200':"Medida borrada correctamente", '404':"Medida con ese ID no encontrada"}
+    )
     def delete(self, request, *arg, **kwargs):
         pk = self.kwargs.get('pk')
         measeure = get_object_or_404(Measure, id = pk)
