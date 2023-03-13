@@ -43,7 +43,7 @@ class MetricId(APIView):
         pk = self.kwargs.get('pk')
         patient = get_object_or_404(Metric, id=pk)
         patient.delete()
-        return Response({"message":"Metrica con id: " +str(pk) + "borrado correctamente"}, status=status.HTTP_200_OK)
+        return Response({"message":"Metrica con id: " +str(pk) + " borrado correctamente"}, status=status.HTTP_200_OK)
 
 #Views from Measure
 class MeasureList(APIView):
@@ -53,39 +53,23 @@ class MeasureList(APIView):
         return Response(serializer.data)
 
 class MeasureCreate(APIView):
-    def get_patient_by_tlf(self):
-           tlf= self.kwargs.get("tlf")
-           return get_object_or_404(Patient, tel=tlf)
-
-    def get_metric_by_name(self):
-           metricName= self.kwargs.get("name")
-           return get_object_or_404(Metric, name=metricName)
-
     def post(self, request):
         serializer = CreateSerializerMeasure(data = request.data)
         if serializer.is_valid():
                 date = serializer.data["date"]
                 value = serializer.data["value"]
-                metricName = serializer.data["metricName"]
-                tlf = serializer.data['tlf'] #tlf con el que se identifica al paciente
+                metric_id = serializer.data["metric_id"]
+                patient_id = serializer.data["patient_id"]
 
-                if not Patient.objects.filter(tel = tlf).exists():
-                    return Response({"error":"No existe ningun paciente con ese telefono"}, status=status.HTTP_400_BAD_REQUEST)
-                if not Metric.objects.filter(name = metricName).exists():
-                    return Response({"error":"No existe ninguna metrica con dicho nombre"}, status=status.HTTP_400_BAD_REQUEST)
+                if not Patient.objects.filter(id = patient_id).exists():
+                    return Response({"error":"No existe ningun paciente con ese id"}, status=status.HTTP_400_BAD_REQUEST)
+                if not Metric.objects.filter(id = metric_id).exists():
+                    return Response({"error":"No existe ninguna metrica con dicho id"}, status=status.HTTP_400_BAD_REQUEST)
                 else:
-                    #print("encuentra patient y metric")
-                    patient = Patient.objects.get(tel=tlf)
-                    metric = Metric.objects.get(name=metricName)
-                    #print(patient.tel)
-                    measeure = Measure(date = date, value = value), 
-                    #measeure = Measure(date = date, value = value, name=metric.name, unit=metric.unit, min_value=metric.min_value, max_value=metric.max_value, username=patient.username, password), 
-                    measeure.user = patient
-                    measeure.save()
-                    #metric = Metric.objects.get(name=metricName)
-                    #print(metric.name)
-                    measeure.metric = metric
-                    measeure.save()
+                    patient = get_object_or_404(Patient, id=patient_id)
+                    metric = get_object_or_404(Metric, id=metric_id)
+                    measure = Measure(date = date, value = value, metric=metric, user=patient)
+                    measure.save()
                     return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -101,4 +85,4 @@ class MeasureId(APIView):
         pk = self.kwargs.get('pk')
         measeure = get_object_or_404(Measure, id = pk)
         measeure.delete()
-        return Response({"message":"Measeure con id: " + str(pk) + "borrado correctamete"}, status=status.HTTP_200_OK)
+        return Response({"message":"Measure con id: " + str(pk) + " borrado correctamete"}, status=status.HTTP_200_OK)

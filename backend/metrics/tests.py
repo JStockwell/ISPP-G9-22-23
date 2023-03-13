@@ -129,22 +129,22 @@ class MeasureCreateTest(APITestCase):
         self.measure_data = {
             "date": "2023-03-01",
             "value": 5.00,
-            "metricName": "metric1",
-            "tlf": "1234567890"
+            "metric_id": metric1.id,
+            "patient_id": patient1.id
         }
 
-        self.metricName_no_found = {
+        self.metric_no_found = {
             "date": "2023-03-01",
             "value": 5.00,
-            "metricName": "metric2",
-            "tlf": "1234567890"
+            "metric_id": 12222,
+            "patient_id": patient1.id
         }
 
-        self.tlf_no_found = {
+        self.patient_no_found = {
             "date": "2023-03-01",
             "value": 5.0,
-            "metricName": "metric1",
-            "tlf": "1234567888890"
+            "metric_id": metric1.id,
+            "patient_id": 111111111
         }
 
         self.factory = APIRequestFactory()
@@ -166,20 +166,20 @@ class MeasureCreateTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_metricName_no_found(self):
-        request = self.factory.post('/metrics/measures/', self.metricName_no_found, format='json')
+        request = self.factory.post('/metrics/measures/', self.metric_no_found, format='json')
         force_authenticate(request, self.admin)
         response = self.view(request)
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.data["error"],"No existe ninguna metrica con dicho nombre")
+        self.assertEqual(response.data["error"],"No existe ninguna metrica con dicho id")
 
     def test_username_no_found(self):
-        request = self.factory.post('/metrics/measures/', self.tlf_no_found, format='json')
+        request = self.factory.post('/metrics/measures/', self.patient_no_found, format='json')
         force_authenticate(request, self.admin)
         response = self.view(request)
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.data["error"],"No existe ningun paciente con ese telefono")
+        self.assertEqual(response.data["error"],"No existe ningun paciente con ese id")
 
 class MetricIdTest(APITestCase):
     def setUp(self):
@@ -188,20 +188,20 @@ class MetricIdTest(APITestCase):
         self.admin.is_superuser = True
         self.admin.save()
 
-        metric1 = Metric.objects.create(name="metric1", unit="unit1", min_value=2.00, max_value=15.00)
-        metric1.save()
+        self.metric1 = Metric.objects.create(name="metric1", unit="unit1", min_value=2.00, max_value=15.00)
+        self.metric1.save()
 
         self.factory = APIRequestFactory()
         self.view = MetricId.as_view()
 
-    """def test_get_valid_metric(self):
+    def test_get_valid_metric(self):
         request = self.factory.get(reverse("id_metrics", kwargs={"pk":self.metric1.id}))
         force_authenticate(request, self.admin)
         response = self.view(request, pk=self.metric1.id)
 
         serializer = MetricSerializer(self.metric1)
         self.assertEqual(response.data, serializer.data)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)"""
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_invalid_metric(self):
         request = self.factory.get(reverse("id_metrics", kwargs={"pk":123123123123}))
@@ -210,13 +210,13 @@ class MetricIdTest(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    """def test_delete_valid_metric(self):
+    def test_delete_valid_metric(self):
         request = self.factory.delete(reverse("id_metrics", kwargs={"pk":self.metric1.id}))
         force_authenticate(request, self.admin)
         response = self.view(request, pk=self.metric1.id)
 
         self.assertEqual(response.data["message"],"Metrica con id: " +str(self.metric1.id) +" borrado correctamente")  
-        self.assertEqual(response.status_code, status.HTTP_200_OK)"""   
+        self.assertEqual(response.status_code, status.HTTP_200_OK)  
 
     def test_delete_invalid_metric(self):
         request = self.factory.delete(reverse("id_metrics", kwargs={"pk":123123123123}))
@@ -242,18 +242,18 @@ class MeasureIdTest(APITestCase):
         patient1 = Patient.objects.create(user=user1, tel='1234567890', birthdate='1990-01-01')
         patient1.save()
 
-        measure1 = Measure.objects.create(date='2023-03-11', value='5.00', metric=metric1, user=patient1)
-        measure1.save()
+        self.measure1 = Measure.objects.create(date='2023-03-11', value='5.00', metric=metric1, user=patient1)
+        self.measure1.save()
 
         self.factory = APIRequestFactory()
         self.view = MeasureId.as_view()
 
     def test_get_valid_measure(self):
-        request = self.factory.get(reverse("id_measures", kwargs={"pk":self.id}))
+        request = self.factory.get(reverse("id_measures", kwargs={"pk":self.measure1.id}))
         force_authenticate(request, self.admin)
-        response = self.view(request, pk=self.id)
+        response = self.view(request, pk=self.measure1.id)
 
-        serializer = MeasureSerializer(self.metric1)
+        serializer = MeasureSerializer(self.measure1)
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -265,11 +265,11 @@ class MeasureIdTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_delete_valid_measure(self):
-        request = self.factory.delete(reverse("id_measures", kwargs={"pk":self.id}))
+        request = self.factory.delete(reverse("id_measures", kwargs={"pk":self.measure1.id}))
         force_authenticate(request, self.admin)
-        response = self.view(request, pk=self.id)
+        response = self.view(request, pk=self.measure1.id)
 
-        self.assertEqual(response.data["message"],"Measure con id: " +str(self.id) +" borrado correctamente")  
+        self.assertEqual(response.data["message"],"Measure con id: " + str(self.measure1.id) + " borrado correctamete")  
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_delete_invalid_measure(self):

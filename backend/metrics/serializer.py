@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from metrics.models import Metric, Measure
+from users.models import Patient
 from users.serializer import PatientSerializer
 
 class CreateSerializerMetric(serializers.Serializer):
@@ -11,8 +12,8 @@ class CreateSerializerMetric(serializers.Serializer):
 class CreateSerializerMeasure(serializers.Serializer):
     date = serializers.DateField()
     value = serializers.FloatField()
-    metricName = serializers.CharField(max_length=50)
-    tlf = serializers.CharField(max_length=20)
+    metric_id = serializers.IntegerField()
+    patient_id = serializers.IntegerField()
 
 class MetricSerializer(serializers.ModelSerializer):
     class Meta:
