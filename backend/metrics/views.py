@@ -1,7 +1,7 @@
 from metrics.models import Metric, Measure
 from users.models import Patient
 from django.contrib.auth.models import User
-from metrics.serializer import MetricSerializer, MeasureSerializer, CreateSerializerMetric, CreateSerializerMeasure
+from metrics.serializer import MetricSerializer, MeasureSerializer, CreateSerializerMetric, CreateSerializerMeasure, CreateSerializerMeasureListNameFromUser, SerializerMetricName
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -21,6 +21,22 @@ class MetricList(APIView):
         metrics = Metric.objects.all()
         serializer = MetricSerializer(metrics, many=True)
         return Response(serializer.data)
+
+class MetricListNameFromUser(APIView):
+    def post(self, request):
+        mesasures = Measure.objects.all()
+        serializer = CreateSerializerMeasureListNameFromUser(data = request.data)
+        if serializer.is_valid():
+            id_patient = serializer.data['id']
+            patient = get_object_or_404(Patient, id = id_patient)
+            measuresListByPatient = Measure.objects.filter(user = patient)
+            name = []
+            for entry in measuresListByPatient:
+                name.append({"name":entry.metric.name})
+
+            return Response({"name": name}, status=status.HTTP_200_OK)
+        else: 
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class MetricCreate(APIView):
     @swagger_auto_schema(
@@ -102,7 +118,6 @@ class MeasureCreate(APIView):
             ),
             responses={'200':MeasureSerializer, '400':"Bad request"}
     )
-
     def post(self, request):
         serializer = CreateSerializerMeasure(data = request.data)
         if serializer.is_valid():
@@ -146,3 +161,23 @@ class MeasureId(APIView):
         measeure = get_object_or_404(Measure, id = pk)
         measeure.delete()
         return Response({"message":"Measure con id: " + str(pk) + " borrado correctamete"}, status=status.HTTP_200_OK)
+
+class MeasureLatestByUser(APIView):
+    def post(self, request):
+        mesasures = Measure.objects.all()
+        serializer = CreateSerializerMeasureListNameFromUser(data = request.data)
+        if serializer.is_valid():
+            id_patient = serializer.data['id']
+            
+            patient = get_object_or_404(Patient, id = id_patient)
+            measuresListByPatient = Measure.objects.filter(user = patient)
+            measuresListByPatientOrder = sorted(measuresListByPatient, key=lambda measure : measure.date)
+            i = 10
+            value = []
+            for entry in measuresListByPatientOrder:
+                if (i > 0):
+                    value.append({'value': entry.value})
+                i = i-1
+            return Response({'value': value},status=status.HTTP_200_OK)
+        else: 
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

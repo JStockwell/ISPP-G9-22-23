@@ -3,6 +3,12 @@ from metrics.models import Metric, Measure
 from users.models import Patient
 from users.serializer import PatientSerializer
 
+class CreateSerializerMeasureListNameFromUser(serializers.Serializer):
+    id = serializers.IntegerField()
+
+class SerializerMetricName():
+    name = serializers.CharField(max_length=50)
+
 class CreateSerializerMetric(serializers.Serializer):
     name = serializers.CharField(max_length=50)
     unit = serializers.CharField(max_length=100)

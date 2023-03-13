@@ -6,7 +6,7 @@ from metrics.models import Metric, Measure
 from metrics.serializer import MetricSerializer, MeasureSerializer
 from rest_framework.test import APIRequestFactory
 from rest_framework.test import force_authenticate
-from metrics.views import MetricList, MeasureList, MetricCreate, MeasureCreate, MetricId, MeasureId
+from metrics.views import MetricList, MeasureList, MetricCreate, MeasureCreate, MetricId, MeasureId, MeasureLatestByUser, MetricListNameFromUser
 from django.urls import reverse
 
 class MetricListTest(APITestCase):
@@ -276,5 +276,133 @@ class MeasureIdTest(APITestCase):
         request = self.factory.delete(reverse("id_measures", kwargs={"pk":123123123123}))
         force_authenticate(request, self.admin)
         response = self.view(request, pk=123123123123)
+
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+class MetricListNameFromUserTest(APITestCase):
+    def setUp(self):
+        self.admin = User.objects.create(username="admin", email="admin@email.com", first_name="admin", last_name="admin")
+        self.admin.set_password("passAdmin")
+        self.admin.is_superuser = True
+        self.admin.save()
+
+        metric1 = Metric.objects.create(name="metric1", unit="unit1", min_value="2.00", max_value="15.00")
+        metric1.save()
+        metric2 = Metric.objects.create(name="metric2", unit="unit2", min_value="4.00", max_value="15.00")
+        metric2.save()
+        metric3 = Metric.objects.create(name="metric3", unit="unit3", min_value="8.00", max_value="15.00")
+        metric3.save()
+        metric4 = Metric.objects.create(name="metric4", unit="unit4", min_value="10.00", max_value="15.00")
+        metric4.save()
+
+        user1 = User.objects.create(username="user1", email="user1@email.com", first_name="nameUser1", last_name="lastUser1")
+        user1.set_password("passUser1")
+        user1.save()
+
+        patient1 = Patient.objects.create(user=user1, tel='1234567890', birthdate='1990-01-01')
+        patient1.save()
+
+        measure1 = Measure.objects.create(date='2023-03-01', value='5.00', metric=metric1, user=patient1)
+        measure1.save()
+        measure2 = Measure.objects.create(date='2023-03-02', value='5.00', metric=metric2, user=patient1)
+        measure2.save()
+        measure3 = Measure.objects.create(date='2023-03-03', value='5.00', metric=metric3, user=patient1)
+        measure3.save()
+        measure4 = Measure.objects.create(date='2023-03-04', value='5.00', metric=metric4, user=patient1)
+        measure4.save()
+
+        self.funciona = {
+            "id": patient1.id
+        }
+
+        self.no_funciona = {
+            "id": 12
+        }
+
+        self.factory = APIRequestFactory()
+        self.view = MetricListNameFromUser.as_view()
+
+    def test_list_metrics_by_user(self):
+        request = self.factory.post('/metrics/list_by_user/', self.funciona, format='json')
+        force_authenticate(request, self.admin)
+        response = self.view(request)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_list_wrong_metrics_by_user(self):
+        request = self.factory.post('/metrics/list_by_user/', {}, format='json')
+        force_authenticate(request, self.admin)
+        response = self.view(request)
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_list_bad_id_metrics_by_user(self):
+        request = self.factory.post('/metrics/list_by_user/', self.no_funciona, format='json')
+        force_authenticate(request, self.admin)
+        response = self.view(request)
+
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+class MeasureLatestByUserTest(APITestCase):
+    def setUp(self):
+        self.admin = User.objects.create(username="admin", email="admin@email.com", first_name="admin", last_name="admin")
+        self.admin.set_password("passAdmin")
+        self.admin.is_superuser = True
+        self.admin.save()
+
+        metric1 = Metric.objects.create(name="metric1", unit="unit1", min_value="2.00", max_value="15.00")
+        metric1.save()
+        metric2 = Metric.objects.create(name="metric2", unit="unit2", min_value="4.00", max_value="15.00")
+        metric2.save()
+        metric3 = Metric.objects.create(name="metric3", unit="unit3", min_value="8.00", max_value="15.00")
+        metric3.save()
+        metric4 = Metric.objects.create(name="metric4", unit="unit4", min_value="10.00", max_value="15.00")
+        metric4.save()
+
+        user1 = User.objects.create(username="user1", email="user1@email.com", first_name="nameUser1", last_name="lastUser1")
+        user1.set_password("passUser1")
+        user1.save()
+
+        patient1 = Patient.objects.create(user=user1, tel='1234567890', birthdate='1990-01-01')
+        patient1.save()
+
+        measure1 = Measure.objects.create(date='2023-03-01', value='5.00', metric=metric1, user=patient1)
+        measure1.save()
+        measure2 = Measure.objects.create(date='2023-03-02', value='5.00', metric=metric2, user=patient1)
+        measure2.save()
+        measure3 = Measure.objects.create(date='2023-03-03', value='5.00', metric=metric3, user=patient1)
+        measure3.save()
+        measure4 = Measure.objects.create(date='2023-03-04', value='5.00', metric=metric4, user=patient1)
+        measure4.save()
+
+        self.funciona = {
+            "id": patient1.id
+        }
+
+        self.no_funciona = {
+            "id": 12
+        }
+
+        self.factory = APIRequestFactory()
+        self.view = MeasureLatestByUser.as_view()
+
+    def test_list_latest_measures_by_user(self):
+        request = self.factory.post('measures/latest_by_user/', self.funciona, format='json')
+        force_authenticate(request, self.admin)
+        response = self.view(request)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_list_wrong_latest_measures_by_user(self):
+        request = self.factory.post('measures/latest_by_user/', {}, format='json')
+        force_authenticate(request, self.admin)
+        response = self.view(request)
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_list_bad_id_latest_measures_by_user(self):
+        request = self.factory.post('measures/latest_by_user/', self.no_funciona, format='json')
+        force_authenticate(request, self.admin)
+        response = self.view(request)
 
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
