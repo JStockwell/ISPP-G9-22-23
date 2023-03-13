@@ -3,10 +3,10 @@ from rest_framework.test import APITestCase, APIClient
 from rest_framework.views import status
 from users.models import Patient, Profile
 from metrics.models import Metric, Measure
-from metrics.serializer import MetricSerializer, MeasureSerializer
+from metrics.serializer import MetricSerializer, MeasureSerializer, SerializerMetricName
 from rest_framework.test import APIRequestFactory
 from rest_framework.test import force_authenticate
-from metrics.views import MetricList, MeasureList, MetricCreate, MeasureCreate, MetricId, MeasureId, MeasureLatestByUser, MetricListNameFromUser
+from metrics.views import MetricList, MeasureList, MetricCreate, MeasureCreate, MetricId, MeasureId, MeasureLatestByUser, MetricListName
 from django.urls import reverse
 
 class MetricListTest(APITestCase):
@@ -57,8 +57,9 @@ class MeasureListTest(APITestCase):
         patient1.save()
         patient2.save()
 
-        measure1 = Measure.objects.create(date='2023-03-11', value='5.00', metric=metric1, user=patient1)
-        measure2 = Measure.objects.create(date='2023-03-01', value='10.00', metric=metric2, user=patient2)
+        # formato fecha (yyyy, mm, dd, hh, mm, ss, ms)
+        measure1 = Measure.objects.create(value='5.00', metric=metric1, user=patient1)
+        measure2 = Measure.objects.create(value='10.00', metric=metric2, user=patient2)
         measure1.save()
         measure2.save()
 
@@ -80,9 +81,6 @@ class MetricCreateTest(APITestCase):
         self.admin.set_password("passAdmin")
         self.admin.is_superuser = True
         self.admin.save()
-
-        #metric1 = Metric.objects.create(name="metric1", unit="unit1", min_value="2.00", max_value="15.00")
-        #metric1.save()
 
         self.metric_data = {
             "name": "metric1000",
@@ -127,21 +125,18 @@ class MeasureCreateTest(APITestCase):
         patient1.save()
 
         self.measure_data = {
-            "date": "2023-03-01",
             "value": 5.00,
             "metric_id": metric1.id,
             "patient_id": patient1.id
         }
 
         self.metric_no_found = {
-            "date": "2023-03-01",
             "value": 5.00,
             "metric_id": 12222,
             "patient_id": patient1.id
         }
 
         self.patient_no_found = {
-            "date": "2023-03-01",
             "value": 5.0,
             "metric_id": metric1.id,
             "patient_id": 111111111
@@ -242,7 +237,7 @@ class MeasureIdTest(APITestCase):
         patient1 = Patient.objects.create(user=user1, tel='1234567890', birthdate='1990-01-01')
         patient1.save()
 
-        self.measure1 = Measure.objects.create(date='2023-03-11', value='5.00', metric=metric1, user=patient1)
+        self.measure1 = Measure.objects.create(value='5.00', metric=metric1, user=patient1)
         self.measure1.save()
 
         self.factory = APIRequestFactory()
@@ -279,7 +274,7 @@ class MeasureIdTest(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-class MetricListNameFromUserTest(APITestCase):
+class MetricListNameTest(APITestCase):
     def setUp(self):
         self.admin = User.objects.create(username="admin", email="admin@email.com", first_name="admin", last_name="admin")
         self.admin.set_password("passAdmin")
@@ -295,53 +290,17 @@ class MetricListNameFromUserTest(APITestCase):
         metric4 = Metric.objects.create(name="metric4", unit="unit4", min_value="10.00", max_value="15.00")
         metric4.save()
 
-        user1 = User.objects.create(username="user1", email="user1@email.com", first_name="nameUser1", last_name="lastUser1")
-        user1.set_password("passUser1")
-        user1.save()
-
-        patient1 = Patient.objects.create(user=user1, tel='1234567890', birthdate='1990-01-01')
-        patient1.save()
-
-        measure1 = Measure.objects.create(date='2023-03-01', value='5.00', metric=metric1, user=patient1)
-        measure1.save()
-        measure2 = Measure.objects.create(date='2023-03-02', value='5.00', metric=metric2, user=patient1)
-        measure2.save()
-        measure3 = Measure.objects.create(date='2023-03-03', value='5.00', metric=metric3, user=patient1)
-        measure3.save()
-        measure4 = Measure.objects.create(date='2023-03-04', value='5.00', metric=metric4, user=patient1)
-        measure4.save()
-
-        self.funciona = {
-            "id": patient1.id
-        }
-
-        self.no_funciona = {
-            "id": 12
-        }
-
         self.factory = APIRequestFactory()
-        self.view = MetricListNameFromUser.as_view()
-
-    def test_list_metrics_by_user(self):
-        request = self.factory.post('/metrics/list_by_user/', self.funciona, format='json')
+        self.view = MetricListName.as_view()
+    
+    def test_list_metrics_name(self):
+        request = self.factory.get('MetricListName/metrics/list_names/')
         force_authenticate(request, self.admin)
         response = self.view(request)
-
+        metrics = Metric.objects.all()
+        serializer = SerializerMetricName(metrics, many=True)
+        self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    def test_list_wrong_metrics_by_user(self):
-        request = self.factory.post('/metrics/list_by_user/', {}, format='json')
-        force_authenticate(request, self.admin)
-        response = self.view(request)
-
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-
-    def test_list_bad_id_metrics_by_user(self):
-        request = self.factory.post('/metrics/list_by_user/', self.no_funciona, format='json')
-        force_authenticate(request, self.admin)
-        response = self.view(request)
-
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
 class MeasureLatestByUserTest(APITestCase):
     def setUp(self):
@@ -366,13 +325,13 @@ class MeasureLatestByUserTest(APITestCase):
         patient1 = Patient.objects.create(user=user1, tel='1234567890', birthdate='1990-01-01')
         patient1.save()
 
-        measure1 = Measure.objects.create(date='2023-03-01', value='5.00', metric=metric1, user=patient1)
+        measure1 = Measure.objects.create(value='5.00', metric=metric1, user=patient1)
         measure1.save()
-        measure2 = Measure.objects.create(date='2023-03-02', value='5.00', metric=metric2, user=patient1)
+        measure2 = Measure.objects.create(value='5.00', metric=metric2, user=patient1)
         measure2.save()
-        measure3 = Measure.objects.create(date='2023-03-03', value='5.00', metric=metric3, user=patient1)
+        measure3 = Measure.objects.create(value='5.00', metric=metric3, user=patient1)
         measure3.save()
-        measure4 = Measure.objects.create(date='2023-03-04', value='5.00', metric=metric4, user=patient1)
+        measure4 = Measure.objects.create(value='5.00', metric=metric4, user=patient1)
         measure4.save()
 
         self.funciona = {

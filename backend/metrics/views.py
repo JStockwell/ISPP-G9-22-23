@@ -22,21 +22,11 @@ class MetricList(APIView):
         serializer = MetricSerializer(metrics, many=True)
         return Response(serializer.data)
 
-class MetricListNameFromUser(APIView):
-    def post(self, request):
-        mesasures = Measure.objects.all()
-        serializer = CreateSerializerMeasureListNameFromUser(data = request.data)
-        if serializer.is_valid():
-            id_patient = serializer.data['id']
-            patient = get_object_or_404(Patient, id = id_patient)
-            measuresListByPatient = Measure.objects.filter(user = patient)
-            name = []
-            for entry in measuresListByPatient:
-                name.append({"name":entry.metric.name})
-
-            return Response({"name": name}, status=status.HTTP_200_OK)
-        else: 
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class MetricListName(APIView):
+    def get(self, request):
+        metrics = Metric.objects.all().order_by('name')
+        serializer = SerializerMetricName(metrics, many=True)
+        return Response(serializer.data)
 
 class MetricCreate(APIView):
     @swagger_auto_schema(
@@ -121,7 +111,7 @@ class MeasureCreate(APIView):
     def post(self, request):
         serializer = CreateSerializerMeasure(data = request.data)
         if serializer.is_valid():
-                date = serializer.data["date"]
+                #date = serializer.data["date"]
                 value = serializer.data["value"]
                 metric_id = serializer.data["metric_id"]
                 patient_id = serializer.data["patient_id"]
@@ -133,7 +123,7 @@ class MeasureCreate(APIView):
                 else:
                     patient = get_object_or_404(Patient, id=patient_id)
                     metric = get_object_or_404(Metric, id=metric_id)
-                    measure = Measure(date = date, value = value, metric=metric, user=patient)
+                    measure = Measure(value = value, metric=metric, user=patient)
                     measure.save()
                     return Response(serializer.data, status=status.HTTP_200_OK)
         else:
