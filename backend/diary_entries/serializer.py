@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 
 class PhysicalEntrySerializer(serializers.ModelSerializer):
-    body_parts = serializers.CharField(max_length=1024)
+    body_parts = serializers.CharField(required = False, default = "", max_length=1024)
     patient_id=serializers.IntegerField()
 
     class Meta:
@@ -14,7 +14,7 @@ class PhysicalEntrySerializer(serializers.ModelSerializer):
 
 
     def validate_body_parts(self, value):
-        accepted_values = {"HEAD", "TORSO", "LEFT_ARM", "RIGHT_ARM", "LEFT_LEG", "RIGHT_LEG"}
+        accepted_values = {"", "HEAD", "TORSO", "LEFT_ARM", "RIGHT_ARM", "LEFT_LEG", "RIGHT_LEG"}
         already_used_values = []
         splitted = value.split(",")
         for part in splitted:
@@ -32,8 +32,8 @@ class MentalEntrySerializer(serializers.ModelSerializer):
     weather = serializers.CharField(max_length=64)
     food = serializers.CharField(max_length=64)
     sleep = serializers.CharField(max_length=64)
-    positive_thoughts = serializers.CharField(max_length=1024)
-    negative_thoughts = serializers.CharField(max_length=1024)
+    positive_thoughts = serializers.CharField(required = False, default = "", max_length=1024)
+    negative_thoughts = serializers.CharField(required = False, default = "", max_length=1024)
     patient_id=serializers.IntegerField()
     class Meta:
         model = MentalEntry
