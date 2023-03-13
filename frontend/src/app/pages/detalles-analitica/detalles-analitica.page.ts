@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-detalles-analitica',
@@ -10,7 +11,7 @@ export class DetallesAnaliticaPage implements OnInit {
   datos?:Array<Analitica>;
 
 
-  constructor() { }
+  constructor(private navCtrl: NavController) { }
 
   ngOnInit() {
     this.nombreAnalitica = "Azúcar";
@@ -20,6 +21,10 @@ export class DetallesAnaliticaPage implements OnInit {
     defaultTab?.click();
   }
 
+  goBack(){
+    this.navCtrl.pop(); 
+  }
+  
   changeTab = (event:Event, nombreTab:string) =>{
     let contents = document.getElementsByClassName("tabcontent");
     for(let i=0; i<contents.length; i++){

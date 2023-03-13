@@ -11,19 +11,22 @@
 .triste{background-image:url(/assets/images/cara-triste.png);}
 .muytriste{background-image:url(/assets/images/cara-muy-triste.png);}
 
-.cabeza{background-image:url(/assets/images/cabeza.png);}
+/* .cabeza{background-image:url(/assets/images/cabeza.png);}
 .brazoizq{background-image:url(/assets/images/brazo-izquierdo.png);}
 .brazodcho{background-image:url(/assets/images/brazo-derecho.png);}
 .torso{background-image:url(/assets/images/torso.png);}
 .piernaizq{background-image:url(/assets/images/pierna-izquierda.png);}
-.piernadcha{background-image:url(/assets/images/pierna-derecha.png);}
+.piernadcha{background-image:url(/assets/images/pierna-derecha.png);} */
 
 .image-cc{
     cursor:pointer;
     background-size:contain;
     background-repeat:no-repeat;
     display:inline-block;
-    width:100px;height:70px;
+    width:59px;height:42px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
     -webkit-transition: all 100ms ease-in;
        -moz-transition: all 100ms ease-in;
             transition: all 100ms ease-in;
