@@ -162,7 +162,5 @@ class MeasureLatestByUser(APIView):
         measuresListByPatient = Measure.objects.filter(user = patient)
         measuresListByPatientOrder = sorted(measuresListByPatient, key=lambda measure : measure.date)
         measures = measuresListByPatientOrder[:10]
-        value = []
-        for entry in measures:
-            value.append({'value': entry.value})
-        return Response({'value': value},status=status.HTTP_200_OK)
+        serializer = MeasureSerializer(measures, many=True)
+        return Response(serializer.data,status=status.HTTP_200_OK)
