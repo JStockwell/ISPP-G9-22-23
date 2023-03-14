@@ -23,6 +23,11 @@ class MetricList(APIView):
         return Response(serializer.data)
 
 class MetricListName(APIView):
+    @swagger_auto_schema(
+            manual_parameters=[],
+            security=[],
+            responses={'200':SerializerMetricName}
+    )
     def get(self, request):
         metrics = Metric.objects.all().order_by('name')
         serializer = SerializerMetricName(metrics, many=True)
@@ -102,7 +107,6 @@ class MeasureCreate(APIView):
             security=[],
             request_body=openapi.Schema(
                 type=openapi.TYPE_OBJECT, properties={
-                    'date': openapi.Schema(type=openapi.TYPE_STRING, description="Fecha en la que se realiza la medida"),
                     'value': openapi.Schema(type=openapi.TYPE_STRING, description="Valor medido para una métrica concreta"),
                     'metric': openapi.Schema(type="foreign key", description="Clave ajena para relacionar la medida con una métrica"),
                     'user': openapi.Schema(type="foreign key", description="Clave ajena para relacionar la medida con un paciente")
@@ -113,7 +117,6 @@ class MeasureCreate(APIView):
     def post(self, request):
         serializer = CreateSerializerMeasure(data = request.data)
         if serializer.is_valid():
-                #date = serializer.data["date"]
                 value = serializer.data["value"]
                 metric_id = serializer.data["metric_id"]
                 patient_id = serializer.data["patient_id"]
@@ -155,12 +158,16 @@ class MeasureId(APIView):
         return Response({"message":"Medida con id: " + str(pk) + " borrado correctamete"}, status=status.HTTP_200_OK)
 
 class MeasureLatestByUser(APIView):
+    @swagger_auto_schema(
+        manual_parameters=[],
+        security=[],
+        responses={'200':MeasureSerializer, '404':"Medida con ese ID no encontrada"}
+    )
     def get(self, request, *arg, **kwargs):
-        mesasures = Measure.objects.all()
         pk = self.kwargs.get('pk')
         patient = get_object_or_404(Patient, id = pk)
-        measuresListByPatient = Measure.objects.filter(user = patient)
-        measuresListByPatientOrder = sorted(measuresListByPatient, key=lambda measure : measure.date)
-        measures = measuresListByPatientOrder[:10]
+        measures_list_by_patient = Measure.objects.filter(user = patient)
+        measures_list_by_patient_order = sorted(measures_list_by_patient, key=lambda measure : measure.date)
+        measures = measures_list_by_patient_order[:10]
         serializer = MeasureSerializer(measures, many=True)
         return Response(serializer.data,status=status.HTTP_200_OK)

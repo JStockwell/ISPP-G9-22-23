@@ -24,7 +24,7 @@ from drf_yasg import openapi
 schema_view = get_schema_view(
    openapi.Info(
       title="HematoDia API",
-      default_version='v0.3.0',
+      default_version='v1.0.0',
       description="Compañero de vida y salud capaz de registrar citas, dolencias y aflicciones.",
       #terms_of_service="https://www.google.com/policies/terms/",
       contact=openapi.Contact(email="isppgrupo9@gmail.com"), #TODO Revisar correo de contacto y actualizar/eliminar según se estime

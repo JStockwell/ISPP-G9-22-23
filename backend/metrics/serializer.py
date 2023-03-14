@@ -19,7 +19,6 @@ class CreateSerializerMetric(serializers.Serializer):
     max_value = serializers.FloatField()
 
 class CreateSerializerMeasure(serializers.Serializer):
-    #date = serializers.DateTimeField(format = "%Y-%m-%d %H:%M:%S", input_formats=['%Y-%m-%d %H:%M:%S'])
     value = serializers.FloatField()
     metric_id = serializers.IntegerField()
     patient_id = serializers.IntegerField()
