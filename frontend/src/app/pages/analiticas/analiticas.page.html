@@ -6,7 +6,7 @@
 
 <ion-content color = "light" class="ion-padding">
   <div *ngFor ="let item of analiticas">
-    <ion-card button color = "warning" [routerLink] = "['/Tabs/Analytics/Details/'+item.id]">
+    <ion-card button color = "warning" [routerLink] = "['/app/Tabs/Analytics/Details/'+item.id]">
       <ion-label style = "text-align: center;">
         <h1 style = "margin-top: 5%;margin-bottom: 1.5%; color:black">{{ item.name }}</h1>
         <div *ngFor="let measure of mediciones">
@@ -22,7 +22,7 @@
   
 
   <ion-fab style = "padding-inline-end: 5%;"  slot = "fixed"  vertical = "bottom" horizontal = "end">
-    <ion-fab-button color = "secondary" [routerLink]="['/Tabs/Analytics/New']">
+    <ion-fab-button color = "secondary" [routerLink]="['/app/Tabs/Analytics/New']">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
