@@ -5,23 +5,32 @@
 </ion-header>
 
 <ion-content color = "light">
-  <ion-card button color="warning">
-    <ion-card-title class="title">{{nombreAnalitica}}</ion-card-title>
+
+  <ion-card color="warning">
+    <ion-card-title class="title">{{analitica.name}}</ion-card-title>
+
     <div class="tabs">
       <button color = "tertiary" class="tab-button" (click)="changeTab($event, 'Datos')" id="default">Datos</button>
       <button color = "primary" class="tab-button" (click)="changeTab($event, 'Grafica')">Gráfica</button>
     </div>
     <br>
     <div class="tabcontent" id="Datos">
-      <div *ngFor="let analitica of datos">
-        <div class="display-datos">
-          {{analitica.value}} {{analitica.unit}} ({{analitica.date.toLocaleTimeString() + " " + analitica.date.toDateString()}})
-        </div>
-        <br>
+      <div *ngFor="let medicion of mediciones" >
+        <ion-item *ngIf="medicion.metric == analitica.id" color="warning">
+          <ion-label class="ion-text-wrap"
+            >{{ medicion.value}} {{analitica.unit}} ({{medicion.date}})
+          </ion-label>
+        </ion-item>
       </div>
     </div>
     <div class="tabcontent" id="Grafica">
-      Aquí la gráfica
+      <canvas #barChart style="width:100%;max-width:700px; height: auto;" ></canvas>
     </div>
   </ion-card>
+
+  <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
+    <ion-fab-button  color = "secondary" [routerLink]="['/app/Tabs/Analytics']">
+      <ion-icon name="arrow-back-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
