@@ -29,6 +29,12 @@ const routes: Routes = [
         path: 'Analytics/New',
         loadChildren: () => import('../pages/new-analytic/new-analytic.module').then(m=>m.NewAnalyticPageModule)        
       },
+
+      {
+        path: 'seccion-mental/New',
+        loadChildren: () => import('../pages/nueva-entrada-mental/nueva-entrada-mental.module').then(m=>m.NuevaEntradaMentalPageModule)        
+      },
+      
       {
         path: 'seccion-fisica/New',
         loadChildren: () => import('../pages/nueva-entrada-fisica/nueva-entrada-fisica.module').then(m=>m.NuevaEntradaFisicaPageModule)        

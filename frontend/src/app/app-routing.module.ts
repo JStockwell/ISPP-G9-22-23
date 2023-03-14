@@ -35,6 +35,11 @@ const routes: Routes = [
   },
 
 
+  {
+    path: 'nueva-entrada-mental',
+    loadChildren: () => import('./pages/nueva-entrada-mental/nueva-entrada-mental.module').then( m => m.NuevaEntradaMentalPageModule)
+  },
+
 ];
 @NgModule({
   imports: [
