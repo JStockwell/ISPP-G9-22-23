@@ -34,6 +34,10 @@ const routes: Routes = [
         path: 'seccion-mental/New',
         loadChildren: () => import('../pages/nueva-entrada-mental/nueva-entrada-mental.module').then(m=>m.NuevaEntradaMentalPageModule)        
       },
+      {
+        path: 'Analytics/Details/:id/Details',
+        loadChildren: () => import('../pages/añadir-detalles-analiticas/añadir-detalles-analiticas.module').then(m=>m.AñadirDetallesAnaliticasPageModule)        
+      },
       
       {
         path: 'seccion-fisica/New',
