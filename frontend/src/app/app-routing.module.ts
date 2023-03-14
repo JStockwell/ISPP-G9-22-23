@@ -8,7 +8,7 @@ const routes: Routes = [
 
   },
   {
-    path: 'detalles-analitica',
+    path: 'Details/:id',
     loadChildren: () => import('./pages/detalles-analitica/detalles-analitica.module').then( m => m.DetallesAnaliticaPageModule)
   },
   {
