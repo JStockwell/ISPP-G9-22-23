@@ -1,3 +1,4 @@
+import { NavController } from '@ionic/angular';
 import { Component, OnInit, ViewChild } from "@angular/core";
 import Chart from "chart.js/auto";
 import { LoadingController } from "@ionic/angular";
@@ -139,13 +140,17 @@ export class DetallesAnaliticaPage implements OnInit {
     },
   ];
   analitica = this.analiticas[0];
-  constructor(private route: ActivatedRoute, public router: Router) {}
+  constructor(private route: ActivatedRoute, private navCtrl: NavController, public router: Router) {}
 
   ngOnInit() {
     
 
   }
 
+  goBack(){
+    this.navCtrl.pop(); 
+  }
+  
   changeTab = (event: Event, nombreTab: string) => {
     let contents = document.getElementsByClassName("tabcontent");
     for (let i = 0; i < contents.length; i++) {
