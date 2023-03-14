@@ -8,7 +8,7 @@
 
   <ion-card color="warning">
     <ion-card-title class="title">{{analitica.name}}</ion-card-title>
-    <a href="{{this.router.url + '/Details'}}">
+    <ion-fab-button color = "secondary" [routerLink]="[this.router.url + '/Details']">
       <div style="text-align: right; margin-right: 15px; margin-top: 20px">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -27,7 +27,7 @@
           />
         </svg>
       </div>
-    </a>
+    </ion-fab-button>
     <div class="tabs">
       <button color = "tertiary" class="tab-button" (click)="changeTab($event, 'Datos')" id="default">Datos</button>
       <button color = "primary" class="tab-button" (click)="changeTab($event, 'Grafica')">Gráfica</button>

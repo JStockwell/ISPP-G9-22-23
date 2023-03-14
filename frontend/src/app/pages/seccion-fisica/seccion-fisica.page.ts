@@ -18,8 +18,8 @@ export class SeccionFisicaPage implements OnInit {
   }
 
   ngOnInit() {
-    this.entradas = [new EntradaFisica(new Date(2023, 2, 5), 'Feliz', [], 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod dolor sit amet mauris aliquam sagittis ac ut lacus. Nullam ut imperdiet ipsum. Nullam vel sem pellentesque, convallis libero et, dictum sem. Sed faucibus id ex quis consequat.'),
-      new EntradaFisica(new Date(2022, 11, 29), 'Triste', ['Pierna', 'Brazo'], 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent dapibus ultrices est at facilisis. Etiam bibendum sit amet massa vel commodo. Sed sagittis nunc gravida tortor rutrum, nec tempor justo mollis. Cras interdum massa at odio condimentum vulputate vel eget massa. Maecenas at dui vel sem sagittis tincidunt. Donec facilisis viverra erat, et tincidunt lacus hendrerit sagittis. Praesent nec porttitor neque, nec fringilla ante. Aenean non pulvinar ligula.')]
+    this.entradas = [new EntradaFisica(new Date(2023, 2, 5), '/images/cara-feliz', [], 'Ayer me encontré bien, nada más que añadir'),
+      new EntradaFisica(new Date(2022, 11, 29), '/images/cara-triste', ['/images/brazo-derecho', '/images/brazo-izquierdo'], 'El dolor en el brazo derecho era constante e irritante.')]
   }
 
 }
