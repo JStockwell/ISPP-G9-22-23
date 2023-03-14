@@ -26,6 +26,11 @@ const routes: Routes = [
     loadChildren: () => import('./tab2/tab2.module').then(m => m.Tab2PageModule)
   },
 
+  {
+    path: 'nueva-entrada-mental',
+    loadChildren: () => import('./pages/nueva-entrada-mental/nueva-entrada-mental.module').then( m => m.NuevaEntradaMentalPageModule)
+  },
+
 ];
 @NgModule({
   imports: [
