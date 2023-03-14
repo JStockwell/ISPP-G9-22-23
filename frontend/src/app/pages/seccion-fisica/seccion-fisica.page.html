@@ -21,7 +21,10 @@
       No hay entradas todavía
     </div>
   </ng-template>
-  <div class="footer">
-    <ion-button style = "padding-inline-end: 2.5%;"color = "secondary"shape="round">Crear Entrada</ion-button>
-  </div>
+  
+  <ion-fab style = "padding-inline-end: 5%;"  slot = "fixed"  vertical = "bottom" horizontal = "end">
+    <ion-fab-button color = "secondary" [routerLink]="['/app/Tabs/seccion-fisica/New']">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
