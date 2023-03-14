@@ -40,7 +40,7 @@ class MetricCreate(APIView):
                     'max_value': openapi.Schema(type=openapi.TYPE_NUMBER, description="Valor máximo que puede tomar la métrica en un caso normal")
                 }
             ),
-            responses={'200':MetricSerializer, '400':"Ya existe una metrica con ese nombre, o se ha introducido un par min/max value ilegal"}
+            responses={'200':MetricSerializer, '400':"Ya existe una métrica con ese nombre, o se ha introducido un par min/max value ilegal"}
     )
     def post(self, request):
         serializer = CreateSerializerMetric(data = request.data)
@@ -51,7 +51,9 @@ class MetricCreate(APIView):
             max_value = serializer.data['max_value']
 
             if Metric.objects.filter(name = name).exists():
-                return Response({"error":"Ya existe una metrica con ese nombre"}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({"error":"Ya existe una métrica con ese nombre"}, status=status.HTTP_400_BAD_REQUEST)
+            if min_value > max_value:
+                return Response({"error":"El valor mínimo no puede ser mayor que el valor máximo"}, status=status.HTTP_400_BAD_REQUEST)
             else:
                 metric = Metric(name = name, unit = unit, min_value = min_value, max_value = max_value)
                 metric.save()
@@ -80,7 +82,7 @@ class MetricId(APIView):
         pk = self.kwargs.get('pk')
         patient = get_object_or_404(Metric, id=pk)
         patient.delete()
-        return Response({"message":"Metrica con id: " +str(pk) + " borrado correctamente"}, status=status.HTTP_200_OK)
+        return Response({"message":"Métrica con id: " +str(pk) + " borrado correctamente"}, status=status.HTTP_200_OK)
 
 #Views from Measure
 class MeasureList(APIView):
@@ -119,7 +121,7 @@ class MeasureCreate(APIView):
                 if not Patient.objects.filter(id = patient_id).exists():
                     return Response({"error":"No existe ningun paciente con ese id"}, status=status.HTTP_400_BAD_REQUEST)
                 if not Metric.objects.filter(id = metric_id).exists():
-                    return Response({"error":"No existe ninguna metrica con dicho id"}, status=status.HTTP_400_BAD_REQUEST)
+                    return Response({"error":"No existe ninguna métrica con dicho id"}, status=status.HTTP_400_BAD_REQUEST)
                 else:
                     patient = get_object_or_404(Patient, id=patient_id)
                     metric = get_object_or_404(Metric, id=metric_id)
@@ -150,24 +152,16 @@ class MeasureId(APIView):
         pk = self.kwargs.get('pk')
         measeure = get_object_or_404(Measure, id = pk)
         measeure.delete()
-        return Response({"message":"Measure con id: " + str(pk) + " borrado correctamete"}, status=status.HTTP_200_OK)
+        return Response({"message":"Medida con id: " + str(pk) + " borrado correctamete"}, status=status.HTTP_200_OK)
 
 class MeasureLatestByUser(APIView):
-    def post(self, request):
+    def get(self, request, *arg, **kwargs):
         mesasures = Measure.objects.all()
-        serializer = CreateSerializerMeasureListNameFromUser(data = request.data)
-        if serializer.is_valid():
-            id_patient = serializer.data['id']
-            
-            patient = get_object_or_404(Patient, id = id_patient)
-            measuresListByPatient = Measure.objects.filter(user = patient)
-            measuresListByPatientOrder = sorted(measuresListByPatient, key=lambda measure : measure.date)
-            i = 10
-            value = []
-            for entry in measuresListByPatientOrder:
-                if (i > 0):
-                    value.append({'value': entry.value})
-                i = i-1
-            return Response({'value': value},status=status.HTTP_200_OK)
-        else: 
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        pk = self.kwargs.get('pk')
+        patient = get_object_or_404(Patient, id = pk)
+        measuresListByPatient = Measure.objects.filter(user = patient)
+        measuresListByPatientOrder = sorted(measuresListByPatient, key=lambda measure : measure.date)
+        value = []
+        for entry in measuresListByPatientOrder:
+            value.append({'value': entry.value})
+        return Response({'value': value},status=status.HTTP_200_OK)

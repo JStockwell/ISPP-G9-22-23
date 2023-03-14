@@ -166,7 +166,7 @@ class MeasureCreateTest(APITestCase):
         response = self.view(request)
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.data["error"],"No existe ninguna metrica con dicho id")
+        self.assertEqual(response.data["error"],"No existe ninguna métrica con dicho id")
 
     def test_username_no_found(self):
         request = self.factory.post('/metrics/measures/', self.patient_no_found, format='json')
@@ -210,7 +210,7 @@ class MetricIdTest(APITestCase):
         force_authenticate(request, self.admin)
         response = self.view(request, pk=self.metric1.id)
 
-        self.assertEqual(response.data["message"],"Metrica con id: " +str(self.metric1.id) +" borrado correctamente")  
+        self.assertEqual(response.data["message"],"Métrica con id: " +str(self.metric1.id) +" borrado correctamente")  
         self.assertEqual(response.status_code, status.HTTP_200_OK)  
 
     def test_delete_invalid_metric(self):
@@ -264,7 +264,7 @@ class MeasureIdTest(APITestCase):
         force_authenticate(request, self.admin)
         response = self.view(request, pk=self.measure1.id)
 
-        self.assertEqual(response.data["message"],"Measure con id: " + str(self.measure1.id) + " borrado correctamete")  
+        self.assertEqual(response.data["message"],"Medida con id: " + str(self.measure1.id) + " borrado correctamete")  
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_delete_invalid_measure(self):
@@ -322,46 +322,29 @@ class MeasureLatestByUserTest(APITestCase):
         user1.set_password("passUser1")
         user1.save()
 
-        patient1 = Patient.objects.create(user=user1, tel='1234567890', birthdate='1990-01-01')
-        patient1.save()
+        self.patient1 = Patient.objects.create(user=user1, tel='1234567890', birthdate='1990-01-01')
+        self.patient1.save()
 
-        measure1 = Measure.objects.create(value='5.00', metric=metric1, user=patient1)
+        measure1 = Measure.objects.create(value='5.00', metric=metric1, user=self.patient1)
         measure1.save()
-        measure2 = Measure.objects.create(value='5.00', metric=metric2, user=patient1)
+        measure2 = Measure.objects.create(value='5.00', metric=metric2, user=self.patient1)
         measure2.save()
-        measure3 = Measure.objects.create(value='5.00', metric=metric3, user=patient1)
+        measure3 = Measure.objects.create(value='5.00', metric=metric3, user=self.patient1)
         measure3.save()
-        measure4 = Measure.objects.create(value='5.00', metric=metric4, user=patient1)
+        measure4 = Measure.objects.create(value='5.00', metric=metric4, user=self.patient1)
         measure4.save()
-
-        self.funciona = {
-            "id": patient1.id
-        }
-
-        self.no_funciona = {
-            "id": 12
-        }
 
         self.factory = APIRequestFactory()
         self.view = MeasureLatestByUser.as_view()
 
-    def test_list_latest_measures_by_user(self):
-        request = self.factory.post('measures/latest_by_user/', self.funciona, format='json')
+    def test_get_valid_latest_measure(self):
+        request = self.factory.get(reverse("id_patients", kwargs={"pk":self.patient1.id}))
         force_authenticate(request, self.admin)
-        response = self.view(request)
+        response = self.view(request, pk=self.patient1.id)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_list_wrong_latest_measures_by_user(self):
-        request = self.factory.post('measures/latest_by_user/', {}, format='json')
+    def test_get_invalid_latest_measure(self):
+        request = self.factory.get(reverse("id_patients", kwargs={"pk":123123123123}))
         force_authenticate(request, self.admin)
-        response = self.view(request)
-
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-
-    def test_list_bad_id_latest_measures_by_user(self):
-        request = self.factory.post('measures/latest_by_user/', self.no_funciona, format='json')
-        force_authenticate(request, self.admin)
-        response = self.view(request)
-
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        response = self.view(request, pk=123123123123)
