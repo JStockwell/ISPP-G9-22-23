@@ -161,7 +161,8 @@ class MeasureLatestByUser(APIView):
         patient = get_object_or_404(Patient, id = pk)
         measuresListByPatient = Measure.objects.filter(user = patient)
         measuresListByPatientOrder = sorted(measuresListByPatient, key=lambda measure : measure.date)
+        measures = measuresListByPatientOrder[:10]
         value = []
-        for entry in measuresListByPatientOrder:
+        for entry in measures:
             value.append({'value': entry.value})
         return Response({'value': value},status=status.HTTP_200_OK)
