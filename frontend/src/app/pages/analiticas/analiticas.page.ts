@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { AnaliticasService } from 'src/app/services/analiticas.service';
 import Chart from 'chart.js/auto';
-import { of } from 'rxjs';
+
 
 @Component({
   selector: 'app-analiticas',
@@ -11,7 +11,6 @@ import { of } from 'rxjs';
 })
 export class AnaliticasPage implements OnInit {
   
-  @ViewChild('barChart') barChart:any;
 
   bars: any;
   colorArray: any;
@@ -102,9 +101,39 @@ export class AnaliticasPage implements OnInit {
       metric: 1,
     },
     {
-      id: 4,
+      id: 11,
       date: '18:47 Lunes, 27/03/2023',
       value: '79',
+      metric: 2,
+    },
+    {
+      id: 12,
+      date: '18:47 Lunes, 28/03/2023',
+      value: '60',
+      metric: 2,
+    },
+    {
+      id: 13,
+      date: '18:47 Lunes, 29/03/2023',
+      value: '89',
+      metric: 2,
+    },
+    {
+      id: 14,
+      date: '18:47 Lunes, 30/03/2023',
+      value: '74',
+      metric: 2,
+    },
+    {
+      id: 15,
+      date: '18:47 Lunes, 31/03/2023',
+      value: '70',
+      metric: 2,
+    },
+    {
+      id: 16,
+      date: '18:47 Lunes, 01/04/2023',
+      value: '75',
       metric: 2,
     },
   ]
@@ -118,7 +147,7 @@ export class AnaliticasPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.createChart(1);
+    this.createChart();
   }
 
   async loadAnaliticas(){
@@ -137,41 +166,55 @@ export class AnaliticasPage implements OnInit {
       console.log(res); 
     })
     */
-    console.log(this.analiticasService.getAnaliticas);
-    console.log(this.analiticas)
+    //console.log(this.analiticasService.getAnaliticas);
+    //console.log(this.analiticas)
     
   }
-  createChart(id:any){
 
-    const dates: String[] = [];
-    const values: String[] = [];
-    for( const medicion of this.mediciones){
-      if(medicion.metric == id){
+  createChart(){
+    for (const analitica of this.analiticas){
+      let nombre = analitica.name;
+      let str = "chart"+nombre;
+      
+      let aux = <HTMLCanvasElement> document.getElementById(str);
+      //console.log(aux)
+      const ctx = aux.getContext("2d");
+      if(ctx != null){
+        //console.log(ctx);
 
-        const aux = medicion.date.split(" ");
-        console.log(aux);
-        dates.push(aux[2]);
-        values.push(medicion.value)
+        const dates: String[] = [];
+        const values: String[] = [];
+        for( const medicion of this.mediciones){
+          if(medicion.metric == analitica.id){
+
+            const aux = medicion.date.split(" ");
+            //console.log(aux);
+            dates.push(aux[2]);
+            values.push(medicion.value)
+          }
+          
+        }
+        Chart.defaults.color = 'black';
+        Chart.defaults.backgroundColor = '#f4f5f9';
+
+        const mensaje: string='Resultados de la analítica('+analitica.unit+')'
+        this.bars = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: dates,
+            datasets: [{
+              label: mensaje,
+              data: values,
+              backgroundColor: "light", // array should have same number of elements as number of dataset
+              borderColor: "light", // array should have same number of elements as number of dataset
+              
+              borderWidth: 1
+            }]
+          }
+        });
       }
       
     }
-    Chart.defaults.color = 'black';
-    Chart.defaults.backgroundColor = '#f4f5f9';
-
-    const mensaje: string='Resultados de la analítica('+this.analiticas[id].unit+')'
-    this.bars = new Chart(this.barChart.nativeElement, {
-      type: 'line',
-      data: {
-        labels: dates,
-        datasets: [{
-          label: mensaje,
-          data: values,
-          backgroundColor: "light", // array should have same number of elements as number of dataset
-          borderColor: "light", // array should have same number of elements as number of dataset
-          
-          borderWidth: 1
-        }]
-      }
-    });
+  
   }
 }
