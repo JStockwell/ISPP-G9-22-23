@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 import { NewAnalyticService } from 'src/app/services/new-analytic.service';
 
 @Component({
@@ -31,7 +32,7 @@ export class NewAnalyticPage implements OnInit {
   valor:string | undefined
   umbralAlto:string | undefined
   umbralBajo:string | undefined
-  constructor(private newAnalyticService: NewAnalyticService) { }
+  constructor(private newAnalyticService: NewAnalyticService, private navCtrl: NavController) { }
 
   ngOnInit() {
     // this.loadNombres();
@@ -52,6 +53,10 @@ export class NewAnalyticPage implements OnInit {
       this.unidad = ''
     }
   } */
+
+  goBack(){
+    this.navCtrl.pop(); 
+  }
 
   newAnalytic(){
     let analytic = {
