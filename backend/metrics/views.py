@@ -1,17 +1,19 @@
 from metrics.models import Metric, Measure
 from users.models import Patient
-from django.contrib.auth.models import User
 from metrics.serializer import MetricSerializer, MeasureSerializer, CreateSerializerMetric, CreateSerializerMeasure, CreateSerializerMeasureListNameFromUser, SerializerMetricName
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
 from drf_yasg.utils import swagger_auto_schema
-from drf_yasg.openapi import Parameter
 from drf_yasg import openapi
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 
 # Views from Metric
 class MetricList(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     @swagger_auto_schema(
             manual_parameters=[],
             security=[],
@@ -23,6 +25,8 @@ class MetricList(APIView):
         return Response(serializer.data)
 
 class MetricListName(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     @swagger_auto_schema(
             manual_parameters=[],
             security=[],
@@ -34,6 +38,8 @@ class MetricListName(APIView):
         return Response(serializer.data)
 
 class MetricCreate(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     @swagger_auto_schema(
             manual_parameters=[],
             security=[],
@@ -67,6 +73,8 @@ class MetricCreate(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class MetricId(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     @swagger_auto_schema(
             manual_parameters=[],
             security=[],
@@ -91,6 +99,8 @@ class MetricId(APIView):
 
 #Views from Measure
 class MeasureList(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     @swagger_auto_schema(
             manual_parameters=[],
             security=[],
@@ -102,6 +112,8 @@ class MeasureList(APIView):
         return Response(serializer.data)
 
 class MeasureCreate(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     @swagger_auto_schema(
             manual_parameters=[],
             security=[],
@@ -135,6 +147,8 @@ class MeasureCreate(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class MeasureId(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     @swagger_auto_schema(
             manual_parameters=[],
             security=[],
@@ -158,6 +172,8 @@ class MeasureId(APIView):
         return Response({"message":"Medida con id: " + str(pk) + " borrado correctamete"}, status=status.HTTP_200_OK)
 
 class MeasureLatestByUser(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     @swagger_auto_schema(
         manual_parameters=[],
         security=[],
