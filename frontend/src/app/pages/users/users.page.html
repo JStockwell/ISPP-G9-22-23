@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      Registro
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-pading" color="light">
+  <ion-card color ="warning"> 
+
+ 
+      <ion-label style = "padding-inline-start: 6%; padding-top: 10%;" display="block" position="floating">Nombre de usuario</ion-label>
+      <ion-item color="warning">
+        <ion-input [(ngModel)]="username" placeholder="Type something here"></ion-input>
+      </ion-item>
+
+   <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Contraseña</ion-label>
+   <ion-item color="warning">
+     <ion-input [(ngModel)]="password" placeholder="Type something here"></ion-input>
+
+    </ion-item>
+
+    <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Nombre</ion-label>
+    <ion-item color="warning">
+      <ion-input [(ngModel)]="first_name" placeholder="Type something here"></ion-input>
+    </ion-item>
+
+    <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Apellidos</ion-label>
+    <ion-item color="warning">
+      <ion-input [(ngModel)]="last_name" placeholder="Type something here"></ion-input>
+    </ion-item>
+
+    <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Correo</ion-label>
+    <ion-item color="warning">
+      <ion-input [(ngModel)]="email" placeholder="aaaa@gmail.com"></ion-input>
+    </ion-item>
+
+    <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Teléfono</ion-label>
+    <ion-item color="warning">
+      <ion-input [(ngModel)]="tel" placeholder="661456620"></ion-input>
+    </ion-item>
+
+    <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Fecha de nacimiento</ion-label>
+    <ion-item color="warning">
+      <ion-input [(ngModel)]="birthdate" placeholder="2001-02-23"></ion-input>
+    </ion-item>
+
+    <ion-button color="dark" expand="block" (click)="registrarUsuario()">
+      Registrarse
+    </ion-button>
+  </ion-card>
+  
+</ion-content>

@@ -2,6 +2,11 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
+
+  {
+    path: 'users/register',
+    loadChildren: () => import('./pages/users/users.module').then(m=>m.UsersPageModule)
+  },
   {
     path: 'app',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
@@ -43,6 +48,11 @@ const routes: Routes = [
     path: 'añadir-detalles-analiticas',
     loadChildren: () => import('./pages/añadir-detalles-analiticas/añadir-detalles-analiticas.module').then( m => m.AñadirDetallesAnaliticasPageModule)
   },
+  {
+    path: 'users',
+    loadChildren: () => import('./pages/users/users.module').then( m => m.UsersPageModule)
+  },
+
 
 ];
 @NgModule({
