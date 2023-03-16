@@ -1,6 +1,6 @@
-from metrics.models import Metric, Measure
+from metrics.models import Metric, Measure, MetricInfo
 from users.models import Patient
-from metrics.serializer import MetricSerializer, MeasureSerializer, CreateSerializerMetric, CreateSerializerMeasure, CreateSerializerMeasureListNameFromUser, SerializerMetricName
+from metrics.serializer import MetricSerializer, MeasureSerializer, CreateSerializerMetric, CreateSerializerMeasure, MetricInfoSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -22,19 +22,20 @@ class MetricList(APIView):
     def get(self, request):
         metrics = Metric.objects.all()
         serializer = MetricSerializer(metrics, many=True)
+        print(metrics)
         return Response(serializer.data)
 
-class MetricListName(APIView):
+class MetricListInfo(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     @swagger_auto_schema(
             manual_parameters=[],
             security=[],
-            responses={'200':SerializerMetricName}
+            responses={'200':MetricInfoSerializer}
     )
     def get(self, request):
-        metrics = Metric.objects.all().order_by('name')
-        serializer = SerializerMetricName(metrics, many=True)
+        metrics = MetricInfo.objects.all()
+        serializer = MetricInfoSerializer(metrics, many=True)
         return Response(serializer.data)
 
 class MetricCreate(APIView):
@@ -48,10 +49,11 @@ class MetricCreate(APIView):
                     'name': openapi.Schema(type=openapi.TYPE_STRING, description="nombre de la métrica, debe ser único"),
                     'unit': openapi.Schema(type=openapi.TYPE_STRING, description="Unidad en la que se mide la métrica"),
                     'min_value': openapi.Schema(type=openapi.TYPE_NUMBER, description="Valor mínimo que puede tomar la métrica en un caso normal"),
-                    'max_value': openapi.Schema(type=openapi.TYPE_NUMBER, description="Valor máximo que puede tomar la métrica en un caso normal")
+                    'max_value': openapi.Schema(type=openapi.TYPE_NUMBER, description="Valor máximo que puede tomar la métrica en un caso normal"),
+                    'patient_id': openapi.Schema(type=openapi.TYPE_STRING, description='Id del paciente al que pertenece')
                 }
             ),
-            responses={'200':MetricSerializer, '400':"Ya existe una métrica con ese nombre, o se ha introducido un par min/max value ilegal"}
+            responses={'200':MetricSerializer, '400':"Ya existe una métrica con ese nombre, o se ha introducido un par min/max value ilegal o el paciente no existe"}
     )
     def post(self, request):
         serializer = CreateSerializerMetric(data = request.data)
@@ -60,13 +62,15 @@ class MetricCreate(APIView):
             unit = serializer.data['unit']
             min_value = serializer.data['min_value']
             max_value = serializer.data['max_value']
+            patient_id = serializer.data["patient_id"]
 
-            if Metric.objects.filter(name = name).exists():
-                return Response({"error":"Ya existe una métrica con ese nombre"}, status=status.HTTP_400_BAD_REQUEST)
+            patient = get_object_or_404(Patient, id=patient_id)
+
             if min_value > max_value:
                 return Response({"error":"El valor mínimo no puede ser mayor que el valor máximo"}, status=status.HTTP_400_BAD_REQUEST)
             else:
-                metric = Metric(name = name, unit = unit, min_value = min_value, max_value = max_value)
+                metricInfo = MetricInfo.objects.get(name=name, unit=unit)
+                metric = Metric(min_value = min_value, max_value = max_value, patient=patient, info = metricInfo)
                 metric.save()
                 return Response(serializer.data, status=status.HTTP_200_OK)
         else:
@@ -121,7 +125,7 @@ class MeasureCreate(APIView):
                 type=openapi.TYPE_OBJECT, properties={
                     'value': openapi.Schema(type=openapi.TYPE_STRING, description="Valor medido para una métrica concreta"),
                     'metric': openapi.Schema(type="foreign key", description="Clave ajena para relacionar la medida con una métrica"),
-                    'user': openapi.Schema(type="foreign key", description="Clave ajena para relacionar la medida con un paciente")
+                    'patient': openapi.Schema(type="foreign key", description="Clave ajena para relacionar la medida con un paciente")
                 }
             ),
             responses={'200':MeasureSerializer, '400':"Bad request"}
@@ -140,7 +144,7 @@ class MeasureCreate(APIView):
                 else:
                     patient = get_object_or_404(Patient, id=patient_id)
                     metric = get_object_or_404(Metric, id=metric_id)
-                    measure = Measure(value = value, metric=metric, user=patient)
+                    measure = Measure(value = value, metric=metric, patient=patient)
                     measure.save()
                     return Response(serializer.data, status=status.HTTP_200_OK)
         else:
@@ -170,20 +174,34 @@ class MeasureId(APIView):
         measeure = get_object_or_404(Measure, id = pk)
         measeure.delete()
         return Response({"message":"Medida con id: " + str(pk) + " borrado correctamete"}, status=status.HTTP_200_OK)
+    
 
-class MeasureLatestByUser(APIView):
+class MetricPatientId(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     @swagger_auto_schema(
-        manual_parameters=[],
-        security=[],
-        responses={'200':MeasureSerializer, '404':"Medida con ese ID no encontrada"}
+            manual_parameters=[],
+            security=[],
+            responses={'200':MetricSerializer, '404':"Paciente con ese ID no encontrado"}
     )
     def get(self, request, *arg, **kwargs):
         pk = self.kwargs.get('pk')
         patient = get_object_or_404(Patient, id = pk)
-        measures_list_by_patient = Measure.objects.filter(user = patient)
-        measures_list_by_patient_order = sorted(measures_list_by_patient, key=lambda measure : measure.date)
-        measures = measures_list_by_patient_order[:10]
+        metrics = Metric.objects.filter(patient = patient)
+        serializer = MetricSerializer(metrics, many=True)
+        return Response(serializer.data)
+    
+class MeasurePatientId(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    @swagger_auto_schema(
+            manual_parameters=[],
+            security=[],
+            responses={'200':MetricSerializer, '404':"Paciente con ese ID no encontrado"}
+    )
+    def get(self, request, *arg, **kwargs):
+        pk = self.kwargs.get('pk')
+        patient = get_object_or_404(Patient, id = pk)
+        measures = Measure.objects.filter(patient = patient)
         serializer = MeasureSerializer(measures, many=True)
-        return Response(serializer.data,status=status.HTTP_200_OK)
+        return Response(serializer.data)
