@@ -6,11 +6,14 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 from users.models import Patient
 from drf_yasg.utils import swagger_auto_schema
-from drf_yasg.openapi import Parameter
 from drf_yasg import openapi
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 
 
 class MentalEntryList(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     @swagger_auto_schema(
         manual_parameters=[],
@@ -30,7 +33,8 @@ class MentalEntryList(APIView):
         return Response(serializer.data)
 
 class MentalEntryPatientList(APIView):
-
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     @swagger_auto_schema(
         manual_parameters=[],
         security=[],
@@ -44,6 +48,8 @@ class MentalEntryPatientList(APIView):
         return Response(serializer.data)
 
 class MentalEntryCreate(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     @swagger_auto_schema(
         manual_parameters=[],
@@ -94,6 +100,8 @@ class MentalEntryCreate(APIView):
         
 
 class MentalEntryId(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     @swagger_auto_schema(
         manual_parameters=[],
@@ -127,6 +135,8 @@ class MentalEntryId(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class PhysicalEntryList(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     @swagger_auto_schema(
         manual_parameters=[],
@@ -139,6 +149,8 @@ class PhysicalEntryList(APIView):
         return Response(serializer.data)
     
 class PhysicalEntryPatientList(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     @swagger_auto_schema(
         manual_parameters=[],
@@ -154,6 +166,8 @@ class PhysicalEntryPatientList(APIView):
 
 
 class PhysicalEntryCreate(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     @swagger_auto_schema(
         manual_parameters=[],
@@ -195,6 +209,8 @@ class PhysicalEntryCreate(APIView):
         
 
 class PhysicalEntryId(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     @swagger_auto_schema(
         manual_parameters=[],
