@@ -4,6 +4,8 @@ import { AnaliticasService } from 'src/app/services/analiticas.service';
 import Chart from 'chart.js/auto';
 import {UsersService} from '../../services/users.service'
 
+
+
 @Component({
   selector: 'app-analiticas',
   templateUrl: './analiticas.page.html',
@@ -143,15 +145,10 @@ export class AnaliticasPage implements OnInit {
   //Se ejecuta al crear la página por parte de angular
   ngOnInit() {
     this.loadAnaliticas();
-    this.showMessage();
+    
 
   }
-  showMessage(){
-    this.uService.getMessage().subscribe(data=>{
-      this.msg = data,
-        console.log(this.msg);
-  });
-  }
+  
 
   ionViewDidEnter() {
     this.createChart();

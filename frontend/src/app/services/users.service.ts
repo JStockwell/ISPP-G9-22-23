@@ -1,27 +1,63 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'; 
+
+import { HttpClient, HttpHeaders } from '@angular/common/http'; 
 import { catchError } from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
+
+const USER_KEY = 'auth-user';
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
-  api_url = 'http://isppgrupo9.pythonanywhere.com/';
-  constructor(private Http: HttpClient) { }
 
+  constructor(private http: HttpClient) { }
+  API_URL = 'http://isppgrupo9.pythonanywhere.com/';
 
-  getMessageRegister(usuario: { username: string | undefined; password: string | undefined; first_name: string | undefined; last_name: string | undefined; email: string | undefined; tel: string | undefined; birthdate: string | undefined; } | undefined){
-    return this.Http.post('http://isppgrupo9.pythonanywhere.com/users/patients/', usuario).pipe(
-      catchError(this.handleError('añadirUsuario', usuario))
-    );
+  clean():void{
+    window.sessionStorage.clear();
   }
 
-  handleError(arg0: string, usuario: { username: string | undefined; password: string | undefined; first_name: string | undefined; last_name: string | undefined; email: string | undefined; tel: string | undefined; birthdate: string | undefined; } | undefined): (err: any, caught: import("rxjs").Observable<Object>) => import("rxjs").ObservableInput<any> {
-    throw new Error('Se ha producido un error.');
+  public saveUser(user:any): void{
+    window.sessionStorage.removeItem(USER_KEY);
+    window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+  }
+
+  public getUser():any {
+    const user = window.sessionStorage.getItem(USER_KEY);
+    if (user){
+      return JSON.parse(user);
+    }
+    return {};
+  }
+
+  public isLoggedIn(): boolean {
+    const user = window.sessionStorage.getItem(USER_KEY);
+    if (user) {
+      return true;
+    }
+
+    return false;
+  }
+
+  //Llamadas de auth
+
+  public register(user:any): Observable<any>{
+    return this.http.post(this.API_URL+'users/patients/',user,httpOptions)
+  }
+
+  login(user:any): Observable<any> {
+    return this.http.post(this.API_URL+'users/login/',user,httpOptions);
+  }
+  logout(): Observable<any> {
+    return this.http.post(this.API_URL+ 'signout', { }, httpOptions);
   }
 
 
-  getMessage(){
-    return this.Http.get(this.api_url+'users/patients/list/');
-  }
+
+
 }

@@ -5,6 +5,8 @@ import { IonicModule } from '@ionic/angular';
 import { AnaliticasPageRoutingModule } from './analiticas-routing.module';
 import { AnaliticasPage } from './analiticas.page';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpInterceptorProviders } from '../../services/analiticas.service';
+
 
 @NgModule({
   imports: [
@@ -14,6 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
     AnaliticasPageRoutingModule,
     HttpClientModule
   ],
-  declarations: [AnaliticasPage]
+  declarations: [AnaliticasPage],
+  providers: [HttpInterceptorProviders],
+  
 })
 export class AnaliticasPageModule {}
