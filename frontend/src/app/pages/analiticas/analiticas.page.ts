@@ -145,7 +145,8 @@ export class AnaliticasPage implements OnInit {
   //Se ejecuta al crear la página por parte de angular
   ngOnInit() {
     this.loadAnaliticas();
-    
+    console.log("a")
+    console.log(sessionStorage.getItem('auth-user'))
 
   }
   

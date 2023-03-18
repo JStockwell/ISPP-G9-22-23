@@ -34,9 +34,6 @@
         <div *ngIf="password.errors['required']">La contraseña es obligatoria</div>
         <div *ngIf="password.errors['minlength']">
           La contraseña debe tener al menos 6 caracteres
-          <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
-        Signup failed!<br />{{ errorMessage }}
-      </div>
         </div>
       </div>
 
@@ -83,9 +80,7 @@
         ¡El registro ha fallado!<br />{{ errorMessage }}
       </div>
     </form>
-    <div class="alert alert-success" *ngIf="isSuccessful">
-      Registro exitoso
-    </div>
+  
 
   </ion-card>
   

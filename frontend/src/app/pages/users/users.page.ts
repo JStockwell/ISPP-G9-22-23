@@ -40,6 +40,8 @@ export class UsersPage implements OnInit {
         console.log(data);
         this.isSuccessful = true;
         this.isSignUpFailed = false;
+        document.location.href=""
+        window.location.href = ""
       },
       error: err => {
         this.errorMessage=err.error.message;
