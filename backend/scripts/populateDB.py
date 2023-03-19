@@ -7,8 +7,6 @@ django.setup()
 
 from django.contrib.auth.models import User
 
-superuser = User.objects.create_superuser(username='admin', email='admin@example.com', password='adminpassword')
-superuser.save()
 
 m1 = MetricInfo(name='Glucosa', unit='mg/dL')
 m1.save()
@@ -51,3 +49,6 @@ m13.save()
 
 m14 = MetricInfo(name='Blast frequency', unit='%')
 m14.save()
+
+superuser = User.objects.create_superuser(username='admin', email='admin@example.com', password='adminpassword')
+superuser.save()
