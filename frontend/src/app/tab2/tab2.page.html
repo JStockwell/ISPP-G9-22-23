@@ -6,7 +6,7 @@
 
 <ion-content [fullscreen]="true" color = "light">
 
-  <div *ngFor="let item of registros; index as i">
+  <div *ngFor="let item  entries">
     <ion-card color="warning">
       <div style="text-align: center;">
         <div style="text-align: right; margin-right: 15px; margin-top: 20px">
@@ -27,7 +27,7 @@
             />
           </svg>
         </div>
-        <h3 style="margin-top: 0px">{{ item.fecha }}</h3>
+        <h3 style="margin-top: 0px">{{ item.date }}</h3>
       </div>
 
       <div style="text-align: center">
@@ -92,7 +92,7 @@
       </div>
 
       <div style="text-align: center"><h3>Notas</h3></div>
-      <div style="text-align: center; margin-bottom: 10px">{{ item.notas}}</div>
+      <div style="text-align: center; margin-bottom: 10px">{{ item.notes}}</div>
     </ion-card>
   </div>
 
@@ -109,15 +109,4 @@
   </ion-fab>
 </ion-content>
 
-<script>
-  import { IonContent, IonItem, IonLabel, IonPage } from "@ionic/vue";
-  import { defineComponent } from "vue";
-  export default defineComponent({
-    components: {
-      IonItem,
-      IonList,
-      IonLabel,
-      SideMenu,
-    },
-  });
-</script>
+
