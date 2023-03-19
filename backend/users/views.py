@@ -223,3 +223,14 @@ class LoginView(APIView):
         
         return Response({'token': token.key, "patient id":patient.id})
         
+class LogoutView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    @swagger_auto_schema(
+        manual_parameters=[],
+        security=[],
+        responses={'200': "Sesión cerrada"})
+
+    def get(self, request):
+        request.user.auth_token.delete()
+        return Response({'message': 'Sesión cerrada'},status=status.HTTP_200_OK)
