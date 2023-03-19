@@ -11,6 +11,11 @@ const routes: Routes = [
     path: 'users/register',
     loadChildren: () => import('./pages/users/users.module').then(m=>m.UsersPageModule)
   },
+
+  {
+    path: 'users/login',
+    loadChildren: () => import('./pages/login/login.module').then(m=>m.LoginPageModule)
+  },  
   {
     path: 'app',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
@@ -53,6 +58,11 @@ const routes: Routes = [
     path: 'users',
     loadChildren: () => import('./pages/users/users.module').then( m => m.UsersPageModule)
   },
+  {
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+  },
+
 
 
 ];
