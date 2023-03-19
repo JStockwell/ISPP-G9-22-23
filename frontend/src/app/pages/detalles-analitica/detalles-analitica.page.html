@@ -5,23 +5,51 @@
 </ion-header>
 
 <ion-content color = "light">
+
   <ion-card color="warning">
-    <ion-card-title class="title">{{nombreAnalitica}}</ion-card-title>
+    <ion-card-title class="title">{{analitica.name}}</ion-card-title>
+    <ion-fab-button color = "secondary" [routerLink]="[this.router.url + '/Details']">
+      <div style="text-align: right; margin-right: 15px; margin-top: 20px">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="23"
+          height="23"
+          fill="currentColor"
+          class="bi bi-pencil-square"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+          />
+          <path
+            fill-rule="evenodd"
+            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+          />
+        </svg>
+      </div>
+    </ion-fab-button>
     <div class="tabs">
       <button color = "tertiary" class="tab-button" (click)="changeTab($event, 'Datos')" id="default">Datos</button>
       <button color = "primary" class="tab-button" (click)="changeTab($event, 'Grafica')">Gráfica</button>
     </div>
     <br>
     <div class="tabcontent" id="Datos">
-      <div *ngFor="let analitica of datos">
-        <div class="display-datos">
-          {{analitica.value}} {{analitica.unit}} ({{analitica.date.toLocaleTimeString() + " " + analitica.date.toDateString()}})
-        </div>
-        <br>
+      <div *ngFor="let medicion of mediciones" >
+        <ion-item *ngIf="medicion.metric == analitica.id" color="warning">
+          <ion-label class="ion-text-wrap"
+            >{{ medicion.value}} {{analitica.unit}} ({{medicion.date}})
+          </ion-label>
+        </ion-item>
       </div>
     </div>
     <div class="tabcontent" id="Grafica">
-      Aquí la gráfica
+      <canvas #barChart style="width:100%;max-width:700px; height: auto;" ></canvas>
     </div>
   </ion-card>
+  
+  <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
+    <ion-fab-button  color = "secondary" [routerLink]="['/app/Tabs/Analytics']">
+      <ion-icon name="arrow-back-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

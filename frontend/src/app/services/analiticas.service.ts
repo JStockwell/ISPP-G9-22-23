@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http'
+import { HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HTTP_INTERCEPTORS} from '@angular/common/http'
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
-
 @Injectable({
   providedIn: 'root'
 })
-export class AnaliticasService {
+export class AnaliticasService implements HttpInterceptor{
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    req=req.clone({
+      withCredentials: true
+    });
+    return next.handle(req);
+  }
 
   constructor(private http: HttpClient) { }
   //DESCOMENTAR
@@ -24,3 +29,7 @@ export class AnaliticasService {
 
   }
 }
+
+export const HttpInterceptorProviders = [
+  {provide: HTTP_INTERCEPTORS, useClass: AnaliticasService, multi:true}
+]

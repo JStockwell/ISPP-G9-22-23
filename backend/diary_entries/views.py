@@ -149,7 +149,7 @@ class PhysicalEntryPatientList(APIView):
         pk = self.kwargs.get('pk')
         patient = get_object_or_404(Patient, id=pk)
         physical_entries = PhysicalEntry.objects.filter(patient = patient)
-        serializer = MentalEntrySerializer(physical_entries, many=True)
+        serializer = PhysicalEntrySerializer(physical_entries, many=True)
         return Response(serializer.data)
 
 
@@ -167,7 +167,7 @@ class PhysicalEntryCreate(APIView):
                 'patient_id': openapi.Schema(type=openapi.TYPE_STRING, description='Id del paciente al que pertenece'),
             }
         ),
-        responses={'200': MentalEntrySerializer, "400": "Comprueba que el formato de la fecha sea válido, que el id de usuario exista y que body_parts se encuentren dentro de los valores proporcionados"})
+        responses={'200': PhysicalEntrySerializer, "400": "Comprueba que el formato de la fecha sea válido, que el id de usuario exista y que body_parts se encuentren dentro de los valores proporcionados"})
 
     def post(self, request):
         serializer = PhysicalEntrySerializer(data = request.data)

@@ -16,7 +16,7 @@ class Metric(models.Model):
         return self.name
 
 class Measure(models.Model):
-    date = models.DateTimeField()
+    date = models.DateTimeField(auto_now=True)
     value = models.FloatField()
     metric = models.ForeignKey(Metric, on_delete=models.CASCADE)
     user = models.ForeignKey(Patient, on_delete=models.CASCADE)
