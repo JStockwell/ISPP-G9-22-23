@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      Azúcar
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-pading" color="light">
+  <ion-card color ="warning"> 
+
+    <ion-label style = "padding-inline-start: 6%; padding-top: 50px;" display="block" position="floating">Valor</ion-label>
+    <ion-item color="warning">
+      <ion-input [(ngModel)]="valor" placeholder="Type something here"></ion-input>
+      <ion-badge class="ion-badge" color="primary">mg/mL</ion-badge>
+   </ion-item>
+
+   <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Umbral Alto</ion-label>
+   <ion-item color="warning">
+     <ion-input [(ngModel)]="umbralA" placeholder="Type something here"></ion-input>
+
+    </ion-item>
+
+    <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Umbral Bajo</ion-label>
+    <ion-item color="warning">
+     <ion-input [(ngModel)]="umbralB" placeholder="Type something here"></ion-input>
+
+    </ion-item>
+
+    <ion-button color="dark" expand="block" (click)="nuevaEntrada()">
+      Crear entrada
+    </ion-button>
+  </ion-card>
+
+  <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
+    <ion-fab-button color = "secondary" (click)="goBack()">
+      <ion-icon name="arrow-back-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  
+  
+</ion-content>
