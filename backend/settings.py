@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'diary_entries',
     'users',
     'metrics',
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
@@ -78,8 +79,9 @@ WSGI_APPLICATION = 'wsgi.application'
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication'
+        
     ]
 }
 
@@ -142,3 +144,13 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'api_key': {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Auth-Token'
+        }
+    },
+}
