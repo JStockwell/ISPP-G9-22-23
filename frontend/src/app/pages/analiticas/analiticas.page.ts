@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { AnaliticasService } from 'src/app/services/analiticas.service';
 import Chart from 'chart.js/auto';
+import {UsersService} from '../../services/users.service'
+
 
 
 @Component({
@@ -11,7 +13,7 @@ import Chart from 'chart.js/auto';
 })
 export class AnaliticasPage implements OnInit {
   
-
+  msg:any;
   bars: any;
   colorArray: any;
   //BORRAR eso más adelante cuando ya estén las llamadas
@@ -138,13 +140,16 @@ export class AnaliticasPage implements OnInit {
     },
   ]
 
-  constructor(private analiticasService: AnaliticasService, private loadingCtrl: LoadingController) {}
+  constructor(private analiticasService: AnaliticasService, private loadingCtrl: LoadingController, private uService: UsersService) {}
 
   //Se ejecuta al crear la página por parte de angular
   ngOnInit() {
     this.loadAnaliticas();
+    console.log("a")
+    console.log(sessionStorage.getItem('auth-user'))
 
   }
+  
 
   ionViewDidEnter() {
     this.createChart();
