@@ -13,13 +13,13 @@ superuser.save()
 m1 = MetricInfo(name='Glucosa', unit='mg/dL')
 m1.save()
 
-m2 = MetricInfo(name='Globulos rojos', unit='mill/mm^3')
+m2 = MetricInfo(name='Globulos rojos', unit='mill/µL')
 m2.save()
 
-m3 = MetricInfo(name='Globulos blancos', unit='ud/mm^3')
+m3 = MetricInfo(name='Globulos blancos', unit='ud/µL')
 m3.save()
 
-m4 = MetricInfo(name='Plaquetas', unit='ud/mm^3')
+m4 = MetricInfo(name='Plaquetas', unit='ud/µL')
 m4.save()
 
 m5 = MetricInfo(name='Hemoglobina', unit='g/dL')
@@ -46,8 +46,8 @@ m11.save()
 m12 = MetricInfo(name='Dioxido de carbono', unit='mg/dL')
 m12.save()
 
-m13 = MetricInfo(name='Testosterona', unit='ng/dL')
+m13 = MetricInfo(name='niveles de suero eritropoyetina', unit='IU/L')
 m13.save()
 
-m14 = MetricInfo(name='Estrógeno', unit='pg/dL')
+m14 = MetricInfo(name='Blast frequency', unit='%')
 m14.save()
