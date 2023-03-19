@@ -1,6 +1,6 @@
 <ion-header >
   <ion-toolbar color = "primary">
-    <ion-title>login</ion-title>
+    <ion-title>Inicio de sesión</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -10,7 +10,7 @@
       <form *ngIf= "!isLoggedIn" name = "form" (ngSubmit)="f.form.valid && logForm()" #f = "ngForm" novalidate>
         <ion-item color = "warning">
           <ion-label for = "username" position="stacked">Nombre de usuario</ion-label>
-          <ion-input [(ngModel)]="form.username" #username="ngModel" placeholder="Enter text" name = "username" minlength="3" required maxlength="50"  [ngClass]="{ 'is-invalid': f.submitted && username.errors }"></ion-input>
+          <ion-input [(ngModel)]="form.username" #username="ngModel" placeholder="Introduce tu nombre de usuario" name = "username" minlength="3" required maxlength="50"  [ngClass]="{ 'is-invalid': f.submitted && username.errors }"></ion-input>
         </ion-item>
   
         <div style = "padding-left: 5%;"class="invalid-feedback" *ngIf="username.errors && f.submitted">
@@ -25,7 +25,7 @@
 
         <ion-item color = "warning">
           <ion-label position="stacked">Contraseña</ion-label>
-          <ion-input type = "password" [(ngModel)]="form.password" value = "password" name = "password" required minlength="6" #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.errors }"></ion-input>
+          <ion-input type = "password" [(ngModel)]="form.password" value = "password" placeholder = "Introduce tu contraseña" name = "password" required minlength="6" #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.errors }"></ion-input>
         </ion-item>
         <div class="invalid-feedback" *ngIf="password.errors && f.submitted">
           <div *ngIf="password.errors['required']">La contraseña es obligatoria</div>
