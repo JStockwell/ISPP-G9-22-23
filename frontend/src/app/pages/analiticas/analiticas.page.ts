@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { AnaliticasService } from 'src/app/services/analiticas.service';
 import Chart from 'chart.js/auto';
+import {UsersService} from '../../services/users.service'
+
 
 
 @Component({
@@ -11,9 +13,10 @@ import Chart from 'chart.js/auto';
 })
 export class AnaliticasPage implements OnInit {
   
-
+  msg:any;
   bars: any;
   colorArray: any;
+  errorMessage = '';
   //BORRAR eso más adelante cuando ya estén las llamadas
   analiticas = [
     {
@@ -138,38 +141,37 @@ export class AnaliticasPage implements OnInit {
     },
   ]
 
-  constructor(private analiticasService: AnaliticasService, private loadingCtrl: LoadingController) {}
+  constructor(private analiticasService: AnaliticasService, private loadingCtrl: LoadingController, private uService: UsersService) {}
 
   //Se ejecuta al crear la página por parte de angular
   ngOnInit() {
-    this.loadAnaliticas();
+    this.analiticasService.getAnaliticas().subscribe({
+      next: data =>{
+        this.analiticas=data;
+      },
+      error: err => {
+        this.errorMessage=err.error.message;
+
+      }
+    });
+
+    this.analiticasService.getAnaliticaDetails().subscribe({
+      next: data => {
+        this.mediciones=data;
+      },
+      error: err =>{
+        this.errorMessage = err.errorMessage;
+      }
+    })
 
   }
+  
 
   ionViewDidEnter() {
     this.createChart();
   }
 
-  async loadAnaliticas(){
-    //DESCOMENTAR
-    /*
-    const loading = await this.loadingCtrl.create({
-      message: 'Loading..',
-      spinner: 'bubbles',
-    });
-    await loading.present();
-
-
-    this.analiticasService.getAnaliticas().subscribe(res => {
-      loading.dismiss();
-      this.analiticas = [...this.analiticas, ...res.results];
-      console.log(res); 
-    })
-    */
-    //console.log(this.analiticasService.getAnaliticas);
-    //console.log(this.analiticas)
-    
-  }
+  
 
   createChart(){
     for (const analitica of this.analiticas){
