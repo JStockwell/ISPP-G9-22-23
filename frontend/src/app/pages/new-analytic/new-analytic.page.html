@@ -9,7 +9,7 @@
     <ion-item color = "warning">
       <ion-label position="floating">Nombre</ion-label>
       <ion-select [(ngModel)]="nombre" placeholder="Nombre">
-        <ion-select-option *ngFor="let item of nombres" value="{{ item.valor }}">{{ item.nombre }}</ion-select-option>
+        <ion-select-option *ngFor="let item of metrics" value="{{ item.name }}">{{ item.name }}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item color = "warning">
@@ -25,7 +25,7 @@
       <ion-input [(ngModel)]="umbralBajo" placeholder="Valor bajo a no superar" type="text"></ion-input>
     </ion-item>
     
-    <ion-button  color="dark" expand="block" (click)="newAnalytic()">
+    <ion-button  color="dark" expand="block" (click)="crearNuevaAnalitica()">
       Crear analítica
     </ion-button>
   </ion-card>

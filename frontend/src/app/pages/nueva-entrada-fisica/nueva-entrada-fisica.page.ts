@@ -18,6 +18,7 @@ export class NuevaEntradaFisicaPage implements OnInit {
   dolores:string | undefined
   notas:string | undefined
   today = new Date();
+
   constructor(private nuevaEntradFisicaService: NuevaEntradaFisicaService, private navCtrl: NavController) { }
 
   ngOnInit() {
@@ -27,6 +28,23 @@ export class NuevaEntradaFisicaPage implements OnInit {
     this.navCtrl.pop(); 
   }
   
+  crearEntradaFisica() {
+    let dataEntry = {
+      state: this.estadoFisico,
+      date: this.today,
+      body_parts: this.dolores,
+      notes: this.notas,
+      patient_id: 1,
+    }
+    
+    this.nuevaEntradFisicaService.post(dataEntry)
+    .subscribe(res => {
+      console.log(dataEntry)
+    }, error => {
+      console.log(error)
+    })
+  }
+
   nuevaEntrada(){
     let entrada = {
       dia: this.today,

@@ -9,24 +9,20 @@ import { NewAnalyticService } from 'src/app/services/new-analytic.service';
   styleUrls: ['./new-analytic.page.scss'],
 })
 export class NewAnalyticPage implements OnInit {
-  nombres = [
+  metrics = [
     {
-      nombre: 'Azúcar',
-      valor: 'azucar',
+      name: 'Azucar',
       unidad: 'mg/dL'
     },
     {
-      nombre: 'Tensión',
-      valor: 'tension',
+      name: 'Tension',
       unidad: 'mm Hg'
     },
     {
-      nombre: 'Plaquetas',
-      valor: 'plaquetas',
+      name: 'Plaquetas',
       unidad: 'mcL'
     }
   ]
-  unidad = '';
 
   nombre:string | undefined
   valor:string | undefined
@@ -35,38 +31,47 @@ export class NewAnalyticPage implements OnInit {
   constructor(private newAnalyticService: NewAnalyticService, private navCtrl: NavController) { }
 
   ngOnInit() {
-    // this.loadNombres();
+    this.infoMetrics();
   }
 
   // DESCOMENTAR CUANDO ESTÉ EL ENDPOINT
-  /* loadNombres() {
-    this.newAnalyticService.getNombresAnaliticas().subscribe((res) => {
+  infoMetrics() {
+    this.newAnalyticService.getMetricInfo().subscribe((res) => {
       console.log(res);
     })
-  } */
-
-  /* unidadAnalitica(e) {
-    let response = e.detail.value
-    if(response in this.nombres) {
-      this.unidad = this.nombre.e.unidad
-    } else {
-      this.unidad = ''
-    }
-  } */
+  }
 
   goBack(){
     this.navCtrl.pop(); 
   }
 
-  newAnalytic(){
-    let analytic = {
-      nombre: this.nombre,
-      valor: this.valor,
-      umbralAlto: this.umbralAlto,
-      umbralBajo: this.umbralBajo
+  crearNuevaAnalitica() {
+    let metricDataEntry = {
+      name: this.nombre,
+      maxValue: this.umbralAlto,
+      minValue: this.umbralBajo,
+      patient_id: 1,
+    }
+    
+    let measureDataEntry = {
+      value: this.valor,
+      metric: this.nombre,
+      patient_id: 1,
     }
 
-    console.log(analytic)
+    this.newAnalyticService.postMetric(metricDataEntry)
+    .subscribe((res) => {
+      console.log(res)
+    }, error => {
+      console.log(error)
+    })
+
+    this.newAnalyticService.postMeasure(measureDataEntry)
+    .subscribe((res) => {
+      console.log(res)
+    }, error => {
+      console.log(error)
+    })
   }
 
 }

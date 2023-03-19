@@ -7,10 +7,20 @@ import { Observable } from 'rxjs';
 })
 export class NewAnalyticService {
 
+  urlApi:string = "https://isppgrupo9.pythonanywhere.com"
+
   constructor(private http: HttpClient) {}
 
-  /* getNombresAnaliticas(): Observable<any> {
-    return this.http.get('');
-  } */
+  getMetricInfo(): Observable<any> {
+    return this.http.get(`${this.urlApi}/metrics/info/list/`);
+  }
+  
+  postMetric(metricDataEntry: any = {}): Observable<any> {
+    return this.http.post(`${this.urlApi}/metrics/metrics/`, JSON.stringify(metricDataEntry));
+  }
+
+  postMeasure(measureDataEntry: any = {}): Observable<any> {
+    return this.http.post(`${this.urlApi}/metrics/measures/`, JSON.stringify(measureDataEntry));
+  }
 
 }
