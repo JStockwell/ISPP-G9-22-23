@@ -9,7 +9,7 @@ import { DiarioEmocionalService } from '../services/diario-emocional.service';
 })
 export class Tab2Page  {
 
-  entries = [];
+  entries:any = [];
 
   constructor(private diarioEmocionalService: DiarioEmocionalService, private loadingCtrl: LoadingController) {}
 
@@ -31,8 +31,9 @@ async loadEntradasDiarioEmocional(){
 
   this.diarioEmocionalService.getDiarioEmocional().subscribe((res)=> {
     loading.dismiss();
-    this.entries = [...this.entries]
-    console.log(res)
+    this.entries =[res];
+    console.log(this.entries)
+    console.log("Diario Emocional")
   });
 
 }
