@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http'; 
-import { catchError } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 
 const USER_KEY = 'auth-user';
+
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };

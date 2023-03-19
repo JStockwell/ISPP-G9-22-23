@@ -16,6 +16,7 @@ export class AnaliticasPage implements OnInit {
   msg:any;
   bars: any;
   colorArray: any;
+  errorMessage = '';
   //BORRAR eso más adelante cuando ya estén las llamadas
   analiticas = [
     {
@@ -144,9 +145,24 @@ export class AnaliticasPage implements OnInit {
 
   //Se ejecuta al crear la página por parte de angular
   ngOnInit() {
-    this.loadAnaliticas();
-    console.log("a")
-    console.log(sessionStorage.getItem('auth-user'))
+    this.analiticasService.getAnaliticas().subscribe({
+      next: data =>{
+        this.analiticas=data;
+      },
+      error: err => {
+        this.errorMessage=err.error.message;
+
+      }
+    });
+
+    this.analiticasService.getAnaliticaDetails().subscribe({
+      next: data => {
+        this.mediciones=data;
+      },
+      error: err =>{
+        this.errorMessage = err.errorMessage;
+      }
+    })
 
   }
   
@@ -155,26 +171,7 @@ export class AnaliticasPage implements OnInit {
     this.createChart();
   }
 
-  async loadAnaliticas(){
-    //DESCOMENTAR
-    /*
-    const loading = await this.loadingCtrl.create({
-      message: 'Loading..',
-      spinner: 'bubbles',
-    });
-    await loading.present();
-
-
-    this.analiticasService.getAnaliticas().subscribe(res => {
-      loading.dismiss();
-      this.analiticas = [...this.analiticas, ...res.results];
-      console.log(res); 
-    })
-    */
-    //console.log(this.analiticasService.getAnaliticas);
-    //console.log(this.analiticas)
-    
-  }
+  
 
   createChart(){
     for (const analitica of this.analiticas){
