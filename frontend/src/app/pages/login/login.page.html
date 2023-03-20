@@ -27,7 +27,7 @@
           <ion-label position="stacked">Contraseña</ion-label>
           <ion-input type = "password" [(ngModel)]="form.password" value = "password" placeholder = "Introduce tu contraseña" name = "password" required minlength="6" #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.errors }"></ion-input>
         </ion-item>
-        <div class="invalid-feedback" *ngIf="password.errors && f.submitted">
+        <div style = "padding-left: 5%;" class="invalid-feedback" *ngIf="password.errors && f.submitted">
           <div *ngIf="password.errors['required']">La contraseña es obligatoria</div>
           <div *ngIf="password.errors['minlength']">
             La contraseña debe tener al menos 6 caracteres
@@ -38,8 +38,13 @@
         </ion-button>
   
       </form>
+      <ion-button *ngIf= "isLoggedIn" (click)="reloadPage()">Acceder</ion-button>
     </ion-card>
-
-    
   </div>
+
+  <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
+    <ion-fab-button  color = "secondary" [routerLink]="['']">
+      <ion-icon name="arrow-back-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

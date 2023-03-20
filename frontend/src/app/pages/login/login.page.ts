@@ -36,6 +36,7 @@ export class LoginPage implements OnInit {
       error: err => {
         this.errorMessage = err.error.message;
         this.isLoginFailed = true;
+        window.alert("Credenciales incorrectas");
     }}
     );
   }
