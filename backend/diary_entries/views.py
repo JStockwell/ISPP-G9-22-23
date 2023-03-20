@@ -6,11 +6,14 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 from users.models import Patient
 from drf_yasg.utils import swagger_auto_schema
-from drf_yasg.openapi import Parameter
 from drf_yasg import openapi
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 
 
 class MentalEntryList(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     @swagger_auto_schema(
         manual_parameters=[],
@@ -30,7 +33,8 @@ class MentalEntryList(APIView):
         return Response(serializer.data)
 
 class MentalEntryPatientList(APIView):
-
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     @swagger_auto_schema(
         manual_parameters=[],
         security=[],
@@ -44,6 +48,8 @@ class MentalEntryPatientList(APIView):
         return Response(serializer.data)
 
 class MentalEntryCreate(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     @swagger_auto_schema(
         manual_parameters=[],
@@ -94,6 +100,8 @@ class MentalEntryCreate(APIView):
         
 
 class MentalEntryId(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     @swagger_auto_schema(
         manual_parameters=[],
@@ -127,6 +135,8 @@ class MentalEntryId(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class PhysicalEntryList(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     @swagger_auto_schema(
         manual_parameters=[],
@@ -139,6 +149,8 @@ class PhysicalEntryList(APIView):
         return Response(serializer.data)
     
 class PhysicalEntryPatientList(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     @swagger_auto_schema(
         manual_parameters=[],
@@ -149,11 +161,13 @@ class PhysicalEntryPatientList(APIView):
         pk = self.kwargs.get('pk')
         patient = get_object_or_404(Patient, id=pk)
         physical_entries = PhysicalEntry.objects.filter(patient = patient)
-        serializer = MentalEntrySerializer(physical_entries, many=True)
+        serializer = PhysicalEntrySerializer(physical_entries, many=True)
         return Response(serializer.data)
 
 
 class PhysicalEntryCreate(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     @swagger_auto_schema(
         manual_parameters=[],
@@ -167,7 +181,7 @@ class PhysicalEntryCreate(APIView):
                 'patient_id': openapi.Schema(type=openapi.TYPE_STRING, description='Id del paciente al que pertenece'),
             }
         ),
-        responses={'200': MentalEntrySerializer, "400": "Comprueba que el formato de la fecha sea válido, que el id de usuario exista y que body_parts se encuentren dentro de los valores proporcionados"})
+        responses={'200': PhysicalEntrySerializer, "400": "Comprueba que el formato de la fecha sea válido, que el id de usuario exista y que body_parts se encuentren dentro de los valores proporcionados"})
 
     def post(self, request):
         serializer = PhysicalEntrySerializer(data = request.data)
@@ -195,6 +209,8 @@ class PhysicalEntryCreate(APIView):
         
 
 class PhysicalEntryId(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     @swagger_auto_schema(
         manual_parameters=[],

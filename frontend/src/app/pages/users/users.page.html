@@ -1,0 +1,103 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      Registro
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-pading" color="light">
+  <ion-card color ="warning"> 
+    <form *ngIf= "!isSuccessful" name = "form" (ngSubmit)="f.form.valid && regForm()" #f = "ngForm" novalidate>
+
+    
+      <ion-item color = "warning">
+        <ion-label for = "username" position="stacked">Nombre de usuario</ion-label>
+        <ion-input [(ngModel)]="form.username" #username="ngModel" placeholder="Introduce tu nombre de usuario" name = "username" minlength="3" required maxlength="50"  [ngClass]="{ 'is-invalid': f.submitted && username.errors }"></ion-input>
+      </ion-item>
+
+      <div style = "padding-left: 5%;"class="invalid-feedback" *ngIf="username.errors && f.submitted">
+        <div *ngIf="username.errors['required']">nombre de usuario requerido</div>
+        <div *ngIf="username.errors['minlength']">
+          El nombre de usuario debe tener al menos 3 caracteres
+        </div>
+        <div *ngIf="username.errors['maxlength']">
+          El nombre de usuario puede tener como máximo 50 caracteres
+        </div>
+      </div>
+
+      <ion-item color = "warning">
+        <ion-label position="stacked">Contraseña</ion-label>
+        <ion-input type = "password" [(ngModel)]="form.password" placeholder = "Introduce tu contraseña" value = "password" name = "password" required minlength="6" #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.errors }"></ion-input>
+      </ion-item>
+      <div style = "padding-left: 5%;" class="invalid-feedback" *ngIf="password.errors && f.submitted">
+        <div *ngIf="password.errors['required']">La contraseña es obligatoria</div>
+        <div *ngIf="password.errors['minlength']">
+          La contraseña debe tener al menos 6 caracteres
+        </div>
+      </div>
+
+      <ion-item color = "warning">
+        <ion-label position="stacked">Repite tu contraseña</ion-label>
+        <ion-input type = "password" [(ngModel)]="form.r_password" placeholder = "Introduce tu contraseña" value = "r_password" name = "r_password" required minlength="6" #r_password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.errors }"></ion-input>
+      </ion-item>
+      <div id = "invalid-r" style = "display: none;">
+        <p>Las contraseñas no coinciden</p>
+      </div>
+      <div style = "padding-left: 5%;" class="invalid-feedback-r_password" *ngIf="r_password.errors && f.submitted">
+        <div *ngIf="r_password.errors['required']">La contraseña es obligatoria</div>
+      </div>
+
+      <ion-item color = "warning">
+        <ion-label position="stacked">Nombre</ion-label>
+        <ion-input [(ngModel)]="form.first_name"placeholder="Introduce tu nombre" name = "first_name"></ion-input>
+      </ion-item>
+
+      
+      <ion-item color = "warning">
+        <ion-label position="stacked">Apellidos</ion-label>
+        <ion-input [(ngModel)]="form.last_name"placeholder="Introduce tus apellidos" name = "last_name"></ion-input>
+      </ion-item>
+
+      
+      <ion-item color = "warning">
+        <ion-label position="stacked">Correo</ion-label>
+        <ion-input type = "email" [(ngModel)]="form.email"placeholder="correo@dominio.com" name = "email" required email #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.errors }"></ion-input>
+      </ion-item>
+      <div style ="padding-left: 5%" class="invalid-feedback" *ngIf="email.errors && f.submitted">
+        <div *ngIf="email.errors['required']">Se necesita una dirección de correo electrónico</div>
+        <div *ngIf="email.errors['email']">
+          Este campo debe ser una dirección de correo válida
+        </div>
+      </div>
+
+      
+      <ion-item color = "warning">
+        <ion-label position="stacked">Teléfono</ion-label>
+        <ion-input type = "tel" [(ngModel)]="form.tel" placeholder="661435678" name = "tel"></ion-input>
+      </ion-item>
+
+      
+      <ion-item color = "warning">
+        <ion-label position="stacked">Fecha de nacimiento</ion-label>
+        <ion-input [(ngModel)]="form.birthdate"placeholder="2001-02-23" name = "birthdate"></ion-input>
+      </ion-item>
+
+      <ion-button color="dark" expand="block" type = "submit" >
+        Registrarse
+      </ion-button>
+
+      <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+        ¡El registro ha fallado!<br />{{ errorMessage }}
+      </div>
+    </form>
+  
+
+  </ion-card>
+  <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
+    <ion-fab-button  color = "secondary" [routerLink]="['']">
+      <ion-icon name="arrow-back-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  
+</ion-content>

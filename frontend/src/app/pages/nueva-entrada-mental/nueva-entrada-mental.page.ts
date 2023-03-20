@@ -28,9 +28,7 @@ export class NuevaEntradaMentalPage implements OnInit{
   ngOnInit() {
   }
 
-  goBack(){
-    this.navCtrl.pop(); 
-  }
+ 
   nuevaEntrada(){
     let entrada = {
       dia: this.today,
