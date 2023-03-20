@@ -27,7 +27,7 @@ jobs:
     - name: Copy new app version
       uses: appleboy/scp-action@v0.0.1
       with:
-        host: www.pythonanywhere.com
+        host: "ssh.pythonanywhere.com"
         username: ${{ secrets.PYANY_USER }}
         password: ${{ secrets.PYANY_PASSWD }}
         source: "backend.zip"
@@ -35,7 +35,7 @@ jobs:
     - name: Update app in pythonanywhere
       uses: appleboy/ssh-action@v0.1.8
       with:
-        host: "ww.pythonanywhere.com"
+        host: "ssh.pythonanywhere.com"
         username: ${{ secrets.PYANY_USER }}
         password: ${{ secrets.PYANY_PASSWD }}
         script: |
