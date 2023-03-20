@@ -4,6 +4,7 @@ import { NavController } from '@ionic/angular';
 import { AñadirDetallesAnaliticasService } from 'src/app/services/añadir-detalles-analiticas.service';
 import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
+import { UsersService } from 'src/app/services/users.service';
 registerLocaleData(localeEs, 'es');
 
 @Component({
@@ -14,14 +15,11 @@ registerLocaleData(localeEs, 'es');
 })
 export class AñadirDetallesAnaliticasPage implements OnInit{
 
-  nombre: string | undefined
   valor:  Int16Array| undefined
-  umbralB: string | undefined 
-  umbralA: string | undefined
 
 
 
-  constructor(private AñadirDetallesAnaliticasService: AñadirDetallesAnaliticasService, private navCtrl: NavController) {}
+  constructor(private AñadirDetallesAnaliticasService: AñadirDetallesAnaliticasService, private navCtrl: NavController, private uService: UsersService ) {}
 
   ngOnInit() {
   }
@@ -32,13 +30,19 @@ export class AñadirDetallesAnaliticasPage implements OnInit{
 
   nuevaEntrada(){
     let entrada = {
-      nombre: this.nombre,
-      valor: this.valor,
-      umbralB: this.umbralB,
-      umbralA: this.umbralA
+      valor: this.valor
     }
 
     console.log(entrada)
-  }
 
+    this.AñadirDetallesAnaliticasService.postEntry(entrada).subscribe({
+      next: entrada => {
+        console.log(entrada);
+        window.location.href = "/app/Tabs/Analytics"
+    },
+      error: error => {
+        console.log(error);
+      }
+    })
+  }
 }

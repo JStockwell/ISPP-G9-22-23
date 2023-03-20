@@ -164,7 +164,7 @@ export class AnaliticasPage implements OnInit {
 
     this.analiticasService.getAnaliticaDetails().subscribe({
       next: data => {
-        
+        this.mediciones = data;
       },
       error: err =>{
         this.errorMessage = err.errorMessage;
