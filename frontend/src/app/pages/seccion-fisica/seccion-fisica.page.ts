@@ -22,6 +22,7 @@ export class SeccionFisicaPage implements OnInit {
     this.fisicoService.getEntradasFisicas().subscribe({
       next: data=>{
         this.entradas = data
+        console.log(this.entradas)
       },
       error: err=>{
         console.log(err.error.message);
