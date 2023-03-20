@@ -20,6 +20,7 @@ export class NewAnalyticPage implements OnInit {
   
   nombre:string | undefined
   unidad:string | undefined
+  valor:string | undefined
   umbralAlto:string | undefined
   umbralBajo:string | undefined
   constructor(private newAnalyticService: NewAnalyticService, private navCtrl: NavController, private uService: UsersService) { }
@@ -64,18 +65,29 @@ export class NewAnalyticPage implements OnInit {
   }
   
   crearNuevaAnalitica(): void{
-    let dataEntry = {
+    let dataMetricEntry = {
       name: this.nombre,
-      unit: this.unidad,
+      unit: this.getMetricUnit(),
       min_value: this.umbralBajo,
       max_value: this.umbralAlto,
       patient_id: this.getIdUser(),
     }
-    console.log(dataEntry);
     
-    this.newAnalyticService.postEntry(dataEntry).subscribe({
-      next: dataEntry => {
-        console.log(dataEntry);
+    this.newAnalyticService.postMetricEntry(dataMetricEntry).subscribe({
+      next: res => {
+        console.log(res);
+        let dataMeasureEntry = {
+          metric: res.id,
+          value: this.valor,
+          patient_id: this.getIdUser(),
+        }
+        this.newAnalyticService.postMeasureEntry(dataMeasureEntry).subscribe({
+          next: res => {
+            console.log(res);
+          }, error: err => {
+            console.log(err);
+          }
+        })
         document.location.href="http://localhost:8100/app/Tabs/Analytics"
         window.location.href = "http://localhost:8100/app/Tabs/Analytics"
       },

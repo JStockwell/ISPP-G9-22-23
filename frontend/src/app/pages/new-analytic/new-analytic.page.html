@@ -13,8 +13,8 @@
       </ion-select>
     </ion-item>
     <ion-item color = "warning">
-      <ion-label position="floating">Unidad</ion-label>
-      <ion-input [(ngModel)]="unidad" placeholder="Unidad de medida" type="text" readonly="true"></ion-input>
+      <ion-label position="floating">Valor</ion-label>
+      <ion-input [(ngModel)]="valor" placeholder="Valor en {{ getMetricUnit() }} " type="number"></ion-input>
     </ion-item>
     <ion-item color = "warning">
       <ion-label position="floating">Umbral Alto</ion-label>

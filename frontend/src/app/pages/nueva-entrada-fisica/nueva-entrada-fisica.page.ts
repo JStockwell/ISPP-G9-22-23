@@ -13,7 +13,6 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json', "Authorization":" Token 481d943276a0f7ce3966f137c256587fdbd166a5"})
 };
 
-
 @Component({
   selector: 'app-nueva-entrada-fisica',
   templateUrl: './nueva-entrada-fisica.page.html',
@@ -24,6 +23,7 @@ export class NuevaEntradaFisicaPage implements OnInit {
 
   estadoFisico:string | undefined
   dolores:string | undefined
+  deporte:boolean | undefined
   notas:string | undefined
   today = new Date();
 
@@ -59,14 +59,18 @@ export class NuevaEntradaFisicaPage implements OnInit {
   }
   
   crearEntradaFisica(): void{
+    let parts = ''
+    if (this.dolores) {
+      parts = this.painsToString(this.dolores);
+    }
     let dataEntry = {
       date: this.today.toISOString().split('T')[0],
       state: this.estadoFisico,
-      body_parts: this.painsToString(this.dolores),
+      body_parts: parts,
+      //done_exercise: this.deporte, DESCOMENTAR CUANDO ESTÉ SUBIDA LA MODIFICACIÓN AL ENDPOINT
       notes: this.notas,
       patient_id: this.getIdUser(),
     }
-    console.log(dataEntry);
     
     this.nuevaEntradFisicaService.postEntry(dataEntry).subscribe({
       next: dataEntry => {

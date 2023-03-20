@@ -38,15 +38,18 @@
       </ion-select>
     </ion-item>
     <ion-item color = "warning">
+      <ion-label>¿Has hecho deporte?</ion-label>
+      <ion-toggle color="primary" [(ngModel)]="deporte" [checked]="false"></ion-toggle>
+    </ion-item>
+    <ion-item color = "warning">
       <ion-label position="floating">Notas</ion-label>
-      <ion-textarea [(ngModel)]="notas" placeholder="Desarrolla aquí tus notas de cómo te sientes hoy." type="text"></ion-textarea>
+      <ion-textarea [(ngModel)]="notas" placeholder="Desarrolla aquí como te sientes y el deporte que hayas hecho." type="text"></ion-textarea>
     </ion-item>
     
     <ion-button color="dark" expand="block" (click)="crearEntradaFisica()">
       Crear entrada
     </ion-button>
   </ion-card>
-
 
   <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
     <ion-fab-button color = "secondary" (click)="goBack()">
