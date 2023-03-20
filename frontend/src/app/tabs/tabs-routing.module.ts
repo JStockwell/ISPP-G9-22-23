@@ -13,6 +13,10 @@ const routes: Routes = [
     
       },
       {
+        path: 'Analytics/Details/New',
+        loadChildren: () => import('../pages/añadir-detalles-analiticas/añadir-detalles-analiticas.module').then(m=>m.AñadirDetallesAnaliticasPageModule)        
+      },
+      {
       path: 'Analytics/Details/:id',
       loadChildren: () => import('../pages/detalles-analitica/detalles-analitica.module').then( m => m.DetallesAnaliticaPageModule)
       },
@@ -29,6 +33,7 @@ const routes: Routes = [
         path: 'Analytics/New',
         loadChildren: () => import('../pages/new-analytic/new-analytic.module').then(m=>m.NewAnalyticPageModule)        
       },
+      
 
       {
         path: 'seccion-mental/New',
