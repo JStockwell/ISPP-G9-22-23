@@ -1,14 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { NewAnalyticService } from 'src/app/services/new-analytic.service';
-
-import { UsersService } from '../../services/users.service';
-
-const USER_KEY = 'auth-user';
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json', "Authorization":" Token 481d943276a0f7ce3966f137c256587fdbd166a5"})
-};
 
 @Component({
   selector: 'app-new-analytic',
@@ -16,73 +9,64 @@ const httpOptions = {
   styleUrls: ['./new-analytic.page.scss'],
 })
 export class NewAnalyticPage implements OnInit {
-  metrics:any[] | undefined
-  
+  nombres = [
+    {
+      nombre: 'Azúcar',
+      valor: 'azucar',
+      unidad: 'mg/dL'
+    },
+    {
+      nombre: 'Tensión',
+      valor: 'tension',
+      unidad: 'mm Hg'
+    },
+    {
+      nombre: 'Plaquetas',
+      valor: 'plaquetas',
+      unidad: 'mcL'
+    }
+  ]
+  unidad = '';
+
   nombre:string | undefined
-  unidad:string | undefined
+  valor:string | undefined
   umbralAlto:string | undefined
   umbralBajo:string | undefined
-  constructor(private newAnalyticService: NewAnalyticService, private navCtrl: NavController, private uService: UsersService) { }
+  constructor(private newAnalyticService: NewAnalyticService, private navCtrl: NavController) { }
 
   ngOnInit() {
-    this.listMetricsInfo();
+    // this.loadNombres();
   }
+
+  // DESCOMENTAR CUANDO ESTÉ EL ENDPOINT
+  /* loadNombres() {
+    this.newAnalyticService.getNombresAnaliticas().subscribe((res) => {
+      console.log(res);
+    })
+  } */
+
+  /* unidadAnalitica(e) {
+    let response = e.detail.value
+    if(response in this.nombres) {
+      this.unidad = this.nombre.e.unidad
+    } else {
+      this.unidad = ''
+    }
+  } */
 
   goBack(){
     this.navCtrl.pop(); 
   }
 
-  getIdUser(){
-    if(this.uService.isLoggedIn()){
-      var ck = window.sessionStorage.getItem('auth-user')
-      if(ck != null){
-        var tk = JSON.parse(ck);
-        var res = [];
-        for(var i in tk){
-          res.push(tk[i]);
-        }
-        return res[1];
-      }
+  newAnalytic(){
+    let analytic = {
+      nombre: this.nombre,
+      valor: this.valor,
+      umbralAlto: this.umbralAlto,
+      umbralBajo: this.umbralBajo
     }
-  }
 
-  listMetricsInfo() {
-    this.newAnalyticService.getMetricsInfoList().subscribe((res) => {
-      this.metrics = res;
-    })
-  }
-
-  getMetricUnit() {
-    var metric = this.nombre;
-    var metricsList: any = this.metrics;
-    var result = '';
-    if(metric) {
-      result = metricsList.find((metrica: { name: string; }) => metrica.name === metric).unit
-    }
-    this.unidad = result;
-    return result;
-  }
-  
-  crearNuevaAnalitica(): void{
-    let dataEntry = {
-      name: this.nombre,
-      unit: this.unidad,
-      min_value: this.umbralBajo,
-      max_value: this.umbralAlto,
-      patient_id: this.getIdUser(),
-    }
-    console.log(dataEntry);
-    
-    this.newAnalyticService.postEntry(dataEntry).subscribe({
-      next: dataEntry => {
-        console.log(dataEntry);
-        document.location.href="http://localhost:8100/app/Tabs/Analytics"
-        window.location.href = "http://localhost:8100/app/Tabs/Analytics"
-      },
-      error: err => {
-        console.log(err);
-      }
-    })
+    console.log(analytic)
   }
 
 }
