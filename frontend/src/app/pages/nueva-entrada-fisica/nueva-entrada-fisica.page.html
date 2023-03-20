@@ -13,15 +13,15 @@
     <ion-item color = "warning">
       <form>
         <div class="cc-selector" style = "padding-top: 5%; padding-bottom: 2%;">
-          <input [(ngModel)]="estadoFisico" id="muyfeliz" type="radio" name="caras" value="VG" />
+          <input [(ngModel)]="estadoFisico" id="muyfeliz" type="radio" name="caras" value="muyfeliz" />
           <label class="image-cc muyfeliz" for="muyfeliz"></label>
-          <input [(ngModel)]="estadoFisico" id="feliz" type="radio" name="caras" value="G" />
+          <input [(ngModel)]="estadoFisico" id="feliz" type="radio" name="caras" value="feliz" />
           <label class="image-cc feliz" for="feliz"></label>
-          <input [(ngModel)]="estadoFisico" id="neutral" type="radio" name="caras" value="F" />
+          <input [(ngModel)]="estadoFisico" id="neutral" type="radio" name="caras" value="neutral" />
           <label class="image-cc neutral" for="neutral"></label>
-          <input [(ngModel)]="estadoFisico" id="triste" type="radio" name="caras" value="B" />
+          <input [(ngModel)]="estadoFisico" id="triste" type="radio" name="caras" value="triste" />
           <label class="image-cc triste" for="triste"></label>
-          <input [(ngModel)]="estadoFisico" id="muytriste" type="radio" name="caras" value="VB" />
+          <input [(ngModel)]="estadoFisico" id="muytriste" type="radio" name="caras" value="muytriste" />
           <label class="image-cc muytriste" for="muytriste"></label>
         </div>
       </form>
@@ -29,12 +29,13 @@
     <ion-item color = "warning">
       <ion-label position="floating">¿Te duele en alguna zona del cuerpo?</ion-label>
       <ion-select [(ngModel)]="dolores" multiple="true" placeholder="Selecciona">
-        <ion-select-option value="HEAD">Cabeza</ion-select-option>
-        <ion-select-option value="TORSO">Torso</ion-select-option>
-        <ion-select-option value="LEFT_ARM">Brazo izquierdo</ion-select-option>
-        <ion-select-option value="RIGHT_ARM">Brazo derecho</ion-select-option>
-        <ion-select-option value="LEFT_LEG">Pierna izquierda</ion-select-option>
-        <ion-select-option value="RIGHT_LEG">Pierna derecha</ion-select-option>
+        <ion-select-option value="cabeza">Cabeza</ion-select-option>
+        <ion-select-option value="pecho-vientre">Pecho/Vientre</ion-select-option>
+        <ion-select-option value="espalda">Espalda</ion-select-option>
+        <ion-select-option value="brazo-izquierdo">Brazo izquierdo</ion-select-option>
+        <ion-select-option value="brazo-derecho">Brazo derecho</ion-select-option>
+        <ion-select-option value="pierna-izquierda">Pierna izquierda</ion-select-option>
+        <ion-select-option value="pierna-derecha">Pierna derecha</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item color = "warning">
@@ -42,7 +43,7 @@
       <ion-textarea [(ngModel)]="notas" placeholder="Desarrolla aquí tus notas de cómo te sientes hoy." type="text"></ion-textarea>
     </ion-item>
     
-    <ion-button color="dark" expand="block" (click)="crearEntradaFisica()">
+    <ion-button color="dark" expand="block" (click)="nuevaEntrada()">
       Crear entrada
     </ion-button>
   </ion-card>
