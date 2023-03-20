@@ -1,0 +1,57 @@
+name: Django CI
+
+on:
+  push:
+    branches: [ "main" ]
+    tags:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.10
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Generate static files
+      run: |
+        cd backend
+        python manage.py collectstatic
+        cd ..
+        zip -r backend.zip backend
+    - name: Delete old deployed app
+      uses: appleboy/ssh-action@v0.1.8
+      with:
+        host: 'www.pythonanywhere.com'
+        username: ${{ secrets.PYANY_USER }}
+        password: ${{ secrets.PYANY_PASSWD }}
+        script: chmod -R 777 backend && rm -rf backend
+    - name: Copy new app version
+      uses: appleboy/scp-action@0.0.1
+      with:
+        host: 'www.pythonanywhere.com'
+        username: ${{ secrets.PYANY_USER }}
+        password: ${{ secrets.PYANY_PASSWD }}
+        source: "backend.zip"
+        target: ""
+    - name: update requirements
+      uses: appleboy/ssh-action@v0.1.8
+      with:
+        host: 'www.pythonanywhere.com'
+        username: ${{ secrets.PYANY_USER }}
+        password: ${{ secrets.PYANY_PASSWD }}
+        script: sourve env2/bin/activate && cd backend && pip install -r requirements.txt
+    - name: Reload pythonanywhere webapp
+      uses: jensvog/pythonanywhere-webapp-reload-action@v1
+      with:
+        host: 'www.pythonanywhere.com'
+        username: ${{ secrets.PYANY_USER }}
+        api-token: ${{ secrets.PYANY_TOKEN }}
+        domain-name: ${{ secrets.PYANY_DOMAIN }}
+
