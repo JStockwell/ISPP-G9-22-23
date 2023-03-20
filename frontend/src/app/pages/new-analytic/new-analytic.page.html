@@ -13,16 +13,16 @@
       </ion-select>
     </ion-item>
     <ion-item color = "warning">
-      <ion-label position="floating">Valor</ion-label>
-      <ion-input [(ngModel)]="valor" placeholder="Cantidad en {{ getMetricUnit() }}" type="text"></ion-input>
+      <ion-label position="floating">Unidad</ion-label>
+      <ion-input [(ngModel)]="unidad" placeholder="Unidad de medida" type="text" readonly="true"></ion-input>
     </ion-item>
     <ion-item color = "warning">
       <ion-label position="floating">Umbral Alto</ion-label>
-      <ion-input [(ngModel)]="umbralAlto" placeholder="Valor alto a no superar en {{ getMetricUnit() }} " type="text"></ion-input>
+      <ion-input [(ngModel)]="umbralAlto" placeholder="Valor alto a no superar en {{ getMetricUnit() }} " type="number"></ion-input>
     </ion-item>
     <ion-item style = "padding-bottom: 5%" color = "warning">
       <ion-label position="floating">Umbral Bajo</ion-label>
-      <ion-input [(ngModel)]="umbralBajo" placeholder="Valor bajo a no superar en {{ getMetricUnit() }}" type="text"></ion-input>
+      <ion-input [(ngModel)]="umbralBajo" placeholder="Valor bajo a no superar en {{ getMetricUnit() }}" type="number"></ion-input>
     </ion-item>
     
     <ion-button  color="dark" expand="block" (click)="crearNuevaAnalitica()">

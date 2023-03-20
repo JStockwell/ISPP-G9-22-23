@@ -79,4 +79,5 @@ export class NuevaEntradaFisicaPage implements OnInit {
       }
     })
   }
+  
 }

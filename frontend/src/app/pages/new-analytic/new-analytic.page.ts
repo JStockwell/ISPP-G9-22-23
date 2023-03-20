@@ -16,45 +16,16 @@ const httpOptions = {
   styleUrls: ['./new-analytic.page.scss'],
 })
 export class NewAnalyticPage implements OnInit {
-  metrics = [
-    {
-      name: 'Azucar',
-      unit: 'mg/dL'
-    },
-    {
-      name: 'Tension',
-      unit: 'mmHg'
-    },
-    {
-      name: 'Plaquetas',
-      unit: 'mcL'
-    }
-  ] // SUSTITUIR ESTE ARRAY CUANDO HAYAN POBLADO LA BD POR: this.listMetricsInfo();
+  metrics:any[] | undefined
   
   nombre:string | undefined
-  valor:string | undefined
+  unidad:string | undefined
   umbralAlto:string | undefined
   umbralBajo:string | undefined
   constructor(private newAnalyticService: NewAnalyticService, private navCtrl: NavController, private uService: UsersService) { }
 
   ngOnInit() {
-  }
-
-  listMetricsInfo() {
-    this.newAnalyticService.getMetricsInfoList().subscribe((res) => {
-      console.log(res);
-      return res;
-    })
-  }
-
-  getMetricUnit() {
-    var metric = this.nombre;
-    var metricsList: any = this.metrics;
-    var result = '';
-    if(metric) {
-      result = metricsList.find((metrica: { name: string; }) => metrica.name === metric).unit
-    }
-    return result;
+    this.listMetricsInfo();
   }
 
   goBack(){
@@ -74,35 +45,37 @@ export class NewAnalyticPage implements OnInit {
       }
     }
   }
+
+  listMetricsInfo() {
+    this.newAnalyticService.getMetricsInfoList().subscribe((res) => {
+      this.metrics = res;
+    })
+  }
+
+  getMetricUnit() {
+    var metric = this.nombre;
+    var metricsList: any = this.metrics;
+    var result = '';
+    if(metric) {
+      result = metricsList.find((metrica: { name: string; }) => metrica.name === metric).unit
+    }
+    this.unidad = result;
+    return result;
+  }
   
   crearNuevaAnalitica(): void{
-    let metricDataEntry = {
+    let dataEntry = {
       name: this.nombre,
-      maxValue: this.umbralAlto,
-      minValue: this.umbralBajo,
+      unit: this.unidad,
+      min_value: this.umbralBajo,
+      max_value: this.umbralAlto,
       patient_id: this.getIdUser(),
     }
+    console.log(dataEntry);
     
-    let measureDataEntry = {
-      value: this.valor,
-      metric_id: this.nombre,
-      patient_id: this.getIdUser(),
-    }
-    
-    this.newAnalyticService.postMetric(metricDataEntry).subscribe({
-      next: metricDataEntry => {
-        console.log(metricDataEntry);
-        document.location.href="http://localhost:8100/app/Tabs/Analytics"
-        window.location.href = "http://localhost:8100/app/Tabs/Analytics"
-      },
-      error: err => {
-        console.log(err);
-      }
-    })
-    
-    this.newAnalyticService.postMeasure(measureDataEntry).subscribe({
-      next: measureDataEntry => {
-        console.log(measureDataEntry);
+    this.newAnalyticService.postEntry(dataEntry).subscribe({
+      next: dataEntry => {
+        console.log(dataEntry);
         document.location.href="http://localhost:8100/app/Tabs/Analytics"
         window.location.href = "http://localhost:8100/app/Tabs/Analytics"
       },
