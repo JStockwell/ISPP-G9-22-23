@@ -25,7 +25,7 @@ jobs:
         cd ..
         zip -r backend.zip backend
     - name: Copy new app version
-      uses: appleboy/scp-action@0.0.1
+      uses: appleboy/scp-action@v0.0.1
       with:
         host: 'www.pythonanywhere.com'
         username: ${{ secrets.PYANY_USER }}
