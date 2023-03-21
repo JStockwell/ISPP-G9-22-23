@@ -1,9 +1,10 @@
-name: Django CI
+name: Pythonanywhere Auto-Deployment
 
 on:
   push:
     branches:
-    - Marioespiro-patch-1
+    - main
+    - develop
 
 jobs:
   build:
@@ -37,6 +38,7 @@ jobs:
           rm -rf backend
           source env2/bin/activate
           unzip backend.zip
+          rm backend.zip
           cd backend
           pip install -r requirements.txt
     - name: Reload pythonanywhere webapp
