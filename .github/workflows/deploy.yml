@@ -25,9 +25,7 @@ jobs:
         cd ..
         zip -r backend.zip backend
     - name: Copy new app version
-      run: |
-        ssh-keyscan -H ssh.pythonanywhere.com >> ~/.ssh/known_hosts
-        sshpass -p "${{ secrets.PYANY_PASSWD }}" scp backend.zip ${{ secrets.PYANY_USER }}@ssh.pythonanywhere.com:/home/${{ secrets.PYANY_USER }}/backend.zip
+      run:  sshpass -p "${{ secrets.PYANY_PASSWD }}" scp -oStrictHostKeyChecking=accept-new backend.zip ${{ secrets.PYANY_USER }}@ssh.pythonanywhere.com:/home/${{ secrets.PYANY_USER }}/backend.zip
     - name: Update app in pythonanywhere
       uses: appleboy/ssh-action@v0.1.8
       with:
