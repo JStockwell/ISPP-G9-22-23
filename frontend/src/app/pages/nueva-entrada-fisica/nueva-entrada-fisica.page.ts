@@ -67,7 +67,7 @@ export class NuevaEntradaFisicaPage implements OnInit {
       date: this.today.toISOString().split('T')[0],
       state: this.estadoFisico,
       body_parts: parts,
-      //done_exercise: this.deporte, DESCOMENTAR CUANDO ESTÉ SUBIDA LA MODIFICACIÓN AL ENDPOINT
+      done_exercise: this.deporte,
       notes: this.notas,
       patient_id: this.getIdUser(),
     }
