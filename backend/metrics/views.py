@@ -75,7 +75,8 @@ class MetricCreate(APIView):
                     return Response({"error":"La unidad y el nombre de métrica debe corresponder a alguna info de métrica guardada"}, status=status.HTTP_400_BAD_REQUEST)
                 metric = Metric(min_value = min_value, max_value = max_value, patient=patient, info = metricInfo)
                 metric.save()
-                return Response(serializer.data, status=status.HTTP_200_OK)
+                return Response({"metric_id":metric.id,"name":name,"unit":unit,"min_value":metric.min_value, 
+                                 "max_value":metric.max_value,"patient_id":patient.id}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -149,7 +150,7 @@ class MeasureCreate(APIView):
                     metric = get_object_or_404(Metric, id=metric_id)
                     measure = Measure(value = value, metric=metric, patient=patient)
                     measure.save()
-                    return Response(serializer.data, status=status.HTTP_200_OK)
+                    return Response({"measure_id":measure.id,"value":measure.value,"metric_id":metric.id, "patient_id":patient.id}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
