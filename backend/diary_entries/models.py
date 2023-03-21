@@ -49,6 +49,7 @@ class DiaryEntry(models.Model):
 
 class PhysicalEntry(DiaryEntry):
     body_parts = models.TextField(max_length=1024, default="none") #, validators=[validate_unique_body_parts])
+    done_exercise = models.BooleanField(default=False)
 
 
 class MentalEntry(DiaryEntry):
