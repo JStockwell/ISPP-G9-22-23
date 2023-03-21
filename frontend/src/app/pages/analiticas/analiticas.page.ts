@@ -11,6 +11,8 @@ import {UsersService} from '../../services/users.service'
   templateUrl: './analiticas.page.html',
   styleUrls: ['./analiticas.page.scss'],
 })
+
+
 export class AnaliticasPage implements OnInit {
   
   msg:any;
@@ -18,22 +20,9 @@ export class AnaliticasPage implements OnInit {
   colorArray: any;
   errorMessage = '';
   //BORRAR eso más adelante cuando ya estén las llamadas
-  analiticas = [
-    {
-      id: 1,
-      name: 'azucar',
-      unit: 'g/L',
-      min_value: '56',
-      max_value: '80',
-    },
-    {
-      id: 2,
-      name: 'colesterol',
-      unit: 'g/L',
-      min_value: '70',
-      max_value: '92',
-    },
-  ];
+  analiticas = new Array<analitica>
+
+
 
   mediciones = [
     {
@@ -139,7 +128,7 @@ export class AnaliticasPage implements OnInit {
       value: '75',
       metric: 2,
     },
-  ]
+  ];
 
   constructor(private analiticasService: AnaliticasService, private loadingCtrl: LoadingController, private uService: UsersService) {}
 
@@ -175,7 +164,7 @@ export class AnaliticasPage implements OnInit {
 
   createChart(){
     for (const analitica of this.analiticas){
-      let nombre = analitica.name;
+      let nombre = analitica.info.name;
       let str = "chart"+nombre;
       
       let aux = <HTMLCanvasElement> document.getElementById(str);
@@ -199,7 +188,7 @@ export class AnaliticasPage implements OnInit {
         Chart.defaults.color = 'black';
         Chart.defaults.backgroundColor = '#f4f5f9';
 
-        const mensaje: string='Resultados de la analítica('+analitica.unit+')'
+        const mensaje: string='Resultados de la analítica('+analitica.info.unit+')'
         this.bars = new Chart(ctx, {
           type: 'line',
           data: {
@@ -220,3 +209,12 @@ export class AnaliticasPage implements OnInit {
   
   }
 }
+type analitica = {
+  id: null,
+  info:{
+    name: null,
+    unit: null,
+  },
+  min_value: null,
+  max_value: null,
+};

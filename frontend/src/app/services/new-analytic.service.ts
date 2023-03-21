@@ -13,9 +13,9 @@ const httpOptions = {
 })
 export class NewAnalyticService {
 
-  urlApi:string = "https://isppgrupo9.pythonanywhere.com"
 
   constructor(private http: HttpClient, private uService: UsersService) {}
+  API_URL = 'http://isppgrupo9.pythonanywhere.com/';
 
   getMetricsInfoList(): Observable<any>{
     if(this.uService.isLoggedIn()){
@@ -28,8 +28,7 @@ export class NewAnalyticService {
         }
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
         headers=headers.set('Authorization','Token '+res[0])
-        
-        return this.http.get(`${this.urlApi}/metrics/info/list/`, {'headers':headers});
+        return this.http.get(this.API_URL+'metrics/info/list/', {'headers':headers});
       }
 
     }
@@ -48,7 +47,7 @@ export class NewAnalyticService {
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
         headers=headers.set('Authorization','Token '+res[0])
         
-        return this.http.post(`${this.urlApi}/metrics/metrics/`, JSON.stringify(dataMetricEntry), {'headers':headers});
+        return this.http.post(this.API_URL+'metrics/metrics/', JSON.stringify(dataMetricEntry), {'headers':headers});
       }
 
     }
@@ -67,7 +66,7 @@ export class NewAnalyticService {
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
         headers=headers.set('Authorization','Token '+res[0])
         
-        return this.http.post(`${this.urlApi}/metrics/metrics/`, JSON.stringify(dataMeasureEntry), {'headers':headers});
+        return this.http.post(this.API_URL+'metrics/measures/', JSON.stringify(dataMeasureEntry), {'headers':headers});
       }
 
     }
