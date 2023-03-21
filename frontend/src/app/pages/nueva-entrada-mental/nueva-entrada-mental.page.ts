@@ -4,6 +4,7 @@ import { NavController } from '@ionic/angular';
 import { NuevaEntradaMentalService } from 'src/app/services/nueva-entrada-mental.service';
 import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
+import { UsersService } from 'src/app/services/users.service';
 registerLocaleData(localeEs, 'es');
 
 @Component({
@@ -23,30 +24,49 @@ export class NuevaEntradaMentalPage implements OnInit{
   pnegativos:string | undefined
   today = new Date();
 
-  constructor(private nuevaEntradaMentalService: NuevaEntradaMentalService, private navCtrl: NavController) {}
+  constructor(private nuevaEntradaMentalService: NuevaEntradaMentalService, private navCtrl: NavController, private uService: UsersService) {}
 
   ngOnInit() {
   }
 
- 
-  nuevaEntrada(){
-    let entrada = {
-      dia: this.today,
-      estadoFisico: this.estadoFisico,
-      suenyo: this.suenyo,
-      comida: this.comida,
-      tiempo: this.tiempo,
-      ppositivos: this.ppositivos,
-      pnegativos: this.pnegativos,
-      notas: this.notas
+  getIdUser(){
+    if(this.uService.isLoggedIn()){
+      var ck = window.sessionStorage.getItem('auth-user')
+      if(ck != null){
+        var tk = JSON.parse(ck);
+        var res = [];
+        for(var i in tk){
+          res.push(tk[i]);
+        }
+        return res[1];
+      }
     }
-
-    console.log(entrada)
   }
-
-
-
-
-
+  
+  crearEntradaMental(): void{
+    let dataEntry = {
+      date: this.today.toISOString().split('T')[0],
+      state: this.estadoFisico,
+      weather : this.tiempo,
+      food: this.comida,
+      sleep: this.suenyo,
+      positive_thoughts: this.ppositivos,
+      negative_thoughts: this.pnegativos,
+      notes: this.notas,
+      patient_id: this.getIdUser(),
+    }
+    console.log(dataEntry);
+    
+    this.nuevaEntradaMentalService.postEntry(dataEntry).subscribe({
+      next: dataEntry => {
+        console.log(dataEntry);
+        document.location.href="http://localhost:8100/app/Tabs/DiarioEmocional"
+        window.location.href = "http://localhost:8100/app/Tabs/DiarioEmocional"
+      },
+      error: err => {
+        console.log(err);
+      }
+    })
+  }
 
 }
