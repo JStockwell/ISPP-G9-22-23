@@ -1,5 +1,5 @@
 from django.urls import path
-from metrics.views import MetricList, MetricCreate, MetricId, MeasureList, MeasureCreate, MeasureId, MetricListInfo, MeasurePatientId, MetricPatientId
+from metrics.views import MetricList, MetricCreate, MetricId, MeasureList, MeasureCreate, MeasureId, MetricListInfo, MeasurePatientId, MetricPatientId, LatestMeasurePatientIdMetricId
 
 urlpatterns = [
     path("metrics/list/",MetricList.as_view()),
@@ -10,5 +10,7 @@ urlpatterns = [
     path("measures/<int:pk>/",MeasureId.as_view(), name="id_measures"),
     path("info/list/", MetricListInfo.as_view()),
     path("metrics/patient/<int:pk>/", MetricPatientId.as_view()),
-    path("measures/patient/<int:pk>/", MeasurePatientId.as_view())
+    path("measures/patient/<int:pk>/", MeasurePatientId.as_view()),
+    path("measures/patient/<int:patient_pk>/metric/<int:metric_pk>/", LatestMeasurePatientIdMetricId.as_view())
+
 ]

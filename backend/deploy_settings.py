@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # IMPORTED MODULES
-    'django_extensions',
     'rest_framework',
     'drf_yasg',
     'rest_framework.authtoken',
@@ -96,17 +95,16 @@ REST_FRAMEWORK = {
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {  
-        'ENGINE': 'django.db.backends.mysql',  
-        'NAME': 'marcoluna',  
-        'USER': 'root',  
-        'PASSWORD': 'MarcoLuna',  
-        'HOST': '127.0.0.1',  
-        'PORT': '3306',  
-        'OPTIONS': {  
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"  
-        }  
-    }  
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ISPPgrupo9$marcoluna',
+        'USER': 'ISPPgrupo9',
+        'PASSWORD': 'MarcoLuna',
+        'HOST': 'ISPPgrupo9.mysql.pythonanywhere-services.com',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+        }
+    }
 }
 
 
