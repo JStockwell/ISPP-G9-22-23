@@ -5,7 +5,7 @@ import { UsersService } from './users.service';
 
 const USER_KEY = 'auth-user';
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json', "Authorization": 'Token 8ba5da5cf85933dd6feb9907340d6682d43eb6e6' })
+  headers: new HttpHeaders({ 'Content-Type': 'application/json', "Authorization": 'Token b5a02b7a4d2332a99e78a7305f8a0d24fab5af67' })
 };
 
 @Injectable({
