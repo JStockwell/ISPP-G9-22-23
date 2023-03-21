@@ -25,13 +25,9 @@ jobs:
         cd ..
         zip -r backend.zip backend
     - name: Copy new app version
-      uses: appleboy/scp-action@v0.0.1
-      with:
-        host: "ssh.pythonanywhere.com"
-        username: ${{ secrets.PYANY_USER }}
-        password: ${{ secrets.PYANY_PASSWD }}
-        source: "backend.zip"
-        target: ""
+      run: |
+        sudo apt-get install sshpass
+        sshpass -p ${{ secrets.PYANY_PASSWD }} scp /backend.zip ${{ secrets.PYANY_USER }}@ssh.pythonanywhere:/home/${{ secrets.PYANY_USER }}/backend.zip
     - name: Update app in pythonanywhere
       uses: appleboy/ssh-action@v0.1.8
       with:
