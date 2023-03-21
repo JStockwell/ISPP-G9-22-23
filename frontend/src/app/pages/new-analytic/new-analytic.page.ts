@@ -81,20 +81,19 @@ export class NewAnalyticPage implements OnInit {
     const ans = this.newAnalyticService.postMetricEntry(dataMetricEntry).subscribe({
       next: res => {
         let dataMeasureEntry = {
-          metric: res.id,
+          metric_id: res.metric_id,
           value: this.valor,
-          patient: this.getIdUser(),
+          patient_id: this.getIdUser(),
         }
         console.log(dataMeasureEntry)
-        /*this.newAnalyticService.postMeasureEntry(dataMeasureEntry).subscribe({
+        this.newAnalyticService.postMeasureEntry(dataMeasureEntry).subscribe({
           next: res => {
             console.log(res);
           }, error: err => {
             console.log(err);
           }
         })
-        //document.location.href="http://localhost:8100/app/Tabs/Analytics"
-        //window.location.href = "http://localhost:8100/app/Tabs/Analytics"*/
+        window.location.href = "http://localhost:8100/app/Tabs/Analytics"
       },
       error: err => {
         console.log(err);

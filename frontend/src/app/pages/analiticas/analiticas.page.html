@@ -16,7 +16,7 @@
           {{ item.info.name }}
         </h1>
         <div *ngFor="let measure of mediciones">
-          <ion-item *ngIf="measure.metric == item.id" color="warning">
+          <ion-item *ngIf="measure.metric.id == item.id" color="warning">
             <ion-label class="ion-text-wrap"
               >{{ measure.value}} {{item.info.unit}} ({{measure.date}})</ion-label
             >
@@ -33,8 +33,7 @@
         </p>
       </ion-label>
       <ion-card-content>
-        
-        <canvas  id="chart{{item.info.name}}" style="width:100%;max-width:700px; height: auto; ;" ></canvas>
+        <div><canvas  id="chart{{item.info.name}}" style="width:100%;max-width:700px; height: auto; " ></canvas></div>
         
       </ion-card-content>
     </ion-card>

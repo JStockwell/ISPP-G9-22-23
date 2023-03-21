@@ -65,7 +65,7 @@ export class NewAnalyticService {
         }
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
         headers=headers.set('Authorization','Token '+res[0])
-        
+        console.log(dataMeasureEntry)
         return this.http.post(this.API_URL+'metrics/measures/', JSON.stringify(dataMeasureEntry), {'headers':headers});
       }
 
