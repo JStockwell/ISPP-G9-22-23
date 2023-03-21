@@ -11,7 +11,6 @@ const routes: Routes = [
     path: 'users/register',
     loadChildren: () => import('./pages/users/users.module').then(m=>m.UsersPageModule)
   },
-
   {
     path: 'users/login',
     loadChildren: () => import('./pages/login/login.module').then(m=>m.LoginPageModule)
@@ -19,7 +18,6 @@ const routes: Routes = [
   {
     path: 'app',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
-
   },
   {
     path: 'Details/:id',
@@ -28,12 +26,10 @@ const routes: Routes = [
   {
     path: 'seccion-fisica',
     loadChildren: () => import('./pages/seccion-fisica/seccion-fisica.module').then( m => m.SeccionFisicaPageModule)
-
   },
   {
     path: 'analytics',
     loadChildren: () => import('./pages/analiticas/analiticas.module').then( m => m.AnaliticasPageModule)
-
   },
   {
     path: 'Diario Emocional',
@@ -43,9 +39,6 @@ const routes: Routes = [
     path: 'nueva-entrada-fisica',
     loadChildren: () => import('./pages/nueva-entrada-fisica/nueva-entrada-fisica.module').then( m => m.NuevaEntradaFisicaPageModule)
   },
- 
-
-
   {
     path: 'nueva-entrada-mental',
     loadChildren: () => import('./pages/nueva-entrada-mental/nueva-entrada-mental.module').then( m => m.NuevaEntradaMentalPageModule)
@@ -62,8 +55,10 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
-
-
+  {
+    path: 'calendario',
+    loadChildren: () => import('./pages/calendario/calendario.module').then( m => m.CalendarioPageModule)
+  },
 
 ];
 @NgModule({

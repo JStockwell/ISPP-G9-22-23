@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Calendario</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" color ="light">
+  <ion-card color = "warning">
+    <ion-datetime 
+      display-format="DD.MM.YYYY HH:mm"
+      presentation="date"
+      value="2023-01-01"
+      locale="es-ES"
+      hourCycle="h23"
+      [highlightedDates]="eventos"
+      [firstDayOfWeek]="1"
+    >
+      <span slot="title">Día seleccionado</span>
+      <span slot="time-label">Tiempo</span>
+    </ion-datetime>
+  </ion-card>
+
+  <ion-fab style = "padding-inline-end: 2.5%;" slot="fixed" size="small" vertical="bottom" horizontal="end">
+    <ion-fab-button color = "secondary" [routerLink]="['/app/Tabs/calendario/New']">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
