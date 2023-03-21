@@ -179,6 +179,7 @@ class PhysicalEntryCreate(APIView):
                 'body_parts': openapi.Schema(type=openapi.TYPE_STRING, description='Lista de partes del cuerpo que duelen al paciente, ha de pertenecer al siguiente grupo ("HEAD", "TORSO", "RIGHT_ARM", "LEFT_ARM", "RIGHT_LEG", "LEFT_LEG")'),
                 'notes': openapi.Schema(type=openapi.TYPE_STRING, description='Notas adicionales'),
                 'patient_id': openapi.Schema(type=openapi.TYPE_STRING, description='Id del paciente al que pertenece'),
+                "done_exercise": openapi.Schema(type=openapi.TYPE_BOOLEAN, description='Ha hecho ejercicio'),
             }
         ),
         responses={'200': PhysicalEntrySerializer, "400": "Comprueba que el formato de la fecha sea válido, que el id de usuario exista y que body_parts se encuentren dentro de los valores proporcionados"})
@@ -192,6 +193,7 @@ class PhysicalEntryCreate(APIView):
             body_parts = serializer.data["body_parts"]
             notes = serializer.data["notes"]
             patient_id = serializer.data["patient_id"]
+            done_exercise = serializer.data["done_exercise"]
 
             patient = get_object_or_404(Patient, id=patient_id)
             patient_diary_entry_list = PhysicalEntry.objects.filter(patient = patient)
@@ -199,7 +201,7 @@ class PhysicalEntryCreate(APIView):
                 if(str(entry.date) == date):
                     return Response({"error":"Ya existe una entrada de este tipo de diario en esta fecha para este usuario"}, status=status.HTTP_400_BAD_REQUEST)
 
-            physical_entry = PhysicalEntry(date = date, state = state, body_parts = body_parts, notes = notes, patient = patient)
+            physical_entry = PhysicalEntry(date = date, state = state, body_parts = body_parts, notes = notes, patient = patient, done_exercise=done_exercise)
 
             physical_entry.save()
 
