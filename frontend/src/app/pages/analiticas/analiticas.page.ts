@@ -29,12 +29,7 @@ export class AnaliticasPage implements OnInit {
   ngOnInit() {
     this.analiticasService.getAnaliticas().subscribe({
       next: data =>{
-        if(!data.value){
-          
-        }
-        else{
-          this.analiticas=data;
-        }
+        this.analiticas=data
         
         console.log(data)
       },
