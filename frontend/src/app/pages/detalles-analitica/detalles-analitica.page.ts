@@ -19,9 +19,17 @@ export class DetallesAnaliticaPage implements OnInit {
   bars: any;
   colorArray: any;
 
-  analitica!:any;
+  analitica:analitica = {
+    id: null,
+    info: {
+      name: null,
+      unit: null
+    },
+    min_value: null,
+    max_value: null
+  };
 
-  mediciones!:any;
+  mediciones = new Array<measure>;
   constructor(private route: ActivatedRoute, private navCtrl: NavController, public router: Router, private service:DetalleAnaliticasService, private analiticaService:AnaliticasService) {}
 
   ngOnInit() {
@@ -110,5 +118,31 @@ export class DetallesAnaliticaPage implements OnInit {
     });
   }
 }
+
+type analitica = {
+  id: null,
+  info:{
+    name: null,
+    unit: null,
+  },
+  min_value: null,
+  max_value: null,
+};
+type measure = {
+  id: null,
+  date: any,
+  metric:{
+    id: null,
+    min_value:null,
+    max_value:null,
+    info:{
+      name:null,
+      unit:null
+    }
+    patient_id:null
+  },
+  patient_id:null,
+  value:any
+};
 
 
