@@ -4,6 +4,7 @@ import Chart from "chart.js/auto";
 import { LoadingController } from "@ionic/angular";
 import { ActivatedRoute } from "@angular/router";
 import { Router } from "@angular/router";
+import { DetalleAnaliticasService } from 'src/app/services/detalle-analiticas.service';
 import { AnaliticasService } from 'src/app/services/analiticas.service';
 
 @Component({
@@ -141,9 +142,30 @@ export class DetallesAnaliticaPage implements OnInit {
     },
   ];
   analitica = this.analiticas[0];
-  constructor(private route: ActivatedRoute, private navCtrl: NavController, public router: Router, private analiticaService:AnaliticasService) {}
+  constructor(private route: ActivatedRoute, private navCtrl: NavController, public router: Router, private service:DetalleAnaliticasService, private analiticaService:AnaliticasService) {}
 
   ngOnInit() {
+    let id_analitica = this.route.snapshot.paramMap.get("id");
+
+    this.service.getDetallesAnaliticas(id_analitica).subscribe({
+      next: data=>{
+        this.analiticas=data
+      },
+      error:err=>{
+        console.log(err.error.message)
+      }
+    })
+    this.analiticaService.getAnaliticaDetails().subscribe({
+      next: data =>{
+        this.mediciones = []
+        for(var d in data){
+          let metric = d as any
+          if(metric['metric']['id']==id_analitica){
+            this.mediciones.push(metric)
+          }
+        }
+      }
+    })
 
   }
 
