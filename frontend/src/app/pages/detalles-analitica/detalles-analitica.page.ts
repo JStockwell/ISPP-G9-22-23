@@ -79,19 +79,18 @@ export class DetallesAnaliticaPage implements OnInit {
 
   ionViewDidEnter() {
     let id = this.route.snapshot.params["id"];
-    //console.log(id)
     this.createChart(id);
   }
 
   createChart(id: any) {
 
-    //console.log('creando')
-
     const dates: String[] = [];
     const values: String[] = [];
     for (const medicion of this.mediciones) {
       if (medicion.metric.id == id) {
-        dates.push(medicion.date);
+        let date:Date = medicion.date;
+        const aux = date.toString().substring(0,9);
+        dates.push(aux);
         values.push(medicion.value);
       }
     }

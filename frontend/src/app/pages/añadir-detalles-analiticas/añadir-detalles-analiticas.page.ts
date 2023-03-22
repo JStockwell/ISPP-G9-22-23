@@ -23,6 +23,9 @@ export class AñadirDetallesAnaliticasPage implements OnInit{
 
   constructor(private route: ActivatedRoute,private AñadirDetallesAnaliticasService: AñadirDetallesAnaliticasService, private navCtrl: NavController, private uService: UsersService ) {}
 
+  form:any ={
+    valor:null
+  }
   getIdUser(){
     if(this.uService.isLoggedIn()){
       var ck = window.sessionStorage.getItem('auth-user')
@@ -45,7 +48,7 @@ export class AñadirDetallesAnaliticasPage implements OnInit{
 
   nuevaEntrada(){
     let id:string = this.route.snapshot.params["id"];
-    let value:any = this.valor;
+    let value:any = this.form.valor;
 
     let entrada = {
       metric_id: parseInt(id),
@@ -55,7 +58,6 @@ export class AñadirDetallesAnaliticasPage implements OnInit{
 
     this.AñadirDetallesAnaliticasService.postEntry(entrada).subscribe({
       next: data => {
-        console.log(data);
         window.location.href = "/app/Tabs/Analytics"
     },
       error: error => {

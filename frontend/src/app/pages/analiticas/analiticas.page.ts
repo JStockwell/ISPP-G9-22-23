@@ -27,35 +27,35 @@ export class AnaliticasPage implements OnInit {
 
   //Se ejecuta al crear la página por parte de angular
   ngOnInit() {
+   this.createAnaliticas()
+  }
+
+  createAnaliticas(){
+
     this.analiticasService.getAnaliticas().subscribe({
       next: data =>{
-        this.analiticas=data
-        
-        console.log(data)
+        this.analiticas=data;
+        this.createMeasures();
       },
       error: err => {
         this.errorMessage=err.error.message;
 
       }
     });
+  }
 
+  createMeasures(){
     this.analiticasService.getAnaliticaDetails().subscribe({
       next: data => {
-
         this.mediciones = data;
-
+        this.createChart();
       },
       error: err =>{
         this.errorMessage = err.errorMessage;
       }
     })
-    
   }
-  
-
-  ionViewDidEnter() {
-    this.createChart();
-  }
+ 
 
   createChart(){
     for (const analitica of this.analiticas){
@@ -93,7 +93,6 @@ export class AnaliticasPage implements OnInit {
             }]
           }
         });
-        console.log(this.bars);
       }
       
     }
