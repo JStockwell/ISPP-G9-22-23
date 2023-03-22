@@ -47,6 +47,11 @@ export class AnaliticasPage implements OnInit {
   createMeasures(){
     this.analiticasService.getAnaliticaDetails().subscribe({
       next: data => {
+        for(var metric of data){
+          let date:Date = metric.date;
+          const aux = date.toString().substring(0,10);
+          metric.date = aux;
+        }
         this.mediciones = data;
         this.createChart();
       },
@@ -70,7 +75,7 @@ export class AnaliticasPage implements OnInit {
         for( const medicion of this.mediciones){
           if(medicion.metric.id == analitica.id){
             let date:Date = medicion.date;
-            const aux = date.toString().substring(0,9);
+            const aux = date.toString().substring(0,10);
             dates.push(aux);
             values.push(medicion.value);
           }
