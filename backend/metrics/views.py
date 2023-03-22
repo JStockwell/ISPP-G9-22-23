@@ -206,7 +206,7 @@ class MeasurePatientId(APIView):
     def get(self, request, *arg, **kwargs):
         pk = self.kwargs.get('pk')
         patient = get_object_or_404(Patient, id = pk)
-        measures = Measure.objects.filter(patient = patient)
+        measures = Measure.objects.filter(patient = patient).order_by("-date")
         serializer = MeasureSerializer(measures, many=True)
         return Response(serializer.data)
     

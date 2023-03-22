@@ -43,7 +43,7 @@ class MentalEntryPatientList(APIView):
     def get(self, request, *args, **kwargs):
         pk = self.kwargs.get('pk')
         patient = get_object_or_404(Patient, id=pk)
-        mental_entries = MentalEntry.objects.filter(patient = patient)
+        mental_entries = MentalEntry.objects.filter(patient = patient).order_by("-date")
         serializer = MentalEntrySerializer(mental_entries, many=True)
         return Response(serializer.data)
 
@@ -162,7 +162,7 @@ class PhysicalEntryPatientList(APIView):
     def get(self, request, *args, **kwargs):
         pk = self.kwargs.get('pk')
         patient = get_object_or_404(Patient, id=pk)
-        physical_entries = PhysicalEntry.objects.filter(patient = patient)
+        physical_entries = PhysicalEntry.objects.filter(patient = patient).order_by("-date")
         serializer = PhysicalEntrySerializer(physical_entries, many=True)
         return Response(serializer.data)
 
