@@ -57,8 +57,8 @@ export class AnaliticasPage implements OnInit {
 
   createChart(){
     for (const analitica of this.analiticas){
-      let nombre = analitica.info.name;
-      let str = "chart"+nombre;
+      let id = analitica.id;
+      let str = "chart"+id;
       let aux = <HTMLCanvasElement> document.getElementById(str);
       const ctx = aux.getContext("2d");
 
