@@ -9,19 +9,24 @@
 <ion-content class="ion-pading" color="light">
   <ion-card color ="warning"> 
     <br>
-    <ion-label style = "padding-inline-start: 6%; padding-top: 50px;" display="block" position="floating">Valor</ion-label>
-    <ion-item color="warning">
-      <ion-input [(ngModel)]="valor" placeholder="Type something here"></ion-input>
-      <ion-badge class="ion-badge" color="primary">mg/mL</ion-badge>
-   </ion-item>
+    <form name = "form" (ngSubmit)="f.form.valid && nuevaEntrada()" #f = "ngForm" novalidate>
+      <ion-label style = "padding-inline-start: 6%; padding-top: 50px;" for = "valor" display="block" position="floating">Valor</ion-label>
+      <ion-item color="warning">
+        <ion-input [(ngModel)]="form.valor" #valor="ngModel" name = "valor"  placeholder="Type something here" required [ngClass]="{ 'is-invalid': f.submitted && valor.errors }"></ion-input>
+        <ion-badge class="ion-badge" color="primary">mg/mL</ion-badge>
+      </ion-item>
+      <div style = "padding-left: 5%;"class="invalid-feedback" *ngIf="valor.errors && f.submitted">
+        <div *ngIf="valor.errors['required']">Valor requerido</div>
+      </div>
+      <ion-button color="dark" expand="block" type = "submit" >
+        Crear entrada
+      </ion-button>
 
-    <ion-button color="dark" expand="block" (click)="nuevaEntrada()">
-      Crear entrada
-    </ion-button>
+    </form>
   </ion-card>
 
   <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
-    <ion-fab-button color = "secondary" (click)="goBack()">
+    <ion-fab-button color = "secondary" (click)="goBack()" [routerLink]="['/app/Tabs/Analytics']">
       <ion-icon name="arrow-back-circle-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
