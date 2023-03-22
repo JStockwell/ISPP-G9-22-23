@@ -10,7 +10,7 @@ class PhysicalEntrySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PhysicalEntry
-        fields = ['id', 'date', 'state', 'body_parts', 'notes', "patient_id"]
+        fields = ['id', 'date', 'state', 'body_parts', 'notes', "patient_id", "done_exercise"]
 
 
     def validate_body_parts(self, value):

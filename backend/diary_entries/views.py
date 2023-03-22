@@ -94,7 +94,9 @@ class MentalEntryCreate(APIView):
 
             mental_entry.save()
             
-            return Response(serializer.data)
+            return Response({"mental_entry_id":mental_entry.id, "date":mental_entry.date, "state":mental_entry.state, "weather": mental_entry.weather,
+                             "food":mental_entry.food, "sleep":mental_entry.sleep, "positive_thoughts": mental_entry.positive_thoughts,
+                             "negative_thoughts": mental_entry.negative_thoughts, "notes":mental_entry.notes, "patient_id":patient.id}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
@@ -179,6 +181,7 @@ class PhysicalEntryCreate(APIView):
                 'body_parts': openapi.Schema(type=openapi.TYPE_STRING, description='Lista de partes del cuerpo que duelen al paciente, ha de pertenecer al siguiente grupo ("HEAD", "TORSO", "RIGHT_ARM", "LEFT_ARM", "RIGHT_LEG", "LEFT_LEG")'),
                 'notes': openapi.Schema(type=openapi.TYPE_STRING, description='Notas adicionales'),
                 'patient_id': openapi.Schema(type=openapi.TYPE_STRING, description='Id del paciente al que pertenece'),
+                "done_exercise": openapi.Schema(type=openapi.TYPE_BOOLEAN, description='Ha hecho ejercicio'),
             }
         ),
         responses={'200': PhysicalEntrySerializer, "400": "Comprueba que el formato de la fecha sea válido, que el id de usuario exista y que body_parts se encuentren dentro de los valores proporcionados"})
@@ -192,6 +195,7 @@ class PhysicalEntryCreate(APIView):
             body_parts = serializer.data["body_parts"]
             notes = serializer.data["notes"]
             patient_id = serializer.data["patient_id"]
+            done_exercise = serializer.data["done_exercise"]
 
             patient = get_object_or_404(Patient, id=patient_id)
             patient_diary_entry_list = PhysicalEntry.objects.filter(patient = patient)
@@ -199,11 +203,12 @@ class PhysicalEntryCreate(APIView):
                 if(str(entry.date) == date):
                     return Response({"error":"Ya existe una entrada de este tipo de diario en esta fecha para este usuario"}, status=status.HTTP_400_BAD_REQUEST)
 
-            physical_entry = PhysicalEntry(date = date, state = state, body_parts = body_parts, notes = notes, patient = patient)
+            physical_entry = PhysicalEntry(date = date, state = state, body_parts = body_parts, notes = notes, patient = patient, done_exercise=done_exercise)
 
             physical_entry.save()
 
-            return Response(serializer.data)
+            return Response({"physical_entry_id":physical_entry.id, "date":physical_entry.date, "state":physical_entry.state,
+                             "notes":physical_entry.notes, "done_exercise": physical_entry.done_exercise, "patient_id":patient.id}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         

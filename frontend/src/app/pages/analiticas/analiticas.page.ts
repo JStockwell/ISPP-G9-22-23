@@ -29,7 +29,14 @@ export class AnaliticasPage implements OnInit {
   ngOnInit() {
     this.analiticasService.getAnaliticas().subscribe({
       next: data =>{
-        this.analiticas=data;
+        if(!data.value){
+          
+        }
+        else{
+          this.analiticas=data;
+        }
+        
+        console.log(data)
       },
       error: err => {
         this.errorMessage=err.error.message;
@@ -40,8 +47,10 @@ export class AnaliticasPage implements OnInit {
     this.analiticasService.getAnaliticaDetails().subscribe({
       next: data => {
         
+
         this.mediciones=data;
         this.createChart();
+
       },
       error: err =>{
         this.errorMessage = err.errorMessage;

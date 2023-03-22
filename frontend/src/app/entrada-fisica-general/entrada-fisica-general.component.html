@@ -9,15 +9,15 @@
       <b style="font-weight: bold;">
         Estado físico
       </b>
-      <img src="/assets/{{state}}.png" style="width: 3rem;">
+      <img src="/assets/images/{{state}}.png" style="width: 3rem;">
     </div>
     <div *ngIf="bodyPartsNotEmpty(); then renderBodyParts"></div>
     <ng-template #renderBodyParts>
       <b style="font-weight: bold;">
         ¿Qué me duele?
       </b>
-      <b *ngFor="let bodyPart of bodyParts;">
-        <img src="/assets/{{bodyPart}}.png" style="width: 3rem;">
+      <b *ngFor="let bodyPart of array_bodyParts;">
+        <img src="/assets/images/{{bodyPart}}.png" style="width: 3rem;">
       </b>
     </ng-template>
     <p style="text-align: center; font-weight: bold; font-size: large;">
