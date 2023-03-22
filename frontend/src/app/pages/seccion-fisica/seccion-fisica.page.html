@@ -9,10 +9,10 @@
   <ng-template #renderEntradas>
     <div *ngFor="let entrada of entradas" style="overflow-y: scroll">
       <app-entrada-fisica-general
-        [date]="entrada['date']"
-        [state]="entrada['state']"
-        [bodyParts]="entrada['body_parts']"
-        [notes]="entrada['notes']"
+        [date]="entrada.date.toUTCString()"
+        [state]="entrada.state"
+        [bodyParts]="entrada.body_parts"
+        [notes]="entrada.notes"
       ></app-entrada-fisica-general>
     </div>
   </ng-template>

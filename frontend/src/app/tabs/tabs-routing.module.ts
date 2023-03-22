@@ -17,8 +17,8 @@ const routes: Routes = [
         loadChildren: () => import('../pages/añadir-detalles-analiticas/añadir-detalles-analiticas.module').then(m=>m.AñadirDetallesAnaliticasPageModule)        
       },
       {
-      path: 'Analytics/Details/:id',
-      loadChildren: () => import('../pages/detalles-analitica/detalles-analitica.module').then( m => m.DetallesAnaliticaPageModule)
+        path: 'Analytics/Details/:id',
+        loadChildren: () => import('../pages/detalles-analitica/detalles-analitica.module').then( m => m.DetallesAnaliticaPageModule)
       },
       {
         path: 'seccion-fisica',
