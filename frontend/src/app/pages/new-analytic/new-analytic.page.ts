@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { NewAnalyticService } from 'src/app/services/new-analytic.service';
@@ -30,7 +30,7 @@ export class NewAnalyticPage implements OnInit {
   }
 
   goBack(){
-    this.navCtrl.pop(); 
+    this.navCtrl.back(); 
   }
 
   getIdUser(){
@@ -48,8 +48,12 @@ export class NewAnalyticPage implements OnInit {
   }
 
   listMetricsInfo() {
-    this.newAnalyticService.getMetricsInfoList().subscribe((res) => {
-      this.metrics = res;
+    this.newAnalyticService.getMetricsInfoList().subscribe({
+      next: res => {
+        this.metrics = res;
+      },error: err => {
+        console.log(err)
+      }
     })
   }
 
@@ -72,15 +76,16 @@ export class NewAnalyticPage implements OnInit {
       max_value: this.umbralAlto,
       patient_id: this.getIdUser(),
     }
+
     
-    this.newAnalyticService.postMetricEntry(dataMetricEntry).subscribe({
+    const ans = this.newAnalyticService.postMetricEntry(dataMetricEntry).subscribe({
       next: res => {
-        console.log(res);
         let dataMeasureEntry = {
-          metric: res.id,
+          metric_id: res.metric_id,
           value: this.valor,
           patient_id: this.getIdUser(),
         }
+        console.log(dataMeasureEntry)
         this.newAnalyticService.postMeasureEntry(dataMeasureEntry).subscribe({
           next: res => {
             console.log(res);
@@ -88,7 +93,6 @@ export class NewAnalyticPage implements OnInit {
             console.log(err);
           }
         })
-        document.location.href="http://localhost:8100/app/Tabs/Analytics"
         window.location.href = "http://localhost:8100/app/Tabs/Analytics"
       },
       error: err => {
