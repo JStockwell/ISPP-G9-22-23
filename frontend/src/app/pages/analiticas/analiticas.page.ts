@@ -46,10 +46,8 @@ export class AnaliticasPage implements OnInit {
 
     this.analiticasService.getAnaliticaDetails().subscribe({
       next: data => {
-        
 
-        this.mediciones=data;
-        this.createChart();
+        this.mediciones = data;
 
       },
       error: err =>{

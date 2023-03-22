@@ -4,6 +4,9 @@ import { NavController } from '@ionic/angular';
 import { AñadirDetallesAnaliticasService } from 'src/app/services/añadir-detalles-analiticas.service';
 import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
+import { UsersService } from 'src/app/services/users.service';
+import { ActivatedRoute } from '@angular/router';
+import { stringify } from 'querystring';
 registerLocaleData(localeEs, 'es');
 
 @Component({
@@ -14,15 +17,25 @@ registerLocaleData(localeEs, 'es');
 })
 export class AñadirDetallesAnaliticasPage implements OnInit{
 
-  nombre: string | undefined
   valor:  Int16Array| undefined
-  umbralB: string | undefined 
-  umbralA: string | undefined
 
 
 
-  constructor(private AñadirDetallesAnaliticasService: AñadirDetallesAnaliticasService, private navCtrl: NavController) {}
+  constructor(private route: ActivatedRoute,private AñadirDetallesAnaliticasService: AñadirDetallesAnaliticasService, private navCtrl: NavController, private uService: UsersService ) {}
 
+  getIdUser(){
+    if(this.uService.isLoggedIn()){
+      var ck = window.sessionStorage.getItem('auth-user')
+      if(ck != null){
+        var tk = JSON.parse(ck);
+        var res = [];
+        for(var i in tk){
+          res.push(tk[i]);
+        }
+        return res[1];
+      }
+    }
+  }
   ngOnInit() {
   }
 
@@ -31,14 +44,23 @@ export class AñadirDetallesAnaliticasPage implements OnInit{
   }
 
   nuevaEntrada(){
+    let id:string = this.route.snapshot.params["id"];
+    let value:any = this.valor;
+
     let entrada = {
-      nombre: this.nombre,
-      valor: this.valor,
-      umbralB: this.umbralB,
-      umbralA: this.umbralA
+      metric_id: parseInt(id),
+      value: value,
+      patient_id: this.getIdUser(),
     }
 
-    console.log(entrada)
+    this.AñadirDetallesAnaliticasService.postEntry(entrada).subscribe({
+      next: data => {
+        console.log(data);
+        window.location.href = "/app/Tabs/Analytics"
+    },
+      error: error => {
+        console.log(error);
+      }
+    })
   }
-
 }
