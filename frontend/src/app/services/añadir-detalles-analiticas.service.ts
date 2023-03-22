@@ -23,7 +23,7 @@ export class AñadirDetallesAnaliticasService {
         }
         let headers = new HttpHeaders()
         headers=headers.set('Authorization','Token '+res[0])
-
+        headers = headers.set('Content-Type', 'application/json')
         return this.http.post(`${this.API_URL}/metrics/measures/`, JSON.stringify(entry),{'headers':headers});
       }
     }
