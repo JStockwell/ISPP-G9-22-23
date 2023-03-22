@@ -4,6 +4,7 @@ import Chart from "chart.js/auto";
 import { LoadingController } from "@ionic/angular";
 import { ActivatedRoute } from "@angular/router";
 import { Router } from "@angular/router";
+import { AnaliticasService } from 'src/app/services/analiticas.service';
 
 @Component({
   selector: "app-detalles-analitica",
@@ -140,10 +141,9 @@ export class DetallesAnaliticaPage implements OnInit {
     },
   ];
   analitica = this.analiticas[0];
-  constructor(private route: ActivatedRoute, private navCtrl: NavController, public router: Router) {}
+  constructor(private route: ActivatedRoute, private navCtrl: NavController, public router: Router, private analiticaService:AnaliticasService) {}
 
   ngOnInit() {
-    
 
   }
 

@@ -6,26 +6,26 @@
 
 <ion-content class="ion-padding" color ="light">
   <ion-card color = "warning">
-    <ion-item color = "warning">
+    <ion-item color = "warning" id="metric">
       <ion-label position="floating">Nombre</ion-label>
-      <ion-select [(ngModel)]="nombre" placeholder="Nombre">
-        <ion-select-option *ngFor="let item of nombres" value="{{ item.valor }}">{{ item.nombre }}</ion-select-option>
+      <ion-select [(ngModel)]="nombre" placeholder="Nombre" (ngModelChange)="getMetricUnit()">
+        <ion-select-option *ngFor="let item of metrics" value="{{ item.name }}">{{ item.name }}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item color = "warning">
       <ion-label position="floating">Valor</ion-label>
-      <ion-input [(ngModel)]="valor" placeholder="Cantidad" type="text"></ion-input>
+      <ion-input [(ngModel)]="valor" placeholder="Valor en {{ getMetricUnit() }} " type="number"></ion-input>
     </ion-item>
     <ion-item color = "warning">
       <ion-label position="floating">Umbral Alto</ion-label>
-      <ion-input [(ngModel)]="umbralAlto" placeholder="Valor alto a no superar" type="text"></ion-input>
+      <ion-input [(ngModel)]="umbralAlto" placeholder="Valor alto a no superar en {{ getMetricUnit() }} " type="number"></ion-input>
     </ion-item>
     <ion-item style = "padding-bottom: 5%" color = "warning">
       <ion-label position="floating">Umbral Bajo</ion-label>
-      <ion-input [(ngModel)]="umbralBajo" placeholder="Valor bajo a no superar" type="text"></ion-input>
+      <ion-input [(ngModel)]="umbralBajo" placeholder="Valor bajo a no superar en {{ getMetricUnit() }}" type="number"></ion-input>
     </ion-item>
     
-    <ion-button  color="dark" expand="block" (click)="newAnalytic()">
+    <ion-button  color="dark" expand="block" (click)="crearNuevaAnalitica()">
       Crear analítica
     </ion-button>
   </ion-card>

@@ -11,6 +11,8 @@ import {UsersService} from '../../services/users.service'
   templateUrl: './analiticas.page.html',
   styleUrls: ['./analiticas.page.scss'],
 })
+
+
 export class AnaliticasPage implements OnInit {
   
   msg:any;
@@ -18,128 +20,8 @@ export class AnaliticasPage implements OnInit {
   colorArray: any;
   errorMessage = '';
   //BORRAR eso más adelante cuando ya estén las llamadas
-  analiticas = [
-    {
-      id: 1,
-      name: 'azucar',
-      unit: 'g/L',
-      min_value: '56',
-      max_value: '80',
-    },
-    {
-      id: 2,
-      name: 'colesterol',
-      unit: 'g/L',
-      min_value: '70',
-      max_value: '92',
-    },
-  ];
-
-  mediciones = [
-    {
-      id: 1,
-      date: '16:34 Jueves, 23/03/2023',
-      value: '57',
-      metric: 1,
-    },
-    {
-      id: 2,
-      date: '17:00 Lunes, 27/03/2023',
-      value: '55',
-      metric: 1,
-    },
-    {
-      id: 3,
-      date: '16:34 Jueves, 28/03/2023',
-      value: '56',
-      metric: 1,
-    },
-    {
-      id: 4,
-      date: '17:00 Viernes, 29/03/2023',
-      value: '70',
-      metric: 1,
-    },
-    {
-      id: 5,
-      date: '16:34 Jueves, 30/03/2023',
-      value: '60',
-      metric: 1,
-    },
-    {
-      id: 6,
-      date: '17:00 Lunes, 31/03/2023',
-      value: '56',
-      metric: 1,
-    },
-    {
-      id: 7,
-      date: '16:34 Jueves, 01/04/2023',
-      value: '58',
-      metric: 1,
-    },
-    {
-      id: 8,
-      date: '17:00 Lunes, 03/04/2023',
-      value: '60',
-      metric: 1,
-    }, 
-    {
-      id: 8,
-      date: '16:34 Jueves, 05/04/2023',
-      value: '57',
-      metric: 1,
-    },
-    {
-      id: 9,
-      date: '17:00 Lunes, 06/04/2023',
-      value: '55',
-      metric: 1,
-    },
-
-    {
-      id: 10,
-      date: '16:34 Jueves, 07/04/2023',
-      value: '50',
-      metric: 1,
-    },
-    {
-      id: 11,
-      date: '18:47 Lunes, 27/03/2023',
-      value: '79',
-      metric: 2,
-    },
-    {
-      id: 12,
-      date: '18:47 Lunes, 28/03/2023',
-      value: '60',
-      metric: 2,
-    },
-    {
-      id: 13,
-      date: '18:47 Lunes, 29/03/2023',
-      value: '89',
-      metric: 2,
-    },
-    {
-      id: 14,
-      date: '18:47 Lunes, 30/03/2023',
-      value: '74',
-      metric: 2,
-    },
-    {
-      id: 15,
-      date: '18:47 Lunes, 31/03/2023',
-      value: '70',
-      metric: 2,
-    },
-    {
-      id: 16,
-      date: '18:47 Lunes, 01/04/2023',
-      value: '75',
-      metric: 2,
-    },
-  ]
+  analiticas = new Array<analitica>
+  mediciones = new Array<measure>
 
   constructor(private analiticasService: AnaliticasService, private loadingCtrl: LoadingController, private uService: UsersService) {}
 
@@ -164,13 +46,15 @@ export class AnaliticasPage implements OnInit {
 
     this.analiticasService.getAnaliticaDetails().subscribe({
       next: data => {
+
         this.mediciones = data;
+
       },
       error: err =>{
         this.errorMessage = err.errorMessage;
       }
     })
-
+    
   }
   
 
@@ -178,35 +62,29 @@ export class AnaliticasPage implements OnInit {
     this.createChart();
   }
 
-  
-
   createChart(){
     for (const analitica of this.analiticas){
-      let nombre = analitica.name;
-      let str = "chart"+nombre;
-      
+      let id = analitica.id;
+      let str = "chart"+id;
       let aux = <HTMLCanvasElement> document.getElementById(str);
-      //console.log(aux)
       const ctx = aux.getContext("2d");
-      if(ctx != null){
-        //console.log(ctx);
 
+      if(ctx != null){
         const dates: String[] = [];
         const values: String[] = [];
         for( const medicion of this.mediciones){
-          if(medicion.metric == analitica.id){
-
-            const aux = medicion.date.split(" ");
-            //console.log(aux);
-            dates.push(aux[2]);
-            values.push(medicion.value)
+          if(medicion.metric.id == analitica.id){
+            let date:Date = medicion.date;
+            const aux = date.toString().substring(0,9);
+            dates.push(aux);
+            values.push(medicion.value);
           }
           
         }
         Chart.defaults.color = 'black';
         Chart.defaults.backgroundColor = '#f4f5f9';
 
-        const mensaje: string='Resultados de la analítica('+analitica.unit+')'
+        const mensaje: string='Resultados de la analítica('+analitica.info.unit+')'
         this.bars = new Chart(ctx, {
           type: 'line',
           data: {
@@ -214,16 +92,41 @@ export class AnaliticasPage implements OnInit {
             datasets: [{
               label: mensaje,
               data: values,
-              backgroundColor: "light", // array should have same number of elements as number of dataset
-              borderColor: "light", // array should have same number of elements as number of dataset
-              
+              backgroundColor: "light", 
+              borderColor: "light", 
               borderWidth: 1
             }]
           }
         });
+        console.log(this.bars);
       }
       
     }
   
   }
 }
+type analitica = {
+  id: null,
+  info:{
+    name: null,
+    unit: null,
+  },
+  min_value: null,
+  max_value: null,
+};
+type measure = {
+  id: null,
+  date: any,
+  metric:{
+    id: null,
+    min_value:null,
+    max_value:null,
+    info:{
+      name:null,
+      unit:null
+    }
+    patient_id:null
+  },
+  patient_id:null,
+  value:any
+};
