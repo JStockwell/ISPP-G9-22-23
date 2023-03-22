@@ -13,7 +13,7 @@ const routes: Routes = [
     
       },
       {
-        path: 'Analytics/Details/New',
+        path: 'Analytics/Details/:id/New',
         loadChildren: () => import('../pages/añadir-detalles-analiticas/añadir-detalles-analiticas.module').then(m=>m.AñadirDetallesAnaliticasPageModule)        
       },
       {

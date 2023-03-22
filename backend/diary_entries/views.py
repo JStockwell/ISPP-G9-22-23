@@ -94,7 +94,9 @@ class MentalEntryCreate(APIView):
 
             mental_entry.save()
             
-            return Response(serializer.data)
+            return Response({"mental_entry_id":mental_entry.id, "date":mental_entry.date, "state":mental_entry.state, "weather": mental_entry.weather,
+                             "food":mental_entry.food, "sleep":mental_entry.sleep, "positive_thoughts": mental_entry.positive_thoughts,
+                             "negative_thoughts": mental_entry.negative_thoughts, "notes":mental_entry.notes, "patient_id":patient.id}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
@@ -205,7 +207,8 @@ class PhysicalEntryCreate(APIView):
 
             physical_entry.save()
 
-            return Response(serializer.data)
+            return Response({"physical_entry_id":physical_entry.id, "date":physical_entry.date, "state":physical_entry.state,
+                             "notes":physical_entry.notes, "done_exercise": physical_entry.done_exercise, "patient_id":patient.id}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         

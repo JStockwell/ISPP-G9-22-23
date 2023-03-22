@@ -41,7 +41,6 @@ export class AnaliticasService implements HttpInterceptor{
         }
         let headers = new HttpHeaders()
         headers=headers.set('Authorization','Token '+res[0])
-        
         return this.http.get(this.API_URL + "metrics/metrics/patient/"+ res[1]+"/",{'headers':headers});
       }
 
