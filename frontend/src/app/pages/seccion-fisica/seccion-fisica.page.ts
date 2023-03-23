@@ -18,6 +18,10 @@ export class SeccionFisicaPage implements OnInit {
     }
   }
 
+  eliminarEntradaFisica(){
+    
+  }
+
   ngOnInit() {
     this.fisicoService.getEntradasFisicas().subscribe({
       next: data=>{
