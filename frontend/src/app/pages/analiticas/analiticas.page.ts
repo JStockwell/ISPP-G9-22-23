@@ -35,7 +35,9 @@ export class AnaliticasPage implements OnInit {
     this.analiticasService.getAnaliticas().subscribe({
       next: data =>{
         this.analiticas=data;
-        this.createMeasures();
+        for(var analitica of this.analiticas){
+          this.createMeasuresv2(analitica)
+        }
       },
       error: err => {
         this.errorMessage=err.error.message;
@@ -44,6 +46,25 @@ export class AnaliticasPage implements OnInit {
     });
   }
 
+  createMeasuresv2(analitica:any){
+    this.analiticasService.getLatestDetails(analitica.id).subscribe({
+      next: data =>{
+        for(var metric of data){
+          let date:Date = metric.date;
+          const aux = date.toString().substring(0,10);
+          metric.date = aux;
+          this.mediciones.push(metric);
+        }
+        this.createChart(analitica);
+      },
+      error: err => {
+        this.errorMessage=err.error.message;
+      }
+    })
+  }
+
+
+/*
   createMeasures(){
     this.analiticasService.getAnaliticaDetails().subscribe({
       next: data => {
@@ -60,15 +81,13 @@ export class AnaliticasPage implements OnInit {
       }
     })
   }
- 
+ */
 
-  createChart(){
-    for (const analitica of this.analiticas){
-      let id = analitica.id;
-      let str = "chart"+id;
+  createChart(analitica:any){
+
+      let str = "chart"+analitica.id;
       let aux = <HTMLCanvasElement> document.getElementById(str);
       const ctx = aux.getContext("2d");
-
       if(ctx != null){
         const dates: String[] = [];
         const values: String[] = [];
@@ -100,7 +119,7 @@ export class AnaliticasPage implements OnInit {
         });
       }
       
-    }
+    
   
   }
 }
