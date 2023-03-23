@@ -207,6 +207,24 @@ class PhysicalEntryCreate(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
+    def put(self, request, pk):
+        physical_entry = get_object_or_404(PhysicalEntry, id=pk)
+        serializer = PhysicalEntrySerializer(physical_entry = request.data)
+
+        if (serializer.is_valid()):
+
+            # patient = get_object_or_404(Patient, id=patient_id)
+            # patient_diary_entry_list = PhysicalEntry.objects.filter(patient = patient)
+            # if(physical_entry not in patient_diary_entry_list):
+            #     return Response({"error":"la entrada a modificar bi es de este usuario"}, status=status.HTTP_400_BAD_REQUEST)
+
+            # physical_entry = PhysicalEntry(date = date, state = state, body_parts = body_parts, notes = notes, patient = patient)
+
+            physical_entry.save() 
+
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class PhysicalEntryId(APIView):
     authentication_classes = [TokenAuthentication]

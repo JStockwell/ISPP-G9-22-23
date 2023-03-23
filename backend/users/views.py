@@ -161,6 +161,34 @@ class MedicCreate(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
+    # def put(self, request, pk):
+    #     medic_user = get_object_or_404(Medic, id=pk)
+    #     serializer = CreateSerializer(medic_user = request.data)
+    #     if serializer.is_valid():
+    #         tel = serializer.data["tel"]
+    #         birthdate = serializer.data["birthdate"]
+    #         password = serializer.data["password"]
+    #         first_name = serializer.data["first_name"]
+    #         last_name = serializer.data["last_name"]
+    #         username = serializer.data["username"]
+    #         email = serializer.data["email"]
+
+    #         if(User.objects.filter(username = username).exists()):
+    #             return Response({"error":"Ya existe un usuario con ese nombre de usuario"}, status=status.HTTP_400_BAD_REQUEST)
+    #         elif(User.objects.filter(email = email).exists()):
+    #             return Response({"error":"Ya existe un usuario con ese email"}, status=status.HTTP_400_BAD_REQUEST)
+    #         else:
+    #             user = User(username = username, email = email, first_name = first_name, last_name = last_name)
+    #             user.set_password(password)
+    #             medic = Medic(tel=tel, birthdate=birthdate)
+
+    #             user.save()
+    #             medic.user = user
+    #             medic.save()
+
+    #             return Response({"the medic has been successfuly modified medic id": medic.id}, status=status.HTTP_200_OK)
+    #     else:
+    #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class MedicId(APIView):
     authentication_classes = [TokenAuthentication]
