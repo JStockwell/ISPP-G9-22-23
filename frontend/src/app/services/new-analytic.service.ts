@@ -17,7 +17,7 @@ export class NewAnalyticService {
   constructor(private http: HttpClient, private uService: UsersService) {}
   API_URL = 'http://isppgrupo9.pythonanywhere.com/';
 
-  getMetricsInfoList(): Observable<any>{
+  getMetricsNotUsedList(): Observable<any>{
     if(this.uService.isLoggedIn()){
       var ck = window.sessionStorage.getItem('auth-user')
       if(ck != null){
@@ -28,7 +28,7 @@ export class NewAnalyticService {
         }
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
         headers=headers.set('Authorization','Token '+res[0])
-        return this.http.get(this.API_URL+'metrics/info/list/', {'headers':headers});
+        return this.http.get(this.API_URL+'metrics/info/not_used/'+res[1]+"/", {'headers':headers});
       }
 
     }

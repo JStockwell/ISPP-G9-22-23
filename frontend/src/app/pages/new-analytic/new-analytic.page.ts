@@ -48,7 +48,7 @@ export class NewAnalyticPage implements OnInit {
   }
 
   listMetricsInfo() {
-    this.newAnalyticService.getMetricsInfoList().subscribe({
+    this.newAnalyticService.getMetricsNotUsedList().subscribe({
       next: res => {
         this.metrics = res;
       },error: err => {
