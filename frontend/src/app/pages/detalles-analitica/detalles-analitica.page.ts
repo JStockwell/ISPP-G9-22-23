@@ -44,6 +44,11 @@ export class DetallesAnaliticaPage implements OnInit {
 
     this.analiticaService.getAnaliticaDetails().subscribe({
       next: data =>{
+        for(var metric of data){
+          let date:Date = metric.date;
+          const aux = date.toString().substring(0,10);
+          metric.date = aux;
+        }
         this.mediciones = data;
       },
       error:err=>{
