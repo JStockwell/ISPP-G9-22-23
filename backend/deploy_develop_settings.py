@@ -98,7 +98,7 @@ REST_FRAMEWORK = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ISPPgrupo9$marcoluna',
+        'NAME': 'ISPPgrupo9$develop',
         'USER': 'ISPPgrupo9',
         'PASSWORD': 'MarcoLuna',
         'HOST': 'ISPPgrupo9.mysql.pythonanywhere-services.com',

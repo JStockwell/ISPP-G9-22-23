@@ -1,10 +1,9 @@
-name: Pythonanywhere Auto-Deployment
+name: Pythonanywhere Auto-Deployment (main)
 
 on:
   push:
     branches:
     - main
-    - develop
 
 jobs:
   build:
@@ -19,14 +18,15 @@ jobs:
       run: |
         cd backend
         rm settings.py
-        cp deploy_settings.py settings.py
+        cp deploy_main_settings.py settings.py
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         python manage.py collectstatic
         cd ..
-        zip -r backend.zip backend
+        cp -r backend main
+        zip -r main.zip main
     - name: Copy new app version
-      run:  sshpass -p "${{ secrets.PYANY_PASSWD }}" scp -oStrictHostKeyChecking=accept-new backend.zip ${{ secrets.PYANY_USER }}@ssh.pythonanywhere.com:/home/${{ secrets.PYANY_USER }}/backend.zip
+      run:  sshpass -p "${{ secrets.PYANY_PASSWD }}" scp -oStrictHostKeyChecking=accept-new main.zip ${{ secrets.PYANY_USER }}@ssh.pythonanywhere.com:/home/${{ secrets.PYANY_USER }}/main.zip
     - name: Update app in pythonanywhere
       uses: appleboy/ssh-action@v0.1.8
       with:
@@ -34,12 +34,12 @@ jobs:
         username: ${{ secrets.PYANY_USER }}
         password: ${{ secrets.PYANY_PASSWD }}
         script: |
-          chmod -R 777 backend
-          rm -rf backend
+          chmod -R 777 main
+          rm -rf main
           source env2/bin/activate
-          unzip backend.zip
-          rm backend.zip
-          cd backend
+          unzip main.zip
+          rm main.zip
+          cd main
           pip install -r requirements.txt
     - name: Reload pythonanywhere webapp
       uses: jensvog/pythonanywhere-webapp-reload-action@v1
@@ -48,4 +48,3 @@ jobs:
         username: ${{ secrets.PYANY_USER }}
         api-token: ${{ secrets.PYANY_TOKEN }}
         domain-name: ${{ secrets.PYANY_DOMAIN }}
-
