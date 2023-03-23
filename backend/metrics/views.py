@@ -34,8 +34,26 @@ class MetricListInfo(APIView):
             responses={'200':MetricInfoSerializer}
     )
     def get(self, request):
-        metrics = MetricInfo.objects.all()
-        serializer = MetricInfoSerializer(metrics, many=True)
+        metrics_info = MetricInfo.objects.all()
+        serializer = MetricInfoSerializer(metrics_info, many=True)
+        return Response(serializer.data)
+    
+class NotUsedMetricInfoByPatient(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    @swagger_auto_schema(
+            manual_parameters=[],
+            security=[],
+            responses={'200':MetricInfoSerializer, '404': "No se ha encontrado el paciente"}
+    )
+    def get(self, request, *arg, **kwargs):
+        pk = self.kwargs.get('pk')
+        patient = get_object_or_404(Patient, id=pk)
+        metrics = Metric.objects.filter(patient = patient)
+        metrics_info = [metric.info for metric in metrics]
+        metrics_info = list(dict.fromkeys(metrics_info))
+        all_metrics_info = list(MetricInfo.objects.all())
+        serializer = MetricInfoSerializer([x for x in all_metrics_info if x not in metrics_info], many=True)
         return Response(serializer.data)
 
 class MetricCreate(APIView):
