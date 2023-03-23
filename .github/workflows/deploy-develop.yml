@@ -1,0 +1,51 @@
+name: Pythonanywhere Auto-Deployment (develop)
+
+on:
+  push:
+    branches:
+    - main
+    - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.10'
+    - name: Prepare app for deploy
+      run: |
+        cd backend
+        rm settings.py
+        cp deploy_develop_settings.py settings.py
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        python manage.py collectstatic
+        cd ..
+        cp -r backend develop
+        zip -r develop.zip develop
+    - name: Copy new app version
+      run:  sshpass -p "${{ secrets.PYANY_PASSWD }}" scp -oStrictHostKeyChecking=accept-new develop.zip ${{ secrets.PYANY_USER }}@ssh.pythonanywhere.com:/home/${{ secrets.PYANY_USER }}/develop.zip
+    - name: Update app in pythonanywhere
+      uses: appleboy/ssh-action@v0.1.8
+      with:
+        host: "ssh.pythonanywhere.com"
+        username: ${{ secrets.PYANY_USER }}
+        password: ${{ secrets.PYANY_PASSWD }}
+        script: |
+          chmod -R 777 develop
+          rm -rf develop
+          source env2/bin/activate
+          unzip develop.zip
+          rm develop.zip
+          cd develop
+          pip install -r requirements.txt
+    - name: Reload pythonanywhere webapp
+      uses: jensvog/pythonanywhere-webapp-reload-action@v1
+      with:
+        host: 'www.pythonanywhere.com'
+        username: ${{ secrets.PYANY_USER }}
+        api-token: ${{ secrets.PYANY_TOKEN }}
+        domain-name: ${{ secrets.PYANY_DOMAIN_DEVELOP }}
