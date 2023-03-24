@@ -39,7 +39,7 @@ class Weather(models.TextChoices):
 
 class DiaryEntry(models.Model):
     state = models.CharField(choices=State.choices, max_length=15)
-    notes = models.TextField(max_length=1024)
+    notes = models.TextField(max_length=1024, default="", blank=True)
     date = models.DateField()
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
 
@@ -48,7 +48,7 @@ class DiaryEntry(models.Model):
 
 
 class PhysicalEntry(DiaryEntry):
-    body_parts = models.TextField(max_length=1024, default="none") #, validators=[validate_unique_body_parts])
+    body_parts = models.TextField(max_length=1024, default="", blank=True) #, validators=[validate_unique_body_parts])
     done_exercise = models.BooleanField(default=False)
 
 
@@ -56,5 +56,5 @@ class MentalEntry(DiaryEntry):
     sleep = models.CharField(choices=Sleep.choices, max_length=64)
     food = models.CharField(choices=Food.choices, max_length=64)
     weather = models.CharField(choices=Weather.choices, max_length=64)
-    positive_thoughts = models.TextField(max_length=1024)
-    negative_thoughts = models.TextField(max_length=1024)
+    positive_thoughts = models.TextField(max_length=1024, default="", blank=True)
+    negative_thoughts = models.TextField(max_length=1024, default="", blank=True)
