@@ -60,8 +60,8 @@ export class NuevaEntradaMentalPage implements OnInit{
     this.nuevaEntradaMentalService.postEntry(dataEntry).subscribe({
       next: dataEntry => {
         console.log(dataEntry);
-        document.location.href="http://localhost:8100/app/Tabs/DiarioEmocional"
-        window.location.href = "http://localhost:8100/app/Tabs/DiarioEmocional"
+        document.location.href="/app/Tabs/DiarioEmocional"
+        window.location.href = "/app/Tabs/DiarioEmocional"
       },
       error: err => {
         console.log(err);
