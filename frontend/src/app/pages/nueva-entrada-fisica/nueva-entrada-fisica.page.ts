@@ -21,10 +21,10 @@ const httpOptions = {
 })
 export class NuevaEntradaFisicaPage implements OnInit {
 
-  estadoFisico:string | undefined
-  dolores:string | undefined
-  deporte:boolean | undefined
-  notas:string | undefined
+  estadoFisico:string | any = '';
+  dolores:string | any = '';
+  deporte:boolean | any = false;
+  notas:string | any = '';
   today = new Date();
 
   constructor(private nuevaEntradFisicaService: NuevaEntradaFisicaService, private navCtrl: NavController, private uService: UsersService) { }
@@ -63,18 +63,32 @@ export class NuevaEntradaFisicaPage implements OnInit {
     if (this.dolores) {
       parts = this.painsToString(this.dolores);
     }
-    let dataEntry = {
-      date: this.today.toISOString().split('T')[0],
-      state: this.estadoFisico,
-      body_parts: parts,
-      done_exercise: this.deporte,
-      notes: this.notas,
-      patient_id: this.getIdUser(),
+    let dataEntry:any;
+    if(parts == ''){
+        dataEntry = {
+        date: this.today.toISOString().split('T')[0],
+        state: this.estadoFisico,
+        done_exercise: this.deporte,
+        patient_id: this.getIdUser(),
+      };
+    }else{
+      dataEntry = {
+        date: this.today.toISOString().split('T')[0],
+        state: this.estadoFisico,
+        body_parts: parts,
+        done_exercise: this.deporte,
+        patient_id: this.getIdUser(),
+      };
+    }
+    if(this.notas != ""){
+      dataEntry["notes"]=this.notas;
     }
     
+    
+    
+    console.log(dataEntry);
     this.nuevaEntradFisicaService.postEntry(dataEntry).subscribe({
       next: dataEntry => {
-        console.log(dataEntry);
         document.location.href="/app/Tabs/seccion-fisica"
         window.location.href = "/app/Tabs/seccion-fisica"
       },
