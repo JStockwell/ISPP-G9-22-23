@@ -6,10 +6,16 @@ from rest_framework import status
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from drf_yasg.utils import swagger_auto_schema
-from drf_yasg.openapi import Parameter
 from drf_yasg import openapi
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.authtoken.models import Token
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from django.contrib.auth import authenticate
 
 class PatientList(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     @swagger_auto_schema(
         manual_parameters=[],
         security=[],
@@ -19,8 +25,9 @@ class PatientList(APIView):
         serializer = PatientSerializer(patients, many=True)
         return Response(serializer.data)
 
-
 class PatientCreate(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [AllowAny]
     @swagger_auto_schema(
         manual_parameters=[],
         security=[],
@@ -35,7 +42,7 @@ class PatientCreate(APIView):
                 'birthdate': openapi.Schema(type=openapi.TYPE_STRING, description='Fecha de nacimiento, formato YYYY-MM-DD'),
             }
         ),
-        responses={'200': PatientSerializer, "400": "Ya existe un usuario con ese nombre de usuario o email"})
+        responses={'200': "Token e id del paciente", "400": "Ya existe un usuario con ese nombre de usuario o email"})
     def post(self, request):
         serializer = CreateSerializer(data = request.data)
         
@@ -61,12 +68,16 @@ class PatientCreate(APIView):
                 patient.user = user
                 patient.save()
 
-                return Response(serializer.data, status=status.HTTP_200_OK)
+                token, _ = Token.objects.get_or_create(user=user)
+
+                return Response({"token":token.key, "patient id": patient.id}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 
 class PatientId(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     @swagger_auto_schema(
         manual_parameters=[],
         security=[],
@@ -89,6 +100,8 @@ class PatientId(APIView):
 
 
 class MedicList(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     @swagger_auto_schema(
         manual_parameters=[],
         security=[],
@@ -100,6 +113,8 @@ class MedicList(APIView):
 
 
 class MedicCreate(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [AllowAny]
     @swagger_auto_schema(
         manual_parameters=[],
         security=[],
@@ -114,7 +129,7 @@ class MedicCreate(APIView):
                 'birthdate': openapi.Schema(type=openapi.TYPE_STRING, description='Fecha de nacimiento, formato YYYY-MM-DD'),
             }
         ),
-        responses={'200': MedicSerializer, "400": "Ya existe un usuario con ese nombre de usuario o email"})
+        responses={'200': "Token e id del médico", "400": "Ya existe un usuario con ese nombre de usuario o email"})
     def post(self, request):
         serializer = CreateSerializer(data = request.data)
         
@@ -140,12 +155,16 @@ class MedicCreate(APIView):
                 medic.user = user
                 medic.save()
 
-                return Response(serializer.data, status=status.HTTP_200_OK)
+                token, _ = Token.objects.get_or_create(user=user)
+
+                return Response({"token":token.key, "medic id": medic.id}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 
 class MedicId(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     @swagger_auto_schema(
         manual_parameters=[],
         security=[],
@@ -165,4 +184,53 @@ class MedicId(APIView):
         medic = get_object_or_404(Medic, id=pk)
         medic.delete()
         return Response({"message":"Médico con id: " +str(pk) +" borrado correctamente"}, status=status.HTTP_200_OK)
+    
+class LoginView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [AllowAny]
+    @swagger_auto_schema(
+        manual_parameters=[],
+        security=[],
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT, properties={
+                'username': openapi.Schema(type=openapi.TYPE_STRING, description='Nombre de usuario, no debe existir previamente'),
+                'password': openapi.Schema(type=openapi.TYPE_STRING, description='Contraseña')
+            }
+        ),
+        responses={'200': "Token e id del médico", "401": "Credenciales inválidos"})
+    def post(self, request, format=None):
+        # Get the username and password from the request data
+        username = request.data.get('username')
+        password = request.data.get('password')
 
+        # Authenticate the user using Django's built-in authentication
+        user = authenticate(request, username=username, password=password)
+
+        # If authentication fails, return an error response
+        if not user:
+            return Response({'error': 'Credenciales inválidos'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        # If authentication succeeds, create a new token or retrieve an existing one
+        token, _ = Token.objects.get_or_create(user=user)
+
+
+        try:
+            patient = Patient.objects.get(user_id=user.id)
+        except Patient.DoesNotExist:
+            medic = Medic.objects.get(user_id=user.id)
+            # Return the token as a response
+            return Response({'token': token.key, "medic id":medic.id})
+        
+        return Response({'token': token.key, "patient id":patient.id})
+        
+class LogoutView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    @swagger_auto_schema(
+        manual_parameters=[],
+        security=[],
+        responses={'200': "Sesión cerrada"})
+
+    def get(self, request):
+        request.user.auth_token.delete()
+        return Response({'message': 'Sesión cerrada'},status=status.HTTP_200_OK)

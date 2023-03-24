@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { AnaliticasService } from 'src/app/services/analiticas.service';
 import Chart from 'chart.js/auto';
+import {UsersService} from '../../services/users.service'
+
 
 
 @Component({
@@ -9,195 +11,99 @@ import Chart from 'chart.js/auto';
   templateUrl: './analiticas.page.html',
   styleUrls: ['./analiticas.page.scss'],
 })
+
+
 export class AnaliticasPage implements OnInit {
   
-
+  msg:any;
   bars: any;
   colorArray: any;
+  errorMessage = '';
   //BORRAR eso más adelante cuando ya estén las llamadas
-  analiticas = [
-    {
-      id: 1,
-      name: 'azucar',
-      unit: 'g/L',
-      min_value: '56',
-      max_value: '80',
-    },
-    {
-      id: 2,
-      name: 'colesterol',
-      unit: 'g/L',
-      min_value: '70',
-      max_value: '92',
-    },
-  ];
+  analiticas = new Array<analitica>
+  mediciones = new Array<measure>
 
-  mediciones = [
-    {
-      id: 1,
-      date: '16:34 Jueves, 23/03/2023',
-      value: '57',
-      metric: 1,
-    },
-    {
-      id: 2,
-      date: '17:00 Lunes, 27/03/2023',
-      value: '55',
-      metric: 1,
-    },
-    {
-      id: 3,
-      date: '16:34 Jueves, 28/03/2023',
-      value: '56',
-      metric: 1,
-    },
-    {
-      id: 4,
-      date: '17:00 Viernes, 29/03/2023',
-      value: '70',
-      metric: 1,
-    },
-    {
-      id: 5,
-      date: '16:34 Jueves, 30/03/2023',
-      value: '60',
-      metric: 1,
-    },
-    {
-      id: 6,
-      date: '17:00 Lunes, 31/03/2023',
-      value: '56',
-      metric: 1,
-    },
-    {
-      id: 7,
-      date: '16:34 Jueves, 01/04/2023',
-      value: '58',
-      metric: 1,
-    },
-    {
-      id: 8,
-      date: '17:00 Lunes, 03/04/2023',
-      value: '60',
-      metric: 1,
-    }, 
-    {
-      id: 8,
-      date: '16:34 Jueves, 05/04/2023',
-      value: '57',
-      metric: 1,
-    },
-    {
-      id: 9,
-      date: '17:00 Lunes, 06/04/2023',
-      value: '55',
-      metric: 1,
-    },
-
-    {
-      id: 10,
-      date: '16:34 Jueves, 07/04/2023',
-      value: '50',
-      metric: 1,
-    },
-    {
-      id: 11,
-      date: '18:47 Lunes, 27/03/2023',
-      value: '79',
-      metric: 2,
-    },
-    {
-      id: 12,
-      date: '18:47 Lunes, 28/03/2023',
-      value: '60',
-      metric: 2,
-    },
-    {
-      id: 13,
-      date: '18:47 Lunes, 29/03/2023',
-      value: '89',
-      metric: 2,
-    },
-    {
-      id: 14,
-      date: '18:47 Lunes, 30/03/2023',
-      value: '74',
-      metric: 2,
-    },
-    {
-      id: 15,
-      date: '18:47 Lunes, 31/03/2023',
-      value: '70',
-      metric: 2,
-    },
-    {
-      id: 16,
-      date: '18:47 Lunes, 01/04/2023',
-      value: '75',
-      metric: 2,
-    },
-  ]
-
-  constructor(private analiticasService: AnaliticasService, private loadingCtrl: LoadingController) {}
+  constructor(private analiticasService: AnaliticasService, private loadingCtrl: LoadingController, private uService: UsersService) {}
 
   //Se ejecuta al crear la página por parte de angular
   ngOnInit() {
-    this.loadAnaliticas();
-
+   this.createAnaliticas()
   }
 
-  ionViewDidEnter() {
-    this.createChart();
-  }
+  createAnaliticas(){
 
-  async loadAnaliticas(){
-    //DESCOMENTAR
-    /*
-    const loading = await this.loadingCtrl.create({
-      message: 'Loading..',
-      spinner: 'bubbles',
+    this.analiticasService.getAnaliticas().subscribe({
+      next: data =>{
+        this.analiticas=data;
+        for(var analitica of this.analiticas){
+          this.createMeasuresv2(analitica)
+        }
+      },
+      error: err => {
+        this.errorMessage=err.error.message;
+
+      }
     });
-    await loading.present();
-
-
-    this.analiticasService.getAnaliticas().subscribe(res => {
-      loading.dismiss();
-      this.analiticas = [...this.analiticas, ...res.results];
-      console.log(res); 
-    })
-    */
-    //console.log(this.analiticasService.getAnaliticas);
-    //console.log(this.analiticas)
-    
   }
 
-  createChart(){
-    for (const analitica of this.analiticas){
-      let nombre = analitica.name;
-      let str = "chart"+nombre;
-      
+  createMeasuresv2(analitica:any){
+    this.analiticasService.getLatestDetails(analitica.id).subscribe({
+      next: data =>{
+        for(var metric of data){
+          let date:Date = metric.date;
+          const aux = date.toString().substring(0,10);
+          metric.date = aux;
+          this.mediciones.push(metric);
+        }
+        this.createChart(analitica);
+      },
+      error: err => {
+        this.errorMessage=err.error.message;
+      }
+    })
+  }
+
+
+/*
+  createMeasures(){
+    this.analiticasService.getAnaliticaDetails().subscribe({
+      next: data => {
+        for(var metric of data){
+          let date:Date = metric.date;
+          const aux = date.toString().substring(0,10);
+          metric.date = aux;
+        }
+        this.mediciones = data;
+        this.createChart();
+      },
+      error: err =>{
+        this.errorMessage = err.errorMessage;
+      }
+    })
+  }
+ */
+
+  createChart(analitica:any){
+
+      let str = "chart"+analitica.id;
       let aux = <HTMLCanvasElement> document.getElementById(str);
-      //console.log(aux)
       const ctx = aux.getContext("2d");
       if(ctx != null){
-        //console.log(ctx);
-
         const dates: String[] = [];
         const values: String[] = [];
         for( const medicion of this.mediciones){
-          if(medicion.metric == analitica.id){
-
-            const aux = medicion.date.split(" ");
-            //console.log(aux);
-            dates.push(aux[2]);
-            values.push(medicion.value)
+          if(medicion.metric.id == analitica.id){
+            let date:Date = medicion.date;
+            const aux = date.toString().substring(0,10);
+            dates.push(aux);
+            values.push(medicion.value);
           }
           
         }
         Chart.defaults.color = 'black';
         Chart.defaults.backgroundColor = '#f4f5f9';
 
-        const mensaje: string='Resultados de la analítica('+analitica.unit+')'
+        const mensaje: string='Resultados de la analítica('+analitica.info.unit+')'
         this.bars = new Chart(ctx, {
           type: 'line',
           data: {
@@ -205,16 +111,40 @@ export class AnaliticasPage implements OnInit {
             datasets: [{
               label: mensaje,
               data: values,
-              backgroundColor: "light", // array should have same number of elements as number of dataset
-              borderColor: "light", // array should have same number of elements as number of dataset
-              
+              backgroundColor: "light", 
+              borderColor: "light", 
               borderWidth: 1
             }]
           }
         });
       }
       
-    }
+    
   
   }
 }
+type analitica = {
+  id: null,
+  info:{
+    name: null,
+    unit: null,
+  },
+  min_value: null,
+  max_value: null,
+};
+type measure = {
+  id: null,
+  date: any,
+  metric:{
+    id: null,
+    min_value:null,
+    max_value:null,
+    info:{
+      name:null,
+      unit:null
+    }
+    patient_id:null
+  },
+  patient_id:null,
+  value:any
+};

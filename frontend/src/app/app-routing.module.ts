@@ -2,6 +2,20 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
+
+  {  
+    path: '',
+    loadChildren: () => import('./pagina-inicial/pagina-inicial.module').then( m => m.PaginaInicialPageModule)
+  },
+  {
+    path: 'users/register',
+    loadChildren: () => import('./pages/users/users.module').then(m=>m.UsersPageModule)
+  },
+
+  {
+    path: 'users/login',
+    loadChildren: () => import('./pages/login/login.module').then(m=>m.LoginPageModule)
+  },  
   {
     path: 'app',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
@@ -29,10 +43,7 @@ const routes: Routes = [
     path: 'nueva-entrada-fisica',
     loadChildren: () => import('./pages/nueva-entrada-fisica/nueva-entrada-fisica.module').then( m => m.NuevaEntradaFisicaPageModule)
   },
-  {  
-    path: '',
-    loadChildren: () => import('./pagina-inicial/pagina-inicial.module').then( m => m.PaginaInicialPageModule)
-  },
+ 
 
 
   {
@@ -43,6 +54,16 @@ const routes: Routes = [
     path: 'añadir-detalles-analiticas',
     loadChildren: () => import('./pages/añadir-detalles-analiticas/añadir-detalles-analiticas.module').then( m => m.AñadirDetallesAnaliticasPageModule)
   },
+  {
+    path: 'users',
+    loadChildren: () => import('./pages/users/users.module').then( m => m.UsersPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+  },
+
+
 
 ];
 @NgModule({

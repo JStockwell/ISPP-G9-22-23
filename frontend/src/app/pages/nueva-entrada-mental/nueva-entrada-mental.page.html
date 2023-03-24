@@ -19,15 +19,15 @@
         <form>
 
           <div class="cc-selector" style = "padding-top: 5%; padding-bottom: 2%;">
-            <input [(ngModel)]="estadoFisico" id="muyfeliz" type="radio" name="caras" value="muyfeliz" />
+            <input [(ngModel)]="estadoFisico" id="muyfeliz" type="radio" name="caras" value="VG" />
             <label class="image-cc muyfeliz" for="muyfeliz"></label>
-            <input [(ngModel)]="estadoFisico" id="feliz" type="radio" name="caras" value="feliz" />
+            <input [(ngModel)]="estadoFisico" id="feliz" type="radio" name="caras" value="G" />
             <label class="image-cc feliz" for="feliz"></label>
-            <input [(ngModel)]="estadoFisico" id="neutral" type="radio" name="caras" value="neutral" />
+            <input [(ngModel)]="estadoFisico" id="neutral" type="radio" name="caras" value="F" />
             <label class="image-cc neutral" for="neutral"></label>
-            <input [(ngModel)]="estadoFisico" id="triste" type="radio" name="caras" value="triste" />
+            <input [(ngModel)]="estadoFisico" id="triste" type="radio" name="caras" value="B" />
             <label class="image-cc triste" for="triste"></label>
-            <input [(ngModel)]="estadoFisico" id="muytriste" type="radio" name="caras" value="muytriste" />
+            <input [(ngModel)]="estadoFisico" id="muytriste" type="radio" name="caras" value="VB" />
             <label class="image-cc muytriste" for="muytriste"></label>
           </div>
 
@@ -42,11 +42,11 @@
         <form>
 
           <div class="cc-selector" style = "padding-top: 5%; padding-bottom: 2%;">
-            <input [(ngModel)]="suenyo" id="profundo" type="radio" name="camas" value="profundo" />
+            <input [(ngModel)]="suenyo" id="profundo" type="radio" name="camas" value="DEEP" />
             <label class="image-cc profundo" for="profundo"></label>
-            <input [(ngModel)]="suenyo" id="ligero" type="radio" name="camas" value="ligero" />
+            <input [(ngModel)]="suenyo" id="ligero" type="radio" name="camas" value="LIGHT" />
             <label class="image-cc ligero" for="ligero"></label>
-            <input [(ngModel)]="suenyo" id="insomnio" type="radio" name="camas" value="insomnio" />
+            <input [(ngModel)]="suenyo" id="insomnio" type="radio" name="camas" value="NONE" />
             <label class="image-cc insomnio" for="insomnio"></label>
             
           </div>
@@ -62,11 +62,11 @@
         <form>
 
           <div class="cc-selector" style = "padding-top: 5%; padding-bottom: 2%;">
-            <input [(ngModel)]="comida" id="sano" type="radio" name="comer" value="sano" />
+            <input [(ngModel)]="comida" id="sano" type="radio" name="comer" value="HEALTHY" />
             <label class="image-cc sano" for="sano"></label>
-            <input [(ngModel)]="comida" id="basura" type="radio" name="comer" value="basura" />
+            <input [(ngModel)]="comida" id="basura" type="radio" name="comer" value="FAST" />
             <label class="image-cc basura" for="basura"></label>
-            <input [(ngModel)]="comida" id="ayuno" type="radio" name="comer" value="ayuno" />
+            <input [(ngModel)]="comida" id="ayuno" type="radio" name="comer" value="NONE" />
             <label class="image-cc ayuno" for="ayuno"></label>
             
           </div>
@@ -82,15 +82,15 @@
         <form>
 
           <div class="cc-selector" style = "padding-top: 5%; padding-bottom: 2%;">
-            <input [(ngModel)]="tiempo" id="sol" type="radio" name="clima" value="sol" />
+            <input [(ngModel)]="tiempo" id="sol" type="radio" name="clima" value="SUNNY" />
             <label class="image-cc sol" for="sol"></label>
-            <input [(ngModel)]="tiempo" id="nubes" type="radio" name="clima" value="nubes" />
+            <input [(ngModel)]="tiempo" id="nubes" type="radio" name="clima" value="CLOUDY" />
             <label class="image-cc nubes" for="nubes"></label>
-            <input [(ngModel)]="tiempo" id="lluvia" type="radio" name="clima" value="lluvia" />
+            <input [(ngModel)]="tiempo" id="lluvia" type="radio" name="clima" value="RAINY" />
             <label class="image-cc lluvia" for="lluvia"></label>
-            <input [(ngModel)]="tiempo" id="tormenta" type="radio" name="clima" value="tormenta" />
+            <input [(ngModel)]="tiempo" id="tormenta" type="radio" name="clima" value="STORMY" />
             <label class="image-cc tormenta" for="tormenta"></label>
-            <input [(ngModel)]="tiempo" id="nieve" type="radio" name="clima" value="nieve" />
+            <input [(ngModel)]="tiempo" id="nieve" type="radio" name="clima" value="SNOWY" />
             <label class="image-cc nieve" for="nieve"></label>
           </div>
 
@@ -115,21 +115,15 @@
         <ion-textarea [(ngModel)]="notas" rows= "3" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam gravida venenatis accumsan. In mi massa tempus" type="text"></ion-textarea>
       </ion-item>
 
-      <ion-button color="dark" expand="block" (click)="nuevaEntrada()">
+      <ion-button color="dark" expand="block" (click)="crearEntradaMental()">
         Crear entrada
       </ion-button>
     </ion-card>
-  
-  
+
     <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
-      <ion-fab-button color = "secondary" (click)="goBack()">
+      <ion-fab-button color = "secondary" [routerLink]="['/app/Tabs/DiarioEmocional']">
         <ion-icon name="arrow-back-circle-outline"></ion-icon>
       </ion-fab-button>
     </ion-fab>
-  
-      
 
-
-    
-  
 </ion-content>
