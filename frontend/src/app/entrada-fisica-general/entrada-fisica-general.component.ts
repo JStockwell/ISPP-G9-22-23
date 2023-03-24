@@ -30,7 +30,6 @@ export class EntradaFisicaGeneralComponent implements OnInit {
 
   ngOnInit() {
     this.array_bodyParts = this.bodyParts.split(",")
-
   }
 
 }
