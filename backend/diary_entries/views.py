@@ -208,7 +208,7 @@ class PhysicalEntryCreate(APIView):
             physical_entry.save()
 
             return Response({"physical_entry_id":physical_entry.id, "date":physical_entry.date, "state":physical_entry.state,
-                             "notes":physical_entry.notes, "done_exercise": physical_entry.done_exercise, "patient_id":patient.id}, status=status.HTTP_200_OK)
+                             "notes":physical_entry.notes, "done_exercise": physical_entry.done_exercise, "patient_id":patient.id, "body_parts":physical_entry.body_parts}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
