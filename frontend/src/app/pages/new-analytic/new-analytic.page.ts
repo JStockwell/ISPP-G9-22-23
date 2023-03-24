@@ -93,7 +93,7 @@ export class NewAnalyticPage implements OnInit {
             console.log(err);
           }
         })
-        window.location.href = "http://localhost:8100/app/Tabs/Analytics"
+        window.location.href = "/app/Tabs/Analytics"
       },
       error: err => {
         console.log(err);

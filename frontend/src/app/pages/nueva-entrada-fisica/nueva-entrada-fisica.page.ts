@@ -75,8 +75,8 @@ export class NuevaEntradaFisicaPage implements OnInit {
     this.nuevaEntradFisicaService.postEntry(dataEntry).subscribe({
       next: dataEntry => {
         console.log(dataEntry);
-        document.location.href="http://localhost:8100/app/Tabs/seccion-fisica"
-        window.location.href = "http://localhost:8100/app/Tabs/seccion-fisica"
+        document.location.href="/app/Tabs/seccion-fisica"
+        window.location.href = "/app/Tabs/seccion-fisica"
       },
       error: err => {
         console.log(err);
