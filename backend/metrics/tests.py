@@ -165,7 +165,7 @@ class MeasureCreateTest(APITestCase):
         force_authenticate(request, self.admin)
         response = self.view(request)
 
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.afrom django.shortcuts import get_object_or_404ssertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data["error"],"No existe ninguna métrica con dicho id")
 
     def test_username_no_found(self):
