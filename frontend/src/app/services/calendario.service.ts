@@ -11,6 +11,38 @@ export class CalendarioService {
   urlApi:string = "https://isppgrupo9.pythonanywhere.com"
 
   constructor(private http: HttpClient, private uService: UsersService) {}
+
+  eventos = [
+    {
+      date: '2023-03-05',
+      time: '12:35',
+    },
+    {
+      date: '2023-03-10',
+      time: '13:40',
+    },
+    {
+      date: '2023-03-20',
+      time: '08:30',
+    },
+    {
+      date: '2023-03-30',
+      time: '12:10',
+    },
+    {
+      date: '2023-03-30',
+      time: '10:35',
+    },
+  ];
+
+  filterByDate(selectedDate: string) {
+    return this.eventos.filter(event => event.date === selectedDate)
+    .sort((a, b) => {
+      const timeA = parseInt(a.time.replace(':', ''));
+      const timeB = parseInt(b.time.replace(':', ''));
+      return timeA - timeB;
+    });
+  }
   
   getAppointmentsList(): Observable<any>{
     if(this.uService.isLoggedIn()){

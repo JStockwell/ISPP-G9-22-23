@@ -8,20 +8,36 @@
   <ion-card color = "warning">
     <ion-datetime 
       display-format="DD.MM.YYYY HH:mm"
+      [(ngModel)]="fechaSeleccionada"
       presentation="date"
-      value="2023-01-01"
       locale="es-ES"
       hourCycle="h23"
       [highlightedDates]="eventos"
       [firstDayOfWeek]="1"
+      (ionChange)="onDateChange($event)"
     >
       <span slot="title">Día seleccionado</span>
-      <span slot="time-label">Tiempo</span>
     </ion-datetime>
+
+    <ion-item *ngIf="comprobarFechaEnEventos(fechaSeleccionada)" color="light">
+      <ion-list style = "padding-bottom: 6%; background-color: #f4f5f8;">
+        <ion-item *ngFor="let item of citasEnDia" color="light" style = "padding-top: 3%; background-color: #f4f5f8;">
+          <ion-text color="primary">
+            Hoy tiene una cita agendada para las {{ item.time }}
+          </ion-text>
+          <ion-button color="dark">
+            Editar
+          </ion-button>
+          <ion-button color="dark">
+            Borrar
+          </ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-item>
   </ion-card>
 
   <ion-fab style = "padding-inline-end: 2.5%;" slot="fixed" size="small" vertical="bottom" horizontal="end">
-    <ion-fab-button color = "secondary" [routerLink]="['/app/Tabs/calendario/New']">
+    <ion-fab-button color = "secondary" (click)="nuevaCita()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

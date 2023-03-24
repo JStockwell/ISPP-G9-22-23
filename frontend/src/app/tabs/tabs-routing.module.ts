@@ -44,7 +44,7 @@ const routes: Routes = [
         loadChildren: () => import('../pages/nueva-entrada-fisica/nueva-entrada-fisica.module').then(m=>m.NuevaEntradaFisicaPageModule)        
       },
       {
-        path: 'calendario/New',
+        path: 'calendario/nueva-cita',
         loadChildren: () => import('../pages/nueva-cita/nueva-cita.module').then(m=>m.NuevaCitaPageModule)        
       },
       {

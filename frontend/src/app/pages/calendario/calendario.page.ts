@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CalendarioService } from 'src/app/services/calendario.service';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -10,30 +11,60 @@ import { UsersService } from 'src/app/services/users.service';
 export class CalendarioPage implements OnInit {
   eventos = [
     {
-      date: '2023-01-05',
-      textColor: '#800080',
-      backgroundColor: '#ffc0cb',
+      date: '2023-03-05',
+      time: '12:35',
     },
     {
-      date: '2023-01-10',
-      textColor: '#09721b',
-      backgroundColor: '#c8e5d0',
+      date: '2023-03-10',
+      time: '13:40',
     },
     {
-      date: '2023-01-20',
-      textColor: 'var(--ion-color-secondary-contrast)',
-      backgroundColor: 'var(--ion-color-secondary)',
+      date: '2023-03-20',
+      time: '08:30',
     },
     {
-      date: '2023-01-23',
-      textColor: 'rgb(68, 10, 184)',
-      backgroundColor: 'rgb(211, 200, 229)'
+      date: '2023-03-30',
+      time: '12:10',
+    },
+    {
+      date: '2023-03-30',
+      time: '10:35',
     }
   ];
 
-  constructor(private calendarioService: CalendarioService, private uService: UsersService) { }
+  fechaSeleccionada = new Date().toISOString();
+  citasEnDia: any[] | undefined;
+
+  constructor(private calendarioService: CalendarioService, private router: Router, private uService: UsersService) { }
 
   ngOnInit() {
+    this.cambiarColorEventos(this.eventos);
+  }
+  
+  nuevaCita() {
+    let fechaEnviar = this.fechaSeleccionada;
+    this.router.navigate(['/app/Tabs/calendario/nueva-cita'], { queryParams: { fecha: fechaEnviar } });
+  }
+
+  onDateChange(event: any) {
+    this.fechaSeleccionada = event.detail.value.split('T')[0];
+    this.citasEnDia = this.calendarioService.filterByDate(this.fechaSeleccionada);
+    console.log(this.citasEnDia);
+  }
+
+  cambiarColorEventos(lista: any) {
+    let colorTextoEvento = 'var(--ion-color-secondary-contrast)';
+    let colorFondoEvento = 'var(--ion-color-secondary)';
+    for (let item of lista) {
+        item["textColor"] = colorTextoEvento;
+        item["backgroundColor"] = colorFondoEvento;
+    }
+    console.log(lista);
+  }
+
+  comprobarFechaEnEventos(fecha: any) {
+    let fechaParseada = fecha.split('T')[0];
+    return this.eventos.find(evento => evento.date === fechaParseada) !== undefined;
   }
 
   getAppointmentsList(){
