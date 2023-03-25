@@ -4,6 +4,7 @@ import { NuevaCitaService } from 'src/app/services/nueva-cita.service';
 import { UsersService } from 'src/app/services/users.service';
 import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 registerLocaleData(localeEs, 'es');
 
 @Component({
@@ -24,12 +25,18 @@ export class NuevaCitaPage implements OnInit {
     name: "Oftalmología"},
   ]
 
-  fecha = new Date(); 
+  fechaRecibida = new Date();
   fechaHora = new Date().toISOString();
   especialidad:string | undefined
   observaciones:string | undefined
 
-  constructor(private nuevaCitaService: NuevaCitaService, private navCtrl: NavController, private uService: UsersService) { }
+  constructor(private nuevaCitaService: NuevaCitaService, private navCtrl: NavController, private route: ActivatedRoute, private uService: UsersService) {
+    this.route.queryParams.subscribe(params => {
+      if (params && params['fecha']) {
+         this.fechaRecibida = params['fecha'];
+      }
+    });
+  }
 
   ngOnInit() {
     // DESCOMENTAR CUANDO ESTÉ EL ENDPOINT
@@ -68,8 +75,9 @@ export class NuevaCitaPage implements OnInit {
   }
   
   crearNuevaCita(): void{
+    let fechaParseada = new Date(this.fechaRecibida);
     let dataEntry = {
-      date: this.fecha.toISOString().split('T')[0],
+      date: fechaParseada.toISOString().split('T')[0],
       description: this.observaciones,
       specialty: this.especialidad,
       time: this.fechaHora.replace(/.*(\d{2}:\d{2}):\d{2}.*/, "$1"),
