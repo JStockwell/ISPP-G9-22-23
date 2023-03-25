@@ -21,9 +21,12 @@
 
     <ion-item *ngIf="comprobarFechaEnEventos(fechaSeleccionada)" color="light">
       <ion-list style = "padding-bottom: 6%; background-color: #f4f5f8;">
+        <ion-text color="primary" style="text-align: center;">
+          <h4>Usted tiene <b>{{ cantidadCitas }} cita/s programada/s</b> para este día</h4>
+        </ion-text>
         <ion-item *ngFor="let item of citasEnDia" color="light" style = "padding-top: 3%; background-color: #f4f5f8;">
           <ion-text color="primary">
-            Hoy tiene una cita agendada para las {{ item.time }}
+            Tiene una cita agendada para las {{ item.time }}h
           </ion-text>
           <ion-button color="dark">
             Editar

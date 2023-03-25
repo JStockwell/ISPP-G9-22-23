@@ -34,6 +34,7 @@ export class CalendarioPage implements OnInit {
 
   fechaSeleccionada = new Date().toISOString();
   citasEnDia: any[] | undefined;
+  cantidadCitas: any | undefined;
 
   constructor(private calendarioService: CalendarioService, private router: Router, private uService: UsersService) { }
 
@@ -49,6 +50,7 @@ export class CalendarioPage implements OnInit {
   onDateChange(event: any) {
     this.fechaSeleccionada = event.detail.value.split('T')[0];
     this.citasEnDia = this.calendarioService.filterByDate(this.fechaSeleccionada);
+    this.cantidadCitas = this.citasEnDia.length;
     console.log(this.citasEnDia);
   }
 
