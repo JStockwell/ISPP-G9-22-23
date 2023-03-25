@@ -11,7 +11,6 @@ import {HttpClient} from '@angular/common/http';
 })
 
 export class UsersPage implements OnInit {
-  
   form:any ={
     username: null,
     password:null,
@@ -23,6 +22,7 @@ export class UsersPage implements OnInit {
     birthdate:null
   }
   
+  
   isSuccessful = false;
   isSignUpFailed = false;
   errorMessage = '';
@@ -31,6 +31,7 @@ export class UsersPage implements OnInit {
   
   constructor(private uService: UsersService, private http: HttpClient) { }
   ngOnInit() {
+
   }
 
   regForm(): void{
