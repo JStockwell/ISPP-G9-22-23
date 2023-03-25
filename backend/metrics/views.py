@@ -22,7 +22,7 @@ class MetricList(APIView):
     def get(self, request):
         metrics = Metric.objects.all()
         serializer = MetricSerializer(metrics, many=True)
-        print(metrics)
+        
         return Response(serializer.data)
 
 class MetricListInfo(APIView):
