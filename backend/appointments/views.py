@@ -30,7 +30,7 @@ class AppointmentCreate(APIView):
             if not Patient.objects.filter(id = patient_id).exists():
                 return Response({"error": "No existe ningun paciente con ese id"}, status=status.HTTP_400_BAD_REQUEST)
             if fecha_dt < dateToday:
-                 return Response({"error": "No se puede coger cita con fecha posterior a la actual"}, status=status.HTTP_400_BAD_REQUEST)
+                 return Response({"error": "No se puede coger cita con fecha anterior a la actual"}, status=status.HTTP_400_BAD_REQUEST)
             else:
                 patient = get_object_or_404(Patient, id=patient_id)
                 appointment = Appointment(date = date, description = description, specialty = specialty, time = time, patient = patient)
