@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Entrada mental</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card color="warning" *ngIf="entrada!=undefined||entrada!=null">
+    <div style="text-align: center;">
+      <div style="text-align: right; margin-right: 15px; margin-top: 20px">
+        
+      </div>
+      <h3 style="margin-top: 0px">{{ entrada.date }}</h3>
+    </div>
+
+    <div style="text-align: center">
+      <ion-row>
+        <ion-col>
+          <h3>
+            Animo: <img src="{{getImagenEstado(entrada.state)}}"  style="width: 3rem;" >
+            
+          </h3>
+        </ion-col>
+        <ion-col>
+          <h3>Sueño: <img src="{{getImagenSuenyo(entrada.sleep)}}"  style="width: 3rem;" ></h3>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <div style="text-align: center">
+      <ion-row>
+        <ion-col>
+          <h3>
+            Tiempo:<img src="{{getImagenTiempo(entrada.weather)}}"  style="width: 3rem;" >
+            
+          </h3>
+        </ion-col>
+        <ion-col>
+          <h3>Comida: <img src="{{getImagenComida(entrada.food)}}"  style="width: 3rem;" ></h3>
+        </ion-col>
+      </ion-row>
+    </div>  
+
+    <div style="text-align: center"><h3>Pensamientos Postivos</h3></div>
+    <div style="text-align: center; margin-bottom: 10px">
+      {{ entrada.positive_thoughts}}
+    </div>
+    <div style="text-align: center"><h3>Pensamientos Negativos</h3></div>
+    <div style="text-align: center; margin-bottom: 10px">
+      {{ entrada.negative_thoughts}}
+    </div>
+
+    <div style="text-align: center"><h3>Notas</h3></div>
+    <div style="text-align: center; margin-bottom: 10px">{{ entrada.notes}}</div>
+  </ion-card>
+  <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
+    <ion-fab-button  color = "secondary" [routerLink]="['/app/Tabs/DiarioEmocional']">
+      <ion-icon name="arrow-back-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

@@ -7,7 +7,7 @@
 <ion-content [fullscreen]="true" color = "light">
 
   <div *ngFor="let item  of entries">
-    <ion-card color="warning" *ngIf="entries !=0">
+    <ion-card color="warning" *ngIf="entries !=0" [routerLink]="['/app/Tabs/seccion-mental/'+item.id]">
       <div style="text-align: center;">
         <div style="text-align: right; margin-right: 15px; margin-top: 20px">
           
@@ -42,18 +42,6 @@
           </ion-col>
         </ion-row>
       </div>  
-
-      <div style="text-align: center"><h3>Pensamientos Postivos</h3></div>
-      <div style="text-align: center; margin-bottom: 10px">
-        {{ item.positive_thoughts}}
-      </div>
-      <div style="text-align: center"><h3>Pensamientos Negativos</h3></div>
-      <div style="text-align: center; margin-bottom: 10px">
-        {{ item.negative_thoughts}}
-      </div>
-
-      <div style="text-align: center"><h3>Notas</h3></div>
-      <div style="text-align: center; margin-bottom: 10px">{{ item.notes}}</div>
     </ion-card>
   </div>
 
