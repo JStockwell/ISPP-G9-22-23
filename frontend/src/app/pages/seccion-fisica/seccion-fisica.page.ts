@@ -18,8 +18,16 @@ export class SeccionFisicaPage implements OnInit {
     }
   }
 
-  eliminarEntradaFisica(){
-    
+  eliminarEntradaFisica(idEntrada: any) {
+    this.fisicoService.deleteEntry(idEntrada).subscribe({
+      next: res => {
+        console.log(res);
+        document.location.href="http://localhost:8100/app/Tabs/seccion-fisica"
+        window.location.href = "http://localhost:8100/app/Tabs/seccion-fisica"
+      },error: err => {
+        console.log(err)
+      }
+    })
   }
 
   ngOnInit() {
