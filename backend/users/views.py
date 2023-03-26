@@ -97,6 +97,18 @@ class PatientId(APIView):
         patient = get_object_or_404(Patient, id=pk)
         patient.delete()
         return Response({"message":"Paciente con id: " +str(pk) +" borrado correctamente"}, status=status.HTTP_200_OK)
+    
+    def put(self, request, pk):
+
+        patient = get_object_or_404(Patient, id=pk)
+        serializer = PatientSerializer(patient, data = request.data)
+        
+        if (serializer.is_valid()):
+            serializer.save()
+            return Response(serializer.data)
+
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class MedicList(APIView):
@@ -212,6 +224,18 @@ class MedicId(APIView):
         medic = get_object_or_404(Medic, id=pk)
         medic.delete()
         return Response({"message":"Médico con id: " +str(pk) +" borrado correctamente"}, status=status.HTTP_200_OK)
+    
+    def put(self, request, pk):
+
+        medic = get_object_or_404(Medic, id = pk)
+        serializer = MedicSerializer(medic, data = request.data)
+        
+        if (serializer.is_valid()):
+            serializer.save()
+            return Response(serializer.data)
+
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class LoginView(APIView):
     authentication_classes = [TokenAuthentication]

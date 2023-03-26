@@ -263,18 +263,15 @@ class PhysicalEntryId(APIView):
         
         if (serializer.is_valid()):
 
-            # patient_id = serializer.data["patient_id"]
-            # put_date = serializer.data["date"]
+            # patient_id = serializer.validated_data["patient_id"]
+            # put_date = serializer.validated_data["date"]
 
-            # print(str(put_date))
+            # print(request.data)
 
             # patient = get_object_or_404(Patient, id=patient_id)
             # previousentries = PhysicalEntry.objects.filter(patient = patient)
             
             # for entry in previousentries:
-            #     print("hellegao")
-            #     print(str(entry.date))
-            #     print(str(put_date))
             #     if(str(entry.date) == str(put_date)):
             #         return Response({"error":"Ya existe una entrada de este tipo de diario en esta fecha para este usuario"}, status=status.HTTP_400_BAD_REQUEST)
             
