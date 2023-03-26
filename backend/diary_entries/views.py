@@ -137,7 +137,7 @@ class MentalEntryId(APIView):
     def put(self, request, pk):
 
         mental_entry = self.get_mental_entry_by_pk(pk)
-        serializer = PhysicalEntrySerializer(mental_entry, data = request.data)
+        serializer = MentalEntrySerializer(mental_entry, data = request.data)
         
         if (serializer.is_valid()):
             serializer.save()
