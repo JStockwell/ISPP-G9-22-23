@@ -49,6 +49,10 @@ const routes: Routes = [
         loadChildren: () => import('../pages/nueva-entrada-fisica/nueva-entrada-fisica.module').then(m=>m.NuevaEntradaFisicaPageModule)        
       },
       {
+        path: 'seccion-fisica/:id/edit',
+        loadChildren: () => import('../pages/modificar-fisico/modificar-fisico-routing.module').then(m=>m.ModificarFisicoPageRoutingModule)
+      },
+      {
         path: '',
         redirectTo: '/Tabs/Analytics',
         pathMatch: 'full'

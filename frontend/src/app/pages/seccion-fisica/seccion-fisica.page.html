@@ -8,6 +8,9 @@
   <div *ngIf="existsEntradas(); then renderEntradas else noEntradas"></div>
   <ng-template #renderEntradas>
     <div *ngFor="let entrada of entradas" style="overflow-y: scroll">
+      <ion-button [routerLink]="['/app/Tabs/seccion-fisica/'+entrada.id+'/edit']">
+        <img src="/assets/images/Edit.png" style="height: 1.5rem;">
+      </ion-button>
       <app-entrada-fisica-general
         [date]="entrada.date.toUTCString()"
         [state]="entrada.state"

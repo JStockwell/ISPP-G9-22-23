@@ -27,7 +27,7 @@ export class SeccionFisicaPage implements OnInit {
           let d = data[i] as any;
           let date_string:Array<any> = d.date.split("-");
           let date = new Date(date_string[0], date_string[1], date_string[2]);
-          let entrada = new EntradaFisica(date, d.state, d.body_parts, d.notes);
+          let entrada = new EntradaFisica(d.id, date, d.state, d.body_parts, d.notes);
           this.entradas.push(entrada)
         }
         this.entradas.sort((entrada1:EntradaFisica, entrada2:EntradaFisica)=> entrada1.date.getTime() - entrada2.date.getTime())
@@ -42,12 +42,14 @@ export class SeccionFisicaPage implements OnInit {
 }
 
 export class EntradaFisica{
+  id:any
   date:Date
   state:String
   body_parts:String
   notes:String
 
-  constructor(date:Date, state:String, body_parts:String, notes:String){
+  constructor(id:any, date:Date, state:String, body_parts:String, notes:String){
+    this.id = id;
     this.date = date;
     this.state = state;
     this.body_parts = body_parts;
