@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # IMPORTED MODULES
+    'django_extensions',
     'rest_framework',
     'drf_yasg',
     'rest_framework.authtoken',
@@ -97,7 +98,7 @@ REST_FRAMEWORK = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ISPPgrupo9$marcoluna',
+        'NAME': 'ISPPgrupo9$develop',
         'USER': 'ISPPgrupo9',
         'PASSWORD': 'MarcoLuna',
         'HOST': 'ISPPgrupo9.mysql.pythonanywhere-services.com',

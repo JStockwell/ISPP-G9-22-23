@@ -5,3 +5,4 @@ django-extensions==3.2.1
 markdown==3.3
 django-filter==22.1
 drf-yasg==1.21.5
+django-cors-headers==3.14.0

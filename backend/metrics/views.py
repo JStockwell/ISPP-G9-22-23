@@ -22,7 +22,7 @@ class MetricList(APIView):
     def get(self, request):
         metrics = Metric.objects.all()
         serializer = MetricSerializer(metrics, many=True)
-        print(metrics)
+        
         return Response(serializer.data)
 
 class MetricListInfo(APIView):
@@ -34,8 +34,26 @@ class MetricListInfo(APIView):
             responses={'200':MetricInfoSerializer}
     )
     def get(self, request):
-        metrics = MetricInfo.objects.all()
-        serializer = MetricInfoSerializer(metrics, many=True)
+        metrics_info = MetricInfo.objects.all()
+        serializer = MetricInfoSerializer(metrics_info, many=True)
+        return Response(serializer.data)
+    
+class NotUsedMetricInfoByPatient(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    @swagger_auto_schema(
+            manual_parameters=[],
+            security=[],
+            responses={'200':MetricInfoSerializer, '404': "No se ha encontrado el paciente"}
+    )
+    def get(self, request, *arg, **kwargs):
+        pk = self.kwargs.get('pk')
+        patient = get_object_or_404(Patient, id=pk)
+        metrics = Metric.objects.filter(patient = patient)
+        metrics_info = [metric.info for metric in metrics]
+        metrics_info = list(dict.fromkeys(metrics_info))
+        all_metrics_info = list(MetricInfo.objects.all())
+        serializer = MetricInfoSerializer([x for x in all_metrics_info if x not in metrics_info], many=True)
         return Response(serializer.data)
 
 class MetricCreate(APIView):
@@ -75,7 +93,8 @@ class MetricCreate(APIView):
                     return Response({"error":"La unidad y el nombre de métrica debe corresponder a alguna info de métrica guardada"}, status=status.HTTP_400_BAD_REQUEST)
                 metric = Metric(min_value = min_value, max_value = max_value, patient=patient, info = metricInfo)
                 metric.save()
-                return Response(serializer.data, status=status.HTTP_200_OK)
+                return Response({"metric_id":metric.id,"name":name,"unit":unit,"min_value":metric.min_value, 
+                                 "max_value":metric.max_value,"patient_id":patient.id}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -168,7 +187,7 @@ class MeasureCreate(APIView):
                     metric = get_object_or_404(Metric, id=metric_id)
                     measure = Measure(value = value, metric=metric, patient=patient)
                     measure.save()
-                    return Response(serializer.data, status=status.HTTP_200_OK)
+                    return Response({"measure_id":measure.id,"value":measure.value,"metric_id":metric.id, "patient_id":patient.id}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -237,7 +256,7 @@ class MeasurePatientId(APIView):
     def get(self, request, *arg, **kwargs):
         pk = self.kwargs.get('pk')
         patient = get_object_or_404(Patient, id = pk)
-        measures = Measure.objects.filter(patient = patient)
+        measures = Measure.objects.filter(patient = patient).order_by("-date")
         serializer = MeasureSerializer(measures, many=True)
         return Response(serializer.data)
     

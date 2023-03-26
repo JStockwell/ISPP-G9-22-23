@@ -11,9 +11,11 @@ export class EntradaFisicaGeneralComponent implements OnInit {
   @Input()
   state!: String;
   @Input()
-  bodyParts!: Array<String>;
+  bodyParts!: String;
   @Input()
   notes!: String;
+
+  array_bodyParts:any
 
   constructor() { 
   }
@@ -26,6 +28,8 @@ export class EntradaFisicaGeneralComponent implements OnInit {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.array_bodyParts = this.bodyParts.split(",")
+  }
 
 }
