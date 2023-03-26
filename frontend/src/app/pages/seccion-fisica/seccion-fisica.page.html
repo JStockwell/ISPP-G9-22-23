@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color = "primary">
-    <ion-title> Sección Física </ion-title>
+    <ion-title> Diario Físico </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -17,13 +17,16 @@
     </div>
   </ng-template>
   <ng-template #noEntradas>
-    <div style="font-weight: bold; font-size: x-large; text-align: center">
-      No hay entradas todavía
+    <div style="font-weight: bold; font-size: x-large; text-align: center">     
+
+      <img src="https://static.thenounproject.com/png/2902077-200.png" class="imagen-vacia" alt="">
+      <div style="opacity: .2;"> No hay entradas todavía </div>
+      
     </div>
   </ng-template>
   
   <ion-fab style = "padding-inline-end: 5%;"  slot = "fixed"  vertical = "bottom" horizontal = "end">
-    <ion-fab-button color = "secondary" [routerLink]="['/app/Tabs/seccion-fisica/New']">
+    <ion-fab-button color = "primary" [routerLink]="['/app/Tabs/seccion-fisica/New']">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

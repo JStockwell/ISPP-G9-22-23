@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SeccionFisicaServiceService } from 'src/app/services/seccion-fisica-service.service';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-seccion-fisica',
@@ -9,7 +10,7 @@ import { SeccionFisicaServiceService } from 'src/app/services/seccion-fisica-ser
 export class SeccionFisicaPage implements OnInit {
   entradas!:Array<any>
   date!:String
-  constructor(private fisicoService: SeccionFisicaServiceService) { }
+  constructor(private fisicoService: SeccionFisicaServiceService, private loadingCtrl: LoadingController) { }
 
   existsEntradas = () =>{
     if (this.entradas){
@@ -20,24 +21,40 @@ export class SeccionFisicaPage implements OnInit {
   }
 
   ngOnInit() {
-    this.fisicoService.getEntradasFisicas().subscribe({
-      next: data=>{
-        this.entradas = []
-        for(let i=0;i<data.length;i++){
-          let d = data[i] as any;
-          let date_string:Array<any> = d.date.split("-");
-          let date = new Date(date_string[0], date_string[1], date_string[2]);
-          let entrada = new EntradaFisica(date, d.state, d.body_parts, d.notes);
-          this.entradas.push(entrada)
-        }
-        this.entradas.sort((entrada1:EntradaFisica, entrada2:EntradaFisica)=> entrada1.date.getTime() - entrada2.date.getTime())
-        this.entradas.reverse()
-      },
-      error: err=>{
-        console.log(err.error.message);
-      }
-    })
+    this.loadEntradasDiarioFisico();
+
   }
+
+    async loadEntradasDiarioFisico(){
+
+      const loading = await this.loadingCtrl.create({
+        message: 'Cargando..',
+        spinner:'bubbles',
+      });
+    
+      await loading.present();
+
+      this.fisicoService.getEntradasFisicas().subscribe({
+        next: data=>{
+          loading.dismiss();
+          this.entradas = []
+          for(let i=0;i<data.length;i++){
+            let d = data[i] as any;
+            let date_string:Array<any> = d.date.split("-");
+            let date = new Date(date_string[0], date_string[1], date_string[2]);
+            let entrada = new EntradaFisica(date, d.state, d.body_parts, d.notes);
+            this.entradas.push(entrada)
+          }
+          this.entradas.sort((entrada1:EntradaFisica, entrada2:EntradaFisica)=> entrada1.date.getTime() - entrada2.date.getTime())
+          this.entradas.reverse()
+        },
+        error: err=>{
+          console.log(err.error.message);
+        }
+      })
+
+
+    }
 
 }
 

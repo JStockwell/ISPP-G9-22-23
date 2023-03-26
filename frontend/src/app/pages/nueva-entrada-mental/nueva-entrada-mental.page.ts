@@ -7,6 +7,10 @@ import { registerLocaleData } from '@angular/common';
 import { UsersService } from 'src/app/services/users.service';
 registerLocaleData(localeEs, 'es');
 
+import { AlertController } from '@ionic/angular';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-nueva-entrada-mental',
   templateUrl: './nueva-entrada-mental.page.html',
@@ -23,8 +27,15 @@ export class NuevaEntradaMentalPage implements OnInit{
   ppositivos:string | undefined
   pnegativos:string | undefined
   today = new Date();
+  errorMessage = '';
+  errorMessageEstado = '';
+  errorMessageTiempo= '';
+  errorMessageComida = '';
+  errorMessageSuenyo = '';
 
-  constructor(private nuevaEntradaMentalService: NuevaEntradaMentalService, private navCtrl: NavController, private uService: UsersService) {}
+  public mostrarAlerta = false;
+
+  constructor(private nuevaEntradaMentalService: NuevaEntradaMentalService, private navCtrl: NavController, private uService: UsersService, private alertController: AlertController) {}
 
   ngOnInit() {
   }
@@ -64,9 +75,51 @@ export class NuevaEntradaMentalPage implements OnInit{
         window.location.href = "/app/Tabs/DiarioEmocional"
       },
       error: err => {
-        console.log(err);
+        if( err.error.error ){
+          this.errorMessage= '* ' + err.error.error; 
+          //window.alert(this.errorMessage);
+        }
+        else if( err.error.state && err.error.weather && err.error.food && err.error.sleep){
+          this.errorMessage = '* No puedes dejar los campos de estado, sueño, comida y tiempo sin seleccionar'
+          //window.alert(this.errorMessage);
+          console.log(err);
+        }
+        else{
+          if(err.error.state){
+            this.errorMessageEstado = "* No puedes dejar el campo de estado sin selecionar";
+            //window.alert(this.errorMessageEstado);
+          }
+          if(err.error.weather){
+            this.errorMessageTiempo = "* No puedes dejar el campo de tiempo sin selecionar";
+            //window.alert(this.errorMessageTiempo);
+          }
+          if(err.error.sleep){
+            this.errorMessageSuenyo = "* No puedes dejar el campo de sueño sin selecionar";
+            //window.alert(this.errorMessageTiempo);
+          }
+          if(err.error.food){
+            this.errorMessageComida = "* No puedes dejar el campo de comida sin selecionar";
+            //window.alert(this.errorMessageComida);
+          }
+          
+          console.log(err);
+          
+          
+
+        }
+       
+
       }
     })
   }
+
+  existsErrores = () =>{
+    if (this.errorMessage){
+      return this.errorMessage.length>0;
+    } else{
+      return false;
+    }
+  }
+
 
 }

@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@awesome-cordova-plugins/screen-orientation": "^6.3.0",
+    "@capacitor/app": "^4.1.1",
+    "@capacitor/haptics": "^4.1.0",
+    "@capacitor/keyboard": "^4.1.1",
+    "@capacitor/status-bar": "^4.1.1",
+    "cordova-plugin-screen-orientation": "^3.0.3"
+  }
+}
