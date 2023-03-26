@@ -40,6 +40,11 @@ export class NuevaEntradaMentalPage implements OnInit{
   ngOnInit() {
   }
 
+  goBack(){
+    this.navCtrl.pop(); 
+  }
+
+
   getIdUser(){
     if(this.uService.isLoggedIn()){
       var ck = window.sessionStorage.getItem('auth-user')
