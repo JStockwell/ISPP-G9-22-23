@@ -86,6 +86,23 @@ export class AnaliticasService implements HttpInterceptor{
 
   }
 
+  deleteAnalitica(analiticaId: any):Observable<any>{
+    if(this.uService.isLoggedIn()){
+      var ck = window.sessionStorage.getItem('auth-user')
+      if(ck != null){
+        var tk = JSON.parse(ck);
+        var res = [];
+        for(var i in tk){
+          res.push(tk[i]);
+        }
+        let headers = new HttpHeaders();
+        headers=headers.set('Authorization', 'Token '+res[0])
+        return this.http.delete(this.API_URL + `metrics/metrics/${analiticaId}`,{'headers':headers})
+      }
+    }
+    return new Observable<any>
+  }
+
 
 }
 

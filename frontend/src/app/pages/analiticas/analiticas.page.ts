@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { AnaliticasService } from 'src/app/services/analiticas.service';
 import Chart from 'chart.js/auto';
 import {UsersService} from '../../services/users.service'
@@ -23,11 +23,41 @@ export class AnaliticasPage implements OnInit {
   analiticas = new Array<analitica>
   mediciones = new Array<measure>
 
-  constructor(private analiticasService: AnaliticasService, private loadingCtrl: LoadingController, private uService: UsersService) {}
+  constructor(private analiticasService: AnaliticasService, private loadingCtrl: LoadingController, private uService: UsersService, private alertController: AlertController) {}
 
   //Se ejecuta al crear la página por parte de angular
   ngOnInit() {
    this.createAnaliticas()
+  }
+
+
+  async deleteAnalitica(id_analitica:any){
+    const alert = await this.alertController.create({
+      header:'Confirme',
+      message:'¿Está seguro de que quiere borrar esta analítica?',
+      buttons:[{
+        text:'Sí',
+        role:'yes',
+        handler: ()=>{
+          this.analiticasService.deleteAnalitica(id_analitica).subscribe({
+            next:data=>{
+              window.location.reload();
+            },
+            error:err=>{
+              this.errorMessage=err.error.message;
+            }
+          });
+        }
+      }, {
+        text:'No',
+        role:'no',
+        handler: ()=>{
+          return null;
+        }
+      }]
+    })
+
+    await alert.present();
   }
 
   createAnaliticas(){
