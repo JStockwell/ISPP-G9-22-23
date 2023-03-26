@@ -20,7 +20,7 @@ class MetricInfoSerializer(serializers.ModelSerializer):
         fields = ["id", "name", "unit"]
 
 class MetricSerializer(serializers.ModelSerializer):
-    info = MetricInfoSerializer()
+    info = MetricInfoSerializer(read_only=True)
     patient_id = serializers.FloatField()
     class Meta:
         model = Metric

@@ -103,6 +103,25 @@ class MetricId(APIView):
         patient = get_object_or_404(Metric, id=pk)
         patient.delete()
         return Response({"message":"Métrica con id: " +str(pk) + " borrado correctamente"}, status=status.HTTP_200_OK)
+    
+
+    def put(self, request, pk):
+
+        metric = get_object_or_404(Metric, id = pk)
+        serializer = MetricSerializer(metric, data = request.data)
+        
+        if (serializer.is_valid()):
+            min_value = serializer.validated_data['min_value']
+            max_value = serializer.validated_data['max_value']
+            if min_value > max_value:
+                return Response({"error":"El valor mínimo no puede ser mayor que el valor máximo"}, status=status.HTTP_400_BAD_REQUEST)
+           
+            serializer.save()
+            return Response(serializer.data)
+
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 #Views from Measure
 class MeasureList(APIView):
@@ -178,6 +197,19 @@ class MeasureId(APIView):
         measeure.delete()
         return Response({"message":"Medida con id: " + str(pk) + " borrado correctamete"}, status=status.HTTP_200_OK)
     
+    def put(self, request, pk):
+
+        measure = get_object_or_404(Measure, id = pk)
+        serializer = MeasureSerializer(measure, data = request.data)
+        
+        if (serializer.is_valid()):
+            serializer.save()
+            return Response(serializer.data)
+
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 class MetricPatientId(APIView):
     authentication_classes = [TokenAuthentication]
@@ -208,6 +240,8 @@ class MeasurePatientId(APIView):
         measures = Measure.objects.filter(patient = patient)
         serializer = MeasureSerializer(measures, many=True)
         return Response(serializer.data)
+    
+    
     
 class LatestMeasurePatientIdMetricId(APIView):
     authentication_classes = [TokenAuthentication]
