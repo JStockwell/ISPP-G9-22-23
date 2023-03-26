@@ -1,4 +1,6 @@
+from users.models import Patient
 from django.forms import ValidationError
+from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 from diary_entries.models import PhysicalEntry, MentalEntry
 from django.contrib.auth.models import User
@@ -25,7 +27,17 @@ class PhysicalEntrySerializer(serializers.ModelSerializer):
             else:
                 raise ValidationError("Elige partes del cuerpo válidas (HEAD, TORSO, LEFT_ARM, RIGHT_ARM, LEFT_LEG, RIGHT_LEG)")
         return value
-
+    
+    # def validate_days(self, value, patient_id):
+    #     patient = get_object_or_404(Patient, id=patient_id)
+    #     patient_diary_entry_list = PhysicalEntry.objects.filter(patient = patient)
+    #     not_accepted_days = []
+    #     for entry in patient_diary_entry_list:
+    #         not_accepted_days.append(str(entry.date))
+    #     if (value in not_accepted_days):
+    #         raise ValidationError("El día de la entrada se encuentra repetido")
+        
+    #     return value
 
 class MentalEntrySerializer(serializers.ModelSerializer):
 

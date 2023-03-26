@@ -133,6 +133,18 @@ class MentalEntryId(APIView):
         mental_entry = self.get_mental_entry_by_pk(pk)
         mental_entry.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    def put(self, request, pk):
+
+        mental_entry = self.get_mental_entry_by_pk(pk)
+        serializer = PhysicalEntrySerializer(mental_entry, data = request.data)
+        
+        if (serializer.is_valid()):
+            serializer.save()
+            return Response(serializer.data)
+
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class PhysicalEntryList(APIView):
     authentication_classes = [TokenAuthentication]
@@ -207,24 +219,6 @@ class PhysicalEntryCreate(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-    def put(self, request, pk):
-        physical_entry = get_object_or_404(PhysicalEntry, id=pk)
-        serializer = PhysicalEntrySerializer(physical_entry = request.data)
-
-        if (serializer.is_valid()):
-
-            # patient = get_object_or_404(Patient, id=patient_id)
-            # patient_diary_entry_list = PhysicalEntry.objects.filter(patient = patient)
-            # if(physical_entry not in patient_diary_entry_list):
-            #     return Response({"error":"la entrada a modificar bi es de este usuario"}, status=status.HTTP_400_BAD_REQUEST)
-
-            # physical_entry = PhysicalEntry(date = date, state = state, body_parts = body_parts, notes = notes, patient = patient)
-
-            physical_entry.save() 
-
-            return Response(serializer.data)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class PhysicalEntryId(APIView):
     authentication_classes = [TokenAuthentication]
@@ -260,3 +254,32 @@ class PhysicalEntryId(APIView):
         physical_entry = self.get_physical_entry_by_pk(pk)
         physical_entry.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    def put(self, request, pk):
+
+        physical_entry = self.get_physical_entry_by_pk(pk)
+
+        serializer = PhysicalEntrySerializer(physical_entry, data = request.data)
+        
+        if (serializer.is_valid()):
+
+            # patient_id = serializer.data["patient_id"]
+            # put_date = serializer.data["date"]
+
+            # print(str(put_date))
+
+            # patient = get_object_or_404(Patient, id=patient_id)
+            # previousentries = PhysicalEntry.objects.filter(patient = patient)
+            
+            # for entry in previousentries:
+            #     print("hellegao")
+            #     print(str(entry.date))
+            #     print(str(put_date))
+            #     if(str(entry.date) == str(put_date)):
+            #         return Response({"error":"Ya existe una entrada de este tipo de diario en esta fecha para este usuario"}, status=status.HTTP_400_BAD_REQUEST)
+            
+            serializer.save()
+            return Response(serializer.data)
+
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
