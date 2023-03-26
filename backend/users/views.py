@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from users.models import Patient, Medic
-from users.serializer import PatientSerializer, MedicSerializer, CreateSerializer
+from users.serializer import PatientSerializer, MedicSerializer, CreateSerializer, UpdateUserSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User
@@ -98,15 +98,41 @@ class PatientId(APIView):
         patient.delete()
         return Response({"message":"Paciente con id: " +str(pk) +" borrado correctamente"}, status=status.HTTP_200_OK)
     
-    def put(self, request, pk):
-
+    @swagger_auto_schema(
+        manual_parameters=[],
+        security=[],
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT, properties={
+                'first_name': openapi.Schema(type=openapi.TYPE_STRING, description='Nombre a modificar, máximo 150 caracteres'),
+                'last_name': openapi.Schema(type=openapi.TYPE_STRING, description='Apellidos a modificar, máximo 150 caracteres'),
+                'tel': openapi.Schema(type=openapi.TYPE_STRING, description='Teléfono a modificar'),
+                'birthdate': openapi.Schema(type=openapi.TYPE_STRING, description='Fecha de nacimiento a modificar, formato YYYY-MM-DD'),
+            }
+        ),
+        responses={'200': PatientSerializer, "400": "Ya existe un usuario con ese nombre de usuario o email"})
+    def put(self, request, *args, **kwargs):
+        serializer = UpdateUserSerializer(data = request.data)
+        pk = self.kwargs.get('pk')
         patient = get_object_or_404(Patient, id=pk)
-        serializer = PatientSerializer(patient, data = request.data)
-        
-        if (serializer.is_valid()):
-            serializer.save()
-            return Response(serializer.data)
+        user = patient.user
+        if serializer.is_valid():
+            fields = serializer.validated_data.items()
+            for field in fields:
+                key = field[0]
+                value = field[1]
+                if str(key) == "tel": 
+                    patient.tel = value
+                if str(key) == "birthdate":
+                    patient.birthdate = value
+                if str(key) == "first_name":
+                    user.first_name  = value
+                if str(key) == "last_name":
+                    user.last_name  = value
+            
+            user.save()
+            patient.save()
 
+            return Response(PatientSerializer(patient).data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -173,34 +199,6 @@ class MedicCreate(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-    # def put(self, request, pk):
-    #     medic_user = get_object_or_404(Medic, id=pk)
-    #     serializer = CreateSerializer(medic_user = request.data)
-    #     if serializer.is_valid():
-    #         tel = serializer.data["tel"]
-    #         birthdate = serializer.data["birthdate"]
-    #         password = serializer.data["password"]
-    #         first_name = serializer.data["first_name"]
-    #         last_name = serializer.data["last_name"]
-    #         username = serializer.data["username"]
-    #         email = serializer.data["email"]
-
-    #         if(User.objects.filter(username = username).exists()):
-    #             return Response({"error":"Ya existe un usuario con ese nombre de usuario"}, status=status.HTTP_400_BAD_REQUEST)
-    #         elif(User.objects.filter(email = email).exists()):
-    #             return Response({"error":"Ya existe un usuario con ese email"}, status=status.HTTP_400_BAD_REQUEST)
-    #         else:
-    #             user = User(username = username, email = email, first_name = first_name, last_name = last_name)
-    #             user.set_password(password)
-    #             medic = Medic(tel=tel, birthdate=birthdate)
-
-    #             user.save()
-    #             medic.user = user
-    #             medic.save()
-
-    #             return Response({"the medic has been successfuly modified medic id": medic.id}, status=status.HTTP_200_OK)
-    #     else:
-    #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class MedicId(APIView):
     authentication_classes = [TokenAuthentication]
@@ -225,15 +223,41 @@ class MedicId(APIView):
         medic.delete()
         return Response({"message":"Médico con id: " +str(pk) +" borrado correctamente"}, status=status.HTTP_200_OK)
     
-    def put(self, request, pk):
+    @swagger_auto_schema(
+        manual_parameters=[],
+        security=[],
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT, properties={
+                'first_name': openapi.Schema(type=openapi.TYPE_STRING, description='Nombre a modificar, máximo 150 caracteres'),
+                'last_name': openapi.Schema(type=openapi.TYPE_STRING, description='Apellidos a modificar, máximo 150 caracteres'),
+                'tel': openapi.Schema(type=openapi.TYPE_STRING, description='Teléfono a modificar'),
+                'birthdate': openapi.Schema(type=openapi.TYPE_STRING, description='Fecha de nacimiento a modificar, formato YYYY-MM-DD'),
+            }
+        ),
+        responses={'200': MedicSerializer, "400": "Ya existe un usuario con ese nombre de usuario o email"})
+    def put(self, request, *args, **kwargs):
+        serializer = UpdateUserSerializer(data = request.data)
+        pk = self.kwargs.get('pk')
+        medic = get_object_or_404(Medic, id=pk)
+        user = medic.user
+        if serializer.is_valid():
+            fields = serializer.validated_data.items()
+            for field in fields:
+                key = field[0]
+                value = field[1]
+                if str(key) == "tel": 
+                    medic.tel = value
+                if str(key) == "birthdate":
+                    medic.birthdate = value
+                if str(key) == "first_name":
+                    user.first_name  = value
+                if str(key) == "last_name":
+                    user.last_name  = value
+            
+            user.save()
+            medic.save()
 
-        medic = get_object_or_404(Medic, id = pk)
-        serializer = MedicSerializer(medic, data = request.data)
-        
-        if (serializer.is_valid()):
-            serializer.save()
-            return Response(serializer.data)
-
+            return Response(MedicSerializer(medic).data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
