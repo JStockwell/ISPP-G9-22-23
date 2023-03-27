@@ -1,6 +1,7 @@
 import { HttpClient, HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { API_URL } from './settings';
 import { UsersService } from './users.service';
 
 @Injectable({
@@ -16,8 +17,6 @@ export class ModificarFisicoService implements HttpInterceptor{
     return next.handle(req)
   }
 
-  API_URL = 'http://isppgrupo9.pythonanywhere.com/'
-
   getEntradasFisica(id_fisico:any):Observable<any>{
     if(this.uService.isLoggedIn()){
       var ck = window.sessionStorage.getItem('auth-user')
@@ -30,7 +29,7 @@ export class ModificarFisicoService implements HttpInterceptor{
         let headers = new HttpHeaders()
         headers = headers.set('Authorization', 'Token '+res[0])
 
-        return this.http.get(this.API_URL + `diary_entries/physical_entry/${id_fisico}`,{'headers':headers})
+        return this.http.get(API_URL + `diary_entries/physical_entry/${id_fisico}`,{'headers':headers})
       }
     }
     return new Observable<any>;
@@ -51,7 +50,7 @@ export class ModificarFisicoService implements HttpInterceptor{
     return null;
   }
 
-  modifyEntradasFisica(id_fisico:any):Observable<any>{
+  modifyEntradasFisica(id_fisico:any, dataEntry:any):Observable<any>{
     if(this.uService.isLoggedIn()){
       var ck = window.sessionStorage.getItem('auth-user')
       if(ck!=null){
@@ -60,10 +59,10 @@ export class ModificarFisicoService implements HttpInterceptor{
         for(var i in tk){
           res.push(tk[i]);
         }
-        let headers = new HttpHeaders()
+        let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
         headers = headers.set('Authorization', 'Token '+res[0])
 
-        return new Observable<any>;
+        return this.http.put(`${API_URL}diary_entries/physical_entry/${id_fisico}/`, JSON.stringify(dataEntry), {'headers': headers});
       }
     }
     return new Observable<any>;

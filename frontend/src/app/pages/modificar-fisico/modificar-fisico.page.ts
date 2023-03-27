@@ -53,13 +53,16 @@ export class ModificarFisicoPage implements OnInit {
     let dataEntry:any;
     if(parts == ''){
         dataEntry = {
+        id: this.route.snapshot.paramMap.get('id'),
         date: this.today,
         state: this.estadoFisico,
+        body_parts: " ",
         done_exercise: this.deporte,
         patient_id: this.service.getIdUser(),
       };
     }else{
       dataEntry = {
+        id: this.route.snapshot.paramMap.get('id'),
         date: this.today,
         state: this.estadoFisico,
         body_parts: parts,
@@ -70,8 +73,14 @@ export class ModificarFisicoPage implements OnInit {
     if(this.notas != ""){
       dataEntry["notes"]=this.notas;
     }
-    
-    
+    this.service.modifyEntradasFisica(this.route.snapshot.paramMap.get('id'),dataEntry).subscribe({
+      next:data=>{
+        window.location.href = '/app/Tabs/seccion-fisica';
+      },
+      error:err=>{
+        console.log(err.error.message);
+      }
+    })
     
     console.log(dataEntry);
   }
