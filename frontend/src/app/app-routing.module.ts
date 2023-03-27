@@ -40,6 +40,11 @@ const routes: Routes = [
     loadChildren: () => import('./tab2/tab2.module').then(m => m.Tab2PageModule)
   },
   {
+    path: 'modificar-mental',
+    loadChildren: () => import('./pages/modificar-mental/modificar-mental.module').then( m => m.ModificarMentalPageModule)
+  },
+  
+  {
     path: 'nueva-entrada-fisica',
     loadChildren: () => import('./pages/nueva-entrada-fisica/nueva-entrada-fisica.module').then( m => m.NuevaEntradaFisicaPageModule)
   },

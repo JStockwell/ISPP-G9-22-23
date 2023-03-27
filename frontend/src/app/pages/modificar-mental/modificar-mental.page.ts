@@ -68,7 +68,7 @@ export class ModificarMentalPage implements OnInit{
   }
 
   if(this.pnegativos !=""){
-    dataEntry["positive_thoughts"]= this.pnegativos;
+    dataEntry["negative_thoughts"]= this.pnegativos;
   }
 
   this.service.modifyEntradasMental(this.route.snapshot.paramMap.get('id'),dataEntry).subscribe({
