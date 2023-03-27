@@ -132,7 +132,7 @@ class MetricId(APIView):
                     'max_value': openapi.Schema(type=openapi.TYPE_NUMBER, description="Valor máximo a modificar que puede tomar la métrica en un caso normal"),
                 }
             ),
-            responses={'200':MetricSerializer, '400':"Se ha introducido un par min/max value ilegal o el paciente no existe, o la metric info no se ha encontrado"}
+            responses={'200':MetricSerializer, '400':"Se ha introducido un par min/max value ilegal o el paciente no existe, o la metric info no se ha encontrado", "404": "Métrica no encontrada"}
     )
     def put(self, request, *args, **kwargs):
         serializer = UpdateMetricSerializer(data = request.data)
@@ -249,7 +249,7 @@ class MeasureId(APIView):
                     'value': openapi.Schema(type=openapi.TYPE_STRING, description="Valor medido a modificar para una métrica concreta"),
                 }
             ),
-            responses={'200':MeasureSerializer, '400':"Bad request"}
+            responses={'200':MeasureSerializer, '400':"Bad request", "404": "Métrica no encontrada"}
     )
     def put(self, request, *args, **kwargs):
         serializer = UpdateMeasureSerializer(data = request.data)

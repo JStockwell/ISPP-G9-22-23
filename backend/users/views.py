@@ -12,6 +12,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.contrib.auth import authenticate
+from datetime import datetime
 
 class PatientList(APIView):
     authentication_classes = [TokenAuthentication]
@@ -42,9 +43,10 @@ class PatientCreate(APIView):
                 'birthdate': openapi.Schema(type=openapi.TYPE_STRING, description='Fecha de nacimiento, formato YYYY-MM-DD'),
             }
         ),
-        responses={'200': "Token e id del paciente", "400": "Ya existe un usuario con ese nombre de usuario o email"})
+        responses={'200': "Token e id del paciente", "400": "Ya existe un usuario con ese nombre de usuario o email o la fecha de nacimiento es incorrecta"})
     def post(self, request):
         serializer = CreateSerializer(data = request.data)
+        dateToday = datetime.now()
         
         if serializer.is_valid():
             tel = serializer.data["tel"]
@@ -54,23 +56,26 @@ class PatientCreate(APIView):
             last_name = serializer.data["last_name"]
             username = serializer.data["username"]
             email = serializer.data["email"]
+            fecha_dt = datetime.strptime(birthdate, '%Y-%m-%d')
 
             if(User.objects.filter(username = username).exists()):
                 return Response({"error":"Ya existe un usuario con ese nombre de usuario"}, status=status.HTTP_400_BAD_REQUEST)
-            elif(User.objects.filter(email = email).exists()):
+            if(User.objects.filter(email = email).exists()):
                 return Response({"error":"Ya existe un usuario con ese email"}, status=status.HTTP_400_BAD_REQUEST)
-            else:
-                user = User(username = username, email = email, first_name = first_name, last_name = last_name)
-                user.set_password(password)
-                patient = Patient(tel=tel, birthdate=birthdate)
+            if fecha_dt > dateToday:
+                return Response({"error": "La fecha de nacimiento debe ser anterior a la actual"}, status=status.HTTP_400_BAD_REQUEST)
+            
+            user = User(username = username, email = email, first_name = first_name, last_name = last_name)
+            user.set_password(password)
+            patient = Patient(tel=tel, birthdate=birthdate)
 
-                user.save()
-                patient.user = user
-                patient.save()
+            user.save()
+            patient.user = user
+            patient.save()
 
-                token, _ = Token.objects.get_or_create(user=user)
+            token, _ = Token.objects.get_or_create(user=user)
 
-                return Response({"token":token.key, "patient id": patient.id}, status=status.HTTP_200_OK)
+            return Response({"token":token.key, "patient id": patient.id}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
@@ -109,12 +114,13 @@ class PatientId(APIView):
                 'birthdate': openapi.Schema(type=openapi.TYPE_STRING, description='Fecha de nacimiento a modificar, formato YYYY-MM-DD'),
             }
         ),
-        responses={'200': PatientSerializer, "400": "Ya existe un usuario con ese nombre de usuario o email"})
+        responses={'200': PatientSerializer, "400": "Ya existe un usuario con ese nombre de usuario o email o la fecha de nacimiento es posterior a la fecha actual", "404": "Paciente no encontrado"})
     def put(self, request, *args, **kwargs):
         serializer = UpdateUserSerializer(data = request.data)
         pk = self.kwargs.get('pk')
         patient = get_object_or_404(Patient, id=pk)
         user = patient.user
+        dateToday = datetime.today().date()
         if serializer.is_valid():
             fields = serializer.validated_data.items()
             for field in fields:
@@ -123,7 +129,10 @@ class PatientId(APIView):
                 if str(key) == "tel": 
                     patient.tel = value
                 if str(key) == "birthdate":
-                    patient.birthdate = value
+                    if(value > dateToday):
+                        return Response({"error": "La fecha de nacimiento debe ser anterior a la actual"}, status=status.HTTP_400_BAD_REQUEST)
+                    else:
+                        patient.birthdate = value
                 if str(key) == "first_name":
                     user.first_name  = value
                 if str(key) == "last_name":
@@ -167,9 +176,10 @@ class MedicCreate(APIView):
                 'birthdate': openapi.Schema(type=openapi.TYPE_STRING, description='Fecha de nacimiento, formato YYYY-MM-DD'),
             }
         ),
-        responses={'200': "Token e id del médico", "400": "Ya existe un usuario con ese nombre de usuario o email"})
+        responses={'200': "Token e id del médico", "400": "Ya existe un usuario con ese nombre de usuario o email o la fecha de nacimiento es incorrecta"})
     def post(self, request):
         serializer = CreateSerializer(data = request.data)
+        dateToday = datetime.now()
         
         if serializer.is_valid():
             tel = serializer.data["tel"]
@@ -179,23 +189,26 @@ class MedicCreate(APIView):
             last_name = serializer.data["last_name"]
             username = serializer.data["username"]
             email = serializer.data["email"]
+            fecha_dt = datetime.strptime(birthdate, '%Y-%m-%d')
 
             if(User.objects.filter(username = username).exists()):
                 return Response({"error":"Ya existe un usuario con ese nombre de usuario"}, status=status.HTTP_400_BAD_REQUEST)
-            elif(User.objects.filter(email = email).exists()):
+            if(User.objects.filter(email = email).exists()):
                 return Response({"error":"Ya existe un usuario con ese email"}, status=status.HTTP_400_BAD_REQUEST)
-            else:
-                user = User(username = username, email = email, first_name = first_name, last_name = last_name)
-                user.set_password(password)
-                medic = Medic(tel=tel, birthdate=birthdate)
+            if(fecha_dt > dateToday):
+                return Response({"error": "La fecha de nacimiento debe ser anterior a la actual"}, status=status.HTTP_400_BAD_REQUEST)
+            
+            user = User(username = username, email = email, first_name = first_name, last_name = last_name)
+            user.set_password(password)
+            medic = Medic(tel=tel, birthdate=birthdate)
 
-                user.save()
-                medic.user = user
-                medic.save()
+            user.save()
+            medic.user = user
+            medic.save()
 
-                token, _ = Token.objects.get_or_create(user=user)
+            token, _ = Token.objects.get_or_create(user=user)
 
-                return Response({"token":token.key, "medic id": medic.id}, status=status.HTTP_200_OK)
+            return Response({"token":token.key, "medic id": medic.id}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
@@ -234,12 +247,13 @@ class MedicId(APIView):
                 'birthdate': openapi.Schema(type=openapi.TYPE_STRING, description='Fecha de nacimiento a modificar, formato YYYY-MM-DD'),
             }
         ),
-        responses={'200': MedicSerializer, "400": "Ya existe un usuario con ese nombre de usuario o email"})
+        responses={'200': MedicSerializer, "400": "Ya existe un usuario con ese nombre de usuario o email o la fecha de nacimiento es posterior a la fecha actual", "404":"Médico no encontrado"})
     def put(self, request, *args, **kwargs):
         serializer = UpdateUserSerializer(data = request.data)
         pk = self.kwargs.get('pk')
         medic = get_object_or_404(Medic, id=pk)
         user = medic.user
+        dateToday = datetime.today().date()
         if serializer.is_valid():
             fields = serializer.validated_data.items()
             for field in fields:
@@ -248,7 +262,10 @@ class MedicId(APIView):
                 if str(key) == "tel": 
                     medic.tel = value
                 if str(key) == "birthdate":
-                    medic.birthdate = value
+                    if(value > dateToday):
+                        return Response({"error": "La fecha de nacimiento debe ser anterior a la actual"}, status=status.HTTP_400_BAD_REQUEST)
+                    else:
+                        medic.birthdate = value
                 if str(key) == "first_name":
                     user.first_name  = value
                 if str(key) == "last_name":

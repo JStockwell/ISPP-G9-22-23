@@ -1,27 +1,18 @@
 from django.shortcuts import render
 from appointments.models import Appointment
 from users.models import Patient
-from appointments.serializer import AppointmentSerializer, SerializerCreateAppointment 
+from appointments.serializer import AppointmentSerializer, SerializerCreateAppointment, UpdateAppointmentSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 from django.shortcuts import get_object_or_404
-from datetime import datetime
-
-# Create your views here.
-from django.shortcuts import render
-from appointments.models import Appointment
-from users.models import Patient
-from appointments.serializer import AppointmentSerializer, SerializerCreateAppointment 
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from rest_framework import status
-from django.shortcuts import get_object_or_404
-from datetime import datetime
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from datetime import datetime
+
+
 
 class AppointmentList(APIView):
     authentication_classes = [TokenAuthentication]
@@ -101,6 +92,47 @@ class AppointmentId(APIView):
         appointment = get_object_or_404(Appointment, id = pk)
         appointment.delete()
         return Response({"message":"Cita con id: " + str(pk) + " borrado correctamente"}, status=status.HTTP_200_OK)
+    
+    @swagger_auto_schema(
+            manual_parameters=[],
+            security=[],
+            request_body=openapi.Schema(
+                type=openapi.TYPE_OBJECT, properties={
+                    'date': openapi.Schema(type=openapi.TYPE_STRING, description="La fecha a modificar debe ser posterior a la actual, su formato es yyy-mm-dd"),
+                    'description': openapi.Schema(type=openapi.TYPE_STRING, description="Descripción a modificar de la cita"),
+                    'specialty': openapi.Schema(type=openapi.TYPE_NUMBER, description="Especialidad a modificar de la cita"),
+                    'time': openapi.Schema(type=openapi.TYPE_STRING, description="Hora a modificar de la cita, su formato es HH:MM")
+                }
+            ),
+            responses={'200':AppointmentSerializer, '400':"Bad request o fecha anterior a la fecha actual", "404":"Cita no encontrada"}
+    )
+    def put(self, request, *args, **kwargs):
+        serializer = UpdateAppointmentSerializer(data = request.data)
+        pk = self.kwargs.get('pk')
+        appointment = get_object_or_404(Appointment, id=pk)
+        dateToday = datetime.today().date()
+        if serializer.is_valid():
+            fields = serializer.validated_data.items()
+            for field in fields:
+                key = field[0]
+                value = field[1]
+                if str(key) == "date":
+                    if value < dateToday:
+                        return Response({"error": "No se puede coger cita con fecha anterior a la actual"}, status=status.HTTP_400_BAD_REQUEST)
+                    else:
+                        appointment.date = value
+                if str(key) == "description":
+                    appointment.description = value
+                if str(key) == "specialty":
+                    appointment.specialty = value
+                if str(key) == "time":
+                    appointment.time = value
+            
+            appointment.save()
+
+            return Response(AppointmentSerializer(appointment).data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class AppointmentPatientId(APIView):
     @swagger_auto_schema(
