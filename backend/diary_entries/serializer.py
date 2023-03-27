@@ -1,8 +1,34 @@
 from django.forms import ValidationError
 from rest_framework import serializers
 from diary_entries.models import PhysicalEntry, MentalEntry
-from django.contrib.auth.models import User
 
+class UpdatePhysicalEntrySerializer(serializers.Serializer):
+    body_parts = serializers.CharField(required = False, max_length=1024, allow_blank=True)
+    notes = serializers.CharField(required = False, max_length=1024, allow_blank=True)
+    done_exercise = serializers.BooleanField(required = False)
+    date = serializers.DateField(required = False)
+    state = serializers.CharField()
+
+    def validate_state(self, value):
+        if (value != None):
+            accepted_values = {"VG", "G", "F", "B", "VB"}
+            if value not in accepted_values:
+                raise ValidationError("Elige estados válidos (VG, G, F, B, VB)")
+            return value
+
+    def validate_body_parts(self, value):
+        if (value != None):
+            accepted_values = {"", "HEAD", "TORSO", "LEFT_ARM", "RIGHT_ARM", "LEFT_LEG", "RIGHT_LEG"}
+            already_used_values = []
+            splitted = value.split(",")
+            for part in splitted:
+                if (part.strip() in accepted_values and part.strip() not in already_used_values):
+                    already_used_values.append(part.strip())
+                elif (part.strip() in accepted_values and part.strip() in already_used_values):
+                    raise ValidationError("Recuerda no repetir partes del cuerpo")
+                else:
+                    raise ValidationError("Elige partes del cuerpo válidas (HEAD, TORSO, LEFT_ARM, RIGHT_ARM, LEFT_LEG, RIGHT_LEG)")
+            return value
 
 class PhysicalEntrySerializer(serializers.ModelSerializer):
     body_parts = serializers.CharField(required = False, default = "", max_length=1024)
@@ -27,10 +53,47 @@ class PhysicalEntrySerializer(serializers.ModelSerializer):
             else:
                 raise ValidationError("Elige partes del cuerpo válidas (HEAD, TORSO, LEFT_ARM, RIGHT_ARM, LEFT_LEG, RIGHT_LEG)")
         return value
+    
+class UpdateMentalEntrySerializer(serializers.Serializer):
+    weather = serializers.CharField(max_length=64, required = False)
+    food = serializers.CharField(max_length=64, required = False)
+    sleep = serializers.CharField(max_length=64, required = False)
+    notes = serializers.CharField(required = False, max_length=1024, allow_blank=True)
+    positive_thoughts = serializers.CharField(required = False, max_length=1024, allow_blank=True)
+    negative_thoughts = serializers.CharField(required = False, max_length=1024, allow_blank=True)
+    state = serializers.CharField(required = False)
+    date = serializers.DateField(required = False)
+    
 
+    def validate_state(self, value):
+        if (value != None):
+            accepted_values = {"VG", "G", "F", "B", "VB"}
+            if value not in accepted_values:
+                raise ValidationError("Elige estados válidos (VG, G, F, B, VB)")
+            return value
+
+    def validate_weather(self, value):
+        accepted_values = {"SNOWY", "RAINY", "CLOUDY", "STORMY", "SUNNY"}
+        if value in accepted_values:
+            return value
+        else:
+            raise ValidationError("Elige un tiempo atmosférico válido (SNOWY, RAINY, CLOUDY, STORMY, SUNNY)")
+
+    def validate_food(self, value):
+        accepted_values = {"NONE", "FAST", "HEALTHY"}
+        if value in accepted_values:
+            return value
+        else:
+            raise ValidationError("Elige un tipo de comida válido (NONE, FAST, HEALTHY)")
+        
+    def validate_sleep(self, value):
+        accepted_values = {"NONE", "LIGHT", "DEEP"}
+        if value in accepted_values:
+            return value
+        else:
+            raise ValidationError("Elige una cantidad de sueño válida (NONE, LIGHT, DEEP)")
 
 class MentalEntrySerializer(serializers.ModelSerializer):
-
     weather = serializers.CharField(max_length=64)
     food = serializers.CharField(max_length=64)
     sleep = serializers.CharField(max_length=64)

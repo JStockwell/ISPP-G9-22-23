@@ -1,0 +1,14 @@
+.imagen-vacia {
+    color:#888;
+    margin-top: 180px;
+    -webkit-filter: brightness(1.8) grayscale(1) opacity(.7);
+        -moz-filter: brightness(1.8) grayscale(1) opacity(.7);
+            filter: brightness(1.8) grayscale(1) opacity(.2);
+        
+}
+
+.emoji {
+    position: relative;
+    top: 15px;
+    margin-left: 5px;
+}
