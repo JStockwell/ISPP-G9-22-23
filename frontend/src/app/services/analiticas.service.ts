@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest, HTTP_INTERCEPTORS} from '@angular/common/http'
 import { Observable } from 'rxjs';
 import {UsersService} from'./users.service';
+import { API_URL } from './settings';
 
 
 
@@ -21,7 +22,7 @@ export class AnaliticasService implements HttpInterceptor{
 
   constructor(private http: HttpClient, private uService: UsersService) { }
 
-  API_URL = 'http://isppgrupo9.pythonanywhere.com/'
+  API_URL = API_URL
   //DESCOMENTAR
 /*
   getAnaliticas(): Observable<APIResult>{

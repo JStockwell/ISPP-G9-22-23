@@ -6,6 +6,9 @@
 
 <ion-content color="light" class="ion-padding">
   <div *ngFor="let item of analiticas">
+    <ion-button [routerLink]="['/app/Tabs/Analytics/'+item.id+'/edit']">
+      <img src="/assets/images/Edit.png" style="height: 1.5rem;">
+    </ion-button>
     <ion-card
       button
       color="warning"

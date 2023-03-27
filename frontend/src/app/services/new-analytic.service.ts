@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { UsersService } from './users.service';
+import { API_URL } from './settings';
 
 const USER_KEY = 'auth-user';
 const httpOptions = {
@@ -15,7 +16,7 @@ export class NewAnalyticService {
 
 
   constructor(private http: HttpClient, private uService: UsersService) {}
-  API_URL = 'http://isppgrupo9.pythonanywhere.com/';
+  API_URL = API_URL
 
   getMetricsNotUsedList(): Observable<any>{
     if(this.uService.isLoggedIn()){

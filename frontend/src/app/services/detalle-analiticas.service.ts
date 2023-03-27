@@ -1,6 +1,7 @@
 import { HttpClient, HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { API_URL } from './settings';
 import { UsersService } from './users.service';
 
 @Injectable({
@@ -16,7 +17,7 @@ export class DetalleAnaliticasService implements HttpInterceptor{
     return next.handle(req);
   }
 
-  API_URL = 'http://isppgrupo9.pythonanywhere.com/'
+  API_URL = API_URL
 
   getDetallesAnaliticas(id_analitica:any):Observable<any>{
     if(this.uService.isLoggedIn()){

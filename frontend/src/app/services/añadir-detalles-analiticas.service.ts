@@ -1,6 +1,7 @@
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { API_URL } from './settings';
 import { UsersService } from './users.service';
 
 @Injectable({
@@ -8,7 +9,7 @@ import { UsersService } from './users.service';
 })
 export class AñadirDetallesAnaliticasService {
 
-  API_URL:string = "https://isppgrupo9.pythonanywhere.com";
+  API_URL:string = API_URL;
 
   constructor(private http: HttpClient, private uService: UsersService) {}
 

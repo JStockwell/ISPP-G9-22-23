@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http'; 
 import { Observable } from 'rxjs/internal/Observable';
+import { API_URL } from './settings';
 
 const USER_KEY = 'auth-user';
 
@@ -16,7 +17,7 @@ const httpOptions = {
 export class UsersService {
 
   constructor(private http: HttpClient) { }
-  API_URL = 'http://isppgrupo9.pythonanywhere.com/';
+  API_URL = API_URL;
 
   clean():void{
     window.sessionStorage.clear();
