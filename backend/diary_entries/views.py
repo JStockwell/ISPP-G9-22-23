@@ -167,15 +167,15 @@ class MentalEntryId(APIView):
                 if str(key) == "state":
                     entry.state = value
                 if str(key) == "weather":
-                    entry.state = value
+                    entry.weather = value
                 if str(key) == "food":
-                    entry.state = value
+                    entry.food = value
                 if str(key) == "sleep":
-                    entry.state = value
+                    entry.sleep = value
                 if str(key) == "positive_thoughts":
-                    entry.state = value
+                    entry.positive_thoughts = value
                 if str(key) == "negative_thoughts":
-                    entry.state = value
+                    entry.negative_thoughts = value
             
             entry.save()
 
