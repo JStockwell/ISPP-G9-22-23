@@ -22,7 +22,7 @@ export class AnaliticasPage implements OnInit {
   //BORRAR eso más adelante cuando ya estén las llamadas
   analiticas = new Array<analitica>
   mediciones = new Array<measure>
-
+  medicionesAux = new Array<measure>
   constructor(private analiticasService: AnaliticasService, private loadingCtrl: LoadingController, private uService: UsersService, private alertController: AlertController) {}
 
   //Se ejecuta al crear la página por parte de angular
@@ -82,9 +82,18 @@ export class AnaliticasPage implements OnInit {
         for(var metric of data){
           let date:Date = metric.date;
           const aux = date.toString().substring(0,10);
-          metric.date = aux;
+          
           this.mediciones.push(metric);
+          console.log(metric.date)
         }
+        const data2 = data.reverse();
+        for(var met of data2){
+          let date:Date = met.date;
+          const aux = date.toString().substring(0,10);
+          const aux2 = date.toString().substring(11,16);
+          met.date = aux+" "+aux2 + "h";
+          this.medicionesAux.push(met);
+        } 
         this.createChart(analitica);
       },
       error: err => {
@@ -92,26 +101,6 @@ export class AnaliticasPage implements OnInit {
       }
     })
   }
-
-
-/*
-  createMeasures(){
-    this.analiticasService.getAnaliticaDetails().subscribe({
-      next: data => {
-        for(var metric of data){
-          let date:Date = metric.date;
-          const aux = date.toString().substring(0,10);
-          metric.date = aux;
-        }
-        this.mediciones = data;
-        this.createChart();
-      },
-      error: err =>{
-        this.errorMessage = err.errorMessage;
-      }
-    })
-  }
- */
 
   createChart(analitica:any){
 
@@ -121,12 +110,16 @@ export class AnaliticasPage implements OnInit {
       if(ctx != null){
         const dates: String[] = [];
         const values: String[] = [];
-        for( const medicion of this.mediciones){
+        const dataLower: any[] = [];
+        const dataUpper: any[] = [];
+        for( const medicion of this.medicionesAux){
           if(medicion.metric.id == analitica.id){
             let date:Date = medicion.date;
             const aux = date.toString().substring(0,10);
             dates.push(aux);
             values.push(medicion.value);
+            dataLower.push(medicion.metric.min_value);
+            dataUpper.push(medicion.metric.max_value);
           }
           
         }
@@ -135,6 +128,7 @@ export class AnaliticasPage implements OnInit {
 
         const mensaje: string='Resultados de la analítica('+analitica.info.unit+')'
         this.bars = new Chart(ctx, {
+          
           type: 'line',
           data: {
             labels: dates,
@@ -144,10 +138,25 @@ export class AnaliticasPage implements OnInit {
               backgroundColor: "light", 
               borderColor: "light", 
               borderWidth: 1
-            }]
-          }
+            },
+            {
+              label: "Umbrales",
+              data: dataLower,
+              borderColor: "orange",
+              backgroundColor:"orange"
+            },
+            {
+              label:"",
+              data: dataUpper,
+              borderColor: "orange",
+              backgroundColor:"orange"
+            }
+          ]
+        }
         });
       }
+
+      
       
     
   
