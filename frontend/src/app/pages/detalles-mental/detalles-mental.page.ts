@@ -32,7 +32,7 @@ export class DetallesMentalPage implements OnInit {
       return "/assets/images/cara-muy-feliz.png";
     }
     
-    if(imagen == "S" ){
+    if(imagen == "F" ){
       return "/assets/images/cara-neutral.png";
     }
     

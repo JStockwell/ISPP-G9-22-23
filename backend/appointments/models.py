@@ -3,10 +3,10 @@ from django.core.exceptions import ValidationError
 from users.models import Patient
 
 class Appointment(models.Model):
-    date = models.DateTimeField()
+    date = models.DateField()
     description = models.CharField(max_length=300)
     specialty = models.CharField(max_length=100)
-    time = models.DateField()
+    time = models.TimeField(['%H:%M'])
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
 
     

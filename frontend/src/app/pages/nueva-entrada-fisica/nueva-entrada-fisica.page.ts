@@ -26,6 +26,8 @@ export class NuevaEntradaFisicaPage implements OnInit {
   deporte:boolean | any = false;
   notas:string | any = '';
   today = new Date();
+  errorMessage = '';
+  errorMessageEstado = '';
 
   constructor(private nuevaEntradFisicaService: NuevaEntradaFisicaService, private navCtrl: NavController, private uService: UsersService) { }
 
@@ -94,6 +96,15 @@ export class NuevaEntradaFisicaPage implements OnInit {
       },
       error: err => {
         console.log(err);
+        if( err.error.error ){
+          this.errorMessage= '* ' + err.error.error; 
+          window.alert(this.errorMessage);
+        }
+        else if( err.error.state ){
+          this.errorMessageEstado = '* No puedes dejar el campo de estado sin seleccionar'
+          window.alert(this.errorMessageEstado);
+          console.log(err);
+        }
       }
     })
   }

@@ -5,55 +5,65 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" color = "light">
-
-  <div *ngFor="let item  of entries">
-    <ion-card color="warning" *ngIf="entries !=0" [routerLink]="['/app/Tabs/seccion-mental/'+item.id]">
-      <div style="text-align: center;">
-        <div style="text-align: right; margin-right: 15px; margin-top: 20px">
-          
+  <div *ngIf="existsEntradas(); then renderEntradas else noEntradas"></div>
+  <ng-template #renderEntradas>
+    <div *ngFor="let item  of entries">
+      <ion-card color="warning" *ngIf="entries !=0" [routerLink]="['/app/Tabs/seccion-mental/'+item.id]">
+        <div style="text-align: center;">
+          <div style="text-align: right; margin-right: 15px; margin-top: 20px">
+            
+          </div>
+          <h1 style="text-align: center; padding-bottom: 2%; font-weight: bold;">{{item.date }}</h1>
         </div>
-        <h3 style="margin-top: 0px">{{ item.date }}</h3>
-      </div>
 
-      <div style="text-align: center">
-        <ion-row>
-          <ion-col>
-            <h3>
-              Animo: <img src="{{getImagenEstado(item.state)}}"  style="width: 3rem;" >
-              
-            </h3>
-          </ion-col>
-          <ion-col>
-            <h3>Sueño: <img src="{{getImagenSuenyo(item.sleep)}}"  style="width: 3rem;" ></h3>
-          </ion-col>
-        </ion-row>
-      </div>
+        <div style="text-align: center">
+          <ion-row>
+            <ion-col>
+              <h3 style="font-weight: bold;">
+                Animo: <img  class ="emoji" src="{{getImagenEstado(item.state)}}"  style="width: 3rem;" >
+                
+              </h3>
+            </ion-col>
+            <ion-col>
+              <h3 style="font-weight: bold;">Sueño: <img  class ="emoji" src="{{getImagenSuenyo(item.sleep)}}"  style="width: 3rem;" ></h3>
+            </ion-col>
+          </ion-row>
+        </div>
 
-      <div style="text-align: center">
-        <ion-row>
-          <ion-col>
-            <h3>
-              Tiempo:<img src="{{getImagenTiempo(item.weather)}}"  style="width: 3rem;" >
-              
-            </h3>
-          </ion-col>
-          <ion-col>
-            <h3>Comida: <img src="{{getImagenComida(item.food)}}"  style="width: 3rem;" ></h3>
-          </ion-col>
-        </ion-row>
-      </div>  
-    </ion-card>
-  </div>
+        <div style="text-align: center">
+          <ion-row>
+            <ion-col>
+              <h3 style="font-weight: bold;">
+                Tiempo:<img class ="emoji" src="{{getImagenTiempo(item.weather)}}"  style="width: 3rem;" >
+                
+              </h3>
+            </ion-col>
+            <ion-col>
+              <h3 style="font-weight: bold;">Comida: <img class ="emoji" src="{{getImagenComida(item.food)}}"  style="width: 3rem;" ></h3>
+            </ion-col>
+          </ion-row>
+        </div>
+      </ion-card>  
+    </div>
+  </ng-template>
 
+  <ng-template #noEntradas>
+    <div style="font-weight: bold; font-size: x-large; text-align: center">     
+
+      <img src="https://static.thenounproject.com/png/2902077-200.png" class="imagen-vacia" alt="">
+      <div style="opacity: .2;"> No hay entradas todavía </div>
+      
+    </div>
+  </ng-template>
   <ion-fab style = "padding-inline-end: 2.5%;" slot="fixed" size="small" vertical="bottom" horizontal="end">
-    <ion-fab-button color = "secondary" [routerLink]="['/app/Tabs/seccion-mental/New']">
+    <ion-fab-button color = "primary" [routerLink]="['/app/Tabs/seccion-mental/New']">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
-  <ion-fab style = "padding-inline-start: 2.5%;" slot="fixed" size="small" vertical="bottom" horizontal="start">
-    <ion-fab-button color = "secondary">
-      <ion-icon name="calendar-outline"></ion-icon>
+  <ion-fab style = "padding-inline-end: 2.5%;"  slot = "fixed"  vertical = "bottom" horizontal = "end">
+    <ion-fab-button color = "primary" [routerLink]="['/app/Tabs/seccion-mental/New']">
+      <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </ion-content>
