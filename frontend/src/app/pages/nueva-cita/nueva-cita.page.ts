@@ -14,16 +14,6 @@ registerLocaleData(localeEs, 'es');
   providers: [{ provide: LOCALE_ID, useValue: 'es'}],
 })
 export class NuevaCitaPage implements OnInit {
-  // especialidades:any[] | undefined
-  // DESCOMENTAR LO DE ARRIBA Y BORRAR LA VARIABLE DE ABAJO CUANDO ESTÉ EL ENDPOINT
-  especialidades = [
-    {id: 1,
-    name: "Dermatología"},
-    {id: 2,
-    name: "Traumatología"},
-    {id: 3,
-    name: "Oftalmología"},
-  ]
 
   fechaRecibida = new Date();
   fechaHora = new Date().toISOString();
@@ -39,8 +29,6 @@ export class NuevaCitaPage implements OnInit {
   }
 
   ngOnInit() {
-    // DESCOMENTAR CUANDO ESTÉ EL ENDPOINT
-    // this.listSpecialties(); 
   }
 
   goBack(){
@@ -67,12 +55,6 @@ export class NuevaCitaPage implements OnInit {
       }
     }
   }
-
-  listSpecialties() {
-    this.nuevaCitaService.getSpecialtiesList().subscribe((res) => {
-      this.especialidades = res;
-    })
-  }
   
   crearNuevaCita(): void{
     let fechaParseada = new Date(this.fechaRecibida);
@@ -80,21 +62,21 @@ export class NuevaCitaPage implements OnInit {
       date: fechaParseada.toISOString().split('T')[0],
       description: this.observaciones,
       specialty: this.especialidad,
-      time: this.fechaHora.replace(/.*(\d{2}:\d{2}):\d{2}.*/, "$1"),
+      time: this.parsearHora(new Date(this.fechaHora)),
       patient_id: this.getUserId(),
     }
     console.log(dataEntry);
     
-    /*this.nuevaCitaService.postEntry(dataEntry).subscribe({
+    this.nuevaCitaService.postEntry(dataEntry).subscribe({
       next: dataEntry => {
         console.log(dataEntry);
-        document.location.href="http://localhost:8100/app/Tabs/seccion-fisica"
-        window.location.href = "http://localhost:8100/app/Tabs/seccion-fisica"
+        document.location.href = "http://localhost:8100/app/Tabs/calendario"
+        window.location.href = "http://localhost:8100/app/Tabs/calendario"
       },
       error: err => {
         console.log(err);
       }
-    })*/
+    })
   }
 
 }

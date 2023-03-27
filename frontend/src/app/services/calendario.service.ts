@@ -8,35 +8,12 @@ import { Observable } from 'rxjs';
 })
 export class CalendarioService {
 
-  urlApi:string = "https://isppgrupo9.pythonanywhere.com"
+  urlApi:string = "https://develop-isppgrupo9.pythonanywhere.com"
 
   constructor(private http: HttpClient, private uService: UsersService) {}
 
-  eventos = [
-    {
-      date: '2023-03-05',
-      time: '12:35',
-    },
-    {
-      date: '2023-03-10',
-      time: '13:40',
-    },
-    {
-      date: '2023-03-20',
-      time: '08:30',
-    },
-    {
-      date: '2023-03-30',
-      time: '12:10',
-    },
-    {
-      date: '2023-03-30',
-      time: '10:35',
-    },
-  ];
-
-  filterByDate(selectedDate: string) {
-    return this.eventos.filter(event => event.date === selectedDate)
+  filterByDate(selectedDate: string, eventos: any[]) {
+    return eventos.filter(event => event.date === selectedDate)
     .sort((a, b) => {
       const timeA = parseInt(a.time.replace(':', ''));
       const timeB = parseInt(b.time.replace(':', ''));
@@ -56,7 +33,7 @@ export class CalendarioService {
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
         headers=headers.set('Authorization','Token '+res[0])
         
-        return this.http.get(`${this.urlApi}/appointments/patient/`+res[1]+"/", {'headers':headers});
+        return this.http.get(`${this.urlApi}/appointments/appointments/patient/`+res[1]+"/", {'headers':headers});
       }
 
     }

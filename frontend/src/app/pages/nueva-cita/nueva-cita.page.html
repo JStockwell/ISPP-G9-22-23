@@ -26,14 +26,12 @@
       </ion-modal>
     </ion-item>
     <ion-item color = "warning">
-      <ion-label position="floating">Seleccione especialidad</ion-label>
-      <ion-select [(ngModel)]="especialidad" placeholder="Especialidad">
-        <ion-select-option *ngFor="let item of especialidades" value="{{ item.name }}">{{ item.name }}</ion-select-option>
-      </ion-select>
+      <ion-label position="floating">Especialidad</ion-label>
+      <ion-input [(ngModel)]="especialidad" placeholder="ej: Traumatología, Oftalmología, etc." type="text"></ion-input>
     </ion-item>
     <ion-item color = "warning">
       <ion-label position="floating">Observaciones</ion-label>
-      <ion-textarea [(ngModel)]="observaciones" placeholder="Observaciones a tener en cuenta por el paciente" type="textarea"></ion-textarea>
+      <ion-textarea [(ngModel)]="observaciones" placeholder="Observaciones a tener en cuenta en la cita" type="textarea"></ion-textarea>
     </ion-item>
     
     <ion-button color="dark" expand="block" (click)="crearNuevaCita()">

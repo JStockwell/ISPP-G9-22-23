@@ -9,36 +9,21 @@ import { UsersService } from 'src/app/services/users.service';
   styleUrls: ['./calendario.page.scss'],
 })
 export class CalendarioPage implements OnInit {
-  eventos = [
+  public eventos = [
     {
-      date: '2023-03-05',
-      time: '12:35',
+      date: '2000-01-01',
+      time: '00:00',
     },
-    {
-      date: '2023-03-10',
-      time: '13:40',
-    },
-    {
-      date: '2023-03-20',
-      time: '08:30',
-    },
-    {
-      date: '2023-03-30',
-      time: '12:10',
-    },
-    {
-      date: '2023-03-30',
-      time: '10:35',
-    }
   ];
 
   fechaSeleccionada = new Date().toISOString();
   citasEnDia: any[] | undefined;
+  cantidadCitas: any | undefined;
 
   constructor(private calendarioService: CalendarioService, private router: Router, private uService: UsersService) { }
 
   ngOnInit() {
-    this.cambiarColorEventos(this.eventos);
+    this.getAppointmentsList();
   }
   
   nuevaCita() {
@@ -48,8 +33,8 @@ export class CalendarioPage implements OnInit {
 
   onDateChange(event: any) {
     this.fechaSeleccionada = event.detail.value.split('T')[0];
-    this.citasEnDia = this.calendarioService.filterByDate(this.fechaSeleccionada);
-    console.log(this.citasEnDia);
+    this.citasEnDia = this.calendarioService.filterByDate(this.fechaSeleccionada, this.eventos);
+    this.cantidadCitas = this.citasEnDia.length;
   }
 
   cambiarColorEventos(lista: any) {
@@ -59,7 +44,14 @@ export class CalendarioPage implements OnInit {
         item["textColor"] = colorTextoEvento;
         item["backgroundColor"] = colorFondoEvento;
     }
-    console.log(lista);
+  }
+
+  cambiarFormatoHora(jsonEventos: any[]) {
+    jsonEventos.forEach((item: any) => {
+      let [horas, minutos, segundos] = item.time.split(':');
+      let nuevaHora = `${horas}:${minutos}`;
+      item.time = nuevaHora;
+    });
   }
 
   comprobarFechaEnEventos(fecha: any) {
@@ -69,8 +61,10 @@ export class CalendarioPage implements OnInit {
 
   getAppointmentsList(){
     this.calendarioService.getAppointmentsList().subscribe((res) => {
-      this.eventos = res;
-    })
-  }
+      this.cambiarColorEventos(res);
+      this.cambiarFormatoHora(res);
+      Object.assign(this.eventos, res);
+    }
+  )}
 
 }

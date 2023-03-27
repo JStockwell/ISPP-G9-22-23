@@ -8,7 +8,7 @@ import { UsersService } from './users.service';
 })
 export class NuevaEntradaFisicaService {
 
-  urlApi:string = "https://isppgrupo9.pythonanywhere.com"
+  urlApi:string = "https://develop-isppgrupo9.pythonanywhere.com"
 
   constructor(private http: HttpClient, private uService: UsersService) {}
 
