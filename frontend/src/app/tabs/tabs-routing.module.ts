@@ -48,6 +48,12 @@ const routes: Routes = [
         path: 'seccion-fisica/New',
         loadChildren: () => import('../pages/nueva-entrada-fisica/nueva-entrada-fisica.module').then(m=>m.NuevaEntradaFisicaPageModule)        
       },
+
+      {
+        path: 'seccion-mental/:id/edit',
+        loadChildren: () => import('../pages/modificar-mental/modificar-mental-routing.module').then(m=>m.ModificarMentalPageRoutingModule)
+      },
+      
       {
         path: '',
         redirectTo: '/Tabs/Analytics',

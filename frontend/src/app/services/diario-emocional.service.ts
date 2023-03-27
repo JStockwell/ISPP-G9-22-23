@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {API_URL} from './settings';
 import { UsersService } from './users.service';
 
 const USER_KEY = 'auth-user';
@@ -18,7 +19,7 @@ export class DiarioEmocionalService {
 
   constructor(private http: HttpClient,private uService: UsersService) { }
 
-  API_URL = 'http://isppgrupo9.pythonanywhere.com/';
+  
 
 
   
@@ -34,7 +35,7 @@ export class DiarioEmocionalService {
       let headers = new HttpHeaders()
       headers=headers.set('Authorization','Token '+res[0])
 
-      return this.http.get(this.API_URL+'diary_entries/mental_entry/patient/'+ res[1]+"/",{'headers':headers});
+      return this.http.get(API_URL+'diary_entries/mental_entry/patient/'+ res[1]+"/",{'headers':headers});
     }
     
   

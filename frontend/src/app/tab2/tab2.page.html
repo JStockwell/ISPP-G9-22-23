@@ -9,6 +9,11 @@
   <ng-template #renderEntradas>
     <div *ngFor="let item  of entries">
       <ion-card color="warning" *ngIf="entries !=0">
+
+        <ion-button [routerLink]="['/app/Tabs/seccion-mental/'+item.id+'/edit']">
+          <img src="/assets/images/Edit.png" style="height: 1.5rem;">
+        </ion-button>
+        
         <div style="text-align: center;">
           <div style="text-align: right; margin-right: 15px; margin-top: 20px">
             
