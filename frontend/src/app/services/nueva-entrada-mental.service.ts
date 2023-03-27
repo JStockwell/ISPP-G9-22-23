@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import {API_URL} from './settings';
 import { UsersService } from './users.service';
 
 @Injectable({
@@ -8,11 +9,12 @@ import { UsersService } from './users.service';
 })
 export class NuevaEntradaMentalService {
 
-  urlApi:string = "https://isppgrupo9.pythonanywhere.com"
+  
 
   constructor(private http: HttpClient, private uService: UsersService) {}
 
   postEntry(dataEntry:any): Observable<any>{
+   
     if(this.uService.isLoggedIn()){
       var ck = window.sessionStorage.getItem('auth-user')
       if(ck != null){
@@ -24,7 +26,7 @@ export class NuevaEntradaMentalService {
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
         headers=headers.set('Authorization','Token '+res[0])
         
-        return this.http.post(`${this.urlApi}/diary_entries/mental_entry/`, JSON.stringify(dataEntry), {'headers':headers});
+        return this.http.post(`${API_URL}/diary_entries/mental_entry/`, JSON.stringify(dataEntry), {'headers':headers});
       }
 
     }

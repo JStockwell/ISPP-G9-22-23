@@ -39,6 +39,12 @@ const routes: Routes = [
         path: 'seccion-mental/New',
         loadChildren: () => import('../pages/nueva-entrada-mental/nueva-entrada-mental.module').then(m=>m.NuevaEntradaMentalPageModule)        
       },
+
+      {
+        path: 'seccion-mental/:id/edit',
+        loadChildren: () => import('../pages/modificar-mental/modificar-mental-routing.module').then(m=>m.ModificarMentalPageRoutingModule)
+      },
+      
       {
         path: 'Analytics/Details/:id/Details',
         loadChildren: () => import('../pages/añadir-detalles-analiticas/añadir-detalles-analiticas.module').then(m=>m.AñadirDetallesAnaliticasPageModule)        

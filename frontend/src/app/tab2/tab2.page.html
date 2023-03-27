@@ -8,12 +8,20 @@
 
   <div *ngFor="let item  of entries">
     <ion-card color="warning" *ngIf="entries !=0">
+
+      <ion-button [routerLink]="['/app/Tabs/DiarioEmocional/'+entrada.id+'/edit']">
+        <img src="/assets/images/Edit.png" style="height: 1.5rem;">
+      </ion-button>
+
+
       <div style="text-align: center;">
         <div style="text-align: right; margin-right: 15px; margin-top: 20px">
           
         </div>
         <h3 style="margin-top: 0px">{{ item.date }}</h3>
       </div>
+
+    
 
       <div style="text-align: center">
         <ion-row>
