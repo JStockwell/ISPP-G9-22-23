@@ -1,6 +1,6 @@
 from metrics.models import Metric, Measure, MetricInfo
 from users.models import Patient
-from metrics.serializer import MetricSerializer, MeasureSerializer, CreateSerializerMetric, CreateSerializerMeasure, MetricInfoSerializer
+from metrics.serializer import MetricSerializer, MeasureSerializer, CreateSerializerMetric, CreateSerializerMeasure, MetricInfoSerializer, UpdateMetricSerializer, UpdateMeasureSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -119,9 +119,52 @@ class MetricId(APIView):
     )
     def delete(self, request, *args, **kwargs):
         pk = self.kwargs.get('pk')
-        patient = get_object_or_404(Metric, id=pk)
-        patient.delete()
+        metric = get_object_or_404(Metric, id=pk)
+        metric.delete()
         return Response({"message":"Métrica con id: " +str(pk) + " borrado correctamente"}, status=status.HTTP_200_OK)
+    
+    @swagger_auto_schema(
+            manual_parameters=[],
+            security=[],
+            request_body=openapi.Schema(
+                type=openapi.TYPE_OBJECT, properties={
+                    'min_value': openapi.Schema(type=openapi.TYPE_NUMBER, description="Valor mínimo a modificar que puede tomar la métrica en un caso normal"),
+                    'max_value': openapi.Schema(type=openapi.TYPE_NUMBER, description="Valor máximo a modificar que puede tomar la métrica en un caso normal"),
+                }
+            ),
+            responses={'200':MetricSerializer, '400':"Se ha introducido un par min/max value ilegal o el paciente no existe, o la metric info no se ha encontrado", "404": "Métrica no encontrada"}
+    )
+    def put(self, request, *args, **kwargs):
+        serializer = UpdateMetricSerializer(data = request.data)
+        pk = self.kwargs.get('pk')
+        metric = get_object_or_404(Metric, id=pk)
+        if serializer.is_valid():
+            fields = serializer.validated_data.keys()
+            min_value = None
+            max_value = None
+            for field in fields:
+                if str(field) == "min_value":
+                    min_value = serializer.validated_data[field]
+                if str(field) == "max_value":
+                    max_value = serializer.data[field]
+            
+            if min_value == None:
+                min_value = metric.min_value
+            if max_value == None:
+                max_value = metric.max_value
+
+            if min_value > max_value:
+                return Response({"error":"El valor mínimo no puede ser mayor que el valor máximo"}, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                metric.max_value = max_value
+                metric.min_value = min_value
+                metric.save()
+                return Response({"metric_id":metric.id, "max_value":metric.max_value, "min_value": metric.min_value, "patient_id": metric.patient.id,
+                                 "name": metric.info.name, "unit":metric.info.unit}, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
 
 #Views from Measure
 class MeasureList(APIView):
@@ -198,6 +241,28 @@ class MeasureId(APIView):
         return Response({"message":"Medida con id: " + str(pk) + " borrado correctamete"}, status=status.HTTP_200_OK)
     
 
+    @swagger_auto_schema(
+            manual_parameters=[],
+            security=[],
+            request_body=openapi.Schema(
+                type=openapi.TYPE_OBJECT, properties={
+                    'value': openapi.Schema(type=openapi.TYPE_STRING, description="Valor medido a modificar para una métrica concreta"),
+                }
+            ),
+            responses={'200':MeasureSerializer, '400':"Bad request", "404": "Métrica no encontrada"}
+    )
+    def put(self, request, *args, **kwargs):
+        serializer = UpdateMeasureSerializer(data = request.data)
+        pk = self.kwargs.get('pk')
+        measure = get_object_or_404(Measure, id=pk)
+        if serializer.is_valid():
+            measure.value = serializer.validated_data["value"]
+            measure.save()
+            return Response({"measure_id":measure.id,"value":measure.value,"metric_id":measure.metric.id, "patient_id":measure.patient.id}, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 class MetricPatientId(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -227,6 +292,8 @@ class MeasurePatientId(APIView):
         measures = Measure.objects.filter(patient = patient).order_by("-date")
         serializer = MeasureSerializer(measures, many=True)
         return Response(serializer.data)
+    
+    
     
 class LatestMeasurePatientIdMetricId(APIView):
     authentication_classes = [TokenAuthentication]
