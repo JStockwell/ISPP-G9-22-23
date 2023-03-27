@@ -2,6 +2,7 @@ import { HttpClient, HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpR
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UsersService } from './users.service';
+import { urlAPI } from '../global';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,7 @@ export class SeccionFisicaServiceService implements HttpInterceptor{
         let headers = new HttpHeaders()
         headers = headers.set('Authorization', 'Token '+res[0])
 
-        return this.http.get(this.API_URL + `diary_entries/physical_entry/patient/${res[1]}`,{'headers':headers})
+        return this.http.get(urlAPI + `/diary_entries/physical_entry/patient/${res[1]}`,{'headers':headers})
       }
     }
     return new Observable<any>;
@@ -48,7 +49,7 @@ export class SeccionFisicaServiceService implements HttpInterceptor{
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
         headers=headers.set('Authorization','Token '+res[0])
         
-        return this.http.delete(`${this.API_URL}/diary_entries/physical_entry/${idEntry}`, {'headers':headers});
+        return this.http.delete(`${urlAPI}/diary_entries/physical_entry/${idEntry}`, {'headers':headers});
       }
 
     }
