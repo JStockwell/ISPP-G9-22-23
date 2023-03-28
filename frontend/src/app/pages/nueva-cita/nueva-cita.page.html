@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Nueva cita</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" color ="light">
+  <ion-card color = "warning">
+    <ion-text color="primary">
+      <h1 style="text-align: center; padding-bottom: 2%; font-weight: bold;">{{ fechaRecibida | date: 'EEEE, dd/MM/yyyy' }}</h1>
+    </ion-text>
+    <ion-item color = "warning">
+      <ion-label>Seleccione una hora</ion-label>
+      <ion-item color = "warning" id="open-modal3">
+        <ion-note slot="end">{{fechaHora | date: 'HH:mm'}}</ion-note>
+      </ion-item>
+      <ion-modal trigger="open-modal3" [cssClass]="'bottom-end'">
+        <ng-template>
+          <ion-datetime
+            presentation="time"
+            [(ngModel)]="fechaHora"
+            size="cover"
+            [showDefaultButtons]="true"
+          ></ion-datetime>
+        </ng-template>
+      </ion-modal>
+    </ion-item>
+    <ion-item color = "warning">
+      <ion-label position="floating">Especialidad</ion-label>
+      <ion-input [(ngModel)]="especialidad" placeholder="ej: Traumatología, Oftalmología, etc." type="text"></ion-input>
+    </ion-item>
+    <ion-item color = "warning">
+      <ion-label position="floating">Observaciones</ion-label>
+      <ion-textarea [(ngModel)]="observaciones" placeholder="Observaciones a tener en cuenta en la cita" type="textarea"></ion-textarea>
+    </ion-item>
+    
+    <ion-button color="dark" expand="block" (click)="crearNuevaCita()">
+      Confirmar
+    </ion-button>
+  </ion-card>
+
+  <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
+    <ion-fab-button  color = "secondary" (click)="goBack()">
+      <ion-icon name="arrow-back-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

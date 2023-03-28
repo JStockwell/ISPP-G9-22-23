@@ -1,30 +1,60 @@
 <ion-header>
   <ion-toolbar color = "primary">
-    <ion-title> Sección Física </ion-title>
+    <ion-title> Diario Físico </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content color = "light">
+<ion-content [fullscreen]="true" color = "light">
   <div *ngIf="existsEntradas(); then renderEntradas else noEntradas"></div>
   <ng-template #renderEntradas>
-    <div *ngFor="let entrada of entradas" style="overflow-y: scroll">
+    <div *ngFor="let entrada of entries" style="overflow-y: scroll">
+      <ion-button [routerLink]="['/app/Tabs/seccion-fisica/'+entrada.id+'/edit']">
+        <img src="/assets/images/Edit.png" style="height: 1.5rem;">
+      </ion-button>
       <app-entrada-fisica-general
-        [date]="entrada.date.toUTCString()"
+        [date]="entrada.date"
         [state]="entrada.state"
         [bodyParts]="entrada.body_parts"
         [notes]="entrada.notes"
       ></app-entrada-fisica-general>
+      <ion-button color="dark" (click)="eliminarEntradaFisica( entrada['id'] )" >
+        Borrar
+      </ion-button>
     </div>
+
+
+    
+
   </ng-template>
   <ng-template #noEntradas>
-    <div style="font-weight: bold; font-size: x-large; text-align: center">
-      No hay entradas todavía
+    <div style="font-weight: bold; font-size: x-large; text-align: center">     
+
+      <img src="https://static.thenounproject.com/png/2902077-200.png" class="imagen-vacia" alt="">
+      <div style="opacity: .2;"> No hay entradas todavía </div>
+      
     </div>
   </ng-template>
-  
-  <ion-fab style = "padding-inline-end: 5%;"  slot = "fixed"  vertical = "bottom" horizontal = "end">
-    <ion-fab-button color = "secondary" [routerLink]="['/app/Tabs/seccion-fisica/New']">
+
+  <ion-fab style = "padding-inline-end: 2.5%;"  slot = "fixed"  vertical = "bottom" horizontal = "end">
+    <ion-fab-button color = "primary" [routerLink]="['/app/Tabs/seccion-fisica/New']">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </ion-content>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

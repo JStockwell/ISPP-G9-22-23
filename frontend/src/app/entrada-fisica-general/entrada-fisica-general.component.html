@@ -1,30 +1,29 @@
-<ion-card color="warning">
-  <ion-card-header>
-    <ion-card-title style="text-align: center; font-weight: bold; font-size: xx-large;">
-      {{date}}
-    </ion-card-title>
-  </ion-card-header>
-  <ion-card-content >
-    <div>
-      <b style="font-weight: bold;">
-        Estado físico
-      </b>
-      <img src="/assets/images/{{state}}.png" style="width: 3rem;">
+
+
+
+  <ion-card color="warning" >
+    <div style="text-align: center;">
+      <div style="text-align: right; margin-right: 15px; margin-top: 20px"></div>
+      <h1 style="text-align: center; padding-bottom: 2%; font-weight: bold;">{{date }}</h1>
     </div>
-    <div *ngIf="bodyPartsNotEmpty(); then renderBodyParts"></div>
-    <ng-template #renderBodyParts>
-      <b style="font-weight: bold;">
-        ¿Qué me duele?
-      </b>
-      <b *ngFor="let bodyPart of array_bodyParts;">
-        <img src="/assets/images/{{bodyPart}}.png" style="width: 3rem;">
-      </b>
-    </ng-template>
-    <p style="text-align: center; font-weight: bold; font-size: large;">
-      Notas
-    </p>
-    <p>
+
+    <div style="text-align: center">
+      <h3 style="font-weight: bold; margin-bottom: 20px">
+        Estado físico: <img src="/assets/images/{{state}}.png"  class ='emoji' style="width: 3rem;">
+      </h3>
+    </div>
+    <div>
+      <div *ngIf="bodyPartsNotEmpty(); then renderBodyParts"></div>
+      <ng-template #renderBodyParts>
+        <h3 style="font-weight: bold;text-align: center">¿Qué me duele?</h3>
+        <b  *ngFor="let bodyPart of array_bodyParts;">
+          <img src="/assets/images/{{bodyPart}}.png" class='emoji' style="width: 3rem; margin-bottom: 20px; margin-left: 10px;">
+        </b>
+      </ng-template>
+    </div>
+    <div style="text-align: center"><h3 style="font-weight: bold;">Notas</h3></div>
+    <div style="text-align: center; margin-bottom: 10px">
       {{notes}}
-    </p>
-  </ion-card-content>
-</ion-card>
+    </div>
+  </ion-card>
+

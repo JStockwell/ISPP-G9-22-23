@@ -9,10 +9,12 @@
     <ion-text color="primary">
       <h1 style="text-align: center; padding-bottom: 2%; font-weight: bold;">{{ today | date: 'EEEE, dd/MM/yyyy' }}</h1>
     </ion-text>
+    <div class="invalid-feedback error" *ngIf="errorMessage"  > {{errorMessage}}</div>
     <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">¿Qué tal te sientes hoy físicamente?</ion-label>
     <ion-item color = "warning">
       <form>
         <div class="cc-selector" style = "padding-top: 5%; padding-bottom: 2%;">
+          <div class="invalid-feedback error" *ngIf="errorMessageEstado" >{{errorMessageEstado}}</div>
           <input [(ngModel)]="estadoFisico" id="muyfeliz" type="radio" name="caras" value="VG" />
           <label class="image-cc muyfeliz" for="muyfeliz"></label>
           <input [(ngModel)]="estadoFisico" id="feliz" type="radio" name="caras" value="G" />
@@ -52,8 +54,9 @@
   </ion-card>
 
   <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
-    <ion-fab-button  color = "secondary" (click)="goBack()">
+    <ion-fab-button  color = "primary" (click)="goBack()">
       <ion-icon name="arrow-back-circle-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
 </ion-content>

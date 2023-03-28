@@ -1,0 +1,129 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+     Modificar entrada mental
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" color="light">
+
+    <ion-card color = "warning">
+
+      <ion-text color="primary">
+        <h1 style="text-align: center; padding-bottom: 2%; font-weight: bold;">{{ today | date: 'EEEE, dd/MM/yyyy'}}</h1>
+      </ion-text>
+
+      <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">¿Cómo te has sentido hoy?</ion-label>
+      <ion-item color="warning">
+        <form>
+
+          <div class="cc-selector" style = "padding-top: 5%; padding-bottom: 2%;">
+            <input [(ngModel)]="estadoFisico" id="muyfeliz" type="radio" name="caras" value="VG" />
+            <label class="image-cc muyfeliz" for="muyfeliz"></label>
+            <input [(ngModel)]="estadoFisico" id="feliz" type="radio" name="caras" value="G" />
+            <label class="image-cc feliz" for="feliz"></label>
+            <input [(ngModel)]="estadoFisico" id="neutral" type="radio" name="caras" value="F" />
+            <label class="image-cc neutral" for="neutral"></label>
+            <input [(ngModel)]="estadoFisico" id="triste" type="radio" name="caras" value="B" />
+            <label class="image-cc triste" for="triste"></label>
+            <input [(ngModel)]="estadoFisico" id="muytriste" type="radio" name="caras" value="VB" />
+            <label class="image-cc muytriste" for="muytriste"></label>
+          </div>
+
+
+
+        </form>
+
+      </ion-item>
+
+      <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">¿Cómo dormiste anoche?</ion-label>
+      <ion-item color="warning">
+        <form>
+
+          <div class="cc-selector" style = "padding-top: 5%; padding-bottom: 2%;">
+            <input [(ngModel)]="suenyo" id="profundo" type="radio" name="camas" value="DEEP" />
+            <label class="image-cc profundo" for="profundo"></label>
+            <input [(ngModel)]="suenyo" id="ligero" type="radio" name="camas" value="LIGHT" />
+            <label class="image-cc ligero" for="ligero"></label>
+            <input [(ngModel)]="suenyo" id="insomnio" type="radio" name="camas" value="NONE" />
+            <label class="image-cc insomnio" for="insomnio"></label>
+
+          </div>
+
+
+
+        </form>
+
+      </ion-item>
+
+      <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">¿Qúe has comido hoy?</ion-label>
+      <ion-item color="warning">
+        <form>
+
+          <div class="cc-selector" style = "padding-top: 5%; padding-bottom: 2%;">
+            <input [(ngModel)]="comida" id="sano" type="radio" name="comer" value="HEALTHY" />
+            <label class="image-cc sano" for="sano"></label>
+            <input [(ngModel)]="comida" id="basura" type="radio" name="comer" value="FAST" />
+            <label class="image-cc basura" for="basura"></label>
+            <input [(ngModel)]="comida" id="ayuno" type="radio" name="comer" value="NONE" />
+            <label class="image-cc ayuno" for="ayuno"></label>
+
+          </div>
+
+
+
+        </form>
+
+      </ion-item>
+
+      <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">¿Qué tiempo ha hecho hoy?</ion-label>
+      <ion-item color="warning">
+        <form>
+
+          <div class="cc-selector" style = "padding-top: 5%; padding-bottom: 2%;">
+            <input [(ngModel)]="tiempo" id="sol" type="radio" name="clima" value="SUNNY" />
+            <label class="image-cc sol" for="sol"></label>
+            <input [(ngModel)]="tiempo" id="nubes" type="radio" name="clima" value="CLOUDY" />
+            <label class="image-cc nubes" for="nubes"></label>
+            <input [(ngModel)]="tiempo" id="lluvia" type="radio" name="clima" value="RAINY" />
+            <label class="image-cc lluvia" for="lluvia"></label>
+            <input [(ngModel)]="tiempo" id="tormenta" type="radio" name="clima" value="STORMY" />
+            <label class="image-cc tormenta" for="tormenta"></label>
+            <input [(ngModel)]="tiempo" id="nieve" type="radio" name="clima" value="SNOWY" />
+            <label class="image-cc nieve" for="nieve"></label>
+          </div>
+
+
+
+        </form>
+
+      </ion-item>
+
+      <ion-item color = "warning">
+        <ion-label position="floating">Pensamientos positivos</ion-label>
+        <ion-textarea [(ngModel)]="ppositivos" rows= "3" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam gravida venenatis accumsan. In mi massa tempus" type="text"></ion-textarea>
+      </ion-item>
+
+      <ion-item color = "warning">
+        <ion-label position="floating">Pensamientos negativos</ion-label>
+        <ion-textarea [(ngModel)]="pnegativos" rows= "3" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam gravida venenatis accumsan. In mi massa tempus" type="text"></ion-textarea>
+      </ion-item>
+
+      <ion-item color = "warning">
+        <ion-label position="floating">Notas</ion-label>
+        <ion-textarea [(ngModel)]="notas" rows= "3" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam gravida venenatis accumsan. In mi massa tempus" type="text"></ion-textarea>
+      </ion-item>
+
+      <ion-button color="dark" expand="block" (click)="editarEntradaMental()">
+        Modificar entrada
+      </ion-button>
+    </ion-card>
+
+    <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
+      <ion-fab-button color = "secondary" [routerLink]="['/app/Tabs/DiarioEmocional']">
+        <ion-icon name="arrow-back-circle-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+
+</ion-content>

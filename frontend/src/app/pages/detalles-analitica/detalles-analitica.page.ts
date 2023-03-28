@@ -15,9 +15,7 @@ import { AnaliticasService } from 'src/app/services/analiticas.service';
 export class DetallesAnaliticaPage implements OnInit {
   nombreAnalitica?: String;
 
-  @ViewChild("barChart") barChart: any;
-  bars: any;
-  colorArray: any;
+  chart: any;
 
   analitica:analitica = {
     id: null,
@@ -28,36 +26,60 @@ export class DetallesAnaliticaPage implements OnInit {
     min_value: null,
     max_value: null
   };
-
+  id:any;
   mediciones = new Array<measure>;
+  medicionesAux = new Array<measure>;
   constructor(private route: ActivatedRoute, private navCtrl: NavController, public router: Router, private service:DetalleAnaliticasService, private analiticaService:AnaliticasService) {}
 
   ngOnInit() {
+    this.id = this.route.snapshot.params["id"];
     this.service.getDetallesAnaliticas(this.route.snapshot.paramMap.get("id")).subscribe({
       next: data=>{
-        this.analitica=data
+        this.analitica=data;
+        this.createDetails();
       },
       error:err=>{
         console.log(err.error.message)
       }
     })
+    let defaultTab = document.getElementById("default");
+    defaultTab?.click();
+  }
 
+  createDetails(){
     this.analiticaService.getAnaliticaDetails().subscribe({
       next: data =>{
         for(var metric of data){
           let date:Date = metric.date;
-          const aux = date.toString().substring(0,10);
-          metric.date = aux;
+          metric.date = this.analiticaService.dateFormatter(date)
+          this.mediciones.push(metric)
         }
-        this.mediciones = data;
       },
       error:err=>{
         console.log(err.error.message)
       }
     })
 
-    let defaultTab = document.getElementById("default");
-    defaultTab?.click();
+    
+
+    this.analiticaService.getLatestDetails(this.id).subscribe({
+      next: data => {
+        const data2 = data.reverse();
+        for(var metric of data2){
+          let date: Date = metric.date;
+          const aux = date.toString().substring(0,10);
+
+          metric.date = aux
+          
+          this.medicionesAux.push(metric)
+        }
+        let id = this.route.snapshot.params["id"];
+        this.createChart(id);
+      },
+      error:err => {
+        console.log(err.error.message)
+      }
+    })
   }
 
   goBack(){
@@ -82,45 +104,83 @@ export class DetallesAnaliticaPage implements OnInit {
     target.className += " active";
   };
 
-  ionViewDidEnter() {
-    let id = this.route.snapshot.params["id"];
-    this.createChart(id);
-  }
 
   createChart(id: any) {
 
     const dates: String[] = [];
     const values: String[] = [];
-    for (const medicion of this.mediciones) {
-      if (medicion.metric.id == id) {
-        let date:Date = medicion.date;
-        const aux = date.toString().substring(0,9);
-        dates.push(aux);
-        values.push(medicion.value);
+    let str = "chr"+id;
+    let aux = <HTMLCanvasElement> document.getElementById(str);
+    const ctx = aux.getContext("2d");
+    if(ctx != null){
+      const dataLower: any[] = [];
+      const dataUpper: any[] = [];
+      for (const medicion of this.medicionesAux) {
+        if (medicion.metric.id == id) {
+          let date:Date = medicion.date;
+          const aux = date.toString().substring(0,10);
+          dates.push(aux);
+          values.push(medicion.value);
+          dataLower.push(medicion.metric.min_value);
+          dataUpper.push(medicion.metric.max_value);
+        }
       }
+      Chart.defaults.color = "black";
+      Chart.defaults.backgroundColor = "#f4f5f9";
+  
+      const mensaje: string =
+        "Resultados de la analítica(" + this.analitica.info.unit + ")";
+      if (this.chart) {
+        this.chart.destroy();
+      }
+      this.chart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: dates,
+          datasets: [
+            {
+              label: mensaje,
+              data: values,
+              backgroundColor: "light", // array should have same number of elements as number of dataset
+              borderColor: "light", // array should have same number of elements as number of dataset
+  
+              borderWidth: 1,
+            },
+            {
+              label: "Umbrales",
+              data: dataLower,
+              borderColor: "darkorange",
+              backgroundColor:"darkorange",
+              pointRadius: 0
+            },
+            {
+              label:"",
+              data: dataUpper,
+              borderColor: "darkorange",
+              backgroundColor:"darkorange",
+              pointRadius: 0
+            }
+          ],
+        },
+        options:{
+          responsive:true,
+          maintainAspectRatio:false
+        }
+      });
     }
-    Chart.defaults.color = "black";
-    Chart.defaults.backgroundColor = "#f4f5f9";
-
-    const mensaje: string =
-      "Resultados de la analítica(" + this.analitica.info.unit + ")";
-    this.bars = new Chart(this.barChart.nativeElement, {
-      type: "line",
-      data: {
-        labels: dates,
-        datasets: [
-          {
-            label: mensaje,
-            data: values,
-            backgroundColor: "light", // array should have same number of elements as number of dataset
-            borderColor: "light", // array should have same number of elements as number of dataset
-
-            borderWidth: 1,
-          },
-        ],
-      },
-    });
   }
+  eliminarDetalles(idEntrada: any) {
+    this.analiticaService.deleteEntry(idEntrada).subscribe({
+      next: res => {
+        console.log(res);
+        document.location.href="/app/Tabs/Analytics/Details/"+ this.route.snapshot.paramMap.get('id')
+        window.location.href = "/app/Tabs/Analytics/Details/"+ this.route.snapshot.paramMap.get('id')
+      },error: err => {
+        console.log(err)
+      }
+    })
+  }
+
 }
 
 type analitica = {

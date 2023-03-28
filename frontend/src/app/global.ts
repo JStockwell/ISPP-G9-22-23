@@ -1,0 +1,1 @@
+export const urlAPI: string = "https://isppgrupo9.pythonanywhere.com";

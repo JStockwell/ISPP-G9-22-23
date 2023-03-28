@@ -23,7 +23,7 @@ export class Tab2Page  {
 async loadEntradasDiarioEmocional(){
 
   const loading = await this.loadingCtrl.create({
-    message: 'Loading..',
+    message: 'Cargando..',
     spinner:'bubbles',
   });
 
@@ -39,7 +39,13 @@ async loadEntradasDiarioEmocional(){
 }
 
 
-
+existsEntradas = () =>{
+  if (this.entries){
+    return this.entries.length>0;
+  } else{
+    return false;
+  }
+}
 
 getImagenEstado(imagen:string): any {
   if(imagen == "G" ){
@@ -49,7 +55,7 @@ getImagenEstado(imagen:string): any {
     return "/assets/images/cara-muy-feliz.png";
   }
   
-  if(imagen == "S" ){
+  if(imagen == "F" ){
     return "/assets/images/cara-neutral.png";
   }
   
@@ -118,6 +124,18 @@ getImagenTiempo(imagen:string): any {
   }
   
 
+}
+
+eliminarEntradaMental(idEntrada: any) {
+  this.diarioEmocionalService.deleteEntry(idEntrada).subscribe({
+    next: res => {
+      console.log(res);
+      document.location.href="/app/Tabs/DiarioEmocional"
+      window.location.href = "/app/Tabs/DiarioEmocional"
+    },error: err => {
+      console.log(err)
+    }
+  })
 }
 
  
