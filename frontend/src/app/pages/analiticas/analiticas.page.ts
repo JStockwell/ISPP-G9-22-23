@@ -23,6 +23,7 @@ export class AnaliticasPage implements OnInit {
   analiticas = new Array<analitica>
   mediciones = new Array<measure>
   medicionesAux = new Array<measure>
+  
   constructor(private analiticasService: AnaliticasService, private loadingCtrl: LoadingController, private uService: UsersService, private alertController: AlertController) {}
 
   //Se ejecuta al crear la página por parte de angular
