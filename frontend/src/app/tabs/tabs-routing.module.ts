@@ -47,7 +47,10 @@ const routes: Routes = [
         path: 'Analytics/Details/:id/Details',
         loadChildren: () => import('../pages/añadir-detalles-analiticas/añadir-detalles-analiticas.module').then(m=>m.AñadirDetallesAnaliticasPageModule)        
       },
-      
+      {
+        path: 'Analytics/:id/edit',
+        loadChildren: () => import('../pages/modificar-analitica/modificar-analitica.module').then(m=>m.ModificarAnaliticaPageModule)
+      },
       {
         path: 'seccion-fisica/New',
         loadChildren: () => import('../pages/nueva-entrada-fisica/nueva-entrada-fisica.module').then(m=>m.NuevaEntradaFisicaPageModule)        
