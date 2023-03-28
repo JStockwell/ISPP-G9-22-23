@@ -9,6 +9,7 @@ import { LoadingController } from '@ionic/angular';
 })
 export class SeccionFisicaPage implements OnInit {
   
+  id: any
   entries: any = [];
 
   constructor(private fisicoService: SeccionFisicaServiceService, private loadingCtrl: LoadingController) { }
@@ -25,8 +26,8 @@ export class SeccionFisicaPage implements OnInit {
     this.fisicoService.deleteEntry(idEntrada).subscribe({
       next: res => {
         console.log(res);
-        document.location.href="http://localhost:8100/app/Tabs/seccion-fisica"
-        window.location.href = "http://localhost:8100/app/Tabs/seccion-fisica"
+        document.location.href="/app/Tabs/seccion-fisica"
+        window.location.href = "/app/Tabs/seccion-fisica"
       },error: err => {
         console.log(err)
       }
