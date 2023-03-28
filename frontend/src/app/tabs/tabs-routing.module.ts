@@ -40,6 +40,10 @@ const routes: Routes = [
         loadChildren: () => import('../pages/nueva-entrada-mental/nueva-entrada-mental.module').then(m=>m.NuevaEntradaMentalPageModule)        
       },
       {
+        path: 'seccion-mental/:id',
+        loadChildren: ()=> import('../pages/detalles-mental/detalles-mental.module').then(m=>m.DetallesMentalPageModule)
+      },
+      {
         path: 'Analytics/Details/:id/Details',
         loadChildren: () => import('../pages/añadir-detalles-analiticas/añadir-detalles-analiticas.module').then(m=>m.AñadirDetallesAnaliticasPageModule)        
       },
