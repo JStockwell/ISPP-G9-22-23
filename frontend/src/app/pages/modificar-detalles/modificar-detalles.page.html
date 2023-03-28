@@ -9,7 +9,7 @@
 <ion-content class="ion-pading" color="light">
   <ion-card color ="warning"> 
     <br>
-    <form name = "form" (ngSubmit)="f.form.valid && nuevaEntrada()" #f = "ngForm" novalidate>
+    <form name = "form" (ngSubmit)="f.form.valid && modificarDetalles()" #f = "ngForm" novalidate>
       <ion-label style = "padding-inline-start: 6%; padding-top: 50px;" for = "valor" display="block" position="floating">Valor</ion-label>
       <ion-item color="warning">
         <ion-input [(ngModel)]="form.valor" #valor="ngModel" name = "valor"  placeholder="Type something here" required [ngClass]="{ 'is-invalid': f.submitted && valor.errors }"></ion-input>
@@ -19,7 +19,7 @@
         <div *ngIf="valor.errors['required']">Valor requerido</div>
       </div>
       <ion-button color="dark" expand="block" type = "submit" >
-        Crear entrada
+        Modificar entrada
       </ion-button>
 
     </form>
@@ -30,7 +30,6 @@
       <ion-icon name="arrow-back-circle-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-
   
   
 </ion-content>

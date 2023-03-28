@@ -53,6 +53,13 @@ const routes: Routes = [
         path: 'seccion-mental/:id/edit',
         loadChildren: () => import('../pages/modificar-mental/modificar-mental-routing.module').then(m=>m.ModificarMentalPageRoutingModule)
       },
+
+      {
+        path: 'Analytics/Details/:id/Details/edit',
+        loadChildren: () => import('../pages/modificar-detalles/modificar-detalles-routing.module').then(m=>m.ModificarDetallesPageRoutingModule)
+      },
+
+      
       
       {
         path: '',

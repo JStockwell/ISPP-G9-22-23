@@ -42,11 +42,18 @@
             >{{ medicion.value}} {{analitica.info.unit}} ({{medicion.date}})
           </ion-label>
         </ion-item>
+        <ion-button [routerLink]="['/app/Tabs/Analytics/Details/'+analitica.id+'/Details/edit']">
+          <img src="/assets/images/Edit.png" style="height: 1.5rem;">
+        </ion-button>
       </div>
+      
+  
     </div>
     <div class="tabcontent" id="Grafica">
       <canvas #barChart style="width:100%;max-width:700px; height: auto;" ></canvas>
     </div>
+
+    
   </ion-card>
   
   <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
@@ -65,4 +72,7 @@
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>
 </ion-fab>
+
+
+
 </ion-content>

@@ -43,6 +43,12 @@ const routes: Routes = [
     path: 'modificar-mental',
     loadChildren: () => import('./pages/modificar-mental/modificar-mental.module').then( m => m.ModificarMentalPageModule)
   },
+
+  {
+    path: 'modificar-detalles',
+    loadChildren: () => import('./pages/modificar-detalles/modificar-detalles.module').then( m => m.ModificarDetallesPageModule)
+
+  },
   
   {
     path: 'nueva-entrada-fisica',
