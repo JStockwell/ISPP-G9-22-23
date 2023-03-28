@@ -32,12 +32,9 @@
           Últimas 10 entradas
         </p>
       </ion-label>
-      <ion-card-content>
-        <div><canvas  id="chart{{item.id}}" style="width:100%;max-width:700px; height: auto; " ></canvas></div>
-        
-      </ion-card-content>
+      <div style = "height:300px" ><canvas  id="chart{{item.id}}" style="width:100%;max-width:700px; height: auto;"></canvas></div>
     </ion-card>
-    <ion-button (click)="deleteAnalitica(item.id)">
+    <ion-button class = "deleteBtn" (click)="deleteAnalitica(item.id)" color = "primary">
         <img src="/assets/images/Trash.png" style="max-height: 1.5rem;">
       </ion-button>
   </div>
