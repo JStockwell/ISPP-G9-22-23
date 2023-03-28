@@ -126,6 +126,18 @@ getImagenTiempo(imagen:string): any {
 
 }
 
+eliminarEntradaMental(idEntrada: any) {
+  this.diarioEmocionalService.deleteEntry(idEntrada).subscribe({
+    next: res => {
+      console.log(res);
+      document.location.href="http://localhost:8100/app/Tabs/DiarioEmocional"
+      window.location.href = "http://localhost:8100/app/Tabs/DiarioEmocional"
+    },error: err => {
+      console.log(err)
+    }
+  })
+}
+
  
 }
 
