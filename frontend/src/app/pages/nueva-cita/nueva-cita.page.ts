@@ -70,8 +70,8 @@ export class NuevaCitaPage implements OnInit {
     this.nuevaCitaService.postEntry(dataEntry).subscribe({
       next: dataEntry => {
         console.log(dataEntry);
-        document.location.href = "http://localhost:8100/app/Tabs/calendario"
-        window.location.href = "http://localhost:8100/app/Tabs/calendario"
+        document.location.href = "/app/Tabs/calendario"
+        window.location.href = "/app/Tabs/calendario"
       },
       error: err => {
         console.log(err);

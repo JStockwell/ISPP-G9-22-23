@@ -13,7 +13,8 @@ export class EntradaFisicaGeneralComponent implements OnInit {
   @Input()
   bodyParts!: String;
   @Input()
-  notes!: String;
+  id!: String;
+
 
   array_bodyParts:any
 
