@@ -1,14 +1,13 @@
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { API_URL } from './settings';
 import { UsersService } from './users.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AñadirDetallesAnaliticasService {
-
-  API_URL:string = "https://develop-isppgrupo9.pythonanywhere.com";
 
   constructor(private http: HttpClient, private uService: UsersService) {}
 
@@ -24,7 +23,7 @@ export class AñadirDetallesAnaliticasService {
         let headers = new HttpHeaders()
         headers=headers.set('Authorization','Token '+res[0])
         headers = headers.set('Content-Type', 'application/json')
-        return this.http.post(`${this.API_URL}/metrics/measures/`, JSON.stringify(entry),{'headers':headers});
+        return this.http.post(`${API_URL}metrics/measures/`, JSON.stringify(entry),{'headers':headers});
       }
     }
     return new Observable<any>;

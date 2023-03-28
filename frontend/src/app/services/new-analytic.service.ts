@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { UsersService } from './users.service';
+import { API_URL } from './settings';
 
 const USER_KEY = 'auth-user';
 const httpOptions = {
@@ -15,7 +16,6 @@ export class NewAnalyticService {
 
 
   constructor(private http: HttpClient, private uService: UsersService) {}
-  API_URL = 'http://develop-isppgrupo9.pythonanywhere.com/';
 
   getMetricsNotUsedList(): Observable<any>{
     if(this.uService.isLoggedIn()){
@@ -28,7 +28,7 @@ export class NewAnalyticService {
         }
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
         headers=headers.set('Authorization','Token '+res[0])
-        return this.http.get(this.API_URL+'metrics/info/not_used/'+res[1]+"/", {'headers':headers});
+        return this.http.get(API_URL+'metrics/info/not_used/'+res[1]+"/", {'headers':headers});
       }
 
     }
@@ -47,7 +47,7 @@ export class NewAnalyticService {
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
         headers=headers.set('Authorization','Token '+res[0])
         
-        return this.http.post(this.API_URL+'metrics/metrics/', JSON.stringify(dataMetricEntry), {'headers':headers});
+        return this.http.post(API_URL+'metrics/metrics/', JSON.stringify(dataMetricEntry), {'headers':headers});
       }
 
     }
@@ -66,7 +66,7 @@ export class NewAnalyticService {
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
         headers=headers.set('Authorization','Token '+res[0])
         console.log(dataMeasureEntry)
-        return this.http.post(this.API_URL+'metrics/measures/', JSON.stringify(dataMeasureEntry), {'headers':headers});
+        return this.http.post(API_URL+'metrics/measures/', JSON.stringify(dataMeasureEntry), {'headers':headers});
       }
 
     }
