@@ -6,9 +6,7 @@
 
 <ion-content color="light" class="ion-padding">
   <div *ngFor="let item of analiticas">
-    <ion-button [routerLink]="['/app/Tabs/Analytics/'+item.id+'/edit']">
-      <img src="/assets/images/Edit.png" style="height: 1.5rem;">
-    </ion-button>
+    
     <ion-card
       button
       color="warning"
@@ -37,9 +35,15 @@
       </ion-label>
       <div style = "height:300px" ><canvas  id="chart{{item.id}}" style="width:100%;max-width:700px; height: auto;"></canvas></div>
     </ion-card>
-    <ion-button class = "deleteBtn" (click)="deleteAnalitica(item.id)" color = "primary">
-        <img src="/assets/images/Trash.png" style="max-height: 1.5rem;">
+
+    <div style = "display: inline">
+      <ion-button class = "updateBtn" [routerLink]="['/app/Tabs/Analytics/'+item.id+'/edit']">
+        <img src="/assets/images/Edit.png" style="height: 1.5rem;">
       </ion-button>
+      <ion-button class = "deleteBtn" (click)="deleteAnalitica(item.id)" color = "primary">
+          <img src="/assets/images/Trash.png" style="max-height: 1.5rem;">
+      </ion-button>
+    </div>
   </div>
 
   <ion-fab
