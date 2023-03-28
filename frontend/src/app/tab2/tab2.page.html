@@ -8,7 +8,7 @@
   <div *ngIf="existsEntradas(); then renderEntradas else noEntradas"></div>
   <ng-template #renderEntradas>
     <div *ngFor="let item  of entries">
-      <ion-card color="warning" *ngIf="entries !=0">
+      <ion-card color="warning" *ngIf="entries !=0" [routerLink]="['/app/Tabs/seccion-mental/'+item.id]">
         <div style="text-align: center;">
           <div style="text-align: right; margin-right: 15px; margin-top: 20px">
             
@@ -42,20 +42,8 @@
               <h3 style="font-weight: bold;">Comida: <img class ="emoji" src="{{getImagenComida(item.food)}}"  style="width: 3rem;" ></h3>
             </ion-col>
           </ion-row>
-        </div>  
-
-        <div style="text-align: center"><h3 style="font-weight: bold;">Pensamientos Postivos</h3></div>
-        <div style="text-align: center; margin-bottom: 10px">
-          {{ item.positive_thoughts}}
         </div>
-        <div style="text-align: center"><h3 style="font-weight: bold;">Pensamientos Negativos</h3></div>
-        <div style="text-align: center; margin-bottom: 10px">
-          {{ item.negative_thoughts}}
-        </div>
-
-        <div style="text-align: center"><h3 style="font-weight: bold;">Notas</h3></div>
-        <div style="text-align: center; margin-bottom: 10px">{{ item.notes}}</div>
-      </ion-card>
+      </ion-card>  
     </div>
   </ng-template>
 
