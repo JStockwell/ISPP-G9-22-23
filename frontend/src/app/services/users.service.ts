@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { API_URL } from './settings';
 import { HttpClient, HttpHeaders } from '@angular/common/http'; 
 import { Observable } from 'rxjs/internal/Observable';
+import { API_URL } from './settings';
 
 const USER_KEY = 'auth-user';
 
@@ -16,7 +17,7 @@ const httpOptions = {
 export class UsersService {
 
   constructor(private http: HttpClient) { }
-  
+
 
   clean():void{
     window.sessionStorage.clear();
