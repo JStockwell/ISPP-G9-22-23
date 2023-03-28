@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {API_URL} from './settings';
 import { UsersService } from './users.service';
 import { API_URL } from './settings';
 

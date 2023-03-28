@@ -9,23 +9,13 @@
   <ng-template #renderEntradas>
     <div *ngFor="let item  of entries">
 
-      <ion-card color="warning" *ngIf="entries !=0">
 
-        <ion-button [routerLink]="['/app/Tabs/seccion-mental/'+item.id+'/edit']">
-          <img src="/assets/images/Edit.png" style="height: 1.5rem;">
-        </ion-button>
-
-        <ion-button color="dark" (click)="eliminarEntradaMental( item['id'] )" >
-          Borrar
-        </ion-button>
-        
+       
 
       <ion-card color="warning" *ngIf="entries !=0" [routerLink]="['/app/Tabs/seccion-mental/'+item.id]">
 
         <div style="text-align: center;">
-          <div style="text-align: right; margin-right: 15px; margin-top: 20px">
-            
-          </div>
+          <div style="text-align: right; margin-right: 15px; margin-top: 20px"></div>
           <h1 style="text-align: center; padding-bottom: 2%; font-weight: bold;">{{item.date }}</h1>
         </div>
 
@@ -56,7 +46,17 @@
             </ion-col>
           </ion-row>
         </div>
-      </ion-card>  
+      </ion-card>
+      <div style = "display: inline;">
+        <ion-button  class = "updateBtn" [routerLink]="['/app/Tabs/seccion-mental/'+item.id+'/edit']">
+          <img src="/assets/images/Edit.png" style="height: 1.5rem;">
+        </ion-button>
+  
+        <ion-button  class = "deleteBtn" color="primary" (click)="eliminarEntradaMental( item['id'] )" >
+          <img src="/assets/images/Trash.png" style="height: 1.5rem;">
+        </ion-button>
+      </div>  
+      
     </div>
   </ng-template>
 
@@ -74,9 +74,5 @@
     </ion-fab-button>
   </ion-fab>
 
-  <ion-fab style = "padding-inline-end: 2.5%;"  slot = "fixed"  vertical = "bottom" horizontal = "end">
-    <ion-fab-button color = "primary" [routerLink]="['/app/Tabs/seccion-mental/New']">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+
 </ion-content>

@@ -1,11 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-<<<<<<< HEAD
-import {API_URL} from './settings';
-=======
 import { API_URL } from './settings';
->>>>>>> origin/develop
 import { UsersService } from './users.service';
 
 @Injectable({
@@ -13,11 +9,6 @@ import { UsersService } from './users.service';
 })
 export class NuevaEntradaMentalService {
 
-<<<<<<< HEAD
-  
-
-=======
->>>>>>> origin/develop
   constructor(private http: HttpClient, private uService: UsersService) {}
 
   postEntry(dataEntry:any): Observable<any>{
