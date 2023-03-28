@@ -7,7 +7,7 @@ import { UsersService } from './users.service';
 @Injectable({
   providedIn: 'root'
 })
-export class SeccionFisicaServiceService implements HttpInterceptor{
+export class ModificarAnaliticaService implements HttpInterceptor{
 
   constructor(private http: HttpClient, private uService: UsersService) { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -17,25 +17,25 @@ export class SeccionFisicaServiceService implements HttpInterceptor{
     return next.handle(req)
   }
 
-  getEntradasFisicas():Observable<any>{
+  getMetricsList(): Observable<any>{
     if(this.uService.isLoggedIn()){
       var ck = window.sessionStorage.getItem('auth-user')
-      if(ck!=null){
+      if(ck != null){
         var tk = JSON.parse(ck);
         var res = [];
         for(var i in tk){
           res.push(tk[i]);
         }
-        let headers = new HttpHeaders()
-        headers = headers.set('Authorization', 'Token '+res[0])
-
-        return this.http.get(API_URL + `diary_entries/physical_entry/patient/${res[1]}`,{'headers':headers})
+        let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
+        headers=headers.set('Authorization','Token '+res[0])
+        return this.http.get(API_URL+'metrics/info/list/', {'headers':headers});
       }
+
     }
     return new Observable<any>;
   }
 
-  deleteEntry(idEntry:any): Observable<any>{
+  modificarAnalitica(id:any, dataMetricEntry:any){
     if(this.uService.isLoggedIn()){
       var ck = window.sessionStorage.getItem('auth-user')
       if(ck != null){
@@ -47,7 +47,7 @@ export class SeccionFisicaServiceService implements HttpInterceptor{
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
         headers=headers.set('Authorization','Token '+res[0])
         
-        return this.http.delete(`${API_URL}/diary_entries/physical_entry/${idEntry}`, {'headers':headers});
+        return this.http.put(API_URL+`metrics/metrics/${id}/`, JSON.stringify(dataMetricEntry), {'headers':headers});
       }
 
     }

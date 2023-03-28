@@ -63,7 +63,10 @@ const routes: Routes = [
     path: 'nueva-cita',
     loadChildren: () => import('./pages/nueva-cita/nueva-cita.module').then( m => m.NuevaCitaPageModule)
   },
-
+  {
+    path: 'modificar-fisico',
+    loadChildren: () => import('./pages/modificar-fisico/modificar-fisico.module').then( m => m.ModificarFisicoPageModule)
+  },
 ];
 @NgModule({
   imports: [

@@ -48,12 +48,20 @@ const routes: Routes = [
         loadChildren: () => import('../pages/añadir-detalles-analiticas/añadir-detalles-analiticas.module').then(m=>m.AñadirDetallesAnaliticasPageModule)        
       },
       {
+        path: 'Analytics/:id/edit',
+        loadChildren: () => import('../pages/modificar-analitica/modificar-analitica.module').then(m=>m.ModificarAnaliticaPageModule)
+      },
+      {
         path: 'seccion-fisica/New',
         loadChildren: () => import('../pages/nueva-entrada-fisica/nueva-entrada-fisica.module').then(m=>m.NuevaEntradaFisicaPageModule)        
       },
       {
         path: 'calendario/nueva-cita',
         loadChildren: () => import('../pages/nueva-cita/nueva-cita.module').then(m=>m.NuevaCitaPageModule)        
+      },
+      {
+        path: 'seccion-fisica/:id/edit',
+        loadChildren: () => import('../pages/modificar-fisico/modificar-fisico-routing.module').then(m=>m.ModificarFisicoPageRoutingModule)
       },
       {
         path: '',

@@ -1,6 +1,7 @@
 import { HttpClient, HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { API_URL } from './settings';
 import { UsersService } from './users.service';
 
 @Injectable({
@@ -16,8 +17,6 @@ export class DetallesMentalService implements HttpInterceptor{
     return next.handle(req)
   }
 
-  API_URL = 'http://isppgrupo9.pythonanywhere.com/'
-
   getEntradaMental(id_entrada:any):Observable<any>{
     if(this.uService.isLoggedIn()){
       var ck = window.sessionStorage.getItem('auth-user')
@@ -29,7 +28,7 @@ export class DetallesMentalService implements HttpInterceptor{
         }
         let headers = new HttpHeaders()
         headers = headers.set('Authorization', 'Token '+res[0])
-        return this.http.get(this.API_URL + `diary_entries/mental_entry/${id_entrada}/`, {'headers': headers})
+        return this.http.get(API_URL + `diary_entries/mental_entry/${id_entrada}/`, {'headers': headers})
       }
     }
     return new Observable<any>
