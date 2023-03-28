@@ -61,7 +61,8 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
-  },  {
+  },
+  {
     path: 'modificar-analitica',
     loadChildren: () => import('./pages/modificar-analitica/modificar-analitica.module').then( m => m.ModificarAnaliticaPageModule)
   },

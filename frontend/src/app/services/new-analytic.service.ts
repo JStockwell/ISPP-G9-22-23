@@ -16,7 +16,6 @@ export class NewAnalyticService {
 
 
   constructor(private http: HttpClient, private uService: UsersService) {}
-  API_URL = API_URL
 
   getMetricsNotUsedList(): Observable<any>{
     if(this.uService.isLoggedIn()){
@@ -29,7 +28,7 @@ export class NewAnalyticService {
         }
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
         headers=headers.set('Authorization','Token '+res[0])
-        return this.http.get(this.API_URL+'metrics/info/not_used/'+res[1]+"/", {'headers':headers});
+        return this.http.get(API_URL+'metrics/info/not_used/'+res[1]+"/", {'headers':headers});
       }
 
     }
@@ -48,7 +47,7 @@ export class NewAnalyticService {
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
         headers=headers.set('Authorization','Token '+res[0])
         
-        return this.http.post(this.API_URL+'metrics/metrics/', JSON.stringify(dataMetricEntry), {'headers':headers});
+        return this.http.post(API_URL+'metrics/metrics/', JSON.stringify(dataMetricEntry), {'headers':headers});
       }
 
     }
@@ -67,7 +66,7 @@ export class NewAnalyticService {
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
         headers=headers.set('Authorization','Token '+res[0])
         console.log(dataMeasureEntry)
-        return this.http.post(this.API_URL+'metrics/measures/', JSON.stringify(dataMeasureEntry), {'headers':headers});
+        return this.http.post(API_URL+'metrics/measures/', JSON.stringify(dataMeasureEntry), {'headers':headers});
       }
 
     }

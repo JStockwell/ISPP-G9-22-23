@@ -17,7 +17,6 @@ const httpOptions = {
 export class UsersService {
 
   constructor(private http: HttpClient) { }
-  API_URL = API_URL;
 
   clean():void{
     window.sessionStorage.clear();
@@ -48,13 +47,13 @@ export class UsersService {
   //Llamadas de auth
 
   public register(user:any): Observable<any>{
-    return this.http.post(this.API_URL+'users/patients/',user,httpOptions)
+    return this.http.post(API_URL+'users/patients/',user,httpOptions)
   }
 
   login(user:any): Observable<any> {
-    return this.http.post(this.API_URL+'users/login/',user,httpOptions);
+    return this.http.post(API_URL+'users/login/',user,httpOptions);
   }
   logout(): Observable<any> {
-    return this.http.post(this.API_URL+ 'signout', { }, httpOptions);
+    return this.http.post(API_URL+ 'signout', { }, httpOptions);
   }
 }

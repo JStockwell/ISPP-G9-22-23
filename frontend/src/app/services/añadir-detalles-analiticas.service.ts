@@ -9,8 +9,6 @@ import { UsersService } from './users.service';
 })
 export class AñadirDetallesAnaliticasService {
 
-  API_URL:string = API_URL;
-
   constructor(private http: HttpClient, private uService: UsersService) {}
 
   postEntry(entry:any): Observable<any> {
@@ -25,7 +23,7 @@ export class AñadirDetallesAnaliticasService {
         let headers = new HttpHeaders()
         headers=headers.set('Authorization','Token '+res[0])
         headers = headers.set('Content-Type', 'application/json')
-        return this.http.post(`${this.API_URL}/metrics/measures/`, JSON.stringify(entry),{'headers':headers});
+        return this.http.post(`${API_URL}metrics/measures/`, JSON.stringify(entry),{'headers':headers});
       }
     }
     return new Observable<any>;
