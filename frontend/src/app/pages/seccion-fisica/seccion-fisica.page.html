@@ -15,6 +15,9 @@
         [bodyParts]="entrada.body_parts"
         [notes]="entrada.notes"
       ></app-entrada-fisica-general>
+      <ion-button color="dark" (click)="eliminarEntradaFisica( entrada['id'] )" >
+        Borrar
+      </ion-button>
     </div>
 
 
