@@ -10,6 +10,7 @@ import {
 } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { UsersService } from "./users.service";
+import { API_URL } from "./settings";
 
 @Injectable({
   providedIn: "root",
@@ -27,8 +28,6 @@ export class AnaliticasService implements HttpInterceptor {
 
   constructor(private http: HttpClient, private uService: UsersService) {}
 
-  API_URL = "http://isppgrupo9.pythonanywhere.com/";
-
   getAnaliticas(): Observable<any> {
     if (this.uService.isLoggedIn()) {
       var ck = window.sessionStorage.getItem("auth-user");
@@ -41,7 +40,7 @@ export class AnaliticasService implements HttpInterceptor {
         let headers = new HttpHeaders();
         headers = headers.set("Authorization", "Token " + res[0]);
         return this.http.get(
-          this.API_URL + "metrics/metrics/patient/" + res[1] + "/",
+          API_URL + "metrics/metrics/patient/" + res[1] + "/",
           { headers: headers }
         );
       }
@@ -62,7 +61,7 @@ export class AnaliticasService implements HttpInterceptor {
         headers = headers.set("Authorization", "Token " + res[0]);
 
         return this.http.get(
-          this.API_URL + "metrics/measures/patient/" + res[1] + "/",
+          API_URL + "metrics/measures/patient/" + res[1] + "/",
           { headers: headers }
         );
       }
@@ -82,7 +81,7 @@ export class AnaliticasService implements HttpInterceptor {
         headers = headers.set("Authorization", "Token " + res[0]);
 
         return this.http.get(
-          this.API_URL +
+          API_URL +
             "metrics/measures/patient/" +
             res[1] +
             "/metric/" +
@@ -107,7 +106,7 @@ export class AnaliticasService implements HttpInterceptor {
         let headers = new HttpHeaders();
         headers = headers.set("Authorization", "Token " + res[0]);
         return this.http.delete(
-          this.API_URL + `metrics/metrics/${analiticaId}`,
+          API_URL + `metrics/metrics/${analiticaId}`,
           { headers: headers }
         );
       }
