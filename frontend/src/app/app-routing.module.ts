@@ -55,6 +55,7 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
+
   {
     path: 'calendario',
     loadChildren: () => import('./pages/calendario/calendario.module').then( m => m.CalendarioPageModule)
@@ -67,6 +68,12 @@ const routes: Routes = [
     path: 'modificar-fisico',
     loadChildren: () => import('./pages/modificar-fisico/modificar-fisico.module').then( m => m.ModificarFisicoPageModule)
   },
+  {
+    path: 'modificar-detalles',
+    loadChildren: () => import('./pages/modificar-detalles/modificar-detalles.module').then( m => m.ModificarDetallesPageModule)
+
+  },
+
 ];
 @NgModule({
   imports: [

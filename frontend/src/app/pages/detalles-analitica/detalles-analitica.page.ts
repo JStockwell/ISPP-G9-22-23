@@ -169,6 +169,18 @@ export class DetallesAnaliticaPage implements OnInit {
       });
     }
   }
+  eliminarDetalles(idEntrada: any) {
+    this.analiticaService.deleteEntry(idEntrada).subscribe({
+      next: res => {
+        console.log(res);
+        document.location.href="http://localhost:8100/app/Tabs/Analytics/Details/"+ this.route.snapshot.paramMap.get('id')
+        window.location.href = "http://localhost:8100/app/Tabs/Analytics/Details/"+ this.route.snapshot.paramMap.get('id')
+      },error: err => {
+        console.log(err)
+      }
+    })
+  }
+
 }
 
 type analitica = {
