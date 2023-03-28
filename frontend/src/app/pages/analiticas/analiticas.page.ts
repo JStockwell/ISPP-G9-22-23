@@ -140,18 +140,24 @@ export class AnaliticasPage implements OnInit {
               borderWidth: 1
             },
             {
-              label: "Umbrales",
+              label: " Umbrales",
               data: dataLower,
-              borderColor: "orange",
-              backgroundColor:"orange"
+              borderColor: "darkorange",
+              backgroundColor:"darkorange",
+              pointRadius: 0
             },
             {
               label:"",
               data: dataUpper,
-              borderColor: "orange",
-              backgroundColor:"orange"
+              borderColor: "darkorange",
+              backgroundColor:"darkorange",
+              pointRadius: 0
             }
           ]
+        },
+        options:{
+          responsive:true,
+          maintainAspectRatio:false
         }
         });
       }

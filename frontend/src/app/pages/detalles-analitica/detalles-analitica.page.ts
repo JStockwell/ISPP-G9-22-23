@@ -35,13 +35,18 @@ export class DetallesAnaliticaPage implements OnInit {
     this.id = this.route.snapshot.params["id"];
     this.service.getDetallesAnaliticas(this.route.snapshot.paramMap.get("id")).subscribe({
       next: data=>{
-        this.analitica=data
+        this.analitica=data;
+        this.createDetails();
       },
       error:err=>{
         console.log(err.error.message)
       }
     })
+    let defaultTab = document.getElementById("default");
+    defaultTab?.click();
+  }
 
+  createDetails(){
     this.analiticaService.getAnaliticaDetails().subscribe({
       next: data =>{
         for(var metric of data){
@@ -56,6 +61,8 @@ export class DetallesAnaliticaPage implements OnInit {
         console.log(err.error.message)
       }
     })
+
+    
 
     this.analiticaService.getLatestDetails(this.id).subscribe({
       next: data => {
@@ -75,11 +82,6 @@ export class DetallesAnaliticaPage implements OnInit {
         console.log(err.error.message)
       }
     })
-
-
-
-    let defaultTab = document.getElementById("default");
-    defaultTab?.click();
   }
 
   goBack(){
@@ -149,17 +151,23 @@ export class DetallesAnaliticaPage implements OnInit {
             {
               label: "Umbrales",
               data: dataLower,
-              borderColor: "orange",
-              backgroundColor:"orange"
+              borderColor: "darkorange",
+              backgroundColor:"darkorange",
+              pointRadius: 0
             },
             {
               label:"",
               data: dataUpper,
-              borderColor: "orange",
-              backgroundColor:"orange"
+              borderColor: "darkorange",
+              backgroundColor:"darkorange",
+              pointRadius: 0
             }
           ],
         },
+        options:{
+          responsive:true,
+          maintainAspectRatio:false
+        }
       });
     }
   }
