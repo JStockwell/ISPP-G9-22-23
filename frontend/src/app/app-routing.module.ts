@@ -63,6 +63,12 @@ const routes: Routes = [
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
 
+  {
+    path: 'modificar-detalles',
+    loadChildren: () => import('./pages/modificar-detalles/modificar-detalles.module').then( m => m.ModificarDetallesPageModule)
+
+  },
+
 
 
 ];

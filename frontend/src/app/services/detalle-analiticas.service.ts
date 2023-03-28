@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UsersService } from './users.service';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,7 +17,7 @@ export class DetalleAnaliticasService implements HttpInterceptor{
     return next.handle(req);
   }
 
-  API_URL = 'http://isppgrupo9.pythonanywhere.com/'
+  API_URL = 'http://develop-isppgrupo9.pythonanywhere.com/'
 
   getDetallesAnaliticas(id_analitica:any):Observable<any>{
     if(this.uService.isLoggedIn()){
@@ -35,4 +36,5 @@ export class DetalleAnaliticasService implements HttpInterceptor{
     }
     return new Observable<any>
   }
+
 }

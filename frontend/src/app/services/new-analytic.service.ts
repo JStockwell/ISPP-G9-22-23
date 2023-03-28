@@ -15,7 +15,7 @@ export class NewAnalyticService {
 
 
   constructor(private http: HttpClient, private uService: UsersService) {}
-  API_URL = 'http://isppgrupo9.pythonanywhere.com/';
+  API_URL = 'http://develop-isppgrupo9.pythonanywhere.com/';
 
   getMetricsNotUsedList(): Observable<any>{
     if(this.uService.isLoggedIn()){

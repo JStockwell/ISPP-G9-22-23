@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest, HTTP_INTERCEPTORS} from '@angular/common/http'
 import { Observable } from 'rxjs';
-import {UsersService} from'./users.service';
+import { UsersService } from'./users.service';
 
 
 
@@ -21,7 +21,7 @@ export class AnaliticasService implements HttpInterceptor{
 
   constructor(private http: HttpClient, private uService: UsersService) { }
 
-  API_URL = 'http://isppgrupo9.pythonanywhere.com/'
+  API_URL = 'http://develop-isppgrupo9.pythonanywhere.com/'
   //DESCOMENTAR
 /*
   getAnaliticas(): Observable<APIResult>{
@@ -103,6 +103,25 @@ export class AnaliticasService implements HttpInterceptor{
     return new Observable<any>
   }
 
+  deleteEntry(idEntry:any): Observable<any>{
+    if(this.uService.isLoggedIn()){
+      var ck = window.sessionStorage.getItem('auth-user')
+      if(ck != null){
+        var tk = JSON.parse(ck);
+        var res = [];
+        for(var i in tk){
+          res.push(tk[i]);
+        }
+        let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
+        headers=headers.set('Authorization','Token '+res[0])
+  
+        return this.http.delete(`${this.API_URL}/metrics/measures/${idEntry}`, {'headers':headers});
+      }
+  
+    }
+    return new Observable<any>;
+  }
+ 
 
 }
 

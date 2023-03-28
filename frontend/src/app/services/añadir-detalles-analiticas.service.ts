@@ -8,7 +8,7 @@ import { UsersService } from './users.service';
 })
 export class AñadirDetallesAnaliticasService {
 
-  API_URL:string = "https://isppgrupo9.pythonanywhere.com";
+  API_URL:string = "https://develop-isppgrupo9.pythonanywhere.com";
 
   constructor(private http: HttpClient, private uService: UsersService) {}
 

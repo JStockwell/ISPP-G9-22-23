@@ -52,7 +52,12 @@ const routes: Routes = [
         path: '',
         redirectTo: '/Tabs/Analytics',
         pathMatch: 'full'
-      }
+      },
+      
+      {
+        path: 'Analytics/Details/:id/Details/edit',
+        loadChildren: () => import('../pages/modificar-detalles/modificar-detalles-routing.module').then(m=>m.ModificarDetallesPageRoutingModule)
+      },
     ]
   },
   {
