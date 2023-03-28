@@ -23,13 +23,14 @@
           <ion-label class="ion-text-wrap"
             >{{ medicion.value}} {{analitica.info.unit}} ({{medicion.date}})
           </ion-label>
+          <ion-button [routerLink]="['/app/Tabs/Analytics/Details/'+medicion.id+'/Details/edit']">
+            <img src="/assets/images/Edit.png" style="height: 1.5rem;">
+          </ion-button>
+          <ion-button color="dark" (click)="eliminarDetalles( medicion.id )" >
+            Borrar
+          </ion-button>
         </ion-item>
-        <ion-button [routerLink]="['/app/Tabs/Analytics/Details/'+analitica.id+'/Details/edit']">
-          <img src="/assets/images/Edit.png" style="height: 1.5rem;">
-        </ion-button>
-        <ion-button color="dark" (click)="eliminarDetalles( analitica['id'] )" >
-          Borrar
-        </ion-button>
+       
       
       </div>
     </div>

@@ -29,7 +29,7 @@ export class ModificarDetallesService implements HttpInterceptor{
         let headers = new HttpHeaders()
         headers = headers.set('Authorization', 'Token '+res[0])
 
-        return this.http.get(API_URL + `${API_URL}metrics/metrics/${id_analitica}`,{'headers':headers})
+        return this.http.get(`${API_URL}metrics/measures/${id_analitica}/`,{'headers':headers})
       }
     }
     return new Observable<any>;
