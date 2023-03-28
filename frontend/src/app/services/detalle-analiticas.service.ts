@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { API_URL } from './settings';
 import { UsersService } from './users.service';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -34,4 +35,5 @@ export class DetalleAnaliticasService implements HttpInterceptor{
     }
     return new Observable<any>
   }
+
 }

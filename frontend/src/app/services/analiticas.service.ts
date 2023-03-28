@@ -114,6 +114,26 @@ export class AnaliticasService implements HttpInterceptor {
     return new Observable<any>();
   }
 
+  deleteEntry(idEntry:any): Observable<any>{
+    if(this.uService.isLoggedIn()){
+      var ck = window.sessionStorage.getItem('auth-user')
+      if(ck != null){
+        var tk = JSON.parse(ck);
+        var res = [];
+        for(var i in tk){
+          res.push(tk[i]);
+        }
+        let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
+        headers=headers.set('Authorization','Token '+res[0])
+  
+        return this.http.delete(`${API_URL}/metrics/measures/${idEntry}`, {'headers':headers});
+      }
+  
+    }
+    return new Observable<any>;
+  }
+ 
+
   dateFormatter(date: Date): string {
     var chain = "";
     var fecha = date.toString();

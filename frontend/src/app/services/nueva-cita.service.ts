@@ -1,13 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { API_URL } from './settings';
 import { UsersService } from './users.service';
+import { Observable } from 'rxjs';
+import { urlAPI } from '../global';
 
 @Injectable({
   providedIn: 'root'
 })
-export class NuevaEntradaFisicaService {
+export class NuevaCitaService {
 
   constructor(private http: HttpClient, private uService: UsersService) {}
 
@@ -23,7 +23,7 @@ export class NuevaEntradaFisicaService {
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
         headers=headers.set('Authorization','Token '+res[0])
         
-        return this.http.post(`${API_URL}/diary_entries/physical_entry/`, JSON.stringify(dataEntry), {'headers':headers});
+        return this.http.post(`${urlAPI}/appointments/appointments/`, JSON.stringify(dataEntry), {'headers':headers});
       }
 
     }

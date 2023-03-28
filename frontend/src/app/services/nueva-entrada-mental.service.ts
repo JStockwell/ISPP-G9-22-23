@@ -23,7 +23,7 @@ export class NuevaEntradaMentalService {
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
         headers=headers.set('Authorization','Token '+res[0])
         
-        return this.http.post(`${API_URL}diary_entries/mental_entry/`, JSON.stringify(dataEntry), {'headers':headers});
+        return this.http.post(`${API_URL}/diary_entries/mental_entry/`, JSON.stringify(dataEntry), {'headers':headers});
       }
 
     }
