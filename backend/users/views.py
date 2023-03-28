@@ -327,3 +327,54 @@ class LogoutView(APIView):
     def get(self, request):
         request.user.auth_token.delete()
         return Response({'message': 'Sesión cerrada'},status=status.HTTP_200_OK)
+    
+class AssignationPatients(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    @swagger_auto_schema(
+        manual_parameters=[],
+        security=[],
+        responses={'200': "Asignación creada", "400":"Esa asignación ya existe", "404": "Médico o paciente no encontrado"})
+    def post(self, request, *args, **kwargs):
+        medic_id = self.kwargs.get('pk_medic')
+        medic = get_object_or_404(Medic, id=medic_id)
+        code = self.kwargs.get('code')
+        patient = get_object_or_404(Patient, code=code)
+
+        if(medic.patients.contains(patient)):
+           return Response({'error': 'Esa asignación ya existe'},status=status.HTTP_400_BAD_REQUEST)
+        medic.patients.add(patient)
+        medic.save()
+        return Response({'message': 'Nueva asignación creada'},status=status.HTTP_200_OK)
+
+    @swagger_auto_schema(
+        manual_parameters=[],
+        security=[],
+        responses={'200': "Asignación borrada", "400":"Esa asignación no existe", "404": "Médico o paciente no encontrado"})
+    def delete(self, request, *args, **kwargs):
+        medic_id = self.kwargs.get('pk_medic')
+        medic = get_object_or_404(Medic, id=medic_id)
+        code = self.kwargs.get('code')
+        patient = get_object_or_404(Patient, code=code)
+
+        if(medic.patients.contains(patient)):
+            medic.patients.remove(patient)
+            medic.save()
+            return Response({'message': 'Relación borrada'},status=status.HTTP_200_OK)
+        return Response({'message': 'Esa relación no existe'},status=status.HTTP_400_BAD_REQUEST)
+    
+
+class PatientsOfMedic(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    @swagger_auto_schema(
+        manual_parameters=[],
+        security=[],
+        responses={'200': PatientSerializer, "404": "Médico o paciente no encontrado"})
+    def get(self, request, *args, **kwargs):
+        medic_id = self.kwargs.get('pk_medic')
+        medic = get_object_or_404(Medic, id=medic_id)
+        patients = medic.patients.all()
+        serializer = PatientSerializer(patients, many=True)
+        return Response(serializer.data,status=status.HTTP_200_OK)
