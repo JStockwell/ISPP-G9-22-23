@@ -81,17 +81,11 @@ export class AnaliticasPage implements OnInit {
       next: data =>{
         for(var metric of data){
           let date:Date = metric.date;
-          const aux = date.toString().substring(0,10);
-          
+          metric.date=this.analiticasService.dateFormatter(date);
           this.mediciones.push(metric);
-          console.log(metric.date)
         }
         const data2 = data.reverse();
         for(var met of data2){
-          let date:Date = met.date;
-          const aux = date.toString().substring(0,10);
-          const aux2 = date.toString().substring(11,16);
-          met.date = aux+" "+aux2 + "h";
           this.medicionesAux.push(met);
         } 
         this.createChart(analitica);
@@ -115,6 +109,7 @@ export class AnaliticasPage implements OnInit {
         for( const medicion of this.medicionesAux){
           if(medicion.metric.id == analitica.id){
             let date:Date = medicion.date;
+            
             const aux = date.toString().substring(0,10);
             dates.push(aux);
             values.push(medicion.value);

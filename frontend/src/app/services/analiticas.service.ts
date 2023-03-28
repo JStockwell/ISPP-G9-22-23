@@ -103,6 +103,20 @@ export class AnaliticasService implements HttpInterceptor{
     return new Observable<any>
   }
 
+  dateFormatter(date:Date):string{
+    var chain = "";
+    var fecha = date.toString()
+
+    var y = fecha.substring(0,4)
+    var m = fecha.substring(5,7)
+    var d = fecha.substring(8,10)
+    var h = fecha.substring(11,13)
+    var min = fecha.substring(14,16)
+    chain = d + "-" + m + "-" + y +"  " + h + ":" + min + " h"
+    console.log(chain)
+    return chain;
+  }
+
 
 }
 

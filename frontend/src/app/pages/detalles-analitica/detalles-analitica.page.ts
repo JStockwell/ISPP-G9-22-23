@@ -51,9 +51,7 @@ export class DetallesAnaliticaPage implements OnInit {
       next: data =>{
         for(var metric of data){
           let date:Date = metric.date;
-          const aux = date.toString().substring(0,10);
-          const aux2 = date.toString().substring(11,16);
-          metric.date = aux+" "+aux2 + "h";
+          metric.date = this.analiticaService.dateFormatter(date)
           this.mediciones.push(metric)
         }
       },
