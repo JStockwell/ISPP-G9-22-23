@@ -76,8 +76,8 @@ export class NuevaEntradaMentalPage implements OnInit{
     this.nuevaEntradaMentalService.postEntry(dataEntry).subscribe({
       next: dataEntry => {
         console.log(dataEntry);
-        document.location.href="/app/Tabs/DiarioEmocional"
-        window.location.href = "/app/Tabs/DiarioEmocional"
+        document.location.href="/app/Tabs/seccion-mental"
+        window.location.href = "/app/Tabs/seccion-mental"
       },
       error: err => {
         if( err.error.error ){

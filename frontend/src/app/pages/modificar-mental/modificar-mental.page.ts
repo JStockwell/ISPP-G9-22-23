@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ModificarMentalService} from 'src/app/services/modificar-mental.service'
+import { ModificarMentalService} from 'src/app/services/modificar-mental.service';
+import { NavController } from '@ionic/angular';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class ModificarMentalPage implements OnInit{
   pnegativos:string | any='';
   today : string | any ='';
 
-  constructor(private route:ActivatedRoute, private service:ModificarMentalService) {}
+  constructor(private route:ActivatedRoute, private service:ModificarMentalService,private navCtrl: NavController) {}
 
   ngOnInit() {
     let id = this.route.snapshot.paramMap.get('id')
@@ -42,6 +43,10 @@ export class ModificarMentalPage implements OnInit{
         console.log(err.error.message);
       }
     })
+  }
+
+  goBack(){
+    this.navCtrl.pop(); 
   }
 
  editarEntradaMental():void{
@@ -73,7 +78,7 @@ export class ModificarMentalPage implements OnInit{
 
   this.service.modifyEntradasMental(this.route.snapshot.paramMap.get('id'),dataEntry).subscribe({
     next:data=>{
-      window.location.href = '/app/Tabs/DiarioEmocional';
+      window.location.href = '/app/Tabs/seccion-mental';
     },
     error:err=>{
       console.log(err.error.message);
