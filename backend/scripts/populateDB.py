@@ -44,7 +44,7 @@ m11.save()
 m12 = MetricInfo(name='Dióxido de carbono', unit='mg/dL')
 m12.save()
 
-m13 = MetricInfo(name='Niveles de suero eritropoyetina', unit='IU/L')
+m13 = MetricInfo(name='Niveles de suero eritropoyetina', unit='UI/L')
 m13.save()
 
 m14 = MetricInfo(name='Colesterol', unit='mg/dL')
