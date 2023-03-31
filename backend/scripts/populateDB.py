@@ -11,10 +11,10 @@ from django.contrib.auth.models import User
 m1 = MetricInfo(name='Glucosa', unit='mg/dL')
 m1.save()
 
-m2 = MetricInfo(name='Globulos rojos', unit='mill/µL')
+m2 = MetricInfo(name='Glóbulos rojos', unit='mill/µL')
 m2.save()
 
-m3 = MetricInfo(name='Globulos blancos', unit='ud/µL')
+m3 = MetricInfo(name='Glóbulos blancos', unit='ud/µL')
 m3.save()
 
 m4 = MetricInfo(name='Plaquetas', unit='ud/µL')
@@ -41,13 +41,13 @@ m10.save()
 m11 = MetricInfo(name='Cloruro', unit='mEq/L')
 m11.save()
 
-m12 = MetricInfo(name='Dioxido de carbono', unit='mg/dL')
+m12 = MetricInfo(name='Dióxido de carbono', unit='mg/dL')
 m12.save()
 
 m13 = MetricInfo(name='Niveles de suero eritropoyetina', unit='IU/L')
 m13.save()
 
-m14 = MetricInfo(name='Inmunoglobulina', unit='mg/dL')
+m14 = MetricInfo(name='Colesterol', unit='mg/dL')
 m14.save()
 
 m15 = MetricInfo(name='Inmunoglobulina A', unit='mg/dL')
@@ -86,7 +86,7 @@ m25.save()
 m26 = MetricInfo(name='Fibrinógeno', unit='mg/dL')
 m26.save()
 
-m27 = MetricInfo(name='Colesterol', unit='mg/dL')
+m27 = MetricInfo(name='Ácido úrico', unit='mg/dL')
 m27.save()
 
 m28 = MetricInfo(name='Triglicéridos', unit='mg/dL')
@@ -94,9 +94,6 @@ m28.save()
 
 m29 = MetricInfo(name='Transaminasas', unit='UI/L')
 m29.save()
-
-m30 = MetricInfo(name='Ácido úrico', unit='mg/dL')
-m30.save()
 
 superuser = User.objects.create_superuser(username='admin', email='admin@example.com', password='adminpassword')
 superuser.save()
