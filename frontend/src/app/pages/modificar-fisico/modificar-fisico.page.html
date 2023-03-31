@@ -10,21 +10,24 @@
       <h1 style="text-align: center; padding-bottom: 2%; font-weight: bold;">{{ today | date: 'EEEE, dd/MM/yyyy' }}</h1>
     </ion-text>
     <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">¿Qué tal te sientes hoy físicamente?</ion-label>
-    <ion-item color = "warning">
-      <form>
-        <div class="cc-selector" style = "padding-top: 5%; padding-bottom: 2%;">
-          <input [(ngModel)]="estadoFisico" id="muyfeliz" type="radio" name="caras" value="VG" />
-          <label class="image-cc muyfeliz" for="muyfeliz"></label>
-          <input [(ngModel)]="estadoFisico" id="feliz" type="radio" name="caras" value="G" />
-          <label class="image-cc feliz" for="feliz"></label>
-          <input [(ngModel)]="estadoFisico" id="neutral" type="radio" name="caras" value="F" />
-          <label class="image-cc neutral" for="neutral"></label>
-          <input [(ngModel)]="estadoFisico" id="triste" type="radio" name="caras" value="B" />
-          <label class="image-cc triste" for="triste"></label>
-          <input [(ngModel)]="estadoFisico" id="muytriste" type="radio" name="caras" value="VB" />
-          <label class="image-cc muytriste" for="muytriste"></label>
-        </div>
-      </form>
+    <ion-item color = "warning" style="padding-top: 3%;">
+      <ion-segment [(ngModel)]="estadoFisico" scrollable>
+        <ion-segment-button value="VG">
+          <img src="/assets/images/cara-muy-feliz.png">
+        </ion-segment-button>
+        <ion-segment-button value="G">
+          <img src="/assets/images/cara-feliz.png">
+        </ion-segment-button>
+        <ion-segment-button value="F">
+          <img src="/assets/images/cara-neutral.png">
+        </ion-segment-button>
+        <ion-segment-button value="B">
+          <img src="/assets/images/cara-triste.png">
+        </ion-segment-button>
+        <ion-segment-button value="VB">
+          <img src="/assets/images/cara-muy-triste.png">
+        </ion-segment-button>
+      </ion-segment>
     </ion-item>
     <ion-item color = "warning">
       <ion-label position="floating">¿Te duele en alguna zona del cuerpo?</ion-label>

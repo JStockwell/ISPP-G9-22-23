@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color = "primary">
+  <ion-toolbar color="primary">
     <ion-title> Diario Físico </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -7,31 +7,48 @@
 <ion-content [fullscreen]="true" color = "light">
   <div *ngIf="existsEntradas(); then renderEntradas else noEntradas"></div>
   <ng-template #renderEntradas>
-    <div *ngFor="let entrada of entries" style="overflow-y: scroll">
-      <ion-button [routerLink]="['/app/Tabs/seccion-fisica/'+entrada.id+'/edit']">
-        <img src="/assets/images/Edit.png" style="height: 1.5rem;">
-      </ion-button>
-      <ion-card>
-        <app-entrada-fisica-general
-        [date]="entrada.date"
-        [state]="entrada.state"
-        [bodyParts]="entrada.body_parts"
-      ></app-entrada-fisica-general>
+    <div *ngFor="let item of entries">
+      <ion-card color="warning" *ngIf="entries !=0" [routerLink]="['/app/Tabs/seccion-fisica/'+item.id]">
+
+        <div style="text-align: center;">
+          <div style="text-align: right; margin-right: 15px; margin-top: 20px"></div>
+          <h1 style="text-align: center; padding-bottom: 2%; font-weight: bold;">{{item.date }}</h1>
+        </div>
+
+        <div style="text-align: center">
+          <ion-row>
+            <ion-col>
+              <h3 style="font-weight: bold;">
+                Estado físico: <img  class ="emoji" src="{{getImagenEstado(item.state)}}"  style="width: 3rem;" >
+              </h3>
+            </ion-col>
+          </ion-row>
+        </div>
+
+        <div *ngIf="item.body_parts" style="text-align: center">
+          <ion-row>
+            <ion-col>
+              <h3 style="font-weight: bold;">
+                ¿Qúe me duele?:
+                <img *ngFor="let part of splitParts(item.body_parts)" class ="emoji" src="{{getImagenDolor(part)}}" style="width: 3rem;" >
+              </h3>
+            </ion-col>
+          </ion-row>
+        </div>
       </ion-card>
-
-      <ion-button [routerLink]="['/app/Tabs/seccion-fisica/'+entrada.id]">
-        Detalles
-      </ion-button>
+      <div style = "display: inline;">
+        <ion-button  class = "updateBtn" [routerLink]="['/app/Tabs/seccion-fisica/'+item.id+'/edit']">
+          <img src="/assets/images/Edit.png" style="height: 1.5rem;">
+        </ion-button>
+  
+        <ion-button  class = "deleteBtn" color="primary" (click)="eliminarEntradaFisica( item['id'] )" >
+          <img src="/assets/images/Trash.png" style="height: 1.5rem;">
+        </ion-button>
+      </div>  
       
-      <ion-button color="dark" (click)="eliminarEntradaFisica( entrada['id'] )" >
-        Borrar
-      </ion-button>
     </div>
-
-
-    
-
   </ng-template>
+
   <ng-template #noEntradas>
     <div style="font-weight: bold; font-size: x-large; text-align: center">     
 
@@ -40,27 +57,11 @@
       
     </div>
   </ng-template>
-
-  <ion-fab style = "padding-inline-end: 2.5%;"  slot = "fixed"  vertical = "bottom" horizontal = "end">
+  <ion-fab style = "padding-inline-end: 2.5%;" slot="fixed" size="small" vertical="bottom" horizontal="end">
     <ion-fab-button color = "primary" [routerLink]="['/app/Tabs/seccion-fisica/New']">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
+
 </ion-content>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
