@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, LOCALE_ID, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModificarMentalService} from 'src/app/services/modificar-mental.service'
+import localeEs from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeEs, 'es');
 
 
 @Component({
   selector: 'app-modificar-mental',
   templateUrl: './modificar-mental.page.html',
   styleUrls: ['modificar-mental.page.scss'],
-
+  providers: [{ provide: LOCALE_ID, useValue: 'es'}],
 })
 
 export class ModificarMentalPage implements OnInit{

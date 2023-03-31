@@ -1,11 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, LOCALE_ID, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModificarFisicoService } from 'src/app/services/modificar-fisico.service';
+import localeEs from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeEs, 'es');
 
 @Component({
   selector: 'app-modificar-fisico',
   templateUrl: './modificar-fisico.page.html',
   styleUrls: ['./modificar-fisico.page.scss'],
+  providers: [{ provide: LOCALE_ID, useValue: 'es'}],
 })
 export class ModificarFisicoPage implements OnInit {
 
