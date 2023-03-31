@@ -86,8 +86,6 @@ export class NuevaEntradaFisicaPage implements OnInit {
       dataEntry["notes"]=this.notas;
     }
     
-    
-    
     console.log(dataEntry);
     this.nuevaEntradFisicaService.postEntry(dataEntry).subscribe({
       next: dataEntry => {

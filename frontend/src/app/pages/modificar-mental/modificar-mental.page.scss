@@ -1,56 +1,22 @@
-.cc-selector input{
-    margin:0;padding:0;
-    -webkit-appearance:none;
-       -moz-appearance:none;
-            appearance:none;
-
+ion-segment-button img {
+   width: 90%;
+   height: 90%;
+   object-fit: contain;
 }
 
-.muyfeliz{background-image:url(/assets/images/cara-muy-feliz.png);}
-.feliz{background-image:url(/assets/images/cara-feliz.png);}
-.neutral{background-image:url(/assets/images/cara-neutral.png);}
-.triste{background-image:url(/assets/images/cara-triste.png);}
-.muytriste{background-image:url(/assets/images/cara-muy-triste.png);}
-
-.profundo{background-image:url(/assets/images/slumber.png);}
-.ligero{background-image:url(/assets/images/sleeping.png);}
-.insomnio{background-image:url(/assets/images/hotel-bed.png);}
-
-.sano{background-image:url(/assets/images/salad.png);}
-.basura{background-image:url(/assets/images/hamburger.png);}
-.ayuno{background-image:url(/assets/images/plato.png);}
-
-.sol{background-image:url(/assets/images/dom.png);}
-.nubes{background-image:url(/assets/images/nubes.png);}
-.lluvia{background-image:url(/assets/images/lluvia.png);}
-.tormenta{background-image:url(/assets/images/tormenta.png);}
-.nieve{background-image:url(/assets/images/nieve.png);}
-
-
-
-
-.image-cc{
-    cursor:pointer;
-    background-size:contain;
-    background-repeat:no-repeat;
-    display:inline-block;
-    width:59px;height:42px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    -webkit-transition: all 100ms ease-in;
-       -moz-transition: all 100ms ease-in;
-            transition: all 100ms ease-in;
-    -webkit-filter: brightness(1.8) grayscale(1) opacity(.7);
-       -moz-filter: brightness(1.8) grayscale(1) opacity(.7);
-            filter: brightness(1.8) grayscale(1) opacity(.7);
-}
-.image-cc:hover{
-    -webkit-filter: brightness(1.2) grayscale(.5) opacity(.9);
-       -moz-filter: brightness(1.2) grayscale(.5) opacity(.9);
-            filter: brightness(1.2) grayscale(.5) opacity(.9);
+ion-segment {
+   padding-top: 3%;
+   padding-bottom: 5%;
 }
 
 a:visited{color:#888}
 a{color:#444;text-decoration:none;}
 p{margin-bottom:.3em;}
+
+.error{
+   margin-top: 5%;
+   padding-left: 10%;
+   color:red;
+   margin-bottom: 5px;
+   margin-left: 3px;
+}
