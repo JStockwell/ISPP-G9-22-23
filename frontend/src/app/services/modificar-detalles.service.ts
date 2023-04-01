@@ -19,7 +19,7 @@ export class ModificarDetallesService implements HttpInterceptor{
 
   getEntradasAnaliticas(id_analitica:any):Observable<any>{
     if(this.uService.isLoggedIn()){
-      var ck = window.sessionStorage.getItem('auth-user')
+      var ck = localStorage.getItem('auth-user')
       if(ck!=null){
         var tk = JSON.parse(ck);
         var res = [];
@@ -37,7 +37,7 @@ export class ModificarDetallesService implements HttpInterceptor{
 
   getIdUser(){
     if(this.uService.isLoggedIn()){
-      var ck = window.sessionStorage.getItem('auth-user')
+      var ck = localStorage.getItem('auth-user')
       if(ck!=null){
         var tk = JSON.parse(ck);
         var res = [];
@@ -52,7 +52,7 @@ export class ModificarDetallesService implements HttpInterceptor{
 
   modifyDetalles(id_analitica:any, dataEntry:any):Observable<any>{
     if(this.uService.isLoggedIn()){
-      var ck = window.sessionStorage.getItem('auth-user')
+      var ck = localStorage.getItem('auth-user')
       if(ck!=null){
         var tk = JSON.parse(ck);
         var res = [];
