@@ -31,6 +31,9 @@ export class AnaliticasPage implements OnInit {
   //Se ejecuta al crear la página por parte de angular
   ngOnInit() {
    this.createAnaliticas()
+   
+   // PARA PODER INICIALIZAR LA VARIABLE DE EVENTOS SIN ENTRAR EN LA VISTA DE CALENDARIO
+   this.calendarioService.setEventosList();
   }
 
 
@@ -78,8 +81,6 @@ export class AnaliticasPage implements OnInit {
       }
     });
 
-    // PARA PODER INICIALIZAR LA VARIABLE DE EVENTOS SIN ENTRAR EN LA VISTA DE CALENDARIO
-    this.calendarioService.setEventosList();
   }
 
   createMeasuresv2(analitica:any){
