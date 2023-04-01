@@ -21,9 +21,6 @@ export class NuevaCitaPage implements OnInit {
     especialidad:null,
     descripcion:null,
   }
-
-  fechaRecibida = new Date();
-  fechaHora = new Date().toISOString();
   
   isSuccessful = false;
   fechaActual = this.goodTimezone(new Date());
