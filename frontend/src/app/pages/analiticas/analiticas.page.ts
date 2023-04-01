@@ -3,6 +3,8 @@ import { AlertController, LoadingController } from '@ionic/angular';
 import { AnaliticasService } from 'src/app/services/analiticas.service';
 import Chart from 'chart.js/auto';
 import {UsersService} from '../../services/users.service'
+import { CalendarioService } from 'src/app/services/calendario.service';
+import { eventos } from '../../services/settings';
 
 
 
@@ -24,7 +26,7 @@ export class AnaliticasPage implements OnInit {
   mediciones = new Array<measure>
   medicionesAux = new Array<measure>
   
-  constructor(private analiticasService: AnaliticasService, private loadingCtrl: LoadingController, private uService: UsersService, private alertController: AlertController) {}
+  constructor(private analiticasService: AnaliticasService, private loadingCtrl: LoadingController, private uService: UsersService, private calendarioService: CalendarioService, private alertController: AlertController) {}
 
   //Se ejecuta al crear la página por parte de angular
   ngOnInit() {
@@ -75,6 +77,9 @@ export class AnaliticasPage implements OnInit {
 
       }
     });
+
+    // PARA PODER INICIALIZAR LA VARIABLE DE EVENTOS SIN ENTRAR EN LA VISTA DE CALENDARIO
+    this.calendarioService.setEventosList();
   }
 
   createMeasuresv2(analitica:any){

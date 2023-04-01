@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UsersService } from './users.service';
 import { Observable } from 'rxjs';
-import { urlAPI } from '../global';
+import { API_URL, eventos } from './settings';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +19,31 @@ export class CalendarioService {
       return timeA - timeB;
     });
   }
+
+  cambiarColorEventos(lista: any) {
+    let colorTextoEvento = 'var(--ion-color-secondary-contrast)';
+    let colorFondoEvento = 'var(--ion-color-secondary)';
+    for (let item of lista) {
+        item["textColor"] = colorTextoEvento;
+        item["backgroundColor"] = colorFondoEvento;
+    }
+  }
+
+  cambiarFormatoHora(jsonEventos: any[]) {
+    jsonEventos.forEach((item: any) => {
+      let [horas, minutos, segundos] = item.time.split(':');
+      let nuevaHora = `${horas}:${minutos}`;
+      item.time = nuevaHora;
+    });
+  }
+
+  setEventosList(){
+    this.getAppointmentsList().subscribe((res) => {
+      this.cambiarColorEventos(res);
+      this.cambiarFormatoHora(res);
+      Object.assign(eventos, res);
+    }
+  )}
   
   getAppointmentsList(): Observable<any>{
     if(this.uService.isLoggedIn()){
@@ -32,7 +57,7 @@ export class CalendarioService {
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
         headers=headers.set('Authorization','Token '+res[0])
         
-        return this.http.get(`${urlAPI}/appointments/appointments/patient/`+res[1]+"/", {'headers':headers});
+        return this.http.get(`${API_URL}/appointments/appointments/patient/`+res[1]+"/", {'headers':headers});
       }
 
     }
@@ -51,7 +76,7 @@ export class CalendarioService {
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
         headers=headers.set('Authorization','Token '+res[0])
         
-        return this.http.delete(`${urlAPI}/appointments/appointments/${idEntry}`, {'headers':headers});
+        return this.http.delete(`${API_URL}/appointments/appointments/${idEntry}`, {'headers':headers});
       }
 
     }
