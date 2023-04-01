@@ -7,39 +7,29 @@ import { urlAPI } from '../global';
 @Injectable({
   providedIn: 'root'
 })
-export class CalendarioService {
+export class ModificarCitaService {
 
   constructor(private http: HttpClient, private uService: UsersService) {}
 
-  filterByDate(selectedDate: string, eventos: any[]) {
-    return eventos.filter(event => event.date === selectedDate)
-    .sort((a, b) => {
-      const timeA = parseInt(a.time.replace(':', ''));
-      const timeB = parseInt(b.time.replace(':', ''));
-      return timeA - timeB;
-    });
-  }
-  
-  getAppointmentsList(): Observable<any>{
+  getCita(idCita:any):Observable<any>{
     if(this.uService.isLoggedIn()){
       var ck = window.sessionStorage.getItem('auth-user')
-      if(ck != null){
+      if(ck!=null){
         var tk = JSON.parse(ck);
         var res = [];
         for(var i in tk){
           res.push(tk[i]);
         }
-        let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
-        headers=headers.set('Authorization','Token '+res[0])
-        
-        return this.http.get(`${urlAPI}/appointments/appointments/patient/`+res[1]+"/", {'headers':headers});
-      }
+        let headers = new HttpHeaders()
+        headers = headers.set('Authorization', 'Token '+res[0])
 
+        return this.http.get(urlAPI + `/appointments/appointments/${idCita}`,{'headers':headers})
+      }
     }
     return new Observable<any>;
   }
 
-  deleteAppointment(idEntry:any): Observable<any>{
+  updateEntry(idEntry:any, dataEntry:any): Observable<any>{
     if(this.uService.isLoggedIn()){
       var ck = window.sessionStorage.getItem('auth-user')
       if(ck != null){
@@ -51,7 +41,7 @@ export class CalendarioService {
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
         headers=headers.set('Authorization','Token '+res[0])
         
-        return this.http.delete(`${urlAPI}/appointments/appointments/${idEntry}`, {'headers':headers});
+        return this.http.put(`${urlAPI}/appointments/appointments/${idEntry}/`, JSON.stringify(dataEntry), {'headers':headers});
       }
 
     }

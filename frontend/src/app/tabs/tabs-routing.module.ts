@@ -55,15 +55,17 @@ const routes: Routes = [
         path: 'seccion-fisica/New',
         loadChildren: () => import('../pages/nueva-entrada-fisica/nueva-entrada-fisica.module').then(m=>m.NuevaEntradaFisicaPageModule)        
       },
-
       {
         path: 'seccion-mental/:id/edit',
         loadChildren: () => import('../pages/modificar-mental/modificar-mental-routing.module').then(m=>m.ModificarMentalPageRoutingModule)
       },
-      
       {
         path: 'calendario/nueva-cita',
         loadChildren: () => import('../pages/nueva-cita/nueva-cita.module').then(m=>m.NuevaCitaPageModule)        
+      },
+      {
+        path: 'calendario/:id/edit',
+        loadChildren: () => import('../pages/modificar-cita/modificar-cita-routing.module').then(m=>m.ModificarCitaPageRoutingModule)
       },
       {
         path: 'seccion-fisica/:id/edit',
@@ -74,7 +76,6 @@ const routes: Routes = [
         redirectTo: '/Tabs/Analytics',
         pathMatch: 'full'
       },
-      
       {
         path: 'Analytics/Details/:id/Details/edit',
         loadChildren: () => import('../pages/modificar-detalles/modificar-detalles-routing.module').then(m=>m.ModificarDetallesPageRoutingModule)

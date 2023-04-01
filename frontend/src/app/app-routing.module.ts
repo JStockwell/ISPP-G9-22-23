@@ -77,7 +77,11 @@ const routes: Routes = [
     path: 'modificar-detalles',
     loadChildren: () => import('./pages/modificar-detalles/modificar-detalles.module').then( m => m.ModificarDetallesPageModule)
 
+  },  {
+    path: 'modificar-cita',
+    loadChildren: () => import('./pages/modificar-cita/modificar-cita.module').then( m => m.ModificarCitaPageModule)
   },
+
 
 ];
 @NgModule({

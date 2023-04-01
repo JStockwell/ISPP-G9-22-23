@@ -66,5 +66,17 @@ export class CalendarioPage implements OnInit {
       Object.assign(this.eventos, res);
     }
   )}
+  
+  eliminarCita(idEntrada: any) {
+    this.calendarioService.deleteAppointment(idEntrada).subscribe({
+      next: res => {
+        console.log(res);
+        document.location.href="/app/Tabs/calendario"
+        window.location.href = "/app/Tabs/calendario"
+      },error: err => {
+        console.log(err)
+      }
+    })
+  }
 
 }
