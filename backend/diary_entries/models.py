@@ -22,10 +22,12 @@ class BodyParts(models.TextChoices):
 class Sleep(models.TextChoices):
     NONE = "NONE", _("No sleep"),
     LIGHT = "LIGHT", _("Light sleep"),
+    NORMAL = "NORMAL", _("Normal sleep"),
     DEEP = "DEEP", _("Deep sleep"),
 
 class Food(models.TextChoices):
     NONE = "NONE", _("Did not eat"),
+    NORMAL = "NORMAL", _("Normal food"),
     FAST = "FAST", _("Fast food"),
     HEALTHY = "HEALTHY", _("Healthy food"),
 
