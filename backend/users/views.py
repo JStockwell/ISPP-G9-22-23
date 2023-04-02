@@ -140,6 +140,14 @@ class PatientId(APIView):
                     user.last_name  = value
                 if str(key) == "premium_account": 
                     patient.premium_account = value
+                if str(key) == "share_physical_entries": 
+                    patient.share_physical_entries = value
+                if str(key) == "share_mental_entries": 
+                    patient.share_mental_entries = value
+                if str(key) == "share_metrics": 
+                    patient.share_metrics = value
+                if str(key) == "share_appointments": 
+                    patient.share_appointments = value
             
             user.save()
             patient.save()
