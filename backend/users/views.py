@@ -113,6 +113,10 @@ class PatientId(APIView):
                 'tel': openapi.Schema(type=openapi.TYPE_STRING, description='Teléfono a modificar'),
                 'birthdate': openapi.Schema(type=openapi.TYPE_STRING, description='Fecha de nacimiento a modificar, formato YYYY-MM-DD'),
                 'premium_account': openapi.Schema(type=openapi.TYPE_BOOLEAN, description='Status de cuenta a modificar'),
+                'share_physical_entries': openapi.Schema(type=openapi.TYPE_BOOLEAN, description='Status de compartir entradas físicas a modificar'),
+                'share_mental_entries': openapi.Schema(type=openapi.TYPE_BOOLEAN, description='Status de compartir entradas mentales a modificar'),
+                'share_metrics': openapi.Schema(type=openapi.TYPE_BOOLEAN, description='Status de compartir métricas a modificar'),
+                'share_appointments': openapi.Schema(type=openapi.TYPE_BOOLEAN, description='Status de compartir citas a modificar'),
             }
         ),
         responses={'200': PatientSerializer, "400": "Ya existe un usuario con ese nombre de usuario o email o la fecha de nacimiento es posterior a la fecha actual", "404": "Paciente no encontrado"})
