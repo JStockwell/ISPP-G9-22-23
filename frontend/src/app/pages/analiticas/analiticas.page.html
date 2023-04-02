@@ -4,56 +4,59 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content color="light" class="ion-padding">
-  <div *ngFor="let item of analiticas">
-    
-    <ion-card
-      button
-      color="warning"
-      [routerLink]="['/app/Tabs/Analytics/Details/'+item.id]"
-    >
-      <ion-label style="text-align: center">
-        <h1 style="margin-top: 5%; margin-bottom: 1.5%; color: black">
-          {{ item.info.name }}
-        </h1>
-        <div *ngFor="let measure of mediciones">
-          <ion-item *ngIf="measure.metric.id == item.id" color="warning">
-            <ion-label class="ion-text-wrap"
-              >{{ measure.value}} {{item.info.unit}} ({{measure.date}})</ion-label
-            >
-          </ion-item>
-        </div>
-        <p
-          style="
-            text-align: center;
-            margin-top: 5%;
-            color: black;
-          "
-        >
-          Últimas 10 entradas
-        </p>
-      </ion-label>
-      <div style = "height:300px" ><canvas  id="chart{{item.id}}" style="width:100%;max-width:700px; height: auto;"></canvas></div>
-    </ion-card>
+<ion-content [fullscreen]="true" color="light">
+  <div *ngIf="existsAnaliticas(); then renderEntradas else noEntradas"></div>
+  <ng-template #renderEntradas>
+    <div *ngFor="let item of analiticas">
+      <ion-card
+        button
+        color="warning"
+        [routerLink]="['/app/Tabs/Analytics/Details/'+item.id]"
+      >
+        <ion-label style="text-align: center">
+          <h1 style="margin-top: 5%; margin-bottom: 1.5%; color: black">
+            {{ item.info.name }}
+          </h1>
+          <div *ngFor="let measure of mediciones">
+            <ion-item *ngIf="measure.metric.id == item.id" color="warning">
+              <ion-label class="ion-text-wrap"
+                >{{ measure.value}} {{item.info.unit}} ({{measure.date}})</ion-label
+              >
+            </ion-item>
+          </div>
+          <p
+            style="
+              text-align: center;
+              margin-top: 5%;
+              color: black;
+            "
+          >
+            Últimas 10 entradas
+          </p>
+        </ion-label>
+        <div style = "height:300px" ><canvas  id="chart{{item.id}}" style="width:100%;max-width:700px; height: auto;"></canvas></div>
+      </ion-card>
 
-    <div style = "display: inline">
-      <ion-button class = "updateBtn" [routerLink]="['/app/Tabs/Analytics/'+item.id+'/edit']">
-        <img src="/assets/images/Edit.png" style="height: 1.5rem;">
-      </ion-button>
-      <ion-button class = "deleteBtn" (click)="deleteAnalitica(item.id)" color = "primary">
-          <img src="/assets/images/Trash.png" style="max-height: 1.5rem;">
-      </ion-button>
+      <div style = "display: inline">
+        <ion-button class = "updateBtn" [routerLink]="['/app/Tabs/Analytics/'+item.id+'/edit']">
+          <img src="/assets/images/Edit.png" style="height: 1.5rem;">
+        </ion-button>
+        <ion-button class = "deleteBtn" (click)="deleteAnalitica(item.id)" color = "primary">
+            <img src="/assets/images/Trash.png" style="max-height: 1.5rem;">
+        </ion-button>
+      </div>
     </div>
-  </div>
+  </ng-template>
 
-  <ion-fab
-    style="padding-inline-end: 5%"
-    slot="fixed"
-    vertical="bottom"
-    horizontal="end"
-  >
-    <ion-fab-button color="secondary" [routerLink]="['/app/Tabs/Analytics/New']">
+  <ng-template #noEntradas>
+    <div style="font-weight: bold; font-size: x-large; text-align: center">
+      <img src="https://static.thenounproject.com/png/2902077-200.png" class="imagen-vacia" alt="">
+      <div style="opacity: .2;"> No hay analíticas todavía </div>
+    </div>
+  </ng-template>
 
+  <ion-fab style="padding-inline-end: 2.5%" slot="fixed" size="small" vertical="bottom" horizontal="end">
+    <ion-fab-button color="primary" [routerLink]="['/app/Tabs/Analytics/New']">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

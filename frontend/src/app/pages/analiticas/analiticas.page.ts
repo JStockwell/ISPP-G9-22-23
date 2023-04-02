@@ -97,6 +97,14 @@ export class AnaliticasPage implements OnInit {
     })
   }
 
+  existsAnaliticas = () =>{
+    if (this.analiticas){
+      return this.analiticas.length>0;
+    } else{
+      return false;
+    }
+  }
+
   createChart(analitica:any){
 
       let str = "chart"+analitica.id;

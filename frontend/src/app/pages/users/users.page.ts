@@ -22,9 +22,14 @@ export class UsersPage implements OnInit {
     birthdate:null
   }
   
-  
+  loginCredentials: any = {
+    username: null,
+    password: null
+  };
+
   isSuccessful = false;
   isSignUpFailed = false;
+  isLoginFailed = false;
   errorMessage = '';
 
 
@@ -40,8 +45,22 @@ export class UsersPage implements OnInit {
         next: data => {
           this.isSuccessful = true;
           this.isSignUpFailed = false;
-          document.location.href = ""
-          window.location.href = ""
+          
+          // SE PROCEDE AL REGISTRO
+          this.loginCredentials.username = this.form.username;
+          this.loginCredentials.password = this.form.password;
+          this.uService.login(this.loginCredentials).subscribe({
+            next: data => {
+              console.log(data)
+              this.uService.saveUser(data);
+              this.reloadPage();
+            },
+            error: err => {
+              this.errorMessage = err.error.message;
+              this.isLoginFailed = true;
+              window.alert("Registro correcto pero algo falló al iniciar sesión.");
+            }
+          });
         },
         error: err => {
           this.errorMessage=err.error.message;
@@ -55,12 +74,10 @@ export class UsersPage implements OnInit {
       campo.style.display = "block";
       campo.style.paddingLeft = "5%";
     }
-    
-    
-    
-
   }
 
-  
+  reloadPage(): void{
+    window.location.href="app/Tabs/Analytics"
+  }
 
 }
