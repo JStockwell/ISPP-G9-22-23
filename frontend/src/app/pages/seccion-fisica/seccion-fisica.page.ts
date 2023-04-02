@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SeccionFisicaServiceService } from 'src/app/services/seccion-fisica-service.service';
 import { LoadingController } from '@ionic/angular';
+import { AnaliticasService } from 'src/app/services/analiticas.service';
 
 @Component({
   selector: 'app-seccion-fisica',
@@ -12,15 +13,7 @@ export class SeccionFisicaPage implements OnInit {
   id: any
   entries: any = [];
 
-  constructor(private fisicoService: SeccionFisicaServiceService, private loadingCtrl: LoadingController) { }
-
-//   existsEntradas = () =>{
-//     if (this.entradas){
-//       return this.entradas.length>0;
-//     } else{
-//       return false;
-//     }
-//   }
+  constructor(private fisicoService: SeccionFisicaServiceService, private loadingCtrl: LoadingController, private analiticasService: AnaliticasService) { }
 
   eliminarEntradaFisica(idEntrada: any) {
     this.fisicoService.deleteEntry(idEntrada).subscribe({
@@ -49,11 +42,12 @@ async loadEntradasDiarioFisico(){
       await loading.present();
 
       this.fisicoService.getEntradasFisicas().subscribe((res) =>{
+        for(var entrada of res){
+          let date:Date = entrada.date;
+          entrada.date=this.analiticasService.dateFormatter_entradas(date);
+          this.entries.push(entrada);
+        }
         loading.dismiss();
-        this.entries = res; 
-        console.log(this.entries)
-        console.log("Diario Fisico")
-
       });
 
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AnaliticasService } from 'src/app/services/analiticas.service';
 import { DetallesMentalService } from 'src/app/services/detalles-mental.service';
 
 @Component({
@@ -11,12 +12,14 @@ export class DetallesMentalPage implements OnInit {
 
   entrada!:mentalEntry
 
-  constructor(private service:DetallesMentalService, private route: ActivatedRoute) { }
+  constructor(private service:DetallesMentalService, private route: ActivatedRoute, private analiticasService: AnaliticasService) { }
 
   ngOnInit() {
     this.service.getEntradaMental(this.route.snapshot.paramMap.get("id")).subscribe({
       next: data =>{
         this.entrada = data
+        let dateAux = data.date;
+        this.entrada.date = this.analiticasService.dateFormatter_entradas(dateAux);
       },
       error:err=>{
         console.log(err.error.message)

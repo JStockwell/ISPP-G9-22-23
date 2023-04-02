@@ -147,6 +147,17 @@ export class AnaliticasService implements HttpInterceptor {
     console.log(chain);
     return chain;
   }
+
+  dateFormatter_entradas(date: Date): string {
+    var chain = "";
+    var fecha = date.toString();
+
+    var y = fecha.substring(0, 4);
+    var m = fecha.substring(5, 7);
+    var d = fecha.substring(8, 10);
+    chain = d + "/" + m + "/" + y ;
+    return chain;
+  }
 }
 
 export const HttpInterceptorProviders = [

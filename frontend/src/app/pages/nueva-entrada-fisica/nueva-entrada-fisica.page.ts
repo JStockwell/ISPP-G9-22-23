@@ -26,12 +26,17 @@ export class NuevaEntradaFisicaPage implements OnInit {
   deporte:boolean | any = false;
   notas:string | any = '';
   today = new Date();
+  dtAux:string = "";
   errorMessage = '';
   errorMessageEstado = '';
 
   constructor(private nuevaEntradFisicaService: NuevaEntradaFisicaService, private navCtrl: NavController, private uService: UsersService) { }
 
   ngOnInit() {
+    
+    var aux = this.today.toLocaleDateString("es-ES", { weekday: 'long'});
+    this.dtAux = aux.charAt(0).toUpperCase() + aux.substring(1) + ', ' + this.today.toLocaleDateString();
+    
   }
 
   goBack(){

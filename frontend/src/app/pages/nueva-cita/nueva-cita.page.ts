@@ -19,6 +19,7 @@ export class NuevaCitaPage implements OnInit {
   fechaHora = new Date().toISOString();
   especialidad:string | undefined
   observaciones:string | undefined
+  dtAux:string = "" ;
 
   constructor(private nuevaCitaService: NuevaCitaService, private navCtrl: NavController, private route: ActivatedRoute, private uService: UsersService) {
     this.route.queryParams.subscribe(params => {
@@ -29,6 +30,9 @@ export class NuevaCitaPage implements OnInit {
   }
 
   ngOnInit() {
+    let Aux:Date = new Date(this.fechaRecibida);
+    var aux = Aux.toLocaleDateString("es-ES", { weekday: 'long'});
+    this.dtAux = aux.charAt(0).toUpperCase() + aux.substring(1) + ', ' + Aux.toLocaleDateString();
   }
 
   goBack(){
@@ -65,11 +69,10 @@ export class NuevaCitaPage implements OnInit {
       time: this.parsearHora(new Date(this.fechaHora)),
       patient_id: this.getUserId(),
     }
-    console.log(dataEntry);
     
     this.nuevaCitaService.postEntry(dataEntry).subscribe({
       next: dataEntry => {
-        console.log(dataEntry);
+     
         document.location.href = "/app/Tabs/calendario"
         window.location.href = "/app/Tabs/calendario"
       },

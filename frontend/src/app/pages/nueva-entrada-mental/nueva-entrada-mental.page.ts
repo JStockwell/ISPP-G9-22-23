@@ -32,12 +32,15 @@ export class NuevaEntradaMentalPage implements OnInit{
   errorMessageTiempo= '';
   errorMessageComida = '';
   errorMessageSuenyo = '';
+  dtAux:string = "";
 
   public mostrarAlerta = false;
 
   constructor(private nuevaEntradaMentalService: NuevaEntradaMentalService, private navCtrl: NavController, private uService: UsersService, private alertController: AlertController) {}
 
   ngOnInit() {
+    var aux = this.today.toLocaleDateString("es-ES", { weekday: 'long'});
+    this.dtAux = aux.charAt(0).toUpperCase() + aux.substring(1) + ', ' + this.today.toLocaleDateString();
   }
 
   goBack(){

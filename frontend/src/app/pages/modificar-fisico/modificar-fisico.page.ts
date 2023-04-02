@@ -19,6 +19,7 @@ export class ModificarFisicoPage implements OnInit {
   deporte:boolean | any = false;
   notas:string | any = '';
   today:string | any = '';
+  dtAux:String = ""
 
   constructor(private route:ActivatedRoute, private service:ModificarFisicoService) { }
 
@@ -32,6 +33,9 @@ export class ModificarFisicoPage implements OnInit {
         this.deporte = this.entrada.done_exercise;
         this.notas = this.entrada.notes;
         this.today = this.entrada.date;
+        let Aux:Date = new Date(this.today);
+        var aux2 = Aux.toLocaleDateString("es-ES", { weekday: 'long'})
+        this.dtAux = aux2.charAt(0).toUpperCase() + aux2.substring(1) + ', ' + Aux.toLocaleDateString();
       },
       error:err=>{
         console.log(err.error.message);
