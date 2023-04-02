@@ -17,6 +17,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     tel = models.CharField(max_length=20)
     birthdate = models.DateField()
+    premium_account = models.BooleanField(default=False)
 
     class Meta:
         app_label="users"
@@ -26,6 +27,10 @@ class Profile(models.Model):
 
 class Patient(Profile):
     code = models.CharField(max_length=6, default=generate_random_code, unique=True, editable=False)
+    share_physical_entries = models.BooleanField(default=False)
+    share_mental_entries = models.BooleanField(default=False)
+    share_metrics = models.BooleanField(default=False)
+    share_appointments = models.BooleanField(default=False)
 
     class Meta:
         app_label="users"
