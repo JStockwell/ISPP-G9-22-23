@@ -16,12 +16,19 @@ export class DetallesMentalPage implements OnInit {
   ngOnInit() {
     this.service.getEntradaMental(this.route.snapshot.paramMap.get("id")).subscribe({
       next: data =>{
-        this.entrada = data
+        this.entrada = data;
+        this.replaceSaltosLinea(this.entrada);
       },
       error:err=>{
         console.log(err.error.message)
       }
     })
+  }
+
+  replaceSaltosLinea(entry: mentalEntry): any {
+    entry.positive_thoughts = entry.positive_thoughts.replace(/\n/g, '<br>');
+    entry.negative_thoughts = entry.negative_thoughts.replace(/\n/g, '<br>');
+    entry.notes = entry.notes.replace(/\n/g, '<br>');
   }
 
   getImagenEstado(imagen:string): any {
