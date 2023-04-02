@@ -112,6 +112,7 @@ class PatientId(APIView):
                 'last_name': openapi.Schema(type=openapi.TYPE_STRING, description='Apellidos a modificar, máximo 150 caracteres'),
                 'tel': openapi.Schema(type=openapi.TYPE_STRING, description='Teléfono a modificar'),
                 'birthdate': openapi.Schema(type=openapi.TYPE_STRING, description='Fecha de nacimiento a modificar, formato YYYY-MM-DD'),
+                'premium_account': openapi.Schema(type=openapi.TYPE_BOOLEAN, description='Status de cuenta a modificar'),
             }
         ),
         responses={'200': PatientSerializer, "400": "Ya existe un usuario con ese nombre de usuario o email o la fecha de nacimiento es posterior a la fecha actual", "404": "Paciente no encontrado"})
@@ -137,6 +138,8 @@ class PatientId(APIView):
                     user.first_name  = value
                 if str(key) == "last_name":
                     user.last_name  = value
+                if str(key) == "premium_account": 
+                    patient.premium_account = value
             
             user.save()
             patient.save()
@@ -245,6 +248,7 @@ class MedicId(APIView):
                 'last_name': openapi.Schema(type=openapi.TYPE_STRING, description='Apellidos a modificar, máximo 150 caracteres'),
                 'tel': openapi.Schema(type=openapi.TYPE_STRING, description='Teléfono a modificar'),
                 'birthdate': openapi.Schema(type=openapi.TYPE_STRING, description='Fecha de nacimiento a modificar, formato YYYY-MM-DD'),
+                'premium_account': openapi.Schema(type=openapi.TYPE_BOOLEAN, description='Status de cuenta a modificar'),
             }
         ),
         responses={'200': MedicSerializer, "400": "Ya existe un usuario con ese nombre de usuario o email o la fecha de nacimiento es posterior a la fecha actual", "404":"Médico no encontrado"})
@@ -270,6 +274,8 @@ class MedicId(APIView):
                     user.first_name  = value
                 if str(key) == "last_name":
                     user.last_name  = value
+                if str(key) == "premium_account": 
+                    medic.premium_account = value
             
             user.save()
             medic.save()

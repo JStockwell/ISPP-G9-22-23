@@ -17,6 +17,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     tel = models.CharField(max_length=20)
     birthdate = models.DateField()
+    premium_account = models.BooleanField(default=False)
 
     class Meta:
         app_label="users"
