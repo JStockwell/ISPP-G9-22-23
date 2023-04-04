@@ -24,7 +24,7 @@ const routes: Routes = [
         loadChildren: () => import('../pages/seccion-fisica/seccion-fisica.module').then( m => m.SeccionFisicaPageModule)
       },
       {
-        path: 'DiarioEmocional',
+        path: 'seccion-mental',
         loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule)
       },
       {

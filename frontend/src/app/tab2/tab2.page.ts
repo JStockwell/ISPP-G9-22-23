@@ -135,8 +135,8 @@ eliminarEntradaMental(idEntrada: any) {
   this.diarioEmocionalService.deleteEntry(idEntrada).subscribe({
     next: res => {
       console.log(res);
-      document.location.href="/app/Tabs/DiarioEmocional"
-      window.location.href = "/app/Tabs/DiarioEmocional"
+      document.location.href="/app/Tabs/seccion-mental"
+      window.location.href = "/app/Tabs/seccion-mental"
     },error: err => {
       console.log(err)
     }

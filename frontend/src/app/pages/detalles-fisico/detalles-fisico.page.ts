@@ -4,6 +4,7 @@ import { DetallesFisicoService } from 'src/app/services/detalles-fisico.service'
 import { NavController } from '@ionic/angular';
 import { AnaliticasService } from 'src/app/services/analiticas.service';
 
+
 @Component({
   selector: 'app-detalles-fisico',
   templateUrl: './detalles-fisico.page.html',
