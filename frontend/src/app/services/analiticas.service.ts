@@ -144,7 +144,6 @@ export class AnaliticasService implements HttpInterceptor {
     var h = fecha.substring(11, 13);
     var min = fecha.substring(14, 16);
     chain = d + "-" + m + "-" + y + "  " + h + ":" + min + " h";
-    console.log(chain);
     return chain;
   }
 
