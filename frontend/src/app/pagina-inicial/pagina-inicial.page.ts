@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UsersService } from '../services/users.service';
 
 @Component({
   selector: 'app-pagina-inicial',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PaginaInicialPage implements OnInit {
 
-  constructor() { }
+  constructor(private uService:UsersService) { }
 
   ngOnInit() {
+  }
+
+  userLoggedIn():boolean{
+    return this.uService.isLoggedIn();
+  }
+
+  toMainPage(){
+    window.location.href="app/Tabs/Analytics"
   }
 
 }
