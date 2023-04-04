@@ -18,19 +18,21 @@ export class DetallesMentalPage implements OnInit {
   ngOnInit() {
     this.service.getEntradaMental(this.route.snapshot.paramMap.get("id")).subscribe({
       next: data =>{
-        this.entrada = data 
 
-        let Aux:Date = new Date(this.entrada.date);
-        var aux2 = Aux.toLocaleDateString("es-ES", { weekday: 'long'})
-        this.dtAux = aux2.charAt(0).toUpperCase() + aux2.substring(1) + ', ' + Aux.toLocaleDateString();
+        this.entrada = data;
+        this.replaceSaltosLinea(this.entrada);
 
-        let dateAux = data.date;
-        this.entrada.date = this.analiticasService.dateFormatter_entradas(dateAux);
       },
       error:err=>{
         console.log(err.error.message)
       }
     })
+  }
+
+  replaceSaltosLinea(entry: mentalEntry): any {
+    entry.positive_thoughts = entry.positive_thoughts.replace(/\n/g, '<br>');
+    entry.negative_thoughts = entry.negative_thoughts.replace(/\n/g, '<br>');
+    entry.notes = entry.notes.replace(/\n/g, '<br>');
   }
 
   getImagenEstado(imagen:string): any {
