@@ -27,13 +27,18 @@
 
       </ion-card-content>
 
-    
+    <ng-template *ngIf="!userLoggedIn(); then login_register else enter"></ng-template>
+    <ng-template #login_register>
       <ion-button expand="block" [routerLink] = "['/users/register']">
         Registrarse
       </ion-button>
       <ion-button expand="block" [routerLink] = "['/users/login']">
         Iniciar sesión
       </ion-button>
+    </ng-template>
+    <ng-template #enter>
+      <ion-button class = "btacceder" (click)="toMainPage()">Acceder</ion-button>
+    </ng-template>
     </ion-card>
   </div>
   

@@ -24,6 +24,7 @@ export class ModificarMentalPage implements OnInit{
   ppositivos:string | any='';
   pnegativos:string | any='';
   today : string | any ='';
+  dtAux : String = "";
 
   constructor(private route:ActivatedRoute, private service:ModificarMentalService) {}
 
@@ -40,6 +41,9 @@ export class ModificarMentalPage implements OnInit{
         this.ppositivos = this.entrada.positive_thoughts
         this.pnegativos = this.entrada.negative_thoughts
         this.today = this.entrada.date;
+        let Aux:Date = new Date(this.today);
+        var aux2 = Aux.toLocaleDateString("es-ES", { weekday: 'long'})
+        this.dtAux = aux2.charAt(0).toUpperCase() + aux2.substring(1) + ', ' + Aux.toLocaleDateString();
       },
       error:err=>{
         console.log(err.error.message);
