@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Entrada mental</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card color="warning" style="padding: 25px; margin-bottom: 75px" *ngIf="entrada!=undefined||entrada!=null">
+    <div style="text-align: center;">
+
+      <h1 style="margin-top: 0px"><b>{{ entrada.date }}</b></h1>
+
+    </div>
+
+    <div style="text-align: center">
+      <ion-row>
+        <ion-col>
+          <h3><b>Ánimo: </b><img src="{{getImagenEstado(entrada.state)}}"  style="width: 3rem;"></h3>
+        </ion-col>
+        <ion-col>
+          <h3><b>Sueño: </b><img src="{{getImagenSuenyo(entrada.sleep)}}"  style="width: 3rem;" ></h3>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <div style="text-align: center">
+      <ion-row>
+        <ion-col>
+          <h3><b>Tiempo: </b><img src="{{getImagenTiempo(entrada.weather)}}"  style="width: 3rem;"></h3>
+        </ion-col>
+        <ion-col>
+          <h3><b>Comida: </b><img src="{{getImagenComida(entrada.food)}}"  style="width: 3rem;" ></h3>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <div style="text-align: center"><h3><b>Notas</b></h3></div>
+    <div style="text-align: left; margin-top: 10px; margin-bottom: 10px">
+      <p [innerHTML]="entrada.notes"></p>
+    </div>
+
+    <div style="text-align: center"><h3><b>Pensamientos Negativos</b></h3></div>
+    <div style="text-align: left; margin-top: 10px; margin-bottom: 10px">
+      <p [innerHTML]="entrada.description"></p>
+    </div>
+    
+  </ion-card>
+  <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
+    <ion-fab-button  color = "primary" (click)="goBack()">
+      <ion-icon name="arrow-back-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
