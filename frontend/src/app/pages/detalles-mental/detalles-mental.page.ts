@@ -11,13 +11,19 @@ import { DetallesMentalService } from 'src/app/services/detalles-mental.service'
 export class DetallesMentalPage implements OnInit {
 
   entrada!:mentalEntry
+  dtAux:String = ""
 
   constructor(private service:DetallesMentalService, private route: ActivatedRoute, private analiticasService: AnaliticasService) { }
 
   ngOnInit() {
     this.service.getEntradaMental(this.route.snapshot.paramMap.get("id")).subscribe({
       next: data =>{
-        this.entrada = data
+        this.entrada = data 
+
+        let Aux:Date = new Date(this.entrada.date);
+        var aux2 = Aux.toLocaleDateString("es-ES", { weekday: 'long'})
+        this.dtAux = aux2.charAt(0).toUpperCase() + aux2.substring(1) + ', ' + Aux.toLocaleDateString();
+
         let dateAux = data.date;
         this.entrada.date = this.analiticasService.dateFormatter_entradas(dateAux);
       },

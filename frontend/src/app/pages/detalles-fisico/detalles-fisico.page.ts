@@ -14,6 +14,7 @@ export class DetallesFisicoPage implements OnInit {
 
   array_bodyParts:any
   entrada!:physicalEntry
+  dtAux:String = ""
 
   constructor(private service:DetallesFisicoService, private route: ActivatedRoute, private navCtrl: NavController, private analiticasService: AnaliticasService) {}
 
@@ -24,6 +25,11 @@ export class DetallesFisicoPage implements OnInit {
         if(this.entrada.body_parts) {
           this.array_bodyParts = this.entrada.body_parts.split(",")
         }
+
+        let Aux:Date = new Date(this.entrada.date);
+        var aux2 = Aux.toLocaleDateString("es-ES", { weekday: 'long'})
+        this.dtAux = aux2.charAt(0).toUpperCase() + aux2.substring(1) + ', ' + Aux.toLocaleDateString();
+
         let dateAux = data.date;
         this.entrada.date = this.analiticasService.dateFormatter_entradas(dateAux);
       },
