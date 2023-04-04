@@ -63,32 +63,30 @@ export class DetallesMentalPage implements OnInit {
     if(imagen == "HEALTHY" ){
       return "/assets/images/salad.png";
     }
+    if(imagen == "NORMAL" ){
+      return "/assets/images/normal-food.png";
+    }
     if(imagen == "FAST" ){
       return "/assets/images/hamburger.png";
     }
-    
     if(imagen == "NONE" ){
       return "/assets/images/plato.png";
     }
-    
-  
-    
-  
   }
   
   getImagenSuenyo(imagen:string): any {
     if(imagen == "DEEP" ){
       return "/assets/images/slumber.png";
     }
-    if(imagen == "LIGHT" ){
+    if(imagen == "NORMAL" ){
       return "/assets/images/sleeping.png";
     }
-    
-    if(imagen == "NONE" ){
-      return "/assets/images/hotel-bed.png";
+    if(imagen == "LIGHT" ){
+      return "/assets/images/light-sleep.png";
     }
-    
-  
+    if(imagen == "NONE" ){
+      return "/assets/images/insomnia.png";
+    }
   }
   
   getImagenTiempo(imagen:string): any {
