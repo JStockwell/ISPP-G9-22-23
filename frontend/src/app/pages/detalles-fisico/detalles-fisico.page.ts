@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DetallesFisicoService } from 'src/app/services/detalles-fisico.service';
 import { NavController } from '@ionic/angular';
+import { AnaliticasService } from 'src/app/services/analiticas.service';
 
 @Component({
   selector: 'app-detalles-fisico',
@@ -13,8 +14,9 @@ export class DetallesFisicoPage implements OnInit {
 
   array_bodyParts:any
   entrada!:physicalEntry
+  dtAux:String = ""
 
-  constructor(private service:DetallesFisicoService, private route: ActivatedRoute, private navCtrl: NavController) {}
+  constructor(private service:DetallesFisicoService, private route: ActivatedRoute, private navCtrl: NavController, private analiticasService: AnaliticasService) {}
 
   ngOnInit() {
     this.service.getEntradaFisica(this.route.snapshot.paramMap.get("id")).subscribe({
@@ -23,6 +25,13 @@ export class DetallesFisicoPage implements OnInit {
         if(this.entrada.body_parts) {
           this.array_bodyParts = this.entrada.body_parts.split(",")
         }
+
+        let Aux:Date = new Date(this.entrada.date);
+        var aux2 = Aux.toLocaleDateString("es-ES", { weekday: 'long'})
+        this.dtAux = aux2.charAt(0).toUpperCase() + aux2.substring(1) + ', ' + Aux.toLocaleDateString();
+
+        let dateAux = data.date;
+        this.entrada.date = this.analiticasService.dateFormatter_entradas(dateAux);
       },
       error:err=>{
         console.log(err.error.message)
@@ -90,7 +99,7 @@ export class DetallesFisicoPage implements OnInit {
 
 type physicalEntry = {
   id: null,
-  date: null,
+  date: string,
   state: string,
   body_parts: string,
   notes: string,

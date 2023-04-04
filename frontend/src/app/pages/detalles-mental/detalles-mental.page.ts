@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AnaliticasService } from 'src/app/services/analiticas.service';
 import { DetallesMentalService } from 'src/app/services/detalles-mental.service';
 
 @Component({
@@ -10,18 +11,28 @@ import { DetallesMentalService } from 'src/app/services/detalles-mental.service'
 export class DetallesMentalPage implements OnInit {
 
   entrada!:mentalEntry
+  dtAux:String = ""
 
-  constructor(private service:DetallesMentalService, private route: ActivatedRoute) { }
+  constructor(private service:DetallesMentalService, private route: ActivatedRoute, private analiticasService: AnaliticasService) { }
 
   ngOnInit() {
     this.service.getEntradaMental(this.route.snapshot.paramMap.get("id")).subscribe({
       next: data =>{
-        this.entrada = data
+
+        this.entrada = data;
+        this.replaceSaltosLinea(this.entrada);
+
       },
       error:err=>{
         console.log(err.error.message)
       }
     })
+  }
+
+  replaceSaltosLinea(entry: mentalEntry): any {
+    entry.positive_thoughts = entry.positive_thoughts.replace(/\n/g, '<br>');
+    entry.negative_thoughts = entry.negative_thoughts.replace(/\n/g, '<br>');
+    entry.notes = entry.notes.replace(/\n/g, '<br>');
   }
 
   getImagenEstado(imagen:string): any {

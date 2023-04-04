@@ -7,7 +7,7 @@ class UpdatePhysicalEntrySerializer(serializers.Serializer):
     notes = serializers.CharField(required = False, max_length=1024, allow_blank=True)
     done_exercise = serializers.BooleanField(required = False)
     date = serializers.DateField(required = False)
-    state = serializers.CharField()
+    state = serializers.CharField(required = False)
 
     def validate_state(self, value):
         if (value != None):
