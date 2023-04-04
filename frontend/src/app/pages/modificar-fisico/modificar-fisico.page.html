@@ -7,7 +7,7 @@
 <ion-content class="ion-padding" color ="light" *ngIf="entrada!=undefined && entrada!=null">
   <ion-card color = "warning">
     <ion-text color="primary">
-      <h1 style="text-align: center; padding-bottom: 2%; font-weight: bold;">{{ today | date: 'EEEE, dd/MM/yyyy' }}</h1>
+      <h1 style="text-align: center; padding-bottom: 2%; font-weight: bold;">{{ dtAux}}</h1>
     </ion-text>
     <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">¿Qué tal te sientes hoy físicamente?</ion-label>
     <ion-item color = "warning" style="padding-top: 3%;">
@@ -55,7 +55,7 @@
   </ion-card>
 
   <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
-    <ion-fab-button  color = "secondary" [routerLink]="['/app/Tabs/seccion-fisica']">
+    <ion-fab-button  color = "primary" (click)="goBack()">
       <ion-icon name="arrow-back-circle-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>

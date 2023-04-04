@@ -23,7 +23,7 @@
       </ion-datetime>
     </ion-card>
     
-    <ion-card color = "warning">
+    <ion-card color = "warning">    
       <ion-item color = "warning">
         <ion-label position="floating">Especialidad</ion-label>
         <ion-input [(ngModel)]="form.especialidad" placeholder="ej: Traumatología, Oftalmología, etc." value="especialidad" name="especialidad" required maxlength="30" #especialidad="ngModel" type="text" required [ngClass]="{ 'is-invalid': f.submitted && especialidad.errors }"></ion-input>

@@ -7,7 +7,7 @@ class UpdatePhysicalEntrySerializer(serializers.Serializer):
     notes = serializers.CharField(required = False, max_length=1024, allow_blank=True)
     done_exercise = serializers.BooleanField(required = False)
     date = serializers.DateField(required = False)
-    state = serializers.CharField()
+    state = serializers.CharField(required = False)
 
     def validate_state(self, value):
         if (value != None):
@@ -80,18 +80,18 @@ class UpdateMentalEntrySerializer(serializers.Serializer):
             raise ValidationError("Elige un tiempo atmosférico válido (SNOWY, RAINY, CLOUDY, STORMY, SUNNY)")
 
     def validate_food(self, value):
-        accepted_values = {"NONE", "FAST", "HEALTHY"}
+        accepted_values = {"NONE", "NORMAL", "FAST", "HEALTHY"}
         if value in accepted_values:
             return value
         else:
-            raise ValidationError("Elige un tipo de comida válido (NONE, FAST, HEALTHY)")
+            raise ValidationError("Elige un tipo de comida válido (NONE, NORMAL, FAST, HEALTHY)")
         
     def validate_sleep(self, value):
-        accepted_values = {"NONE", "LIGHT", "DEEP"}
+        accepted_values = {"NONE", "LIGHT", "NORMAL", "DEEP"}
         if value in accepted_values:
             return value
         else:
-            raise ValidationError("Elige una cantidad de sueño válida (NONE, LIGHT, DEEP)")
+            raise ValidationError("Elige una cantidad de sueño válida (NONE, LIGHT, NORMAL, DEEP)")
 
 class MentalEntrySerializer(serializers.ModelSerializer):
     weather = serializers.CharField(max_length=64)
@@ -113,15 +113,15 @@ class MentalEntrySerializer(serializers.ModelSerializer):
             raise ValidationError("Elige un tiempo atmosférico válido (SNOWY, RAINY, CLOUDY, STORMY, SUNNY)")
 
     def validate_food(self, value):
-        accepted_values = {"NONE", "FAST", "HEALTHY"}
+        accepted_values = {"NONE", "NORMAL", "FAST", "HEALTHY"}
         if value in accepted_values:
             return value
         else:
-            raise ValidationError("Elige un tipo de comida válido (NONE, FAST, HEALTHY)")
+            raise ValidationError("Elige un tipo de comida válido (NONE, NORMAL, FAST, HEALTHY)")
         
     def validate_sleep(self, value):
-        accepted_values = {"NONE", "LIGHT", "DEEP"}
+        accepted_values = {"NONE", "LIGHT", "NORMAL", "DEEP"}
         if value in accepted_values:
             return value
         else:
-            raise ValidationError("Elige una cantidad de sueño válida (NONE, LIGHT, DEEP)")
+            raise ValidationError("Elige una cantidad de sueño válida (NONE, LIGHT, NORMAL, DEEP)")

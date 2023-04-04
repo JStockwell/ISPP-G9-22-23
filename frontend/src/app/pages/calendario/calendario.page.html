@@ -24,9 +24,9 @@
         <ion-text color="primary" style="text-align: center;">
           <h4>Usted tiene <b>{{ cantidadCitas }} cita/s programada/s</b> para este día</h4>
         </ion-text>
-        <ion-item *ngFor="let item of citasEnDia" color="light" style = "padding-top: 3%; background-color: #f4f5f8;" [routerLink]="['/app/Tabs/calendario/detalles-cita/'+item.id]">
-          <ion-text color="primary">
-            Tiene una cita agendada para las {{ item.time }}h
+        <ion-item *ngFor="let item of citasEnDia" color="light" style = "padding-top: 3%; background-color: #f4f5f8;">
+          <ion-text color="primary" [routerLink]="['/app/Tabs/calendario/detalles-cita/'+item.id]">
+            <u>Tiene una cita agendada para las <b>{{ item.time }}h</b></u>
           </ion-text>
           <ion-button color="dark" [routerLink]="['/app/Tabs/calendario/'+item.id+'/edit']">
             Editar

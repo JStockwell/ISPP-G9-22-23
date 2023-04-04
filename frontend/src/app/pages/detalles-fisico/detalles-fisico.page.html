@@ -10,7 +10,7 @@
       <div style="text-align: right; margin-right: 15px; margin-top: 20px">
         
       </div>
-      <h3 style="margin-top: 0px">{{ entrada.date }}</h3>
+      <h3 style="margin-top: 0px">{{ dtAux }}</h3>
     </div>
 
     <div style="text-align: center">
@@ -38,7 +38,7 @@
     <div style="text-align: center; margin-bottom: 10px">{{ entrada.notes}}</div>
   </ion-card>
   <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
-    <ion-fab-button  color = "secondary" [routerLink]="['/app/Tabs/seccion-fisica']">
+    <ion-fab-button  color = "primary" (click)="goBack()">
       <ion-icon name="arrow-back-circle-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>

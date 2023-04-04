@@ -11,11 +11,11 @@
     <ion-card color = "warning">
 
       <ion-text color="primary">
-        <h1 style="text-align: center; padding-bottom: 2%; font-weight: bold;">{{ today | date: 'EEEE, dd/MM/yyyy'}}</h1>
+        <h1 style="text-align: center; padding-bottom: 2%; font-weight: bold;">{{ dtAux}}</h1>
       </ion-text>
 
       <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">¿Cómo te has sentido hoy?</ion-label>
-      <ion-item color = "warning" style="padding-top: 3%;">
+      <ion-item color = "warning" style="padding-top: 3%; margin-bottom: 5%;">
         <ion-segment [(ngModel)]="estadoFisico" scrollable>
           <ion-segment-button value="VG">
             <img src="/assets/images/cara-muy-feliz.png">
@@ -35,26 +35,32 @@
         </ion-segment>
       </ion-item>
 
-      <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">¿Cómo dormiste anoche?</ion-label>
-      <ion-item color = "warning" style="padding-top: 3%;">
+      <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">¿Cómo consideras que dormistes anoche?</ion-label>
+      <ion-item color = "warning" style="padding-top: 3%; margin-bottom: 5%;">
         <ion-segment [(ngModel)]="suenyo" scrollable>
           <ion-segment-button value="DEEP">
             <img src="/assets/images/slumber.png">
           </ion-segment-button>
-          <ion-segment-button value="LIGHT">
+          <ion-segment-button value="NORMAL">
             <img src="/assets/images/sleeping.png">
           </ion-segment-button>
+          <ion-segment-button value="LIGHT">
+            <img src="/assets/images/light-sleep.png">
+          </ion-segment-button>
           <ion-segment-button value="NONE">
-            <img src="/assets/images/hotel-bed.png">
+            <img src="/assets/images/insomnia.png">
           </ion-segment-button>
         </ion-segment>
       </ion-item>
 
-      <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">¿Qúe has comido hoy?</ion-label>
-      <ion-item color = "warning" style="padding-top: 3%;">
+      <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">¿Cómo consideras que has comido hoy?</ion-label>
+      <ion-item color = "warning" style="padding-top: 3%; margin-bottom: 5%;">
         <ion-segment [(ngModel)]="comida" scrollable>
           <ion-segment-button value="HEALTHY">
             <img src="/assets/images/salad.png">
+          </ion-segment-button>
+          <ion-segment-button value="NORMAL">
+            <img src="/assets/images/normal-food.png">
           </ion-segment-button>
           <ion-segment-button value="FAST">
             <img src="/assets/images/hamburger.png">
@@ -66,7 +72,7 @@
       </ion-item>
 
       <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">¿Qué tiempo ha hecho hoy?</ion-label>
-      <ion-item color = "warning" style="padding-top: 3%;">
+      <ion-item color = "warning" style="padding-top: 3%; margin-bottom: 2%;">
         <ion-segment [(ngModel)]="tiempo" scrollable>
           <ion-segment-button value="SUNNY">
             <img src="/assets/images/dom.png">
@@ -98,7 +104,7 @@
 
       <ion-item color = "warning">
         <ion-label position="floating">Notas</ion-label>
-        <ion-textarea [(ngModel)]="notas" rows= "3" placeholder="Aquí puedes explicar y desarrollar lo que desees sobre las preguntas anteriores u otras cuestiones a parte." type="text"></ion-textarea>
+        <ion-textarea [(ngModel)]="notas" rows= "3" placeholder="Si quieres explicar algo más sobre las preguntas anteriores o contarnos tu día, aquí nos tienes :)" type="text"></ion-textarea>
       </ion-item>
 
       <ion-button color="dark" expand="block" (click)="editarEntradaMental()">
@@ -107,7 +113,7 @@
     </ion-card>
 
     <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
-      <ion-fab-button color = "secondary" [routerLink]="['/app/Tabs/DiarioEmocional']">
+      <ion-fab-button  color = "primary" (click)="goBack()">
         <ion-icon name="arrow-back-circle-outline"></ion-icon>
       </ion-fab-button>
     </ion-fab>

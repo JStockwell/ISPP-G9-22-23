@@ -17,9 +17,9 @@ export class DetallesCitaService implements HttpInterceptor {
     return next.handle(req)
   }
 
-  getAppointment(id_cita:any):Observable<any>{
+  getCita(id_entrada:any):Observable<any>{
     if(this.uService.isLoggedIn()){
-      var ck = window.sessionStorage.getItem('auth-user')
+      var ck = localStorage.getItem('auth-user')
       if(ck!=null){
         var tk = JSON.parse(ck);
         var res = [];
@@ -28,7 +28,7 @@ export class DetallesCitaService implements HttpInterceptor {
         }
         let headers = new HttpHeaders()
         headers = headers.set('Authorization', 'Token '+res[0])
-        return this.http.get(API_URL + `appointments/appointments/${id_cita}/`, {'headers': headers})
+        return this.http.get(API_URL + `appointments/appointments/${id_entrada}/`, {'headers': headers})
       }
     }
     return new Observable<any>
