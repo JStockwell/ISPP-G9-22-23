@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AnaliticasService } from 'src/app/services/analiticas.service';
 import { DetallesMentalService } from 'src/app/services/detalles-mental.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-detalles-mental',
@@ -13,7 +14,7 @@ export class DetallesMentalPage implements OnInit {
   entrada!:mentalEntry
   dtAux:String = ""
 
-  constructor(private service:DetallesMentalService, private route: ActivatedRoute, private analiticasService: AnaliticasService) { }
+  constructor(private service:DetallesMentalService, private route: ActivatedRoute, private analiticasService: AnaliticasService,private navCtrl: NavController) { }
 
   ngOnInit() {
     this.service.getEntradaMental(this.route.snapshot.paramMap.get("id")).subscribe({
@@ -33,6 +34,10 @@ export class DetallesMentalPage implements OnInit {
     entry.positive_thoughts = entry.positive_thoughts.replace(/\n/g, '<br>');
     entry.negative_thoughts = entry.negative_thoughts.replace(/\n/g, '<br>');
     entry.notes = entry.notes.replace(/\n/g, '<br>');
+  }
+
+  goBack(){
+    this.navCtrl.pop(); 
   }
 
   getImagenEstado(imagen:string): any {

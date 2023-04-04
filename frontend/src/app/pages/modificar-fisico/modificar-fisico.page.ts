@@ -4,6 +4,7 @@ import { ModificarFisicoService } from 'src/app/services/modificar-fisico.servic
 import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 registerLocaleData(localeEs, 'es');
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-modificar-fisico',
@@ -21,7 +22,7 @@ export class ModificarFisicoPage implements OnInit {
   today:string | any = '';
   dtAux:String = ""
 
-  constructor(private route:ActivatedRoute, private service:ModificarFisicoService) { }
+  constructor(private route:ActivatedRoute, private service:ModificarFisicoService, private navCtrl: NavController) { }
 
   ngOnInit() {
     let id = this.route.snapshot.paramMap.get('id')
@@ -41,6 +42,9 @@ export class ModificarFisicoPage implements OnInit {
         console.log(err.error.message);
       }
     })
+  }
+  goBack(){
+    this.navCtrl.pop(); 
   }
 
   painsToString(dolores: any) {
