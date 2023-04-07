@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CalendarioService } from 'src/app/services/calendario.service';
-import { UsersService } from 'src/app/services/users.service';
+import { eventos } from '../../services/settings';
 
 @Component({
   selector: 'app-calendario',
@@ -9,18 +9,13 @@ import { UsersService } from 'src/app/services/users.service';
   styleUrls: ['./calendario.page.scss'],
 })
 export class CalendarioPage implements OnInit {
-  public eventos = [
-    {
-      date: '2000-01-01',
-      time: '00:00',
-    },
-  ];
 
+  eventos = eventos;
   fechaSeleccionada = new Date().toISOString();
   citasEnDia: any[] | undefined;
   cantidadCitas: any | undefined;
 
-  constructor(private calendarioService: CalendarioService, private router: Router, private uService: UsersService) { }
+  constructor(private calendarioService: CalendarioService, private router: Router) { }
 
   ngOnInit() {
     this.getAppointmentsList();
@@ -33,7 +28,7 @@ export class CalendarioPage implements OnInit {
 
   onDateChange(event: any) {
     this.fechaSeleccionada = event.detail.value.split('T')[0];
-    this.citasEnDia = this.calendarioService.filterByDate(this.fechaSeleccionada, this.eventos);
+    this.citasEnDia = this.calendarioService.filterByDate(this.fechaSeleccionada, eventos);
     this.cantidadCitas = this.citasEnDia.length;
   }
 
@@ -56,15 +51,27 @@ export class CalendarioPage implements OnInit {
 
   comprobarFechaEnEventos(fecha: any) {
     let fechaParseada = fecha.split('T')[0];
-    return this.eventos.find(evento => evento.date === fechaParseada) !== undefined;
+    return eventos.find(evento => evento.date === fechaParseada) !== undefined;
   }
 
   getAppointmentsList(){
     this.calendarioService.getAppointmentsList().subscribe((res) => {
       this.cambiarColorEventos(res);
       this.cambiarFormatoHora(res);
-      Object.assign(this.eventos, res);
+      Object.assign(eventos, res);
     }
   )}
+  
+  eliminarCita(idEntrada: any) {
+    this.calendarioService.deleteAppointment(idEntrada).subscribe({
+      next: res => {
+        console.log(res);
+        document.location.href="/app/Tabs/calendario"
+        window.location.href = "/app/Tabs/calendario"
+      },error: err => {
+        console.log(err)
+      }
+    })
+  }
 
 }

@@ -1,29 +1,27 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Nueva cita</ion-title>
+    <ion-title>Modificar cita</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding" color ="light">
-  <form *ngIf= "!isSuccessful" name="form" (ngSubmit)="f.form.valid && crearNuevaCita()" #f="ngForm" novalidate>
+  <form *ngIf= "!isSuccessful" name="form" (ngSubmit)="f.form.valid && modificarCita()" #f="ngForm" novalidate>
     <ion-card color="warning">
       <ion-datetime 
         display-format="DD.MM.YYYY HH:mm"
         locale="es-ES"
         display-timezone="utc"
         hourCycle="h23"
-        invalid-text="Introduce hora"
         [firstDayOfWeek]="1"
         [(ngModel)]="form.fechaYHora"
         min="{{ fechaActual }}"
         value="fechaYHora" name="fechaYHora" required #fechaYHora="ngModel" [ngClass]="{ 'is-invalid': f.submitted && fechaYHora.errors }">
         <span slot="title">Día seleccionado</span>
         <span slot="time-label">Hora de la cita</span>
-        <span slot="invalid-text">Hora de la cita</span>
       </ion-datetime>
     </ion-card>
     
-    <ion-card color = "warning">    
+    <ion-card color = "warning">
       <ion-item color = "warning">
         <ion-label position="floating">Especialidad</ion-label>
         <ion-input [(ngModel)]="form.especialidad" placeholder="ej: Traumatología, Oftalmología, etc." value="especialidad" name="especialidad" required maxlength="30" #especialidad="ngModel" type="text" required [ngClass]="{ 'is-invalid': f.submitted && especialidad.errors }"></ion-input>
