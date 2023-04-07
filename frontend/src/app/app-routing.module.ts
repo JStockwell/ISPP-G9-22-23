@@ -32,7 +32,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/analiticas/analiticas.module').then( m => m.AnaliticasPageModule)
   },
   {
-    path: 'seccion-mental',
+    path: 'Diario Emocional',
     loadChildren: () => import('./tab2/tab2.module').then(m => m.Tab2PageModule)
   },
   {
@@ -78,6 +78,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/modificar-detalles/modificar-detalles.module').then( m => m.ModificarDetallesPageModule)
 
   },
+  {
+    path: 'modificar-cita',
+    loadChildren: () => import('./pages/modificar-cita/modificar-cita.module').then( m => m.ModificarCitaPageModule)
+  },
+
 
 ];
 @NgModule({

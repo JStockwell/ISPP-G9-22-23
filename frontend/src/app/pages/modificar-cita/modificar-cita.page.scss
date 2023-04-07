@@ -1,12 +1,12 @@
 ion-modal {
     &.bottom-end {
-      align-items: flex-end;
-      --height: auto;
-      .ion-page {
+        align-items: flex-end;
+        --height: auto;
+        .ion-page {
         position: relative;
         display: block;
         contain: content;
-      }
+        }
     }
 }
 

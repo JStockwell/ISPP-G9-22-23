@@ -28,10 +28,10 @@
           <ion-text color="primary">
             Tiene una cita agendada para las {{ item.time }}h
           </ion-text>
-          <ion-button color="dark">
+          <ion-button color="dark" [routerLink]="['/app/Tabs/calendario/'+item.id+'/edit']">
             Editar
           </ion-button>
-          <ion-button color="dark">
+          <ion-button color="dark" (click)="eliminarCita(item.id)">
             Borrar
           </ion-button>
         </ion-item>
