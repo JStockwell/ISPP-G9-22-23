@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Detalles de la cita</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card color="warning" style="padding: 25px; margin-bottom: 75px" *ngIf="entrada!=undefined||entrada!=null">
+    <div style="text-align: center;">
+      <h1 style="margin-top: 0px"><b>{{ dtAux }}</b></h1>
+    </div>
+
+    <div style="text-align: center"><h3>Este día tiene una cita agendada para las: <b>{{ entrada.time }}</b></h3></div>
+
+    <div style="text-align: center"><h3><b>Especialidad:</b></h3></div>
+    <div style="text-align: left; margin-top: 10px; margin-bottom: 10px">
+      <h4 [innerHTML]="entrada.specialty"></h4>
+    </div>
+
+    <div style="text-align: center"><h3><b>Descripción:</b></h3></div>
+    <div style="text-align: left; margin-top: 10px; margin-bottom: 10px">
+      <h4 [innerHTML]="entrada.description"></h4>
+    </div>
+    
+  </ion-card>
+  
+  <div style = "display: inline;">
+    <ion-button  class = "updateBtn" [routerLink]="['/app/Tabs/calendario/'+idCita+'/edit']">
+      <img src="/assets/images/Edit.png" style="height: 1.5rem;">
+    </ion-button>
+
+    <ion-button  class = "deleteBtn" color="primary" (click)="eliminarCita(idCita)" >
+      <img src="/assets/images/Trash.png" style="height: 1.5rem;">
+    </ion-button>
+  </div>
+
+  <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
+    <ion-fab-button  color = "primary" (click)="goBack()">
+      <ion-icon name="arrow-back-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

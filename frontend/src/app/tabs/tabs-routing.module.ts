@@ -84,6 +84,10 @@ const routes: Routes = [
         path: 'seccion-fisica/:id',
         loadChildren: ()=> import('../pages/detalles-fisico/detalles-fisico.module').then(m=>m.DetallesFisicoPageModule)
       },
+      {
+        path: 'calendario/detalles-cita/:id',
+        loadChildren: () => import('../pages/detalles-cita/detalles-cita.module').then( m => m.DetallesCitaPageModule)
+      },
     ]
   },
   {

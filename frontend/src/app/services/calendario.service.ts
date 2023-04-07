@@ -66,7 +66,7 @@ export class CalendarioService {
 
   deleteAppointment(idEntry:any): Observable<any>{
     if(this.uService.isLoggedIn()){
-      var ck = window.sessionStorage.getItem('auth-user')
+      var ck = localStorage.getItem('auth-user')
       if(ck != null){
         var tk = JSON.parse(ck);
         var res = [];
