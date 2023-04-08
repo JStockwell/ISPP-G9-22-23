@@ -51,7 +51,7 @@ class PhysicalEntrySerializer(serializers.ModelSerializer):
             elif (part.strip() in accepted_values and part.strip() in already_used_values):
                 raise ValidationError("Recuerda no repetir partes del cuerpo")
             else:
-                raise ValidationError("Elige partes del cuerpo válidas (HEAD, TORSO, LEFT_ARM, RIGHT_ARM, LEFT_LEG, RIGHT_LEG)")
+                raise ValidationError("Elige partes del cuerpo válidas (HEAD, NECK, SHOULDER, HIGHER_BACK, LOWER_BACK, TORSO, ARM, ELBOW, WRIST, HAND, LEG, KNEE, ANKLE, FOOT)")
         return value
     
 class UpdateMentalEntrySerializer(serializers.Serializer):
