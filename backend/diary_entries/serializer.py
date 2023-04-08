@@ -42,7 +42,7 @@ class PhysicalEntrySerializer(serializers.ModelSerializer):
 
 
     def validate_body_parts(self, value):
-        accepted_values = {"", "HEAD", "TORSO", "LEFT_ARM", "RIGHT_ARM", "LEFT_LEG", "RIGHT_LEG"}
+        accepted_values = {"", "HEAD", "NECK", "SHOULDER", "HIGHER_BACK", "LOWER_BACK", "ARM", "ELBOW", "WRIST", "HAND", "TORSO", "LEG", "KNEE", "ANKLE", "FOOT"}
         already_used_values = []
         splitted = value.split(",")
         for part in splitted:
