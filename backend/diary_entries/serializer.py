@@ -18,7 +18,7 @@ class UpdatePhysicalEntrySerializer(serializers.Serializer):
 
     def validate_body_parts(self, value):
         if (value != None):
-            accepted_values = {"", "HEAD", "TORSO", "LEFT_ARM", "RIGHT_ARM", "LEFT_LEG", "RIGHT_LEG"}
+            accepted_values = {"", "HEAD", "NECK", "SHOULDER", "HIGHER_BACK", "LOWER_BACK", "ARM", "ELBOW", "WRIST", "HAND", "TORSO", "LEG", "KNEE", "ANKLE", "FOOT"}
             already_used_values = []
             splitted = value.split(",")
             for part in splitted:
@@ -27,7 +27,7 @@ class UpdatePhysicalEntrySerializer(serializers.Serializer):
                 elif (part.strip() in accepted_values and part.strip() in already_used_values):
                     raise ValidationError("Recuerda no repetir partes del cuerpo")
                 else:
-                    raise ValidationError("Elige partes del cuerpo válidas (HEAD, TORSO, LEFT_ARM, RIGHT_ARM, LEFT_LEG, RIGHT_LEG)")
+                    raise ValidationError("Elige partes del cuerpo válidas (HEAD, NECK, SHOULDER, HIGHER_BACK, LOWER_BACK, TORSO, ARM, ELBOW, WRIST, HAND, LEG, KNEE, ANKLE, FOOT)")
             return value
 
 class PhysicalEntrySerializer(serializers.ModelSerializer):
