@@ -31,6 +31,7 @@ class Patient(Profile):
     share_mental_entries = models.BooleanField(default=False)
     share_metrics = models.BooleanField(default=False)
     share_appointments = models.BooleanField(default=False)
+    has_period = models.BooleanField(default=False)
 
     class Meta:
         app_label="users"
