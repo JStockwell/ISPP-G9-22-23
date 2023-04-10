@@ -44,6 +44,7 @@ class DiaryEntry(models.Model):
     notes = models.TextField(max_length=1024, default="", blank=True)
     date = models.DateField()
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    period_now = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.state) + " " + str(self.date)

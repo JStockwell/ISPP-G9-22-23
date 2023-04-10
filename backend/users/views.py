@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from users.models import Patient, Medic
-from users.serializer import PatientSerializer, MedicSerializer, CreateSerializer, UpdateUserSerializer
+from users.serializer import PatientSerializer, MedicSerializer, CreateSerializer, UpdateUserSerializer, CreatePatientSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User
@@ -41,14 +41,17 @@ class PatientCreate(APIView):
                 'email': openapi.Schema(type=openapi.TYPE_STRING, description='Email, no debe existir previamente'),
                 'tel': openapi.Schema(type=openapi.TYPE_STRING, description='Teléfono'),
                 'birthdate': openapi.Schema(type=openapi.TYPE_STRING, description='Fecha de nacimiento, formato YYYY-MM-DD'),
+                'has_period': openapi.Schema(type=openapi.TYPE_BOOLEAN, description='Persona que tiene regla'),
             }
         ),
         responses={'200': "Token e id del paciente", "400": "Ya existe un usuario con ese nombre de usuario o email o la fecha de nacimiento es incorrecta"})
     def post(self, request):
-        serializer = CreateSerializer(data = request.data)
+        serializer = CreatePatientSerializer(data = request.data)
         dateToday = datetime.now()
         
         if serializer.is_valid():
+            fields = serializer.validated_data.items()
+            print(fields)
             tel = serializer.data["tel"]
             birthdate = serializer.data["birthdate"]
             password = serializer.data["password"]
@@ -56,6 +59,7 @@ class PatientCreate(APIView):
             last_name = serializer.data["last_name"]
             username = serializer.data["username"]
             email = serializer.data["email"]
+            period = serializer.data["has_period"]
             fecha_dt = datetime.strptime(birthdate, '%Y-%m-%d')
 
             if(User.objects.filter(username = username).exists()):
@@ -67,7 +71,7 @@ class PatientCreate(APIView):
             
             user = User(username = username, email = email, first_name = first_name, last_name = last_name)
             user.set_password(password)
-            patient = Patient(tel=tel, birthdate=birthdate)
+            patient = Patient(tel=tel, birthdate=birthdate, has_period=period)
 
             user.save()
             patient.user = user
@@ -117,6 +121,7 @@ class PatientId(APIView):
                 'share_mental_entries': openapi.Schema(type=openapi.TYPE_BOOLEAN, description='Status de compartir entradas mentales a modificar'),
                 'share_metrics': openapi.Schema(type=openapi.TYPE_BOOLEAN, description='Status de compartir métricas a modificar'),
                 'share_appointments': openapi.Schema(type=openapi.TYPE_BOOLEAN, description='Status de compartir citas a modificar'),
+                'has_period': openapi.Schema(type=openapi.TYPE_BOOLEAN, description='Persona que tiene regla, a modificar')
             }
         ),
         responses={'200': PatientSerializer, "400": "Ya existe un usuario con ese nombre de usuario o email o la fecha de nacimiento es posterior a la fecha actual", "404": "Paciente no encontrado"})
@@ -152,6 +157,8 @@ class PatientId(APIView):
                     patient.share_metrics = value
                 if str(key) == "share_appointments": 
                     patient.share_appointments = value
+                if str(key) == "has_period":
+                    patient.has_period = value
             
             user.save()
             patient.save()

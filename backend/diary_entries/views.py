@@ -64,6 +64,7 @@ class MentalEntryCreate(APIView):
                 'negative_thoughts': openapi.Schema(type=openapi.TYPE_STRING, description='Pensamientos negativos que haya tenido el paciente'),
                 'notes': openapi.Schema(type=openapi.TYPE_STRING, description='Notas adicionales'),
                 'patient_id': openapi.Schema(type=openapi.TYPE_STRING, description='Id del paciente al que pertenece'),
+                "period_now": openapi.Schema(type=openapi.TYPE_BOOLEAN, description='Ha tenido la regla hoy')
             }
         ),
         responses={'200': MentalEntrySerializer, "400": "Comprueba que el formato de la fecha sea válido, que el id de usuario exista y que state, weather, food y sleep se encuentren dentro de los valores proporcionados"})
@@ -81,6 +82,7 @@ class MentalEntryCreate(APIView):
             negative_thoughts = serializer.data["negative_thoughts"]
             notes = serializer.data["notes"]
             patient_id = serializer.data["patient_id"]
+            period_now = serializer.data["period_now"]
             fecha_dt = datetime.strptime(date, '%Y-%m-%d')
 
             patient = get_object_or_404(Patient, id=patient_id)
@@ -92,13 +94,13 @@ class MentalEntryCreate(APIView):
                 return Response({"error": "La fecha debe ser anterior a la actual"}, status=status.HTTP_400_BAD_REQUEST)
 
             mental_entry = MentalEntry(date = date, state = state, weather = weather, food = food, sleep = sleep,
-                                      positive_thoughts = positive_thoughts, negative_thoughts = negative_thoughts, notes = notes, patient = patient)
+                                      positive_thoughts = positive_thoughts, negative_thoughts = negative_thoughts, notes = notes, patient = patient, period_now = period_now)
 
             mental_entry.save()
             
             return Response({"mental_entry_id":mental_entry.id, "date":mental_entry.date, "state":mental_entry.state, "weather": mental_entry.weather,
                              "food":mental_entry.food, "sleep":mental_entry.sleep, "positive_thoughts": mental_entry.positive_thoughts,
-                             "negative_thoughts": mental_entry.negative_thoughts, "notes":mental_entry.notes, "patient_id":patient.id}, status=status.HTTP_200_OK)
+                             "negative_thoughts": mental_entry.negative_thoughts, "notes":mental_entry.notes, "period_now":mental_entry.period_now,"patient_id":patient.id}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
@@ -143,7 +145,8 @@ class MentalEntryId(APIView):
                 'sleep': openapi.Schema(type=openapi.TYPE_STRING, description='Tipo de sueño a modificar, ha de pertenecer al siguiente grupo ("NONE", "DEEP", "NORMAL", "LIGHT)'),
                 'positive_thoughts': openapi.Schema(type=openapi.TYPE_STRING, description='Pensamientos positivos que haya tenido el paciente  a modificar'),
                 'negative_thoughts': openapi.Schema(type=openapi.TYPE_STRING, description='Pensamientos negativos que haya tenido el paciente  a modificar'),
-                'notes': openapi.Schema(type=openapi.TYPE_STRING, description='Notas adicionales  a modificar')
+                'notes': openapi.Schema(type=openapi.TYPE_STRING, description='Notas adicionales  a modificar'),
+                "period_now": openapi.Schema(type=openapi.TYPE_BOOLEAN, description='Ha tenido la regla hoy (a modificar)')
             }
         ),
         responses={'200': MentalEntrySerializer, "400": "Comprueba que el formato de la fecha sea válido y que state, weather, food y sleep se encuentren dentro de los valores proporcionados", "404":"Entrada no encontrada"})
@@ -172,6 +175,8 @@ class MentalEntryId(APIView):
                     entry.food = value
                 if str(key) == "sleep":
                     entry.sleep = value
+                if str(key) == "period_now":
+                    entry.period_now = value
                 if str(key) == "positive_thoughts":
                     entry.positive_thoughts = value
                 if str(key) == "negative_thoughts":
@@ -228,6 +233,7 @@ class PhysicalEntryCreate(APIView):
                 'notes': openapi.Schema(type=openapi.TYPE_STRING, description='Notas adicionales'),
                 'patient_id': openapi.Schema(type=openapi.TYPE_STRING, description='Id del paciente al que pertenece'),
                 "done_exercise": openapi.Schema(type=openapi.TYPE_BOOLEAN, description='Ha hecho ejercicio'),
+                "period_now": openapi.Schema(type=openapi.TYPE_BOOLEAN, description='Ha tenido la regla hoy')
             }
         ),
         responses={'200': PhysicalEntrySerializer, "400": "Comprueba que el formato de la fecha sea válido, que el id de usuario exista y que body_parts se encuentren dentro de los valores proporcionados"})
@@ -242,6 +248,7 @@ class PhysicalEntryCreate(APIView):
             notes = serializer.data["notes"]
             patient_id = serializer.data["patient_id"]
             done_exercise = serializer.data["done_exercise"]
+            period_now = serializer.data["period_now"]
             fecha_dt = datetime.strptime(date, '%Y-%m-%d')
 
             patient = get_object_or_404(Patient, id=patient_id)
@@ -252,12 +259,12 @@ class PhysicalEntryCreate(APIView):
             if(fecha_dt > dateToday):
                 return Response({"error": "La fecha debe ser anterior a la actual"}, status=status.HTTP_400_BAD_REQUEST)
 
-            physical_entry = PhysicalEntry(date = date, state = state, body_parts = body_parts, notes = notes, patient = patient, done_exercise=done_exercise)
+            physical_entry = PhysicalEntry(date = date, state = state, body_parts = body_parts, notes = notes, patient = patient, done_exercise=done_exercise, period_now = period_now)
 
             physical_entry.save()
 
             return Response({"physical_entry_id":physical_entry.id, "date":physical_entry.date, "state":physical_entry.state,
-                             "notes":physical_entry.notes, "done_exercise": physical_entry.done_exercise, "patient_id":patient.id, "body_parts":physical_entry.body_parts}, status=status.HTTP_200_OK)
+                             "notes":physical_entry.notes, "done_exercise": physical_entry.done_exercise, "period_now":physical_entry.period_now,"patient_id":patient.id, "body_parts":physical_entry.body_parts}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
@@ -300,6 +307,7 @@ class PhysicalEntryId(APIView):
                 'body_parts': openapi.Schema(type=openapi.TYPE_STRING, description='Lista de partes del cuerpo que duelen al paciente a modificar, ha de pertenecer al siguiente grupo ("HEAD", "TORSO", "RIGHT_ARM", "LEFT_ARM", "RIGHT_LEG", "LEFT_LEG")'),
                 'notes': openapi.Schema(type=openapi.TYPE_STRING, description='Notas adicionales a modificar'),
                 "done_exercise": openapi.Schema(type=openapi.TYPE_BOOLEAN, description='Ha hecho ejercicio (a modificar)'),
+                "period_now": openapi.Schema(type=openapi.TYPE_BOOLEAN, description='Ha tenido la regla hoy (a modificar)')
             }
         ),
         responses={'200': PhysicalEntrySerializer, "400": "Comprueba que el formato de la fecha sea válido y que body_parts se encuentren dentro de los valores proporcionados", "404":"Entrada no encontrada"})
@@ -324,6 +332,8 @@ class PhysicalEntryId(APIView):
                     entry.notes = value
                 if str(key) == "done_exercise":
                     entry.done_exercise = value
+                if str(key) == "period_now":
+                    entry.period_now = value
                 if str(key) == "state":
                     entry.state = value
             
