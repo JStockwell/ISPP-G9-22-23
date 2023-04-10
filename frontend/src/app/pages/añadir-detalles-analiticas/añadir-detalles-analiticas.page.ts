@@ -58,7 +58,7 @@ export class AñadirDetallesAnaliticasPage implements OnInit{
 
     this.AñadirDetallesAnaliticasService.postEntry(entrada).subscribe({
       next: data => {
-        window.location.href = "/app/Tabs/Analytics"
+        window.location.href = "/app/Tabs/Analytics/Details/" + entrada.metric_id; 
     },
       error: error => {
         console.log(error);

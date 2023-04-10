@@ -5,34 +5,35 @@
 </ion-header>
 
 <ion-content class="ion-padding" color ="light">
-  <ion-card color = "warning">
+  <div class = "ct">
     <ion-text color="primary">
-      <h1 style="text-align: center; padding-bottom: 2%; font-weight: bold;">{{ dtAux }}</h1>
+      <h1 style="text-align: center; font-weight: bold;">{{ dtAux }}</h1>
     </ion-text>
     <div class="invalid-feedback error" *ngIf="errorMessage"  > {{errorMessage}}</div>
-    <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">¿Qué tal te sientes hoy físicamente?</ion-label>
-    <ion-item color = "warning" style="padding-top: 3%;">
-      <ion-segment [(ngModel)]="estadoFisico" scrollable>
+    
+    <ion-item color = "light" style="padding-top: 3%;">
+      <ion-label text-wrap class = "txt" position="stacked">¿Cómo te sientes hoy?</ion-label>
+      <ion-segment [(ngModel)]="estadoFisico"  scrollable>
         <ion-segment-button value="VG">
-          <img src="/assets/images/cara-muy-feliz.png">
+          <img style = "min-width: 13px;"src="/assets/images/cara-muy-feliz.png">
         </ion-segment-button>
         <ion-segment-button value="G">
-          <img src="/assets/images/cara-feliz.png">
+          <img style = "min-width: 13px;"src="/assets/images/cara-feliz.png">
         </ion-segment-button>
         <ion-segment-button value="F">
-          <img src="/assets/images/cara-neutral.png">
+          <img style = "min-width: 13px;"src="/assets/images/cara-neutral.png">
         </ion-segment-button>
         <ion-segment-button value="B">
-          <img src="/assets/images/cara-triste.png">
+          <img style = "min-width: 13px;"src="/assets/images/cara-triste.png">
         </ion-segment-button>
         <ion-segment-button value="VB">
-          <img src="/assets/images/cara-muy-triste.png">
+          <img style = "min-width: 13px;"src="/assets/images/cara-muy-triste.png">
         </ion-segment-button>
       </ion-segment>
     </ion-item>
-    <ion-item color = "warning">
-      <ion-label position="floating">¿Te duele en alguna zona del cuerpo?</ion-label>
-      <ion-select [(ngModel)]="dolores" multiple="true" placeholder="Selecciona">
+    <ion-item color = "light" lines = "none">
+      <ion-label  text-wrap  class = "txt" position="stacked">¿Te duele en alguna parte del cuerpo?</ion-label>
+      <ion-select style = "background-color: white; border-radius:15px" [(ngModel)]="dolores" multiple="true" placeholder="Selecciona">
         <ion-select-option value="HEAD">Cabeza</ion-select-option>
         <ion-select-option value="TORSO">Torso</ion-select-option>
         <ion-select-option value="LEFT_ARM">Brazo izquierdo</ion-select-option>
@@ -41,19 +42,19 @@
         <ion-select-option value="RIGHT_LEG">Pierna derecha</ion-select-option>
       </ion-select>
     </ion-item>
-    <ion-item color = "warning">
-      <ion-label>¿Has hecho deporte?</ion-label>
+    <ion-item style = "width:100%;"color = "light" lines = "none">
+      <ion-label text-wrap class = "txt" style = "width:100%;" position = "stacked">¿Has hecho deporte?</ion-label>
       <ion-toggle color="primary" [(ngModel)]="deporte" [checked]="false"></ion-toggle>
     </ion-item>
-    <ion-item color = "warning">
-      <ion-label position="floating">Notas</ion-label>
+    <ion-item color = "light" lines = "none">
+      <ion-label class = "txt" position="stacked">Notas</ion-label>
       <ion-textarea [(ngModel)]="notas" placeholder="Desarrolla aquí como te sientes y el deporte que hayas hecho." type="text"></ion-textarea>
     </ion-item>
     
-    <ion-button color="dark" expand="block" (click)="crearEntradaFisica()">
+    <ion-button color="primary" expand="block" (click)="crearEntradaFisica()">
       Crear entrada
     </ion-button>
-  </ion-card>
+  </div>
 
   <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
     <ion-fab-button  color = "primary" (click)="goBack()">
