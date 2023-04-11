@@ -25,6 +25,7 @@ export class NuevaEntradaFisicaPage implements OnInit {
   dolores:string | any = '';
   deporte:boolean | any = false;
   notas:string | any = '';
+  regla:boolean | any = false;
   today = new Date();
   dtAux:string = "";
   errorMessage = '';
@@ -64,7 +65,27 @@ export class NuevaEntradaFisicaPage implements OnInit {
       }
     }
   }
-  
+
+  getRegla(){
+    var res;
+    if(this.uService.isLoggedIn()){
+      var ck = localStorage.getItem('auth-user')
+      if(ck != null){
+        var tk = JSON.parse(ck);
+        var tiene_regla = tk.has_period();
+        if(tiene_regla) {
+          res = true;
+        }else{
+          res = false;
+        }
+
+        
+      }
+      
+    }
+    return res;
+  }
+
   crearEntradaFisica(): void{
     let parts = ''
     if (this.dolores) {
@@ -76,6 +97,7 @@ export class NuevaEntradaFisicaPage implements OnInit {
         date: this.today.toISOString().split('T')[0],
         state: this.estadoFisico,
         done_exercise: this.deporte,
+        period_now: this.regla,
         patient_id: this.getIdUser(),
       };
     }else{
@@ -83,6 +105,7 @@ export class NuevaEntradaFisicaPage implements OnInit {
         date: this.today.toISOString().split('T')[0],
         state: this.estadoFisico,
         body_parts: parts,
+        period_now: this.regla,
         done_exercise: this.deporte,
         patient_id: this.getIdUser(),
       };

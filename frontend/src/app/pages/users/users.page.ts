@@ -19,6 +19,7 @@ export class UsersPage implements OnInit {
     last_name:null,
     email:null,
     tel:null,
+    has_period:false,
     birthdate:null
   }
   
@@ -49,6 +50,7 @@ export class UsersPage implements OnInit {
           // SE PROCEDE AL REGISTRO
           this.loginCredentials.username = this.form.username;
           this.loginCredentials.password = this.form.password;
+          this.loginCredentials.has_period = this.form.has_period;
           this.uService.login(this.loginCredentials).subscribe({
             next: data => {
               console.log(data)

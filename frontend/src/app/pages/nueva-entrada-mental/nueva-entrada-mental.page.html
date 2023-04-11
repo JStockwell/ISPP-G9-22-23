@@ -95,6 +95,11 @@
       </ion-item>
 
       <ion-item color = "warning">
+        <ion-label>¿Tienes la regla?</ion-label>
+        <ion-toggle color="primary" [(ngModel)]="regla" [checked]="false"></ion-toggle>
+      </ion-item>
+
+      <ion-item color = "warning">
         <ion-label position="floating">Pensamientos positivos</ion-label>
         <ion-textarea [(ngModel)]="ppositivos" rows= "3" placeholder="Escribe aquí los pensamientos positivos que has tenido en el día de hoy." type="text"></ion-textarea>
       </ion-item>

@@ -24,6 +24,7 @@ export class NuevaEntradaMentalPage implements OnInit{
   notas:string | undefined
   comida:string | undefined
   tiempo:string | undefined
+  regla:boolean | any = false;
   ppositivos:string | undefined
   pnegativos:string | undefined
   today = new Date();
@@ -69,6 +70,7 @@ export class NuevaEntradaMentalPage implements OnInit{
       weather : this.tiempo,
       food: this.comida,
       sleep: this.suenyo,
+      period_now: this.regla,
       positive_thoughts: this.ppositivos,
       negative_thoughts: this.pnegativos,
       notes: this.notas,
@@ -107,6 +109,11 @@ export class NuevaEntradaMentalPage implements OnInit{
           }
           if(err.error.food){
             this.errorMessageComida = "* No puedes dejar el campo de comida sin selecionar";
+            //window.alert(this.errorMessageComida);
+          }
+
+          if(err.error.period_now){
+            this.errorMessageComida = "* No puedes dejar el campo de regla sin selecionar";
             //window.alert(this.errorMessageComida);
           }
           
