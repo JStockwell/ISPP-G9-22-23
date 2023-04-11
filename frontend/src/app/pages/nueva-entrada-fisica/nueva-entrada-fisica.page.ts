@@ -26,12 +26,17 @@ export class NuevaEntradaFisicaPage implements OnInit {
   deporte:boolean | any = false;
   notas:string | any = '';
   today = new Date();
+  dtAux:string = "";
   errorMessage = '';
   errorMessageEstado = '';
 
   constructor(private nuevaEntradFisicaService: NuevaEntradaFisicaService, private navCtrl: NavController, private uService: UsersService) { }
 
   ngOnInit() {
+    
+    var aux = this.today.toLocaleDateString("es-ES", { weekday: 'long'});
+    this.dtAux = aux.charAt(0).toUpperCase() + aux.substring(1) + ', ' + this.today.toLocaleDateString();
+    
   }
 
   goBack(){
@@ -48,7 +53,7 @@ export class NuevaEntradaFisicaPage implements OnInit {
 
   getIdUser(){
     if(this.uService.isLoggedIn()){
-      var ck = window.sessionStorage.getItem('auth-user')
+      var ck = localStorage.getItem('auth-user')
       if(ck != null){
         var tk = JSON.parse(ck);
         var res = [];
@@ -85,8 +90,6 @@ export class NuevaEntradaFisicaPage implements OnInit {
     if(this.notas != ""){
       dataEntry["notes"]=this.notas;
     }
-    
-    
     
     console.log(dataEntry);
     this.nuevaEntradFisicaService.postEntry(dataEntry).subscribe({

@@ -139,8 +139,8 @@ class MentalEntryId(APIView):
                 'date': openapi.Schema(type=openapi.TYPE_STRING, description='Fecha del registro de diario a modificar, debe seguir el formato YYYY-MM-DD'),
                 'state': openapi.Schema(type=openapi.TYPE_STRING, description='Estado mental del paciente a modificar, ha de pertenecer al siguiente grupo ("VG", "G", "F", "B", "VB")'),
                 'weather': openapi.Schema(type=openapi.TYPE_STRING, description='Tiempo atmosférico, a modificar ha de pertenecer al siguiente grupo ("SNOWY", "RAINY", "CLOUDY", "STORMY", "SUNNY")'),
-                'food': openapi.Schema(type=openapi.TYPE_STRING, description='Comida consumida durante el dia a modificar, ha de pertenecer al siguiente grupo ("NONE", "FAST", "HEALTHY)'),
-                'sleep': openapi.Schema(type=openapi.TYPE_STRING, description='Tipo de sueño a modificar, ha de pertenecer al siguiente grupo ("NONE", "DEEP", "LIGHT)'),
+                'food': openapi.Schema(type=openapi.TYPE_STRING, description='Comida consumida durante el dia a modificar, ha de pertenecer al siguiente grupo ("NONE", "NORMAL", "FAST", "HEALTHY)'),
+                'sleep': openapi.Schema(type=openapi.TYPE_STRING, description='Tipo de sueño a modificar, ha de pertenecer al siguiente grupo ("NONE", "DEEP", "NORMAL", "LIGHT)'),
                 'positive_thoughts': openapi.Schema(type=openapi.TYPE_STRING, description='Pensamientos positivos que haya tenido el paciente  a modificar'),
                 'negative_thoughts': openapi.Schema(type=openapi.TYPE_STRING, description='Pensamientos negativos que haya tenido el paciente  a modificar'),
                 'notes': openapi.Schema(type=openapi.TYPE_STRING, description='Notas adicionales  a modificar')

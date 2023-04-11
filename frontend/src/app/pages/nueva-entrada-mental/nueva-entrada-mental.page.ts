@@ -32,12 +32,15 @@ export class NuevaEntradaMentalPage implements OnInit{
   errorMessageTiempo= '';
   errorMessageComida = '';
   errorMessageSuenyo = '';
+  dtAux:string = "";
 
   public mostrarAlerta = false;
 
   constructor(private nuevaEntradaMentalService: NuevaEntradaMentalService, private navCtrl: NavController, private uService: UsersService, private alertController: AlertController) {}
 
   ngOnInit() {
+    var aux = this.today.toLocaleDateString("es-ES", { weekday: 'long'});
+    this.dtAux = aux.charAt(0).toUpperCase() + aux.substring(1) + ', ' + this.today.toLocaleDateString();
   }
 
   goBack(){
@@ -47,7 +50,7 @@ export class NuevaEntradaMentalPage implements OnInit{
 
   getIdUser(){
     if(this.uService.isLoggedIn()){
-      var ck = window.sessionStorage.getItem('auth-user')
+      var ck = localStorage.getItem('auth-user')
       if(ck != null){
         var tk = JSON.parse(ck);
         var res = [];
@@ -76,8 +79,8 @@ export class NuevaEntradaMentalPage implements OnInit{
     this.nuevaEntradaMentalService.postEntry(dataEntry).subscribe({
       next: dataEntry => {
         console.log(dataEntry);
-        document.location.href="/app/Tabs/DiarioEmocional"
-        window.location.href = "/app/Tabs/DiarioEmocional"
+        document.location.href="/app/Tabs/seccion-mental"
+        window.location.href = "/app/Tabs/seccion-mental"
       },
       error: err => {
         if( err.error.error ){

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SeccionFisicaServiceService } from 'src/app/services/seccion-fisica-service.service';
 import { LoadingController } from '@ionic/angular';
+import { AnaliticasService } from 'src/app/services/analiticas.service';
 
 @Component({
   selector: 'app-seccion-fisica',
@@ -9,17 +10,10 @@ import { LoadingController } from '@ionic/angular';
 })
 export class SeccionFisicaPage implements OnInit {
   
+  id: any
   entries: any = [];
 
-  constructor(private fisicoService: SeccionFisicaServiceService, private loadingCtrl: LoadingController) { }
-
-//   existsEntradas = () =>{
-//     if (this.entradas){
-//       return this.entradas.length>0;
-//     } else{
-//       return false;
-//     }
-//   }
+  constructor(private fisicoService: SeccionFisicaServiceService, private loadingCtrl: LoadingController, private analiticasService: AnaliticasService) { }
 
   eliminarEntradaFisica(idEntrada: any) {
     this.fisicoService.deleteEntry(idEntrada).subscribe({
@@ -48,13 +42,62 @@ async loadEntradasDiarioFisico(){
       await loading.present();
 
       this.fisicoService.getEntradasFisicas().subscribe((res) =>{
-        loading.dismiss();
-        this.entries = res; 
-        console.log(this.entries)
-        console.log("Diario Fisico")
+        for(var entrada of res){
+          let date:Date = entrada.date;
+          entrada.date=this.analiticasService.dateFormatter_entradas(date);
 
+          let Aux:Date = new Date(entrada.date);
+          var aux2 = Aux.toLocaleDateString("es-ES", { weekday: 'long'})
+          entrada.dtAux = aux2.charAt(0).toUpperCase() + aux2.substring(1) + ', ' + Aux.toLocaleDateString();
+          this.entries.push(entrada);
+        }
+        loading.dismiss();
       });
 
+}
+
+splitParts(str: string) {
+  let arr = str.split(',');
+  return arr
+}
+
+getImagenEstado(imagen:string): any {
+  if(imagen == "VG" ){
+    return "/assets/images/cara-muy-feliz.png";
+  }
+  if(imagen == "G" ){
+    return "/assets/images/cara-feliz.png";
+  }
+  if(imagen == "F" ){
+    return "/assets/images/cara-neutral.png";
+  }
+  if(imagen == "B" ){
+    return "/assets/images/cara-triste.png";
+  }
+  if(imagen == "VB" ){
+    return "/assets/images/cara-muy-triste.png";
+  }
+}
+
+getImagenDolor(imagen:string): any {
+  if(imagen == "HEAD" ){
+    return "/assets/images/HEAD.png";
+  }
+  if(imagen == "TORSO" ){
+    return "/assets/images/TORSO.png";
+  }
+  if(imagen == "LEFT_ARM" ){
+    return "/assets/images/LEFT_ARM.png";
+  }
+  if(imagen == "RIGHT_ARM" ){
+    return "/assets/images/RIGHT_ARM.png";
+  }
+  if(imagen == "LEFT_LEG" ){
+    return "/assets/images/LEFT_LEG.png";
+  }
+  if(imagen == "RIGHT_LEG" ){
+    return "/assets/images/RIGHT_LEG.png";
+  }
 }
 
 existsEntradas = () =>{

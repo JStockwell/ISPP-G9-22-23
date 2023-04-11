@@ -1,30 +1,33 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>modificar entrada física</ion-title>
+    <ion-title>Modificar entrada física</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding" color ="light" *ngIf="entrada!=undefined && entrada!=null">
   <ion-card color = "warning">
     <ion-text color="primary">
-      <h1 style="text-align: center; padding-bottom: 2%; font-weight: bold;">{{ today | date: 'EEEE, dd/MM/yyyy' }}</h1>
+      <h1 style="text-align: center; padding-bottom: 2%; font-weight: bold;">{{ dtAux}}</h1>
     </ion-text>
     <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">¿Qué tal te sientes hoy físicamente?</ion-label>
-    <ion-item color = "warning">
-      <form>
-        <div class="cc-selector" style = "padding-top: 5%; padding-bottom: 2%;">
-          <input [(ngModel)]="estadoFisico" id="muyfeliz" type="radio" name="caras" value="VG" />
-          <label class="image-cc muyfeliz" for="muyfeliz"></label>
-          <input [(ngModel)]="estadoFisico" id="feliz" type="radio" name="caras" value="G" />
-          <label class="image-cc feliz" for="feliz"></label>
-          <input [(ngModel)]="estadoFisico" id="neutral" type="radio" name="caras" value="F" />
-          <label class="image-cc neutral" for="neutral"></label>
-          <input [(ngModel)]="estadoFisico" id="triste" type="radio" name="caras" value="B" />
-          <label class="image-cc triste" for="triste"></label>
-          <input [(ngModel)]="estadoFisico" id="muytriste" type="radio" name="caras" value="VB" />
-          <label class="image-cc muytriste" for="muytriste"></label>
-        </div>
-      </form>
+    <ion-item color = "warning" style="padding-top: 3%;">
+      <ion-segment [(ngModel)]="estadoFisico" scrollable>
+        <ion-segment-button value="VG">
+          <img src="/assets/images/cara-muy-feliz.png">
+        </ion-segment-button>
+        <ion-segment-button value="G">
+          <img src="/assets/images/cara-feliz.png">
+        </ion-segment-button>
+        <ion-segment-button value="F">
+          <img src="/assets/images/cara-neutral.png">
+        </ion-segment-button>
+        <ion-segment-button value="B">
+          <img src="/assets/images/cara-triste.png">
+        </ion-segment-button>
+        <ion-segment-button value="VB">
+          <img src="/assets/images/cara-muy-triste.png">
+        </ion-segment-button>
+      </ion-segment>
     </ion-item>
     <ion-item color = "warning">
       <ion-label position="floating">¿Te duele en alguna zona del cuerpo?</ion-label>
@@ -38,7 +41,7 @@
       </ion-select>
     </ion-item>
     <ion-item color = "warning">
-      <ion-label>¿Has hecho deporte?</ion-label>
+      <ion-label>¿Has hecho algún tipo de actividad física?</ion-label>
       <ion-toggle color="primary" [(ngModel)]="deporte" [checked]="false" [value]="entrada.done_exercise"></ion-toggle>
     </ion-item>
     <ion-item color = "warning">
@@ -52,7 +55,7 @@
   </ion-card>
 
   <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
-    <ion-fab-button  color = "secondary" [routerLink]="['/app/Tabs/seccion-fisica']">
+    <ion-fab-button  color = "primary" (click)="goBack()">
       <ion-icon name="arrow-back-circle-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>

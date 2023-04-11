@@ -5,39 +5,52 @@
 </ion-header>
 
 <ion-content class="ion-padding" color ="light">
-  <ion-card color = "warning">
-    <ion-text color="primary">
-      <h1 style="text-align: center; padding-bottom: 2%; font-weight: bold;">{{ fechaRecibida | date: 'EEEE, dd/MM/yyyy' }}</h1>
-    </ion-text>
-    <ion-item color = "warning">
-      <ion-label>Seleccione una hora</ion-label>
-      <ion-item color = "warning" id="open-modal3">
-        <ion-note slot="end">{{fechaHora | date: 'HH:mm'}}</ion-note>
-      </ion-item>
-      <ion-modal trigger="open-modal3" [cssClass]="'bottom-end'">
-        <ng-template>
-          <ion-datetime
-            presentation="time"
-            [(ngModel)]="fechaHora"
-            size="cover"
-            [showDefaultButtons]="true"
-          ></ion-datetime>
-        </ng-template>
-      </ion-modal>
-    </ion-item>
-    <ion-item color = "warning">
-      <ion-label position="floating">Especialidad</ion-label>
-      <ion-input [(ngModel)]="especialidad" placeholder="ej: Traumatología, Oftalmología, etc." type="text"></ion-input>
-    </ion-item>
-    <ion-item color = "warning">
-      <ion-label position="floating">Observaciones</ion-label>
-      <ion-textarea [(ngModel)]="observaciones" placeholder="Observaciones a tener en cuenta en la cita" type="textarea"></ion-textarea>
-    </ion-item>
+  <form *ngIf= "!isSuccessful" name="form" (ngSubmit)="f.form.valid && crearNuevaCita()" #f="ngForm" novalidate>
+    <ion-card color="warning">
+      <ion-datetime 
+        display-format="DD.MM.YYYY HH:mm"
+        locale="es-ES"
+        display-timezone="utc"
+        hourCycle="h23"
+        invalid-text="Introduce hora"
+        [firstDayOfWeek]="1"
+        [(ngModel)]="form.fechaYHora"
+        min="{{ fechaActual }}"
+        value="fechaYHora" name="fechaYHora" required #fechaYHora="ngModel" [ngClass]="{ 'is-invalid': f.submitted && fechaYHora.errors }">
+        <span slot="title">Día seleccionado</span>
+        <span slot="time-label">Hora de la cita</span>
+        <span slot="invalid-text">Hora de la cita</span>
+      </ion-datetime>
+    </ion-card>
     
-    <ion-button color="dark" expand="block" (click)="crearNuevaCita()">
-      Confirmar
-    </ion-button>
-  </ion-card>
+    <ion-card color = "warning">    
+      <ion-item color = "warning">
+        <ion-label position="floating">Especialidad</ion-label>
+        <ion-input [(ngModel)]="form.especialidad" placeholder="ej: Traumatología, Oftalmología, etc." value="especialidad" name="especialidad" required maxlength="30" #especialidad="ngModel" type="text" required [ngClass]="{ 'is-invalid': f.submitted && especialidad.errors }"></ion-input>
+      </ion-item>
+      <div class="invalid-feedback error" *ngIf="especialidad.errors && f.submitted">
+        <div *ngIf="especialidad.errors['required']">Se necesita una especialidad.</div>
+      </div>
+      <div class="invalid-feedback error" *ngIf="especialidad.errors && f.submitted">
+        <div *ngIf="especialidad.errors['maxlength']">La especialidad no puede superar los 30 caracteres.</div>
+      </div>
+
+      <ion-item color = "warning">
+        <ion-label position="floating">Descripción</ion-label>
+        <ion-textarea [(ngModel)]="form.descripcion" placeholder="Descripción u observaciones a tener en cuenta en la cita" type="textarea" value="descripcion" name="descripcion" required maxlength="200" #descripcion="ngModel" [ngClass]="{ 'is-invalid': f.submitted && descripcion.errors }"></ion-textarea>
+      </ion-item>
+      <div class="invalid-feedback error" *ngIf="descripcion.errors && f.submitted">
+        <div *ngIf="descripcion.errors['required']">Se necesita una descripción.</div>
+      </div>
+      <div class="invalid-feedback error" *ngIf="descripcion.errors && f.submitted">
+        <div *ngIf="descripcion.errors['maxlength']">La descripción no puede superar los 200 caracteres.</div>
+      </div>
+      
+      <ion-button color="dark" expand="block" type="submit">
+        Confirmar
+      </ion-button>
+    </ion-card>
+  </form>
 
   <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
     <ion-fab-button  color = "secondary" (click)="goBack()">

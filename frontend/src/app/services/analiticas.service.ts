@@ -30,7 +30,7 @@ export class AnaliticasService implements HttpInterceptor {
 
   getAnaliticas(): Observable<any> {
     if (this.uService.isLoggedIn()) {
-      var ck = window.sessionStorage.getItem("auth-user");
+      var ck = localStorage.getItem("auth-user");
       if (ck != null) {
         var tk = JSON.parse(ck);
         var res = [];
@@ -50,7 +50,7 @@ export class AnaliticasService implements HttpInterceptor {
 
   getAnaliticaDetails(): Observable<any> {
     if (this.uService.isLoggedIn()) {
-      var ck = window.sessionStorage.getItem("auth-user");
+      var ck = localStorage.getItem("auth-user");
       if (ck != null) {
         var tk = JSON.parse(ck);
         var res = [];
@@ -70,7 +70,7 @@ export class AnaliticasService implements HttpInterceptor {
   }
   getLatestDetails(metricId: any): Observable<any> {
     if (this.uService.isLoggedIn()) {
-      var ck = window.sessionStorage.getItem("auth-user");
+      var ck = localStorage.getItem("auth-user");
       if (ck != null) {
         var tk = JSON.parse(ck);
         var res = [];
@@ -96,7 +96,7 @@ export class AnaliticasService implements HttpInterceptor {
 
   deleteAnalitica(analiticaId: any): Observable<any> {
     if (this.uService.isLoggedIn()) {
-      var ck = window.sessionStorage.getItem("auth-user");
+      var ck = localStorage.getItem("auth-user");
       if (ck != null) {
         var tk = JSON.parse(ck);
         var res = [];
@@ -116,7 +116,7 @@ export class AnaliticasService implements HttpInterceptor {
 
   deleteEntry(idEntry:any): Observable<any>{
     if(this.uService.isLoggedIn()){
-      var ck = window.sessionStorage.getItem('auth-user')
+      var ck = localStorage.getItem('auth-user')
       if(ck != null){
         var tk = JSON.parse(ck);
         var res = [];
@@ -144,7 +144,17 @@ export class AnaliticasService implements HttpInterceptor {
     var h = fecha.substring(11, 13);
     var min = fecha.substring(14, 16);
     chain = d + "-" + m + "-" + y + "  " + h + ":" + min + " h";
-    console.log(chain);
+    return chain;
+  }
+
+  dateFormatter_entradas(date: Date): string {
+    var chain = "";
+    var fecha = date.toString();
+
+    var y = fecha.substring(0, 4);
+    var m = fecha.substring(5, 7);
+    var d = fecha.substring(8, 10);
+    chain = d + "/" + m + "/" + y ;
     return chain;
   }
 }

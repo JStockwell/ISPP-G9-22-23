@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Entrada física</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card color="warning" *ngIf="entrada!=undefined||entrada!=null">
+    <div style="text-align: center;">
+      <div style="text-align: right; margin-right: 15px; margin-top: 20px">
+        
+      </div>
+      <h3 style="margin-top: 0px">{{ dtAux }}</h3>
+    </div>
+
+    <div style="text-align: center">
+      <ion-row>
+        <ion-col>
+          <h3>
+            Estado físico: <img src="{{getImagenEstado(entrada.state)}}"  style="width: 3rem;" >
+          </h3>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <div style="text-align: center">
+      <ion-row>
+        <ion-col>
+          <h3>
+            ¿Qúe me duele?:
+            <img *ngFor="let part of splitParts(entrada.body_parts)" class ="emoji" src="{{getImagenDolor(part)}}" style="width: 3rem;" >
+          </h3>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <div style="text-align: center"><h3>Notas</h3></div>
+    <div style="text-align: center; margin-bottom: 10px">{{ entrada.notes}}</div>
+  </ion-card>
+  <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
+    <ion-fab-button  color = "primary" (click)="goBack()">
+      <ion-icon name="arrow-back-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
