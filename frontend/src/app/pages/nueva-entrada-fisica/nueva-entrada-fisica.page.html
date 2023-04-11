@@ -45,7 +45,11 @@
       <ion-label>¿Has hecho algún tipo de actividad física?</ion-label>
       <ion-toggle color="primary" [(ngModel)]="deporte" [checked]="false"></ion-toggle>
     </ion-item>
-    <ion-item color = "warning">
+    
+
+
+
+    <ion-item color = "warning" *ngIf="getRegla()">
       <ion-label>¿Tienes la regla hoy?</ion-label>
       <ion-toggle color="primary" [(ngModel)]="regla" [checked]="false"></ion-toggle> 
     </ion-item>
@@ -54,6 +58,8 @@
       <ion-textarea [(ngModel)]="notas" placeholder="Desarrolla aquí como te sientes y el deporte que hayas hecho." type="text"></ion-textarea>
     </ion-item>
     
+    
+
     <ion-button color="dark" expand="block" (click)="crearEntradaFisica()">
       Crear entrada
     </ion-button>

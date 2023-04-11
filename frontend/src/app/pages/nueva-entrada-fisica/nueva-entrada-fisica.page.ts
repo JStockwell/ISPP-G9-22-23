@@ -66,25 +66,28 @@ export class NuevaEntradaFisicaPage implements OnInit {
     }
   }
 
+  
   getRegla(){
-    var res;
-    if(this.uService.isLoggedIn()){
-      var ck = localStorage.getItem('auth-user')
-      if(ck != null){
-        var tk = JSON.parse(ck);
-        var tiene_regla = tk.has_period();
-        if(tiene_regla) {
+
+    this.uService.getPatientById().subscribe({
+      
+      next: dataEntry => {
+        var res = false
+        console.log(dataEntry.has_period)
+        if(dataEntry.has_period===true){
           res = true;
         }else{
-          res = false;
+          res =false;
         }
-
+        return res;
+      },
+      error: err => {
+        console.log(err);
         
       }
-      
-    }
-    return res;
+    })
   }
+  
 
   crearEntradaFisica(): void{
     let parts = ''
