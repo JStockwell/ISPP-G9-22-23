@@ -47,7 +47,7 @@ export class SeccionFisicaServiceService implements HttpInterceptor{
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
         headers=headers.set('Authorization','Token '+res[0])
         
-        return this.http.delete(`${API_URL}/diary_entries/physical_entry/${idEntry}`, {'headers':headers});
+        return this.http.delete(`${API_URL}diary_entries/physical_entry/${idEntry}`, {'headers':headers});
       }
 
     }
