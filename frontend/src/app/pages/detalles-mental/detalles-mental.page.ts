@@ -22,6 +22,10 @@ export class DetallesMentalPage implements OnInit {
 
         this.entrada = data;
         this.replaceSaltosLinea(this.entrada);
+        let Aux:Date = new Date(this.entrada.date);
+        console.log(Aux)
+        var aux2 = Aux.toLocaleDateString("es-ES", { weekday: 'long'})
+        this.dtAux = aux2.charAt(0).toUpperCase() + aux2.substring(1) + ', ' + Aux.toLocaleDateString();;
 
       },
       error:err=>{

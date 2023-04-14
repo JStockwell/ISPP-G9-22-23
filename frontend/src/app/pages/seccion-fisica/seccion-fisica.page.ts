@@ -43,10 +43,8 @@ async loadEntradasDiarioFisico(){
 
       this.fisicoService.getEntradasFisicas().subscribe((res) =>{
         for(var entrada of res){
-          let date:Date = entrada.date;
-          entrada.date=this.analiticasService.dateFormatter_entradas(date);
-
           let Aux:Date = new Date(entrada.date);
+          console.log(Aux)
           var aux2 = Aux.toLocaleDateString("es-ES", { weekday: 'long'})
           entrada.dtAux = aux2.charAt(0).toUpperCase() + aux2.substring(1) + ', ' + Aux.toLocaleDateString();
           this.entries.push(entrada);
