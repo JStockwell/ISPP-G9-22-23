@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
+import { AnaliticasService } from '../services/analiticas.service';
 import { DiarioEmocionalService } from '../services/diario-emocional.service';
 
 @Component({
@@ -11,7 +12,7 @@ export class Tab2Page  {
 
   entries:any = [];
 
-  constructor(private diarioEmocionalService: DiarioEmocionalService, private loadingCtrl: LoadingController) {}
+  constructor(private diarioEmocionalService: DiarioEmocionalService, private loadingCtrl: LoadingController, private analiticasService: AnaliticasService) {}
 
 
 
@@ -30,10 +31,16 @@ async loadEntradasDiarioEmocional(){
   await loading.present();
 
   this.diarioEmocionalService.getDiarioEmocional().subscribe((res)=> {
+    for(var entrada of res){
+      let Aux:Date = new Date(entrada.date);
+      console.log(Aux)
+      var aux2 = Aux.toLocaleDateString("es-ES", { weekday: 'long'})
+      entrada.dtAux = aux2.charAt(0).toUpperCase() + aux2.substring(1) + ', ' + Aux.toLocaleDateString();
+      this.entries.push(entrada);
+      console.log(entrada)
+    }
     loading.dismiss();
-    this.entries =res;
-    console.log(this.entries)
-    console.log("Diario Emocional")
+
   });
 
 }
@@ -75,32 +82,30 @@ getImagenComida(imagen:string): any {
   if(imagen == "HEALTHY" ){
     return "/assets/images/salad.png";
   }
+  if(imagen == "NORMAL" ){
+    return "/assets/images/normal-food.png";
+  }
   if(imagen == "FAST" ){
     return "/assets/images/hamburger.png";
   }
-  
   if(imagen == "NONE" ){
     return "/assets/images/plato.png";
   }
-  
-
-  
-
 }
 
 getImagenSuenyo(imagen:string): any {
   if(imagen == "DEEP" ){
     return "/assets/images/slumber.png";
   }
-  if(imagen == "LIGHT" ){
+  if(imagen == "NORMAL" ){
     return "/assets/images/sleeping.png";
   }
-  
-  if(imagen == "NONE" ){
-    return "/assets/images/hotel-bed.png";
+  if(imagen == "LIGHT" ){
+    return "/assets/images/light-sleep.png";
   }
-  
-
+  if(imagen == "NONE" ){
+    return "/assets/images/insomnia.png";
+  }
 }
 
 getImagenTiempo(imagen:string): any {
@@ -130,8 +135,8 @@ eliminarEntradaMental(idEntrada: any) {
   this.diarioEmocionalService.deleteEntry(idEntrada).subscribe({
     next: res => {
       console.log(res);
-      document.location.href="/app/Tabs/DiarioEmocional"
-      window.location.href = "/app/Tabs/DiarioEmocional"
+      document.location.href="/app/Tabs/seccion-mental"
+      window.location.href = "/app/Tabs/seccion-mental"
     },error: err => {
       console.log(err)
     }

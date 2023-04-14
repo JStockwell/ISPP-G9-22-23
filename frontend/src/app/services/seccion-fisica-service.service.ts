@@ -19,7 +19,7 @@ export class SeccionFisicaServiceService implements HttpInterceptor{
 
   getEntradasFisicas():Observable<any>{
     if(this.uService.isLoggedIn()){
-      var ck = window.sessionStorage.getItem('auth-user')
+      var ck = localStorage.getItem('auth-user')
       if(ck!=null){
         var tk = JSON.parse(ck);
         var res = [];
@@ -37,7 +37,7 @@ export class SeccionFisicaServiceService implements HttpInterceptor{
 
   deleteEntry(idEntry:any): Observable<any>{
     if(this.uService.isLoggedIn()){
-      var ck = window.sessionStorage.getItem('auth-user')
+      var ck = localStorage.getItem('auth-user')
       if(ck != null){
         var tk = JSON.parse(ck);
         var res = [];
@@ -47,7 +47,7 @@ export class SeccionFisicaServiceService implements HttpInterceptor{
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
         headers=headers.set('Authorization','Token '+res[0])
         
-        return this.http.delete(`${API_URL}/diary_entries/physical_entry/${idEntry}`, {'headers':headers});
+        return this.http.delete(`${API_URL}diary_entries/physical_entry/${idEntry}`, {'headers':headers});
       }
 
     }

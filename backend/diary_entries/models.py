@@ -22,10 +22,12 @@ class BodyParts(models.TextChoices):
 class Sleep(models.TextChoices):
     NONE = "NONE", _("No sleep"),
     LIGHT = "LIGHT", _("Light sleep"),
+    NORMAL = "NORMAL", _("Normal sleep"),
     DEEP = "DEEP", _("Deep sleep"),
 
 class Food(models.TextChoices):
     NONE = "NONE", _("Did not eat"),
+    NORMAL = "NORMAL", _("Normal food"),
     FAST = "FAST", _("Fast food"),
     HEALTHY = "HEALTHY", _("Healthy food"),
 
@@ -42,6 +44,7 @@ class DiaryEntry(models.Model):
     notes = models.TextField(max_length=1024, default="", blank=True)
     date = models.DateField()
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    period_now = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.state) + " " + str(self.date)

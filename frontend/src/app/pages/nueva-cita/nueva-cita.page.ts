@@ -16,19 +16,31 @@ registerLocaleData(localeEs, 'es');
 export class NuevaCitaPage implements OnInit {
 
   fechaRecibida = new Date();
-  fechaHora = new Date().toISOString();
-  especialidad:string | undefined
-  observaciones:string | undefined
+  dtAux:string = "" ;
+  
+  form:any ={
+    fecha: null,
+    fechaYHora: null,
+    especialidad:null,
+    descripcion:null,
+  }
+  
+  isSuccessful = false;
+  fechaActual = this.goodTimezone(new Date());
+  errorMessage = '';
 
   constructor(private nuevaCitaService: NuevaCitaService, private navCtrl: NavController, private route: ActivatedRoute, private uService: UsersService) {
     this.route.queryParams.subscribe(params => {
       if (params && params['fecha']) {
-         this.fechaRecibida = params['fecha'];
+         this.form.fechaYHora = new Date(params['fecha']).toISOString();
       }
     });
   }
 
   ngOnInit() {
+    let Aux:Date = new Date(this.fechaRecibida);
+    var aux = Aux.toLocaleDateString("es-ES", { weekday: 'long'});
+    this.dtAux = aux.charAt(0).toUpperCase() + aux.substring(1) + ', ' + Aux.toLocaleDateString();
   }
 
   goBack(){
@@ -42,9 +54,20 @@ export class NuevaCitaPage implements OnInit {
     return horaParseada;
   }
 
+  goodTimezone(fecha: any) {
+    let year = fecha.getFullYear();
+    let month = fecha.getMonth() + 1;
+    let day = fecha.getDate();
+    let hours = fecha.getHours();
+    let minutes = fecha.getMinutes();
+    let seconds = fecha.getSeconds();
+    let isoDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}T${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    return isoDate;
+  }
+
   getUserId(){
     if(this.uService.isLoggedIn()){
-      var ck = window.sessionStorage.getItem('auth-user')
+      var ck = localStorage.getItem('auth-user')
       if(ck != null){
         var tk = JSON.parse(ck);
         var res = [];
@@ -57,19 +80,17 @@ export class NuevaCitaPage implements OnInit {
   }
   
   crearNuevaCita(): void{
-    let fechaParseada = new Date(this.fechaRecibida);
+    let fechaParseada = new Date(this.form.fechaYHora);
     let dataEntry = {
       date: fechaParseada.toISOString().split('T')[0],
-      description: this.observaciones,
-      specialty: this.especialidad,
-      time: this.parsearHora(new Date(this.fechaHora)),
+      description: this.form.descripcion,
+      specialty: this.form.especialidad,
+      time: this.parsearHora(new Date(this.form.fechaYHora)),
       patient_id: this.getUserId(),
     }
-    console.log(dataEntry);
     
     this.nuevaCitaService.postEntry(dataEntry).subscribe({
       next: dataEntry => {
-        console.log(dataEntry);
         document.location.href = "/app/Tabs/calendario"
         window.location.href = "/app/Tabs/calendario"
       },

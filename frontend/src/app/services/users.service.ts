@@ -20,16 +20,16 @@ export class UsersService {
 
 
   clean():void{
-    window.sessionStorage.clear();
+    localStorage.clear();
   }
 
   public saveUser(user:any): void{
-    window.sessionStorage.removeItem(USER_KEY);
-    window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+    localStorage.removeItem(USER_KEY);
+    localStorage.setItem(USER_KEY, JSON.stringify(user));
   }
 
   public getUser():any {
-    const user = window.sessionStorage.getItem(USER_KEY);
+    const user = localStorage.getItem(USER_KEY);
     if (user){
       return JSON.parse(user);
     }
@@ -37,7 +37,7 @@ export class UsersService {
   }
 
   public isLoggedIn(): boolean {
-    const user = window.sessionStorage.getItem(USER_KEY);
+    const user = localStorage.getItem(USER_KEY);
     if (user) {
       return true;
     }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SeccionFisicaServiceService } from 'src/app/services/seccion-fisica-service.service';
 import { LoadingController } from '@ionic/angular';
+import { AnaliticasService } from 'src/app/services/analiticas.service';
 
 @Component({
   selector: 'app-seccion-fisica',
@@ -9,17 +10,10 @@ import { LoadingController } from '@ionic/angular';
 })
 export class SeccionFisicaPage implements OnInit {
   
+  id: any
   entries: any = [];
 
-  constructor(private fisicoService: SeccionFisicaServiceService, private loadingCtrl: LoadingController) { }
-
-//   existsEntradas = () =>{
-//     if (this.entradas){
-//       return this.entradas.length>0;
-//     } else{
-//       return false;
-//     }
-//   }
+  constructor(private fisicoService: SeccionFisicaServiceService, private loadingCtrl: LoadingController, private analiticasService: AnaliticasService) { }
 
   eliminarEntradaFisica(idEntrada: any) {
     this.fisicoService.deleteEntry(idEntrada).subscribe({
@@ -48,13 +42,84 @@ async loadEntradasDiarioFisico(){
       await loading.present();
 
       this.fisicoService.getEntradasFisicas().subscribe((res) =>{
+        for(var entrada of res){
+          let Aux:Date = new Date(entrada.date);
+          console.log(Aux)
+          var aux2 = Aux.toLocaleDateString("es-ES", { weekday: 'long'})
+          entrada.dtAux = aux2.charAt(0).toUpperCase() + aux2.substring(1) + ', ' + Aux.toLocaleDateString();
+          this.entries.push(entrada);
+        }
         loading.dismiss();
-        this.entries = res; 
-        console.log(this.entries)
-        console.log("Diario Fisico")
-
       });
 
+}
+
+splitParts(str: string) {
+  let arr = str.split(',');
+  return arr
+}
+
+getImagenEstado(imagen:string): any {
+  if(imagen == "VG" ){
+    return "/assets/images/cara-muy-feliz.png";
+  }
+  if(imagen == "G" ){
+    return "/assets/images/cara-feliz.png";
+  }
+  if(imagen == "F" ){
+    return "/assets/images/cara-neutral.png";
+  }
+  if(imagen == "B" ){
+    return "/assets/images/cara-triste.png";
+  }
+  if(imagen == "VB" ){
+    return "/assets/images/cara-muy-triste.png";
+  }
+}
+
+getImagenDolor(imagen:string): any {
+  if(imagen == "HEAD" ){
+    return "/assets/images/HEAD.png";
+  }
+  if(imagen == "NECK" ){
+    return "/assets/images/NECK.png";
+  }
+  if(imagen == "SHOULDER" ){
+    return "/assets/images/SHOULDER.png";
+  }
+  if(imagen == "HIGHER_BACK" ){
+    return "/assets/images/HIGHER_BACK.png";
+  }
+  if(imagen == "LOWER_BACK" ){
+    return "/assets/images/LOWER_BACK.png";
+  }
+  if(imagen == "TORSO" ){
+    return "/assets/images/TORSO.png";
+  }
+  if(imagen == "ARM" ){
+    return "/assets/images/ARM.png";
+  }
+  if(imagen == "ELBOW" ){
+    return "/assets/images/ELBOW.png";
+  }
+  if(imagen == "WRIST" ){
+    return "/assets/images/WRIST.png";
+  }
+  if(imagen == "HAND" ){
+    return "/assets/images/HAND.png";
+  }
+  if(imagen == "LEG" ){
+    return "/assets/images/LEG.png";
+  }
+  if(imagen == "KNEE" ){
+    return "/assets/images/KNEE.png";
+  }
+  if(imagen == "ANKLE" ){
+    return "/assets/images/ANKLE.png";
+  }
+  if(imagen == "FOOT" ){
+    return "/assets/images/FOOT.png";
+  }
 }
 
 existsEntradas = () =>{

@@ -13,7 +13,7 @@ export class NuevaEntradaMentalService {
 
   postEntry(dataEntry:any): Observable<any>{
     if(this.uService.isLoggedIn()){
-      var ck = window.sessionStorage.getItem('auth-user')
+      var ck = localStorage.getItem('auth-user')
       if(ck != null){
         var tk = JSON.parse(ck);
         var res = [];
@@ -23,7 +23,7 @@ export class NuevaEntradaMentalService {
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
         headers=headers.set('Authorization','Token '+res[0])
         
-        return this.http.post(`${API_URL}/diary_entries/mental_entry/`, JSON.stringify(dataEntry), {'headers':headers});
+        return this.http.post(`${API_URL}diary_entries/mental_entry/`, JSON.stringify(dataEntry), {'headers':headers});
       }
 
     }
