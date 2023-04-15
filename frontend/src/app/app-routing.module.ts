@@ -7,6 +7,10 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./pagina-inicial/pagina-inicial.module').then( m => m.PaginaInicialPageModule)
   },
+  {  
+    path: 'users/preferences',
+    loadChildren: () => import('./pages/preferencias-de-usuario/preferencias-de-usuario.module').then( m => m.PreferenciasDeUsuarioPageModule)
+  },
   {
     path: 'users/register',
     loadChildren: () => import('./pages/users/users.module').then(m=>m.UsersPageModule)
@@ -86,6 +90,11 @@ const routes: Routes = [
     path: 'detalles-cita',
     loadChildren: () => import('./pages/detalles-cita/detalles-cita.module').then( m => m.DetallesCitaPageModule)
   },
+  {
+    path: 'preferencias-de-usuario',
+    loadChildren: () => import('./pages/preferencias-de-usuario/preferencias-de-usuario.module').then( m => m.PreferenciasDeUsuarioPageModule)
+  },
+
 
 ];
 @NgModule({
