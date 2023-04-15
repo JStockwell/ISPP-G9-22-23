@@ -53,7 +53,7 @@ export class MedicsPage implements OnInit {
             next: data => {
               console.log(data)
               this.uService.saveMedic(data);
-              this.reloadPage();
+              // this.reloadPage();
             },
             error: err => {
               this.errorMessage = err.error.message;
@@ -77,7 +77,7 @@ export class MedicsPage implements OnInit {
   }
 
   reloadPage(): void{
-    window.location.href="app/Tabs/Analytics"
+    window.location.href="medic/home"
   }
 
 }

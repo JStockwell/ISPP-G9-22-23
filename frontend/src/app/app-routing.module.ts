@@ -20,6 +20,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/login/login.module').then(m=>m.LoginPageModule)
   },  
   {
+    path: 'medic/home',
+    loadChildren: () => import('./pages/medic-home/medic-home.module').then(m=>m.MedicHomePageModule)
+  },
+  {
     path: 'app',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
@@ -90,6 +94,11 @@ const routes: Routes = [
     path: 'detalles-cita',
     loadChildren: () => import('./pages/detalles-cita/detalles-cita.module').then( m => m.DetallesCitaPageModule)
   },
+  {
+    path: 'medic-home',
+    loadChildren: () => import('./pages/medic-home/medic-home.module').then( m => m.MedicHomePageModule)
+  },
+
 
 ];
 @NgModule({

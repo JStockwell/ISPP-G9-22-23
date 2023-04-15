@@ -52,7 +52,7 @@ export class MedicsService {
   }
 
   login(medic:any): Observable<any> {
-    return this.http.post(API_URL+'medics/login/',medic,httpOptions);
+    return this.http.post(API_URL+'users/login/',medic,httpOptions);
   }
   logout(): Observable<any> {
     return this.http.post(API_URL+ 'signout', { }, httpOptions);
