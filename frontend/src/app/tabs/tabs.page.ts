@@ -32,7 +32,7 @@ export class TabsPage implements OnInit, OnDestroy{
     const options: BannerAdOptions = {
       adId: adId,
       adSize: BannerAdSize.ADAPTIVE_BANNER,
-      position: BannerAdPosition.TOP_CENTER,
+      position: BannerAdPosition.BOTTOM_CENTER,
       margin: 0,
       isTesting: true
     }

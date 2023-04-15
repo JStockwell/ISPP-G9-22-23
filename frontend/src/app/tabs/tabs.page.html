@@ -1,12 +1,5 @@
 <ion-tabs>
   <div slot="top">
-    <div *ngIf="!isPremium" slot="start">
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-    </div>
     <ion-tab-bar>
       <ion-tab-button tab="Analytics">
         <ion-icon name="bar-chart-outline"></ion-icon>
@@ -28,5 +21,12 @@
         <ion-label>Calendario</ion-label>
       </ion-tab-button>
     </ion-tab-bar>
+  </div>
+  <div *ngIf="!isPremium" slot="bottom">
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
   </div>
 </ion-tabs>
