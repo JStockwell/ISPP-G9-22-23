@@ -8,4 +8,37 @@
 
   Pagia de inicio para médicos
 
+  <ion-button color="dark" expand="block" [routerLink]="['/users/medics/patients/New']">
+    Añadir paciente
+  </ion-button>
+
+  <div *ngIf="existsPatients(); then renderPatients else noPatients"></div>
+  <ng-template #renderPatients>
+    <div *ngFor="let item of pacientes">
+      <ion-card
+        button
+        color="warning"
+        [routerLink]=""
+      >
+        <ion-label style="text-align: center">
+          <h1 style="margin-top: 5%; margin-bottom: 1.5%; color: black">
+            {{ item.user.first_name }} {{ item.user.email }}
+          </h1>
+       
+        </ion-label>
+       
+      </ion-card>
+    </div>
+    
+  </ng-template>
+
+  <ng-template #noPatients>
+    <div style="font-weight: bold; font-size: x-large; text-align: center">
+      <img src="https://static.thenounproject.com/png/2902077-200.png" class="imagen-vacia" alt="">
+      <div style="opacity: .2;"> No hay pacientes todavía </div>
+    </div>
+  </ng-template>
+
+  
+
 </ion-content>

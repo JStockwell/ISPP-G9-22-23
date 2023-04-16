@@ -51,9 +51,9 @@ export class MedicsPage implements OnInit {
           this.loginCredentials.password = this.form.password;
           this.uService.login(this.loginCredentials).subscribe({
             next: data => {
-              console.log(data)
+
               this.uService.saveMedic(data);
-              // this.reloadPage();
+              this.reloadPage();
             },
             error: err => {
               this.errorMessage = err.error.message;
