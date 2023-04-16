@@ -37,8 +37,37 @@
         Iniciar sesión
       </ion-button>
 
+      
+      
     </form>
     <ion-button class = "btacceder" *ngIf= "isLoggedIn" (click)="reloadPage()">Acceder</ion-button>
+    <ion-button  class = "btacceder" *ngIf= "isLoggedIn" color="primary" (click)="eliminarUsuario( getUserId() )" >Borrar Cuenta </ion-button>
+
+    <ion-button id="open-modal" expand="block">Borrar Cuenta</ion-button>
+    <ion-modal #modal trigger="open-modal" [canDismiss]="canDismiss" [presentingElement]="presentingElement">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Borrar Cuenta</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="eliminarUsuario( getUserId() )">Borrar</ion-button>
+              
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <p>Vas a eliminar tu cuenta</p>
+        </ion-content>
+
+      
+      </ng-template>
+
+     
+    </ion-modal>
+
+    
+    
+   
   </div>
 
   <ion-fab color = "primary" style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
