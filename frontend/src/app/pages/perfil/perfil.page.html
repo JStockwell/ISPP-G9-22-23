@@ -1,13 +1,34 @@
-<ion-header>  
-   <ion-toolbar>
-
-        <ion-buttons slot="start">
-            <ion-menu-button></ion-menu-button>
-        </ion-buttons>
-
-        <ion-title>
-            Mi perfil
-        </ion-title>
-        
+<ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Perfil</ion-title>
     </ion-toolbar>
-</ion-header> 
+  </ion-header>
+
+  <ion-content class="ion-padding" color ="light">
+ 
+    <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Aquí podrás consultar tus datos personales:</ion-label>
+    <ul>
+        <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Nombre de usuario: {{username}}</ion-label>
+    </ul>
+    <ul>
+        <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Nombre: {{name}}</ion-label>
+    </ul>
+    <ul>
+        <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Apellidos: {{surname}}</ion-label>
+    </ul>
+    <ul>
+        <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Fecha nacimiento: {{birthdate}}</ion-label>
+    </ul> 
+    <ul>
+        <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Telefono: {{tel}}</ion-label>
+    </ul>  
+    <ul>
+        <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Email: {{email}}</ion-label>
+    </ul> 
+
+    <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">A continuación puedes editar las preferencias de tu cuenta:</ion-label>
+    <ion-button expand="block" [routerLink] = "['./preferencias-de-usuario']">
+        Editar preferencias
+      </ion-button>
+
+  </ion-content>

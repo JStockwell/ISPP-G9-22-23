@@ -7,6 +7,10 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./pagina-inicial/pagina-inicial.module').then( m => m.PaginaInicialPageModule)
   },
+  {  
+    path: 'users/preferences',
+    loadChildren: () => import('./pages/preferencias-de-usuario/preferencias-de-usuario.module').then( m => m.PreferenciasDeUsuarioPageModule)
+  },
   {
     path: 'users/register',
     loadChildren: () => import('./pages/users/users.module').then(m=>m.UsersPageModule)
@@ -97,6 +101,15 @@ const routes: Routes = [
   {
     path: 'medic-home',
     loadChildren: () => import('./pages/medic-home/medic-home.module').then( m => m.MedicHomePageModule)
+
+  },
+  {
+    path: 'preferencias-de-usuario',
+    loadChildren: () => import('./pages/preferencias-de-usuario/preferencias-de-usuario.module').then( m => m.PreferenciasDeUsuarioPageModule)
+  },
+  {
+    path: 'perfil-de-usuario',
+    loadChildren: () => import('./pages/perfil/perfil.module').then(m => m.PerfilPageModule)
   },
 
 
