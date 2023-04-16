@@ -6,7 +6,6 @@
 
   <ion-content class="ion-padding" color ="light">
  
-    <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Aquí podrás consultar tus datos personales:</ion-label>
     <ul>
         <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Nombre de usuario: {{username}}</ion-label>
     </ul>
@@ -26,9 +25,12 @@
         <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Email: {{email}}</ion-label>
     </ul> 
 
-    <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">A continuación puedes editar las preferencias de tu cuenta:</ion-label>
-    <ion-button expand="block" [routerLink] = "['./preferencias-de-usuario']">
-        Editar preferencias
-      </ion-button>
+    <ion-button expand="block" [routerLink] = "['/preferencias-de-usuario']">
+        Editar preferencias de usuario
+    </ion-button>
+
+    <ion-button expand="block" [routerLink] = "['/app/Tabs/Analytics']">
+        Volver a inicio
+    </ion-button>
 
   </ion-content>
