@@ -84,7 +84,7 @@ export class ModificarMentalPage implements OnInit{
 
   this.service.modifyEntradasMental(this.route.snapshot.paramMap.get('id'),dataEntry).subscribe({
     next:data=>{
-      window.location.href = '/app/Tabs/DiarioEmocional';
+      window.location.href = '/app/Tabs/seccion-mental';
     },
     error:err=>{
       console.log(err.error.message);
