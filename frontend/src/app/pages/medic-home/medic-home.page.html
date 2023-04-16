@@ -1,16 +1,17 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>medic-home</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>Página inicio médicos</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-  Pagia de inicio para médicos
+  <div style="margin-top: 6%; text-align: left; margin-left: 6%; margin-bottom: 4%;">
+    <ion-label display="block" position="floating">Esta es la página de inicio exclusiva para médicos donde pueden ver un listado de sus pacientes</ion-label>
+  </div>
+  
 
-  <ion-button color="dark" expand="block" [routerLink]="['/users/medics/patients/New']">
-    Añadir paciente
-  </ion-button>
+  
 
   <div *ngIf="existsPatients(); then renderPatients else noPatients"></div>
   <ng-template #renderPatients>
@@ -20,15 +21,23 @@
         color="warning"
         [routerLink]=""
       >
-        <ion-label style="text-align: center">
-          <h1 style="margin-top: 5%; margin-bottom: 1.5%; color: black">
-            {{ item.user.first_name }} {{ item.user.email }}
-          </h1>
-       
-        </ion-label>
-       
+
+      <ul>
+        <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Nombre: {{item.user.first_name}}</ion-label>
+    </ul>
+    <ul>
+      <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Apellidos: {{item.user.last_name}}</ion-label>
+  </ul>
+  <ul>
+    <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Email: {{item.user.email}}</ion-label>
+</ul>
+    
       </ion-card>
     </div>
+
+    <ion-button color="primary" expand="block" [routerLink]="['/users/medics/patients/New']">
+      Añadir paciente
+    </ion-button>
     
   </ng-template>
 
