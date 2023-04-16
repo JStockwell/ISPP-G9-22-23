@@ -14,16 +14,24 @@ export class PaginaInicialService {
   getIdentificador():boolean{
     let resultado = false;
     if(this.uService.isLoggedIn()){
-      var ck = localStorage.getItem('auth-user')
+
+      var ck = localStorage.getItem('auth-user');
+      console.log(ck);
+      
+
       if(ck!=null){
         var tk = JSON.parse(ck);
         var res = [];
         for(var i in tk){
           res.push(tk[i]);
         }
-        let headers = new HttpHeaders()
-        headers = headers.set('Authorization', 'Token '+res[0])
+
+        if (res[1])
+
         resultado = true;
+        
+        
+
         return resultado
       }
     }

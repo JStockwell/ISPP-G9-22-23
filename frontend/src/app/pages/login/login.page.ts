@@ -42,6 +42,38 @@ export class LoginPage implements OnInit {
   }
 
   reloadPage():void{
-    window.location.href="app/Tabs/Analytics"
+
+    if(this.estaLogMedico()){
+      window.location.href="medic/home";
+      
+    }
+    else{
+      window.location.href="app/Tabs/Analytics";
+    }
   }
+
+
+  estaLogMedico(){
+    let resultado = false;
+    if(this.uService.isLoggedIn()){
+    var ck = localStorage.getItem('auth-user');
+    console.log(ck);
+    
+      if(ck!=null){
+        var tk = JSON.parse(ck);
+        for(var i in tk){
+          if (i == "medic id"){
+            resultado = true;
+          }
+        }
+        console.log(resultado);
+        
+        return resultado
+      }
+  }
+  return resultado
+  }
+
+
+
 }

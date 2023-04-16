@@ -107,9 +107,15 @@ const routes: Routes = [
     path: 'preferencias-de-usuario',
     loadChildren: () => import('./pages/preferencias-de-usuario/preferencias-de-usuario.module').then( m => m.PreferenciasDeUsuarioPageModule)
   },
-  {
+    {
     path: 'perfil-de-usuario',
     loadChildren: () => import('./pages/perfil/perfil.module').then(m => m.PerfilPageModule)
+    },
+  {
+
+    path: 'medic-home',
+    loadChildren: () => import('./pages/medic-home/medic-home.module').then( m => m.MedicHomePageModule)
+
   },
 
 
