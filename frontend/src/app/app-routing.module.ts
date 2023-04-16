@@ -52,6 +52,11 @@ const routes: Routes = [
     path: 'nueva-entrada-fisica',
     loadChildren: () => import('./pages/nueva-entrada-fisica/nueva-entrada-fisica.module').then( m => m.NuevaEntradaFisicaPageModule)
   },
+
+  {
+    path: 'users/medics/patients/New',
+    loadChildren: () => import('./pages/nuevo-paciente-medico/nuevo-paciente-medico.module').then( m => m.NuevoPacienteMedicoPageModule)
+  },
   {
     path: 'nueva-entrada-mental',
     loadChildren: () => import('./pages/nueva-entrada-mental/nueva-entrada-mental.module').then( m => m.NuevaEntradaMentalPageModule)
