@@ -35,17 +35,21 @@
         </ion-segment>
       </ion-item>
 
+
       <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">¿Cómo dormiste anoche?</ion-label>
       <ion-item class = "txt" color = "light" style="padding-top: 3%; padding-bottom: 5%;" lines = "none">
         <ion-segment [(ngModel)]="suenyo" scrollable>
           <ion-segment-button value="DEEP">
             <img src="/assets/images/slumber.png">
           </ion-segment-button>
-          <ion-segment-button value="LIGHT">
+          <ion-segment-button value="NORMAL">
             <img src="/assets/images/sleeping.png">
           </ion-segment-button>
+          <ion-segment-button value="LIGHT">
+            <img src="/assets/images/light-sleep.png">
+          </ion-segment-button>
           <ion-segment-button value="NONE">
-            <img src="/assets/images/hotel-bed.png">
+            <img src="/assets/images/insomnia.png">
           </ion-segment-button>
         </ion-segment>
       </ion-item>
@@ -55,6 +59,9 @@
         <ion-segment [(ngModel)]="comida" scrollable>
           <ion-segment-button value="HEALTHY">
             <img src="/assets/images/salad.png">
+          </ion-segment-button>
+          <ion-segment-button value="NORMAL">
+            <img src="/assets/images/normal-food.png">
           </ion-segment-button>
           <ion-segment-button value="FAST">
             <img src="/assets/images/hamburger.png">
@@ -66,6 +73,7 @@
       </ion-item>
 
       <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">¿Qué tiempo ha hecho hoy?</ion-label>
+
       <ion-item class = "txt" color = "light" style="padding-top: 3%; padding-bottom: 5%;" lines = "none">
         <ion-segment [(ngModel)]="tiempo" scrollable>
           <ion-segment-button value="SUNNY">
@@ -96,9 +104,11 @@
         <ion-textarea [(ngModel)]="pnegativos" rows= "3" placeholder="Escribe aquí los pensamientos negativos que has tenido en el día de hoy." type="text"></ion-textarea>
       </ion-item>
 
+
       <ion-item color = "light" lines = "none">
         <ion-label class = "txt" style="margin-top: 5%;" position="stacked">Notas</ion-label>
         <ion-textarea [(ngModel)]="notas" rows= "3" placeholder="Aquí puedes explicar y desarrollar lo que desees sobre las preguntas anteriores u otras cuestiones a parte." type="text"></ion-textarea>
+
       </ion-item>
 
       <ion-button color="primary" expand="block" (click)="editarEntradaMental()">
@@ -107,7 +117,8 @@
     </div>
 
     <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
-      <ion-fab-button color = "primary" [routerLink]="['/app/Tabs/DiarioEmocional']">
+
+      <ion-fab-button  color = "primary" (click)="goBack()">
         <ion-icon name="arrow-back-circle-outline"></ion-icon>
       </ion-fab-button>
     </ion-fab>

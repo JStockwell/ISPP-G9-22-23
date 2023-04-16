@@ -36,6 +36,24 @@ export class UsersService {
     return {};
   }
 
+  public getUserData():Observable<any>{
+    if(this.isLoggedIn()){
+      var ck = localStorage.getItem('auth-user')
+      if(ck!=null){
+        var tk = JSON.parse(ck);
+        var res = [];
+        for(var i in tk){
+          res.push(tk[i]);
+        }
+        let headers = new HttpHeaders()
+        headers = headers.set('Authorization', 'Token '+res[0])
+
+        return this.http.get(API_URL + `users/patients/${res[1]}/`,{'headers':headers})
+      }
+    }
+    return new Observable<any>;
+  }
+
   public isLoggedIn(): boolean {
     const user = localStorage.getItem(USER_KEY);
     if (user) {

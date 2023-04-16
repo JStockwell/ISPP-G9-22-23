@@ -4,6 +4,7 @@ import { DetallesFisicoService } from 'src/app/services/detalles-fisico.service'
 import { NavController } from '@ionic/angular';
 import { AnaliticasService } from 'src/app/services/analiticas.service';
 
+
 @Component({
   selector: 'app-detalles-fisico',
   templateUrl: './detalles-fisico.page.html',
@@ -78,20 +79,44 @@ export class DetallesFisicoPage implements OnInit {
     if(imagen == "HEAD" ){
       return "/assets/images/HEAD.png";
     }
+    if(imagen == "NECK" ){
+      return "/assets/images/NECK.png";
+    }
+    if(imagen == "SHOULDER" ){
+      return "/assets/images/SHOULDER.png";
+    }
+    if(imagen == "HIGHER_BACK" ){
+      return "/assets/images/HIGHER_BACK.png";
+    }
+    if(imagen == "LOWER_BACK" ){
+      return "/assets/images/LOWER_BACK.png";
+    }
     if(imagen == "TORSO" ){
       return "/assets/images/TORSO.png";
     }
-    if(imagen == "LEFT_ARM" ){
-      return "/assets/images/LEFT_ARM.png";
+    if(imagen == "ARM" ){
+      return "/assets/images/ARM.png";
     }
-    if(imagen == "RIGHT_ARM" ){
-      return "/assets/images/RIGHT_ARM.png";
+    if(imagen == "ELBOW" ){
+      return "/assets/images/ELBOW.png";
     }
-    if(imagen == "LEFT_LEG" ){
-      return "/assets/images/LEFT_LEG.png";
+    if(imagen == "WRIST" ){
+      return "/assets/images/WRIST.png";
     }
-    if(imagen == "RIGHT_LEG" ){
-      return "/assets/images/RIGHT_LEG.png";
+    if(imagen == "HAND" ){
+      return "/assets/images/HAND.png";
+    }
+    if(imagen == "LEG" ){
+      return "/assets/images/LEG.png";
+    }
+    if(imagen == "KNEE" ){
+      return "/assets/images/KNEE.png";
+    }
+    if(imagen == "ANKLE" ){
+      return "/assets/images/ANKLE.png";
+    }
+    if(imagen == "FOOT" ){
+      return "/assets/images/FOOT.png";
     }
   }
 

@@ -1,23 +1,32 @@
 <ion-tabs>
-  <ion-tab-bar slot="top">
-    <ion-tab-button tab="Analytics">
-      <ion-icon name="bar-chart-outline"></ion-icon>
-      <ion-label>Analíticas</ion-label>
-    </ion-tab-button>
-
-    <ion-tab-button tab="seccion-fisica">
-      <ion-icon name="barbell-outline"></ion-icon>
-      <ion-label>Diario Físico</ion-label>
-    </ion-tab-button>
-
-    <ion-tab-button tab="DiarioEmocional">
-      <ion-icon name="happy-outline"></ion-icon>
-      <ion-label>Diario Emocional</ion-label>
-    </ion-tab-button>
-
-    <ion-tab-button tab="calendario">
-      <ion-icon name="calendar-outline"></ion-icon>
-      <ion-label>Calendario</ion-label>
-    </ion-tab-button>
-  </ion-tab-bar>
+  <div slot="top">
+    <ion-tab-bar>
+      <ion-tab-button tab="Analytics">
+        <ion-icon name="bar-chart-outline"></ion-icon>
+        <ion-label>Analíticas</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button tab="seccion-fisica">
+        <ion-icon name="barbell-outline"></ion-icon>
+        <ion-label>Diario Físico</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button tab="seccion-mental">
+        <ion-icon name="happy-outline"></ion-icon>
+        <ion-label>Diario Emocional</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button tab="calendario">
+        <ion-icon name="calendar-outline"></ion-icon>
+        <ion-label>Calendario</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </div>
+  <div *ngIf="!isPremium" slot="bottom">
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+  </div>
 </ion-tabs>

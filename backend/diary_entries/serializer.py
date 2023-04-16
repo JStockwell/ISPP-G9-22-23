@@ -6,6 +6,7 @@ class UpdatePhysicalEntrySerializer(serializers.Serializer):
     body_parts = serializers.CharField(required = False, max_length=1024, allow_blank=True)
     notes = serializers.CharField(required = False, max_length=1024, allow_blank=True)
     done_exercise = serializers.BooleanField(required = False)
+    period_now = serializers.BooleanField(required = False)
     date = serializers.DateField(required = False)
     state = serializers.CharField(required = False)
 
@@ -18,7 +19,7 @@ class UpdatePhysicalEntrySerializer(serializers.Serializer):
 
     def validate_body_parts(self, value):
         if (value != None):
-            accepted_values = {"", "HEAD", "TORSO", "LEFT_ARM", "RIGHT_ARM", "LEFT_LEG", "RIGHT_LEG"}
+            accepted_values = {"", "HEAD", "NECK", "SHOULDER", "HIGHER_BACK", "LOWER_BACK", "ARM", "ELBOW", "WRIST", "HAND", "TORSO", "LEG", "KNEE", "ANKLE", "FOOT"}
             already_used_values = []
             splitted = value.split(",")
             for part in splitted:
@@ -27,22 +28,23 @@ class UpdatePhysicalEntrySerializer(serializers.Serializer):
                 elif (part.strip() in accepted_values and part.strip() in already_used_values):
                     raise ValidationError("Recuerda no repetir partes del cuerpo")
                 else:
-                    raise ValidationError("Elige partes del cuerpo válidas (HEAD, TORSO, LEFT_ARM, RIGHT_ARM, LEFT_LEG, RIGHT_LEG)")
+                    raise ValidationError("Elige partes del cuerpo válidas (HEAD, NECK, SHOULDER, HIGHER_BACK, LOWER_BACK, TORSO, ARM, ELBOW, WRIST, HAND, LEG, KNEE, ANKLE, FOOT)")
             return value
 
 class PhysicalEntrySerializer(serializers.ModelSerializer):
     body_parts = serializers.CharField(required = False, default = "", max_length=1024)
     notes = serializers.CharField(required = False, default = "", max_length=1024)
     done_exercise = serializers.BooleanField(required = False, default = False)
+    period_now = serializers.BooleanField(required = False, default = False)
     patient_id=serializers.IntegerField()
 
     class Meta:
         model = PhysicalEntry
-        fields = ['id', 'date', 'state', 'body_parts', 'notes', "patient_id", "done_exercise"]
+        fields = ['id', 'date', 'state', 'body_parts', 'notes', "patient_id", "done_exercise", "period_now"]
 
 
     def validate_body_parts(self, value):
-        accepted_values = {"", "HEAD", "TORSO", "LEFT_ARM", "RIGHT_ARM", "LEFT_LEG", "RIGHT_LEG"}
+        accepted_values = {"", "HEAD", "NECK", "SHOULDER", "HIGHER_BACK", "LOWER_BACK", "ARM", "ELBOW", "WRIST", "HAND", "TORSO", "LEG", "KNEE", "ANKLE", "FOOT"}
         already_used_values = []
         splitted = value.split(",")
         for part in splitted:
@@ -51,7 +53,7 @@ class PhysicalEntrySerializer(serializers.ModelSerializer):
             elif (part.strip() in accepted_values and part.strip() in already_used_values):
                 raise ValidationError("Recuerda no repetir partes del cuerpo")
             else:
-                raise ValidationError("Elige partes del cuerpo válidas (HEAD, TORSO, LEFT_ARM, RIGHT_ARM, LEFT_LEG, RIGHT_LEG)")
+                raise ValidationError("Elige partes del cuerpo válidas (HEAD, NECK, SHOULDER, HIGHER_BACK, LOWER_BACK, TORSO, ARM, ELBOW, WRIST, HAND, LEG, KNEE, ANKLE, FOOT)")
         return value
     
 class UpdateMentalEntrySerializer(serializers.Serializer):
@@ -61,6 +63,7 @@ class UpdateMentalEntrySerializer(serializers.Serializer):
     notes = serializers.CharField(required = False, max_length=1024, allow_blank=True)
     positive_thoughts = serializers.CharField(required = False, max_length=1024, allow_blank=True)
     negative_thoughts = serializers.CharField(required = False, max_length=1024, allow_blank=True)
+    period_now = serializers.BooleanField(required = False)
     state = serializers.CharField(required = False)
     date = serializers.DateField(required = False)
     
@@ -98,12 +101,13 @@ class MentalEntrySerializer(serializers.ModelSerializer):
     food = serializers.CharField(max_length=64)
     sleep = serializers.CharField(max_length=64)
     notes = serializers.CharField(required = False, default = "", max_length=1024)
+    period_now = serializers.BooleanField(required = False, default = False)
     positive_thoughts = serializers.CharField(required = False, default = "", max_length=1024)
     negative_thoughts = serializers.CharField(required = False, default = "", max_length=1024)
     patient_id=serializers.IntegerField()
     class Meta:
         model = MentalEntry
-        fields = ['id', 'date', 'state', 'notes', 'weather', 'food', 'sleep', 'positive_thoughts', 'negative_thoughts', "patient_id"]
+        fields = ['id', 'date', 'state', 'notes', 'weather', 'food', 'sleep', 'positive_thoughts', 'negative_thoughts', "patient_id", "period_now"]
 
     def validate_weather(self, value):
         accepted_values = {"SNOWY", "RAINY", "CLOUDY", "STORMY", "SUNNY"}

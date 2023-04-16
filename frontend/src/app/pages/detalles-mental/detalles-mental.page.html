@@ -5,23 +5,20 @@
 </ion-header>
 
 <ion-content>
-  <ion-card color="warning" *ngIf="entrada!=undefined||entrada!=null">
+  <ion-card color="warning" style="padding: 25px; margin-bottom: 75px" *ngIf="entrada!=undefined||entrada!=null">
     <div style="text-align: center;">
-      <div style="text-align: right; margin-right: 15px; margin-top: 20px">
-        
-      </div>
-      <h3 style="margin-top: 0px">{{ dtAux }}</h3>
+
+      <h1 style="margin-top: 0px"><b>{{ dtAux}}</b></h1>
+
     </div>
 
     <div style="text-align: center">
       <ion-row>
         <ion-col>
-          <h3>
-            Ánimo: <img src="{{getImagenEstado(entrada.state)}}"  style="width: 3rem;" >
-          </h3>
+          <h3><b>Ánimo: </b><img src="{{getImagenEstado(entrada.state)}}"  style="width: 3rem;"></h3>
         </ion-col>
         <ion-col>
-          <h3>Sueño: <img src="{{getImagenSuenyo(entrada.sleep)}}"  style="width: 3rem;" ></h3>
+          <h3><b>Sueño: </b><img src="{{getImagenSuenyo(entrada.sleep)}}"  style="width: 3rem;" ></h3>
         </ion-col>
       </ion-row>
     </div>
@@ -29,31 +26,32 @@
     <div style="text-align: center">
       <ion-row>
         <ion-col>
-          <h3>
-            Tiempo:<img src="{{getImagenTiempo(entrada.weather)}}"  style="width: 3rem;" >
-            
-          </h3>
+          <h3><b>Tiempo: </b><img src="{{getImagenTiempo(entrada.weather)}}"  style="width: 3rem;"></h3>
         </ion-col>
         <ion-col>
-          <h3>Comida: <img src="{{getImagenComida(entrada.food)}}"  style="width: 3rem;" ></h3>
+          <h3><b>Comida: </b><img src="{{getImagenComida(entrada.food)}}"  style="width: 3rem;" ></h3>
         </ion-col>
       </ion-row>
     </div>  
 
-    <div style="text-align: center"><h3>Pensamientos Postivos</h3></div>
-    <div style="text-align: center; margin-bottom: 10px">
-      {{ entrada.positive_thoughts}}
-    </div>
-    <div style="text-align: center"><h3>Pensamientos Negativos</h3></div>
-    <div style="text-align: center; margin-bottom: 10px">
-      {{ entrada.negative_thoughts}}
+    <div style="text-align: center"><h3><b>Pensamientos Postivos</b></h3></div>
+    <div style="text-align: left; margin-top: 10px; margin-bottom: 10px">
+      <p [innerHTML]="entrada.positive_thoughts"></p>
     </div>
 
-    <div style="text-align: center"><h3>Notas</h3></div>
-    <div style="text-align: center; margin-bottom: 10px">{{ entrada.notes}}</div>
+    <div style="text-align: center"><h3><b>Pensamientos Negativos</b></h3></div>
+    <div style="text-align: left; margin-top: 10px; margin-bottom: 10px">
+      <p [innerHTML]="entrada.negative_thoughts"></p>
+    </div>
+
+    <div style="text-align: center"><h3><b>Notas</b></h3></div>
+    <div style="text-align: left; margin-top: 10px; margin-bottom: 10px">
+      <p [innerHTML]="entrada.notes"></p>
+    </div>
+    
   </ion-card>
   <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
-    <ion-fab-button  color = "secondary" [routerLink]="['/app/Tabs/DiarioEmocional']">
+    <ion-fab-button  color = "primary" (click)="goBack()">
       <ion-icon name="arrow-back-circle-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>

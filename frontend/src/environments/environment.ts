@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  'android-banner-id': 'ca-app-pub-4710417310239846/9066140458'
 };
 
 /*

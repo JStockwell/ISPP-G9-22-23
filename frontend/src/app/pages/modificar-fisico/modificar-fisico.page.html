@@ -34,15 +34,24 @@
       <ion-label text-wrap  class = "txt" position="stacked">¿Te duele en alguna zona del cuerpo?</ion-label>
       <ion-select style = "background-color: white;border-radius:15px"[(ngModel)]="dolores" multiple="true" placeholder="Selecciona">
         <ion-select-option value="HEAD">Cabeza</ion-select-option>
+        <ion-select-option value="NECK">Cuello</ion-select-option>
+        <ion-select-option value="SHOULDER">Hombro</ion-select-option>
+        <ion-select-option value="HIGHER_BACK">Espalda alta</ion-select-option>
+        <ion-select-option value="LOWER_BACK">Espalda baja</ion-select-option>
         <ion-select-option value="TORSO">Torso</ion-select-option>
-        <ion-select-option value="LEFT_ARM">Brazo izquierdo</ion-select-option>
-        <ion-select-option value="RIGHT_ARM">Brazo derecho</ion-select-option>
-        <ion-select-option value="LEFT_LEG">Pierna izquierda</ion-select-option>
-        <ion-select-option value="RIGHT_LEG">Pierna derecha</ion-select-option>
+        <ion-select-option value="ARM">Brazo</ion-select-option>
+        <ion-select-option value="ELBOW">Codo</ion-select-option>
+        <ion-select-option value="WRIST">Muñeca</ion-select-option>
+        <ion-select-option value="HAND">Mano</ion-select-option>
+        <ion-select-option value="LEG">Pierna</ion-select-option>
+        <ion-select-option value="KNEE">Rodilla</ion-select-option>
+        <ion-select-option value="ANKLE">Tobillo</ion-select-option>
+        <ion-select-option value="FOOT">Pie</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item color = "light" lines = "none">
       <ion-label text-wrap class = "txt" position = "stacked">¿Has hecho deporte?</ion-label>
+
       <ion-toggle color="primary" [(ngModel)]="deporte" [checked]="false" [value]="entrada.done_exercise"></ion-toggle>
     </ion-item>
     <ion-item color = "light" lines = "none">
@@ -56,7 +65,8 @@
   </div>
 
   <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
-    <ion-fab-button  color = "primary" [routerLink]="['/app/Tabs/seccion-fisica']">
+
+    <ion-fab-button  color = "primary" (click)="goBack()">
       <ion-icon name="arrow-back-circle-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>

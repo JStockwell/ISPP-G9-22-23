@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AnaliticasService } from 'src/app/services/analiticas.service';
 import { DetallesMentalService } from 'src/app/services/detalles-mental.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-detalles-mental',
@@ -13,24 +14,34 @@ export class DetallesMentalPage implements OnInit {
   entrada!:mentalEntry
   dtAux:String = ""
 
-  constructor(private service:DetallesMentalService, private route: ActivatedRoute, private analiticasService: AnaliticasService) { }
+  constructor(private service:DetallesMentalService, private route: ActivatedRoute, private analiticasService: AnaliticasService,private navCtrl: NavController) { }
 
   ngOnInit() {
     this.service.getEntradaMental(this.route.snapshot.paramMap.get("id")).subscribe({
       next: data =>{
-        this.entrada = data 
 
+        this.entrada = data;
+        this.replaceSaltosLinea(this.entrada);
         let Aux:Date = new Date(this.entrada.date);
+        console.log(Aux)
         var aux2 = Aux.toLocaleDateString("es-ES", { weekday: 'long'})
-        this.dtAux = aux2.charAt(0).toUpperCase() + aux2.substring(1) + ', ' + Aux.toLocaleDateString();
+        this.dtAux = aux2.charAt(0).toUpperCase() + aux2.substring(1) + ', ' + Aux.toLocaleDateString();;
 
-        let dateAux = data.date;
-        this.entrada.date = this.analiticasService.dateFormatter_entradas(dateAux);
       },
       error:err=>{
         console.log(err.error.message)
       }
     })
+  }
+
+  replaceSaltosLinea(entry: mentalEntry): any {
+    entry.positive_thoughts = entry.positive_thoughts.replace(/\n/g, '<br>');
+    entry.negative_thoughts = entry.negative_thoughts.replace(/\n/g, '<br>');
+    entry.notes = entry.notes.replace(/\n/g, '<br>');
+  }
+
+  goBack(){
+    this.navCtrl.pop(); 
   }
 
   getImagenEstado(imagen:string): any {
@@ -61,32 +72,30 @@ export class DetallesMentalPage implements OnInit {
     if(imagen == "HEALTHY" ){
       return "/assets/images/salad.png";
     }
+    if(imagen == "NORMAL" ){
+      return "/assets/images/normal-food.png";
+    }
     if(imagen == "FAST" ){
       return "/assets/images/hamburger.png";
     }
-    
     if(imagen == "NONE" ){
       return "/assets/images/plato.png";
     }
-    
-  
-    
-  
   }
   
   getImagenSuenyo(imagen:string): any {
     if(imagen == "DEEP" ){
       return "/assets/images/slumber.png";
     }
-    if(imagen == "LIGHT" ){
+    if(imagen == "NORMAL" ){
       return "/assets/images/sleeping.png";
     }
-    
-    if(imagen == "NONE" ){
-      return "/assets/images/hotel-bed.png";
+    if(imagen == "LIGHT" ){
+      return "/assets/images/light-sleep.png";
     }
-    
-  
+    if(imagen == "NONE" ){
+      return "/assets/images/insomnia.png";
+    }
   }
   
   getImagenTiempo(imagen:string): any {

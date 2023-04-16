@@ -4,6 +4,7 @@ import { ModificarMentalService} from 'src/app/services/modificar-mental.service
 import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 registerLocaleData(localeEs, 'es');
+import { NavController } from '@ionic/angular';
 
 
 @Component({
@@ -26,7 +27,7 @@ export class ModificarMentalPage implements OnInit{
   today : string | any ='';
   dtAux : String = "";
 
-  constructor(private route:ActivatedRoute, private service:ModificarMentalService) {}
+  constructor(private route:ActivatedRoute, private service:ModificarMentalService,private navCtrl: NavController) {}
 
   ngOnInit() {
     let id = this.route.snapshot.paramMap.get('id')
@@ -51,6 +52,9 @@ export class ModificarMentalPage implements OnInit{
     })
   }
 
+  goBack(){
+    this.navCtrl.pop(); 
+  }
  editarEntradaMental():void{
 
   let dataEntry: any;

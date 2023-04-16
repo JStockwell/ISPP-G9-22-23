@@ -12,9 +12,17 @@ const routes: Routes = [
     loadChildren: () => import('./pages/users/users.module').then(m=>m.UsersPageModule)
   },
   {
+    path: 'medics/register',
+    loadChildren: () => import('./pages/medics/medics.module').then(m=>m.MedicsPageModule)
+  },
+  {
     path: 'users/login',
     loadChildren: () => import('./pages/login/login.module').then(m=>m.LoginPageModule)
   },  
+  {
+    path: 'medic/home',
+    loadChildren: () => import('./pages/medic-home/medic-home.module').then(m=>m.MedicHomePageModule)
+  },
   {
     path: 'app',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
@@ -78,6 +86,19 @@ const routes: Routes = [
     loadChildren: () => import('./pages/modificar-detalles/modificar-detalles.module').then( m => m.ModificarDetallesPageModule)
 
   },
+  {
+    path: 'modificar-cita',
+    loadChildren: () => import('./pages/modificar-cita/modificar-cita.module').then( m => m.ModificarCitaPageModule)
+  },
+  {
+    path: 'detalles-cita',
+    loadChildren: () => import('./pages/detalles-cita/detalles-cita.module').then( m => m.DetallesCitaPageModule)
+  },
+  {
+    path: 'medic-home',
+    loadChildren: () => import('./pages/medic-home/medic-home.module').then( m => m.MedicHomePageModule)
+  },
+
 
 ];
 @NgModule({
