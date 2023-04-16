@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../services/users.service';
+import { PaginaInicialService } from '../services/pagina-inicial.service';
 
 @Component({
   selector: 'app-pagina-inicial',
@@ -8,7 +9,7 @@ import { UsersService } from '../services/users.service';
 })
 export class PaginaInicialPage implements OnInit {
 
-  constructor(private uService:UsersService) { }
+  constructor(private uService:UsersService, private HomeService: PaginaInicialService) { }
 
   ngOnInit() {
   }
@@ -18,7 +19,42 @@ export class PaginaInicialPage implements OnInit {
   }
 
   toMainPage(){
-    window.location.href="app/Tabs/Analytics"
+    if(this.estaLogMedico()){
+      window.location.href="medic/home";
+      
+    }
+    else{
+      window.location.href="app/Tabs/Analytics";
+    }
+    
+
+
+  }
+
+
+  //Comprueba que se ha iniciado sesión con una cuenta de médico, para redirigir a las vistas que solo pueden ver los médicos.
+
+
+  estaLogMedico(){
+    let resultado = false;
+    if(this.uService.isLoggedIn()){
+    var ck = localStorage.getItem('auth-user');
+    console.log(ck);
+    
+      if(ck!=null){
+        var tk = JSON.parse(ck);
+        var res = [];
+        for(var i in tk){
+          if (i == "medic id"){
+            resultado = true;
+          }
+        }
+        console.log(resultado);
+        
+        return resultado
+      }
+  }
+  return resultado
   }
 
 }
