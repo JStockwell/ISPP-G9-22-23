@@ -88,6 +88,11 @@ const routes: Routes = [
         path: 'calendario/detalles-cita/:id',
         loadChildren: () => import('../pages/detalles-cita/detalles-cita.module').then( m => m.DetallesCitaPageModule)
       },
+      {
+        path: 'perfil',
+        loadChildren: () => import('../pages/perfil/perfil.module').then( m => m.PerfilPageModule)
+      },
+      
     ]
   },
   {

@@ -1,0 +1,36 @@
+<ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Perfil</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="ion-padding" color ="light">
+ 
+    <ul>
+        <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Nombre de usuario: {{username}}</ion-label>
+    </ul>
+    <ul>
+        <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Nombre: {{name}}</ion-label>
+    </ul>
+    <ul>
+        <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Apellidos: {{surname}}</ion-label>
+    </ul>
+    <ul>
+        <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Fecha nacimiento: {{birthdate}}</ion-label>
+    </ul> 
+    <ul>
+        <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Telefono: {{tel}}</ion-label>
+    </ul>  
+    <ul>
+        <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Email: {{email}}</ion-label>
+    </ul> 
+
+    <ion-button expand="block" [routerLink] = "['/preferencias-de-usuario']">
+        Editar preferencias de usuario
+    </ion-button>
+
+    <ion-button expand="block" [routerLink] = "['/app/Tabs/Analytics']">
+        Volver a inicio
+    </ion-button>
+
+  </ion-content>
