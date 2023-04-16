@@ -1,0 +1,119 @@
+<ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>
+        Registro
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content class="ion-pading " color="light">
+    
+      <div class = "ct" >
+        <img src = "../../../assets/images/Logo Prototipo.png"/>
+        
+        <form *ngIf= "!isSuccessful" name = "form" (ngSubmit)="f.form.valid && regForm()" #f = "ngForm" novalidate>
+          <ion-item color = "light" lines = "none">
+            <ion-label class="txt" for = "username" position="stacked">Nombre de usuario</ion-label>
+            <ion-input [(ngModel)]="form.username" #username="ngModel" placeholder="Introduce tu nombre de usuario" name = "username" minlength="3" required maxlength="50"  [ngClass]="{ 'is-invalid': f.submitted && username.errors }"></ion-input>
+          </ion-item>
+  
+          <div  class="invalid-feedback error" *ngIf="username.errors && f.submitted">
+            <div *ngIf="username.errors['required']">Nombre de usuario requerido</div>
+            <div *ngIf="username.errors['minlength']">
+              El nombre de usuario debe tener al menos 3 caracteres
+            </div>
+            <div *ngIf="username.errors['maxlength']">
+              El nombre de usuario puede tener como máximo 50 caracteres
+            </div>
+          </div>
+  
+          <ion-item color = "light" lines = "none">
+            <ion-label class="txt"  position="stacked">Contraseña</ion-label>
+            <ion-input type = "password" [(ngModel)]="form.password" placeholder = "Introduce tu contraseña" value = "password" name = "password" required minlength="6" #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.errors }"></ion-input>
+          </ion-item>
+          <div class="invalid-feedback error" *ngIf="password.errors && f.submitted">
+            <div *ngIf="password.errors['required']">La contraseña es obligatoria</div>
+            <div *ngIf="password.errors['minlength']">
+              La contraseña debe tener al menos 6 caracteres
+            </div>
+          </div>
+  
+          <ion-item color = "light" lines = "none">
+            <ion-label class="txt" position="stacked">Repite tu contraseña</ion-label>
+            <ion-input type = "password" [(ngModel)]="form.r_password" placeholder = "Introduce tu contraseña" value = "r_password" name = "r_password" required minlength="6" #r_password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.errors }"></ion-input>
+          </ion-item>
+          <div  class = "error" id = "invalid-r" style = "display: none;">
+            <p>Las contraseñas no coinciden</p>
+          </div>
+          <div  class="invalid-feedback-r_password error" *ngIf="r_password.errors && f.submitted">
+            <div *ngIf="r_password.errors['required']">La contraseña es obligatoria</div>
+          </div>
+  
+          <ion-item color = "light" lines = "none">
+            <ion-label class="txt" position="stacked">Nombre</ion-label>
+            <ion-input [(ngModel)]="form.first_name"placeholder="Introduce tu nombre" value="first_name" name = "first_name" required maxlength="150" #first_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && first_name.errors }"></ion-input>
+          </ion-item>
+          <div  class="invalid-feedback error" *ngIf="first_name.errors && f.submitted">
+            <div *ngIf="first_name.errors['required']">Nombre requerido</div>
+            <div *ngIf="first_name.errors['maxlength']">
+              El nombre puede tener como máximo 150 caracteres
+            </div>
+          </div>
+  
+          <ion-item color = "light" lines = "none">
+            <ion-label class="txt" position="stacked">Apellidos</ion-label>
+            <ion-input [(ngModel)]="form.last_name"placeholder="Introduce tus apellidos" value = "last_name" name = "last_name" required maxlength = "150" #last_name = "ngModel"[ngClass]="{ 'is-invalid': f.submitted && last_name.errors }" ></ion-input>
+          </ion-item>
+          <div  class="invalid-feedback error" *ngIf="last_name.errors && f.submitted">
+            <div *ngIf="last_name.errors['required']">Apellidos requeridos</div>
+            <div *ngIf="last_name.errors['maxlength']">
+              Los apellidos puede tener como máximo 150 caracteres
+            </div>
+          </div>
+  
+          
+          <ion-item color = "light" lines = "none">
+            <ion-label class="txt" position="stacked">Correo</ion-label>
+            <ion-input type = "email" [(ngModel)]="form.email"placeholder="correo@dominio.com" name = "email" required email #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.errors }"></ion-input>
+          </ion-item>
+          <div class="invalid-feedback error" *ngIf="email.errors && f.submitted">
+            <div *ngIf="email.errors['required']">Se necesita una dirección de correo electrónico</div>
+            <div *ngIf="email.errors['email']">
+              Este campo debe ser una dirección de correo válida
+            </div>
+          </div>
+  
+          
+          <ion-item color = "light" lines = "none">
+            <ion-label class="txt" position="stacked">Teléfono</ion-label>
+            <ion-input type = "tel" [(ngModel)]="form.tel" placeholder="612345678" name = "tel" value="tel" required #tel="ngModel" [ngClass]="{ 'is-invalid': f.submitted && tel.errors }" ></ion-input>
+          </ion-item>
+          <div class="invalid-feedback error" *ngIf="email.errors && f.submitted">
+            <div *ngIf="email.errors['required']">Se necesita un número de teléfono</div>
+          </div>
+  
+          
+          <ion-item color = "light" lines = "none">
+            <ion-label class="txt" type="date" position="stacked">Fecha de nacimiento</ion-label>
+            <ion-input type = "date" [(ngModel)]="form.birthdate"   name = "birthdate" required #birthdate = "ngModel" [ngClass] = "{ 'is-invalid': f.submitted && birthdate.errors }"></ion-input>
+          </ion-item>
+          <div class="invalid-feedback error" *ngIf="birthdate.errors && f.submitted">
+            <div *ngIf="birthdate.errors['required']">Se necesita la fecha de nacimiento</div>
+          </div>
+          
+  
+          <ion-button color="primary" expand="block" type = "submit" >
+            Registrarse
+          </ion-button>
+  
+          <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+            ¡El registro ha fallado!<br />{{ errorMessage }}
+          </div>
+        </form>
+      
+  
+      </div>
+    
+    
+  </ion-content>
+  
