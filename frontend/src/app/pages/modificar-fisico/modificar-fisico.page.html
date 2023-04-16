@@ -5,13 +5,14 @@
 </ion-header>
 
 <ion-content class="ion-padding" color ="light" *ngIf="entrada!=undefined && entrada!=null">
-  <ion-card color = "warning">
+  <div color = "light">
     <ion-text color="primary">
       <h1 style="text-align: center; padding-bottom: 2%; font-weight: bold;">{{ dtAux}}</h1>
     </ion-text>
-    <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">¿Qué tal te sientes hoy físicamente?</ion-label>
-    <ion-item color = "warning" style="padding-top: 3%;">
-      <ion-segment [(ngModel)]="estadoFisico" scrollable>
+    
+    <ion-item color = "light" style="padding-top: 3%;" lines = "none">
+      <ion-label text-wrap class = "txt" position="stacked">¿Cómo te sientes hoy?</ion-label>
+      <ion-segment [(ngModel)]="estadoFisico"  scrollable>
         <ion-segment-button value="VG">
           <img src="/assets/images/cara-muy-feliz.png">
         </ion-segment-button>
@@ -29,9 +30,9 @@
         </ion-segment-button>
       </ion-segment>
     </ion-item>
-    <ion-item color = "warning">
-      <ion-label position="floating">¿Te duele en alguna zona del cuerpo?</ion-label>
-      <ion-select [(ngModel)]="dolores" multiple="true" placeholder="Selecciona">
+    <ion-item color = "light" lines = "none">
+      <ion-label text-wrap  class = "txt" position="stacked">¿Te duele en alguna zona del cuerpo?</ion-label>
+      <ion-select style = "background-color: white;border-radius:15px"[(ngModel)]="dolores" multiple="true" placeholder="Selecciona">
         <ion-select-option value="HEAD">Cabeza</ion-select-option>
         <ion-select-option value="TORSO">Torso</ion-select-option>
         <ion-select-option value="LEFT_ARM">Brazo izquierdo</ion-select-option>
@@ -40,22 +41,22 @@
         <ion-select-option value="RIGHT_LEG">Pierna derecha</ion-select-option>
       </ion-select>
     </ion-item>
-    <ion-item color = "warning">
-      <ion-label>¿Has hecho deporte?</ion-label>
+    <ion-item color = "light" lines = "none">
+      <ion-label text-wrap class = "txt" position = "stacked">¿Has hecho deporte?</ion-label>
       <ion-toggle color="primary" [(ngModel)]="deporte" [checked]="false" [value]="entrada.done_exercise"></ion-toggle>
     </ion-item>
-    <ion-item color = "warning">
-      <ion-label position="floating">Notas</ion-label>
-      <ion-textarea [(ngModel)]="notas" placeholder="Desarrolla aquí como te sientes y el deporte que hayas hecho." type="text"></ion-textarea>
+    <ion-item color = "light" lines = "none">
+      <ion-label class = "txt" position="stacked">Notas</ion-label>
+      <ion-textarea style = "background-color: white;" [(ngModel)]="notas" placeholder="Desarrolla aquí como te sientes y el deporte que hayas hecho." type="text"></ion-textarea>
     </ion-item>
     
-    <ion-button color="dark" expand="block" (click)="editarEntradaFisica()">
+    <ion-button color="primary" style = "width:75%"expand="block" (click)="editarEntradaFisica()">
       Modificar entrada
     </ion-button>
-  </ion-card>
+  </div>
 
   <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
-    <ion-fab-button  color = "secondary" [routerLink]="['/app/Tabs/seccion-fisica']">
+    <ion-fab-button  color = "primary" [routerLink]="['/app/Tabs/seccion-fisica']">
       <ion-icon name="arrow-back-circle-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>

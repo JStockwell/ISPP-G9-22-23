@@ -5,35 +5,34 @@
 </ion-header>
 
 <ion-content class="ion-padding" color ="light">
-  <div class = "ct">
+  <div color = "light">
     <ion-text color="primary">
-      <h1 style="text-align: center; font-weight: bold;">{{ dtAux }}</h1>
+      <h1 style="text-align: center; font-weight: bold; padding-bottom: 5%;">{{ dtAux }}</h1>
     </ion-text>
-    <div class="invalid-feedback error" *ngIf="errorMessage"  > {{errorMessage}}</div>
     
-    <ion-item color = "light" style="padding-top: 3%;">
-      <ion-label text-wrap class = "txt" position="stacked">¿Cómo te sientes hoy?</ion-label>
+    <ion-item color = "light" style="padding-top: 3%;" lines = "none">
+      <ion-label class = "txt" position="stacked">¿Cómo te sientes hoy?</ion-label>
       <ion-segment [(ngModel)]="estadoFisico"  scrollable>
         <ion-segment-button value="VG">
-          <img style = "min-width: 13px;"src="/assets/images/cara-muy-feliz.png">
+          <img src="/assets/images/cara-muy-feliz.png">
         </ion-segment-button>
         <ion-segment-button value="G">
-          <img style = "min-width: 13px;"src="/assets/images/cara-feliz.png">
+          <img src="/assets/images/cara-feliz.png">
         </ion-segment-button>
         <ion-segment-button value="F">
-          <img style = "min-width: 13px;"src="/assets/images/cara-neutral.png">
+          <img src="/assets/images/cara-neutral.png">
         </ion-segment-button>
         <ion-segment-button value="B">
-          <img style = "min-width: 13px;"src="/assets/images/cara-triste.png">
+          <img src="/assets/images/cara-triste.png">
         </ion-segment-button>
         <ion-segment-button value="VB">
-          <img style = "min-width: 13px;"src="/assets/images/cara-muy-triste.png">
+          <img src="/assets/images/cara-muy-triste.png">
         </ion-segment-button>
       </ion-segment>
     </ion-item>
     <ion-item color = "light" lines = "none">
-      <ion-label  text-wrap  class = "txt" position="stacked">¿Te duele en alguna parte del cuerpo?</ion-label>
-      <ion-select style = "background-color: white; border-radius:15px" [(ngModel)]="dolores" multiple="true" placeholder="Selecciona">
+      <ion-label text-wrap  class = "txt" position="stacked">¿Te duele en alguna zona del cuerpo?</ion-label>
+      <ion-select style = "background-color: white;border-radius:15px"[(ngModel)]="dolores" multiple="true" placeholder="Selecciona">
         <ion-select-option value="HEAD">Cabeza</ion-select-option>
         <ion-select-option value="TORSO">Torso</ion-select-option>
         <ion-select-option value="LEFT_ARM">Brazo izquierdo</ion-select-option>
@@ -42,13 +41,13 @@
         <ion-select-option value="RIGHT_LEG">Pierna derecha</ion-select-option>
       </ion-select>
     </ion-item>
-    <ion-item style = "width:100%;"color = "light" lines = "none">
-      <ion-label text-wrap class = "txt" style = "width:100%;" position = "stacked">¿Has hecho deporte?</ion-label>
-      <ion-toggle color="primary" [(ngModel)]="deporte" [checked]="false"></ion-toggle>
+    <ion-item color = "light" lines = "none">
+      <ion-label text-wrap class = "txt" position = "stacked">¿Has hecho deporte?</ion-label>
+      <ion-toggle color="primary" [(ngModel)]="deporte" [checked]="false" ></ion-toggle>
     </ion-item>
     <ion-item color = "light" lines = "none">
       <ion-label class = "txt" position="stacked">Notas</ion-label>
-      <ion-textarea [(ngModel)]="notas" placeholder="Desarrolla aquí como te sientes y el deporte que hayas hecho." type="text"></ion-textarea>
+      <ion-textarea style = "background-color: white;" [(ngModel)]="notas" placeholder="Desarrolla aquí como te sientes y el deporte que hayas hecho." type="text"></ion-textarea>
     </ion-item>
     
     <ion-button color="primary" expand="block" (click)="crearEntradaFisica()">
