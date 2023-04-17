@@ -14,17 +14,11 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.contrib.auth import authenticate
 from datetime import datetime
 
-class PatientList(APIView):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
-    @swagger_auto_schema(
-        manual_parameters=[],
-        security=[],
-        responses={'200': PatientSerializer})
-    def get(self, request):
-        patients = Patient.objects.all()
-        serializer = PatientSerializer(patients, many=True)
-        return Response(serializer.data)
+def permissions_checker(id, token):
+    token_owner = token.user
+    if (int(id) != token_owner.id):
+        return True
+
 
 class PatientCreate(APIView):
     authentication_classes = [TokenAuthentication]
@@ -94,6 +88,8 @@ class PatientId(APIView):
     def get(self, request, *args, **kwargs):
         pk = self.kwargs.get('pk')
         patient = get_object_or_404(Patient, id=pk)
+        if (permissions_checker(patient.user.id, request.auth) == True):
+            return Response({"error": "El propietario del token de acceso proporcionado no corresponde con el usuario que se está referenciando en la petición"}, status=status.HTTP_400_BAD_REQUEST)
         serializer = PatientSerializer(patient)
         return Response(serializer.data)
     
@@ -104,6 +100,8 @@ class PatientId(APIView):
     def delete(self, request, *args, **kwargs):
         pk = self.kwargs.get('pk')
         patient = get_object_or_404(Patient, id=pk)
+        if (permissions_checker(patient.user.id, request.auth) == True):
+            return Response({"error": "El propietario del token de acceso proporcionado no corresponde con el usuario que se está referenciando en la petición"}, status=status.HTTP_400_BAD_REQUEST)
         patient.delete()
         return Response({"message":"Paciente con id: " +str(pk) +" borrado correctamente"}, status=status.HTTP_200_OK)
     
@@ -130,6 +128,8 @@ class PatientId(APIView):
         pk = self.kwargs.get('pk')
         patient = get_object_or_404(Patient, id=pk)
         user = patient.user
+        if (permissions_checker(user.id, request.auth) == True):
+            return Response({"error": "El propietario del token de acceso proporcionado no corresponde con el usuario que se está referenciando en la petición"}, status=status.HTTP_400_BAD_REQUEST)
         dateToday = datetime.today().date()
         if serializer.is_valid():
             fields = serializer.validated_data.items()
@@ -166,20 +166,6 @@ class PatientId(APIView):
             return Response(PatientSerializer(patient).data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class MedicList(APIView):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
-    @swagger_auto_schema(
-        manual_parameters=[],
-        security=[],
-        responses={'200': MedicSerializer})
-    def get(self, request):
-        medics = Medic.objects.all()
-        serializer = MedicSerializer(medics, many=True)
-        return Response(serializer.data)
-
 
 class MedicCreate(APIView):
     authentication_classes = [TokenAuthentication]
@@ -245,6 +231,8 @@ class MedicId(APIView):
     def get(self, request, *args, **kwargs):
         pk = self.kwargs.get('pk')
         medic = get_object_or_404(Medic, id=pk)
+        if (permissions_checker(medic.user.id, request.auth) == True):
+            return Response({"error": "El propietario del token de acceso proporcionado no corresponde con el usuario que se está referenciando en la petición"}, status=status.HTTP_400_BAD_REQUEST)
         serializer = MedicSerializer(medic)
         return Response(serializer.data)
     
@@ -255,6 +243,8 @@ class MedicId(APIView):
     def delete(self, request, *args, **kwargs):
         pk = self.kwargs.get('pk')
         medic = get_object_or_404(Medic, id=pk)
+        if (permissions_checker(medic.user.id, request.auth) == True):
+            return Response({"error": "El propietario del token de acceso proporcionado no corresponde con el usuario que se está referenciando en la petición"}, status=status.HTTP_400_BAD_REQUEST)
         medic.delete()
         return Response({"message":"Médico con id: " +str(pk) +" borrado correctamente"}, status=status.HTTP_200_OK)
     
@@ -276,6 +266,8 @@ class MedicId(APIView):
         pk = self.kwargs.get('pk')
         medic = get_object_or_404(Medic, id=pk)
         user = medic.user
+        if (permissions_checker(user.id, request.auth) == True):
+            return Response({"error": "El propietario del token de acceso proporcionado no corresponde con el usuario que se está referenciando en la petición"}, status=status.HTTP_400_BAD_REQUEST)
         dateToday = datetime.today().date()
         if serializer.is_valid():
             fields = serializer.validated_data.items()
@@ -348,7 +340,6 @@ class LogoutView(APIView):
         manual_parameters=[],
         security=[],
         responses={'200': "Sesión cerrada"})
-
     def get(self, request):
         request.user.auth_token.delete()
         return Response({'message': 'Sesión cerrada'},status=status.HTTP_200_OK)
@@ -364,6 +355,8 @@ class AssignationPatients(APIView):
     def post(self, request, *args, **kwargs):
         medic_id = self.kwargs.get('pk_medic')
         medic = get_object_or_404(Medic, id=medic_id)
+        if (permissions_checker(medic.user.id, request.auth) == True):
+            return Response({"error": "El propietario del token de acceso proporcionado no corresponde con el usuario que se está referenciando en la petición"}, status=status.HTTP_400_BAD_REQUEST)
         code = self.kwargs.get('code')
         patient = get_object_or_404(Patient, code=code)
 
@@ -380,6 +373,8 @@ class AssignationPatients(APIView):
     def delete(self, request, *args, **kwargs):
         medic_id = self.kwargs.get('pk_medic')
         medic = get_object_or_404(Medic, id=medic_id)
+        if (permissions_checker(medic.user.id, request.auth) == True):
+            return Response({"error": "El propietario del token de acceso proporcionado no corresponde con el usuario que se está referenciando en la petición"}, status=status.HTTP_400_BAD_REQUEST)
         code = self.kwargs.get('code')
         patient = get_object_or_404(Patient, code=code)
 
@@ -400,6 +395,8 @@ class PatientsOfMedic(APIView):
     def get(self, request, *args, **kwargs):
         medic_id = self.kwargs.get('pk_medic')
         medic = get_object_or_404(Medic, id=medic_id)
+        if (permissions_checker(medic.user.id, request.auth) == True):
+            return Response({"error": "El propietario del token de acceso proporcionado no corresponde con el usuario que se está referenciando en la petición"}, status=status.HTTP_400_BAD_REQUEST)
         patients = medic.patients.all()
         serializer = PatientSerializer(patients, many=True)
         return Response(serializer.data,status=status.HTTP_200_OK)
