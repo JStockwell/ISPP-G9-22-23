@@ -10,6 +10,7 @@ registerLocaleData(localeEs, 'es');
 import { AlertController } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { resolve } from 'chart.js/dist/helpers/helpers.options';
 
 @Component({
   selector: 'app-nueva-entrada-mental',
@@ -26,6 +27,7 @@ export class NuevaEntradaMentalPage implements OnInit{
   tiempo:string | undefined
   ppositivos:string | undefined
   pnegativos:string | undefined
+  regla:boolean | undefined
   today = new Date();
   errorMessage = '';
   errorMessageEstado = '';
@@ -69,6 +71,7 @@ export class NuevaEntradaMentalPage implements OnInit{
       weather : this.tiempo,
       food: this.comida,
       sleep: this.suenyo,
+      period_now : this.regla,
       positive_thoughts: this.ppositivos,
       negative_thoughts: this.pnegativos,
       notes: this.notas,
@@ -129,5 +132,23 @@ export class NuevaEntradaMentalPage implements OnInit{
     }
   }
 
+  
+  getRegla(){
+   
+    this.uService.getUserData().subscribe({
+      
+      next: data => {
+        console.log(data.has_period)
+        return data.has_period;
+        
+      },
+      error: err => {
+        console.log(err);
+
+      }
+      
+    })
+    
+  }
 
 }

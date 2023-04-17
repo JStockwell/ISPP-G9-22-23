@@ -100,6 +100,11 @@
         <div class="invalid-feedback error" *ngIf="birthdate.errors && f.submitted">
           <div *ngIf="birthdate.errors['required']">Se necesita la fecha de nacimiento</div>
         </div>
+
+        <ion-item color = "light" lines="none">
+          <ion-label class="txt" type="date" position="stacked">¿Tienes la regla?</ion-label>
+          <ion-toggle color="primary" [(ngModel)]="form.has_period" value = "has_period" name = "has_period" #has_period="ngModel" [checked]="false" ></ion-toggle>
+        </ion-item>
         
 
         <ion-button color="primary" expand="block" type = "submit" >
