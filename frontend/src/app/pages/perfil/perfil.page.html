@@ -5,7 +5,7 @@
   </ion-header>
 
   <ion-content class="ion-padding" color ="light">
- 
+    
     <ul>
         <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Nombre de usuario: {{username}}</ion-label>
     </ul>
@@ -24,9 +24,16 @@
     <ul>
         <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Email: {{email}}</ion-label>
     </ul> 
+    <ul>
+        <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Código: {{code}}</ion-label>
+    </ul> 
 
     <ion-button expand="block" [routerLink] = "['/preferencias-de-usuario']">
         Editar preferencias de usuario
+    </ion-button>
+
+    <ion-button expand="block" [routerLink] = "['/preferencias-de-usuario']">
+        Editar perfil
     </ion-button>
 
     <ion-button expand="block" [routerLink] = "['/app/Tabs/Analytics']">
