@@ -88,8 +88,6 @@ class PatientId(APIView):
     def get(self, request, *args, **kwargs):
         pk = self.kwargs.get('pk')
         patient = get_object_or_404(Patient, id=pk)
-        if (permissions_checker(patient.user.id, request.auth) == True):
-            return Response({"error": "El propietario del token de acceso proporcionado no corresponde con el usuario que se está referenciando en la petición"}, status=status.HTTP_400_BAD_REQUEST)
         serializer = PatientSerializer(patient)
         return Response(serializer.data)
     
