@@ -75,7 +75,7 @@ export class UsersService {
     return this.http.post(API_URL+'users/login/',user,httpOptions);
   }
   logout(): Observable<any> {
-    return this.http.post(API_URL+ 'signout', { }, httpOptions);
+    return this.http.get(API_URL+ 'users/logout');
   }
 
   public UserData(): Observable<any> {

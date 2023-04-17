@@ -52,4 +52,8 @@ export class PerfilPage implements OnInit {
 
           });
     }
+    cerrarsesion(){
+      localStorage.clear();
+      window.location.href=""
+    }
 }
