@@ -56,6 +56,10 @@ const routes: Routes = [
         loadChildren: () => import('../pages/nueva-entrada-fisica/nueva-entrada-fisica.module').then(m=>m.NuevaEntradaFisicaPageModule)        
       },
       {
+        path: 'seccion-fisica/calendar',
+        loadChildren: ()=> import('../pages/calendario-fisico/calendario-fisico.module').then(m=>m.CalendarioFisicoPageModule)
+      },
+      {
         path: 'seccion-mental/:id/edit',
         loadChildren: () => import('../pages/modificar-mental/modificar-mental-routing.module').then(m=>m.ModificarMentalPageRoutingModule)
       },
