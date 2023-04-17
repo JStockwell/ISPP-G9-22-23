@@ -11,7 +11,9 @@
   </div>
   
 
-  
+    <ion-button color="primary" expand="block" [routerLink]="['/users/medics/patients/New']">
+      Añadir paciente
+    </ion-button>
 
   <div *ngIf="existsPatients(); then renderPatients else noPatients"></div>
   <ng-template #renderPatients>
@@ -35,9 +37,7 @@
       </ion-card>
     </div>
 
-    <ion-button color="primary" expand="block" [routerLink]="['/users/medics/patients/New']">
-      Añadir paciente
-    </ion-button>
+  
     
   </ng-template>
 
