@@ -13,7 +13,12 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.contrib.auth import authenticate
 from datetime import datetime
-from aux.permissions import permissions_checker
+
+def permissions_checker(id, token):
+    token_owner = token.user
+    if (int(id) != token_owner.id):
+        return True
+
 
 class PatientCreate(APIView):
     authentication_classes = [TokenAuthentication]
