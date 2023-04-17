@@ -3,7 +3,6 @@ name: Pythonanywhere Auto-Deployment (develop)
 on:
   push:
     branches:
-    - main
     - develop
 
 jobs:
