@@ -121,7 +121,11 @@ const routes: Routes = [
     path: 'medic-home',
     loadChildren: () => import('./pages/medic-home/medic-home.module').then( m => m.MedicHomePageModule)
 
+  },  {
+    path: 'info',
+    loadChildren: () => import('./pages/info/info.module').then( m => m.InfoPageModule)
   },
+
 
 
 ];

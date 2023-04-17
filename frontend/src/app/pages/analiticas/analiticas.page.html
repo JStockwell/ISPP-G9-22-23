@@ -10,9 +10,8 @@
     <div *ngFor="let item of analiticas">
       <ion-card
         button
-        color="warning"
         [routerLink]="['/app/Tabs/Analytics/Details/'+item.id]"
-      >
+        style = "color:white">
         <ion-label style="text-align: center">
           <h1 style="margin-top: 5%; margin-bottom: 1.5%; color: black">
             {{ item.info.name }}
