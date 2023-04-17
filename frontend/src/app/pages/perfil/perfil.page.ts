@@ -53,7 +53,16 @@ export class PerfilPage implements OnInit {
           });
     }
     cerrarsesion(){
-      localStorage.clear();
-      window.location.href=""
+      
+      this.userService.logout().subscribe(
+        (data) =>{
+          localStorage.clear();
+          window.location.href=""
+        },
+        error =>{
+          console.log(error)
+        }
+        );
+      
     }
 }
