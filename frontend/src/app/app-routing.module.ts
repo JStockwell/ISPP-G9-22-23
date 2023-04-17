@@ -112,10 +112,15 @@ const routes: Routes = [
     path: 'preferencias-de-usuario',
     loadChildren: () => import('./pages/preferencias-de-usuario/preferencias-de-usuario.module').then( m => m.PreferenciasDeUsuarioPageModule)
   },
-    {
-    path: 'perfil-de-usuario',
-    loadChildren: () => import('./pages/perfil/perfil.module').then(m => m.PerfilPageModule)
-    },
+  {
+  path: 'perfil-de-usuario',
+  loadChildren: () => import('./pages/perfil/perfil.module').then(m => m.PerfilPageModule)
+  },
+  {
+    path: 'editar-datos-perfil',
+    loadChildren: () => import('./pages/modificar-perfil/modificar-perfil.module').then(m => m.ModificarPerfilPageModule)
+  },
+
   {
 
     path: 'medic-home',

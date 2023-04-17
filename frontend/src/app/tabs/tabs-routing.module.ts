@@ -92,6 +92,10 @@ const routes: Routes = [
         path: 'perfil',
         loadChildren: () => import('../pages/perfil/perfil.module').then( m => m.PerfilPageModule)
       },
+      {
+        path: 'perfil/editar-datos-perfil',
+        loadChildren: () => import('../pages/modificar-perfil/modificar-perfil.module').then( m => m.ModificarPerfilPageModule)
+      },
       
     ]
   },

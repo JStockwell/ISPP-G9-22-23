@@ -1,6 +1,6 @@
 <ion-header>
     <ion-toolbar color="primary">
-      <ion-title>Perfil</ion-title>
+      <ion-title>Modificar datos de Perfil</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding" color ="light">
@@ -8,44 +8,39 @@
         <form name = "form">
           <ion-item color = "light"  lines = "none">
             <ion-label class="txt" for = "username" position="stacked">Nombre de usuario</ion-label>
-            <ion-input value={{username}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
+            <ion-input value={{username}} name = "username" minlength="3" required maxlength="50"></ion-input>
           </ion-item>
   
           <ion-item color = "light"  lines = "none">
               <ion-label class="txt" for = "username" position="stacked">Nombre</ion-label>
-              <ion-input value={{name}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
+              <ion-input value={{name}}  name = "username" minlength="3" required maxlength="50"></ion-input>
           </ion-item>
   
           <ion-item color = "light"  lines = "none">
               <ion-label class="txt" for = "username" position="stacked">Apellidos</ion-label>
-              <ion-input value={{surname}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
+              <ion-input value={{surname}}  name = "username" minlength="3" required maxlength="50"></ion-input>
           </ion-item>
   
           <ion-item color = "light"  lines = "none">
               <ion-label class="txt" for = "username" position="stacked">Fecha de nacimiento</ion-label>
-              <ion-input value={{birthdate}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
+              <ion-input value={{birthdate}}  name = "username" minlength="3" required maxlength="50"></ion-input>
           </ion-item>
   
           <ion-item color = "light"  lines = "none">
               <ion-label class="txt" for = "username" position="stacked">Telefono</ion-label>
-              <ion-input value={{tel}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
+              <ion-input value={{tel}}  name = "username" minlength="3" required maxlength="50"></ion-input>
           </ion-item>
   
           <ion-item color = "light"  lines = "none">
               <ion-label class="txt" for = "username" position="stacked">Email</ion-label>
-              <ion-input value={{email}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
+              <ion-input value={{email}}  name = "username" minlength="3" required maxlength="50"></ion-input>
           </ion-item>
     
         </form>
       </div>
 
-
-    <ion-button expand="block" [routerLink] = "['/preferencias-de-usuario']">
-        Preferencias de usuario
-    </ion-button>
-
-    <ion-button expand="block" [routerLink] = "['/editar-datos-perfil']">
-        Editar datos
-    </ion-button>
+      <ion-button color="dark" expand="block" (click)="editarPerfil()">
+        Modificar entrada
+      </ion-button>
 
   </ion-content>
