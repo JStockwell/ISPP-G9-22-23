@@ -26,10 +26,18 @@
       <ion-toggle color="primary"[(ngModel)]="share_mental_entries" [checked]="false"></ion-toggle>
     </ion-item>
 
-    <ion-button color="dark" expand="block" (click)="editarPreferenciasUsuario()">
+    <ion-button  color = "primary" expand="block" (click)="editarPreferenciasUsuario()">
       Guardar configuración
     </ion-button>
   </ion-card>
+
+
+  <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
+
+    <ion-fab-button  color = "primary" (click)="goBack()">
+      <ion-icon name="arrow-back-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
   
 
