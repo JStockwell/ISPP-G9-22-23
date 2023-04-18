@@ -75,7 +75,22 @@ export class UsersService {
     return this.http.post(API_URL+'users/login/',user,httpOptions);
   }
   logout(): Observable<any> {
-    return this.http.post(API_URL+ 'signout', { }, httpOptions);
+
+    if(this.isLoggedIn()){
+      var ck = localStorage.getItem('auth-user')
+      if(ck!=null){
+        var tk = JSON.parse(ck);
+        var res = [];
+        for(var i in tk){
+          res.push(tk[i]);
+        }
+        let headers = new HttpHeaders()
+        headers = headers.set('Authorization', 'Token '+res[0])
+
+        return this.http.get(API_URL + `users/logout/`,{'headers':headers})
+      }
+    }
+    return new Observable<any>;
   }
 
   public UserData(): Observable<any> {

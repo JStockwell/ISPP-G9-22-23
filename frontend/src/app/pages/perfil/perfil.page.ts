@@ -55,6 +55,20 @@ export class PerfilPage implements OnInit {
           });
     }
 
+    cerrarsesion(){
+      
+      this.userService.logout().subscribe(
+        (data) =>{
+          localStorage.clear();
+          window.location.href=""
+        },
+        error =>{
+          console.log(error)
+        }
+        );
+      
+
+
     setOpen(isOpen: boolean) {
       this.isModalOpen = isOpen;
     }
