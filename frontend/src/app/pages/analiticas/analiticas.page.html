@@ -12,10 +12,17 @@
         button
         [routerLink]="['/app/Tabs/Analytics/Details/'+item.id]"
         style = "color:white">
+
         <ion-label style="text-align: center">
           <h1 style="margin-top: 5%; margin-bottom: 1.5%; color: black">
-            {{ item.info.name }}
+            {{ item.info.name }} 
+            
+              <img *ngIf="item.favorite==true"   src = "/assets/images/star.png" width="8%">
+            
+         
           </h1>
+          
+          
           <div *ngFor="let measure of mediciones">
             <ion-item *ngIf="measure.metric.id == item.id" color="warning">
               <ion-label class="ion-text-wrap"

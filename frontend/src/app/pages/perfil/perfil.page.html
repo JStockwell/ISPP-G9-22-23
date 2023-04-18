@@ -29,29 +29,16 @@
     <ion-button style = "width: 60%; margin-top: 10%;margin-left: auto; margin-right: auto;" expand="block" [routerLink] = "['/preferencias-de-usuario']">
       Editar preferencias
     </ion-button>
-    <ion-button style = "width: 60%; margin-top: 15%;margin-left: auto; margin-right: auto;" expand = "block" (click)="setOpen(true)">Borrar Cuenta</ion-button>
+    <ion-button style = "width: 60%; margin-top: 10%;margin-left: auto; margin-right: auto;" expand = "block" (click)="setOpen(true)">Borrar Cuenta</ion-button>
 
-    <div style = "display: flex; margin-left: 6%; margin-right: auto; margin-top: 50%;">
-      
-      <ion-button style = "margin-right: 5%; width:141px;" expand = "block" [routerLink] = "['/app/Tabs/perfil/info']">
-        Acerca de nosotros
-      </ion-button>
-      <ion-button expand="block" style = "margin-right: 10%; width:150px;" (click)="cerrarsesion()">
-          Cerrar sesión
-      </ion-button>
-        
-       
-        
-    </div>
-    <div style = "display: flex; margin-left: 11%; margin-right: auto; margin-top: 10%;">
-    
-    </div>
-  
-  
-    
+    <ion-button style = "margin-left: auto;margin-right: auto; width:60%; margin-top: 30%;" expand = "block" [routerLink] = "['/app/Tabs/perfil/info']">
+      Acerca de nosotros
+    </ion-button>    
     
 
-   
+    <ion-button expand="block" style = "margin-left: auto; margin-top: 10%;   margin-right: auto; width:60%;" (click)="cerrarsesion()">
+      Cerrar sesión
+    </ion-button>
 
     
     <ion-modal [isOpen]="isModalOpen">
