@@ -15,13 +15,14 @@
       >
       
         
-        <div style="text-align: right; color: yellow;">
-          <ion-icon name="star-outline"></ion-icon>
-        </div>
+        
+        
+        
         <ion-label style="text-align: center">
           <h1 style="margin-top: 5%; margin-bottom: 1.5%; color: black">
-            {{ item.info.name }} {{ item.favorite }}
+            {{ item.info.name }} <ion-icon class="icono" *ngIf="item.favorite==true" name="star-outline"></ion-icon>
           </h1>
+          
           
           <div *ngFor="let measure of mediciones">
             <ion-item *ngIf="measure.metric.id == item.id" color="warning">

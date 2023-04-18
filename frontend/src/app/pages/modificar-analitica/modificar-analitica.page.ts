@@ -30,7 +30,7 @@ export class ModificarAnaliticaPage implements OnInit {
         this.unidad=data.info.unit;
         this.umbralAlto=data.max_value;
         this.umbralBajo=data.min_value;
-        this.favorita=false;
+        this.favorita=data.favorite;
         this.metric = data;
       },
       error:err=>{

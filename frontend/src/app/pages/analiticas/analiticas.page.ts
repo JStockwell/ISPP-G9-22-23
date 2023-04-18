@@ -26,6 +26,7 @@ export class AnaliticasPage implements OnInit {
   analiticas = new Array<analitica>
   mediciones = new Array<measure>
   medicionesAux = new Array<measure>
+  favorita = false;
   
   constructor(private analiticasService: AnaliticasService, private loadingCtrl: LoadingController, private uService: UsersService, private calendarioService: CalendarioService, private alertController: AlertController) {}
 
