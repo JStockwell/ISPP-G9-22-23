@@ -8,6 +8,7 @@ import { eventos } from '../../services/settings';
 
 
 
+
 @Component({
   selector: 'app-analiticas',
   templateUrl: './analiticas.page.html',
@@ -82,6 +83,7 @@ export class AnaliticasPage implements OnInit {
     });
 
   }
+
 
   createMeasuresv2(analitica:any){
     this.analiticasService.getLatestDetails(analitica.id).subscribe({
@@ -186,6 +188,7 @@ type analitica = {
   },
   min_value: null,
   max_value: null,
+  favorite: null
 };
 type measure = {
   id: null,
