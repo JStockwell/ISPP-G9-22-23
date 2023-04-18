@@ -66,7 +66,7 @@ export class PerfilPage implements OnInit {
           console.log(error)
         }
         );
-      
+      }  
 
 
     setOpen(isOpen: boolean) {

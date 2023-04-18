@@ -1,9 +1,7 @@
 <ion-header>
     <ion-toolbar color="primary">
         <ion-title>Perfil</ion-title>
-        <ion-buttons slot="end">
-          <ion-button (click)="setOpen(true)">Borrar Cuenta</ion-button>
-        </ion-buttons>
+       
       </ion-toolbar>
   </ion-header>
 
@@ -28,23 +26,30 @@
         <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Email: {{email}}</ion-label>
     </ul> 
 
-        <ion-button style = "width: 60%; margin-top: 10%;margin-left: auto; margin-right: auto;" expand="block" [routerLink] = "['/preferencias-de-usuario']">
-        Editar preferencias
+    <ion-button style = "width: 60%; margin-top: 10%;margin-left: auto; margin-right: auto;" expand="block" [routerLink] = "['/preferencias-de-usuario']">
+      Editar preferencias
     </ion-button>
+    <ion-button style = "width: 60%; margin-top: 15%;margin-left: auto; margin-right: auto;" expand = "block" (click)="setOpen(true)">Borrar Cuenta</ion-button>
 
-    <div style = "display: flex; margin-left: 2.5%; margin-right: auto; margin-top: 80%;">
-        <ion-button style="margin-right: 5%;" expand="block" [routerLink] = "['/app/Tabs/Analytics']">
-            Volver a inicio
-        </ion-button>
-    
-        <ion-button expand="block" (click)="cerrarsesion()">
-            Cerrar sesión
-        </ion-button>
-    </div>
-    
-    <ion-button [routerLink] = "['/app/Tabs/perfil/info']">
+    <div style = "display: flex; margin-left: 6%; margin-right: auto; margin-top: 50%;">
+      
+      <ion-button style = "margin-right: 5%; width:141px;" expand = "block" [routerLink] = "['/app/Tabs/perfil/info']">
         Acerca de nosotros
-    </ion-button>
+      </ion-button>
+      <ion-button expand="block" style = "margin-right: 10%; width:150px;" (click)="cerrarsesion()">
+          Cerrar sesión
+      </ion-button>
+        
+       
+        
+    </div>
+    <div style = "display: flex; margin-left: 11%; margin-right: auto; margin-top: 10%;">
+    
+    </div>
+  
+  
+    
+    
 
    
 
