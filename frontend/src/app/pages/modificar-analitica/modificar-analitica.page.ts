@@ -19,6 +19,8 @@ export class ModificarAnaliticaPage implements OnInit {
   umbralAlto:string | undefined
   umbralBajo:string | undefined
   unidad:string | undefined
+  favorita:boolean | undefined
+
   constructor(private newAnalyticService: NewAnalyticService, private navCtrl: NavController, private uService: UsersService,
     private analiticaService:DetalleAnaliticasService, private route:ActivatedRoute, private service:ModificarAnaliticaService) { }
 
@@ -28,6 +30,7 @@ export class ModificarAnaliticaPage implements OnInit {
         this.unidad=data.info.unit;
         this.umbralAlto=data.max_value;
         this.umbralBajo=data.min_value;
+        this.favorita=data.favorite;
         this.metric = data;
       },
       error:err=>{
@@ -62,9 +65,9 @@ export class ModificarAnaliticaPage implements OnInit {
     let dataMetricEntry = {
       min_value: this.umbralBajo,
       max_value: this.umbralAlto,
+      favorite: this.favorita
     }
 
-    
     this.service.modificarAnalitica(this.route.snapshot.paramMap.get('id'), dataMetricEntry).subscribe({
       next: res => {
         window.location.href = "/app/Tabs/Analytics"

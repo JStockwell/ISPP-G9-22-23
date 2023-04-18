@@ -12,6 +12,7 @@ class MetricInfo(models.Model):
 class Metric(models.Model):
     min_value = models.FloatField()
     max_value = models.FloatField()
+    favorite = models.BooleanField(default=False)
     info = models.ForeignKey(MetricInfo, on_delete=models.CASCADE, related_name="info")
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
 

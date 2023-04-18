@@ -94,7 +94,7 @@ class MetricCreate(APIView):
                 metric = Metric(min_value = min_value, max_value = max_value, patient=patient, info = metricInfo)
                 metric.save()
                 return Response({"metric_id":metric.id,"name":name,"unit":unit,"min_value":metric.min_value, 
-                                 "max_value":metric.max_value,"patient_id":patient.id}, status=status.HTTP_200_OK)
+                                 "max_value":metric.max_value, "favorite": metric.favorite, "patient_id":patient.id}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -130,6 +130,7 @@ class MetricId(APIView):
                 type=openapi.TYPE_OBJECT, properties={
                     'min_value': openapi.Schema(type=openapi.TYPE_NUMBER, description="Valor mínimo a modificar que puede tomar la métrica en un caso normal"),
                     'max_value': openapi.Schema(type=openapi.TYPE_NUMBER, description="Valor máximo a modificar que puede tomar la métrica en un caso normal"),
+                    'favorite': openapi.Schema(type=openapi.TYPE_BOOLEAN, description="True o False para que sea métrica favorita"),
                 }
             ),
             responses={'200':MetricSerializer, '400':"Se ha introducido un par min/max value ilegal o el paciente no existe, o la metric info no se ha encontrado", "404": "Métrica no encontrada"}
@@ -147,6 +148,8 @@ class MetricId(APIView):
                     min_value = serializer.validated_data[field]
                 if str(field) == "max_value":
                     max_value = serializer.data[field]
+                if str(field) == "favorite":
+                    metric.favorite = serializer.data[field]
             
             if min_value == None:
                 min_value = metric.min_value
@@ -160,7 +163,7 @@ class MetricId(APIView):
                 metric.min_value = min_value
                 metric.save()
                 return Response({"metric_id":metric.id, "max_value":metric.max_value, "min_value": metric.min_value, "patient_id": metric.patient.id,
-                                 "name": metric.info.name, "unit":metric.info.unit}, status=status.HTTP_200_OK)
+                                 "name": metric.info.name, "favorite":metric.favorite, "unit":metric.info.unit}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     

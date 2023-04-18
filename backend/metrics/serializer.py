@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from metrics.models import Metric, Measure, MetricInfo
-from users.serializer import PatientSerializer
 
 class UpdateMeasureSerializer(serializers.Serializer):
     value = serializers.FloatField()
@@ -8,6 +7,7 @@ class UpdateMeasureSerializer(serializers.Serializer):
 class UpdateMetricSerializer(serializers.Serializer):
     min_value = serializers.FloatField(required=False)
     max_value = serializers.FloatField(required=False)
+    favorite = serializers.BooleanField(required=False)
 
 class CreateSerializerMetric(serializers.Serializer):
     name = serializers.CharField(max_length=50)
@@ -31,7 +31,7 @@ class MetricSerializer(serializers.ModelSerializer):
     patient_id = serializers.FloatField()
     class Meta:
         model = Metric
-        fields = ['id', 'min_value', 'max_value', 'info', 'patient_id']
+        fields = ['id', 'min_value', 'max_value', 'info', 'patient_id', 'favorite']
 
 class MeasureSerializer(serializers.ModelSerializer):
     metric = MetricSerializer()

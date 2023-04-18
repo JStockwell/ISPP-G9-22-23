@@ -7,14 +7,26 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./pagina-inicial/pagina-inicial.module').then( m => m.PaginaInicialPageModule)
   },
+  {  
+    path: 'users/preferences',
+    loadChildren: () => import('./pages/preferencias-de-usuario/preferencias-de-usuario.module').then( m => m.PreferenciasDeUsuarioPageModule)
+  },
   {
     path: 'users/register',
     loadChildren: () => import('./pages/users/users.module').then(m=>m.UsersPageModule)
   },
   {
+    path: 'medics/register',
+    loadChildren: () => import('./pages/medics/medics.module').then(m=>m.MedicsPageModule)
+  },
+  {
     path: 'users/login',
     loadChildren: () => import('./pages/login/login.module').then(m=>m.LoginPageModule)
   },  
+  {
+    path: 'medic/home',
+    loadChildren: () => import('./pages/medic-home/medic-home.module').then(m=>m.MedicHomePageModule)
+  },
   {
     path: 'app',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
@@ -43,6 +55,11 @@ const routes: Routes = [
   {
     path: 'nueva-entrada-fisica',
     loadChildren: () => import('./pages/nueva-entrada-fisica/nueva-entrada-fisica.module').then( m => m.NuevaEntradaFisicaPageModule)
+  },
+
+  {
+    path: 'users/medics/patients/New',
+    loadChildren: () => import('./pages/nuevo-paciente-medico/nuevo-paciente-medico.module').then( m => m.NuevoPacienteMedicoPageModule)
   },
   {
     path: 'nueva-entrada-mental',
@@ -86,6 +103,112 @@ const routes: Routes = [
     path: 'detalles-cita',
     loadChildren: () => import('./pages/detalles-cita/detalles-cita.module').then( m => m.DetallesCitaPageModule)
   },
+  {
+    path: 'medic-home',
+    loadChildren: () => import('./pages/medic-home/medic-home.module').then( m => m.MedicHomePageModule)
+
+  },
+  {
+    path: 'preferencias-de-usuario',
+    loadChildren: () => import('./pages/preferencias-de-usuario/preferencias-de-usuario.module').then( m => m.PreferenciasDeUsuarioPageModule)
+  },
+    {
+    path: 'perfil-de-usuario',
+    loadChildren: () => import('./pages/perfil/perfil.module').then(m => m.PerfilPageModule)
+    },
+  {
+
+    path: 'medic-home',
+    loadChildren: () => import('./pages/medic-home/medic-home.module').then( m => m.MedicHomePageModule)
+
+  },
+  {
+    path: 'info',
+    loadChildren: () => import('./pages/info/info.module').then( m => m.InfoPageModule)
+  },
+
+  {
+    path: 'users',
+    loadChildren: () => import('./pages/users/users.module').then( m => m.UsersPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+  },
+
+  {
+    path: 'calendario',
+    loadChildren: () => import('./pages/calendario/calendario.module').then( m => m.CalendarioPageModule)
+  },
+  {
+    path: 'nueva-cita',
+    loadChildren: () => import('./pages/nueva-cita/nueva-cita.module').then( m => m.NuevaCitaPageModule)
+  },
+  {
+    path: 'modificar-fisico',
+    loadChildren: () => import('./pages/modificar-fisico/modificar-fisico.module').then( m => m.ModificarFisicoPageModule)
+  },
+  {
+    path: 'modificar-detalles',
+    loadChildren: () => import('./pages/modificar-detalles/modificar-detalles.module').then( m => m.ModificarDetallesPageModule)
+
+  },
+  {
+    path: 'modificar-cita',
+    loadChildren: () => import('./pages/modificar-cita/modificar-cita.module').then( m => m.ModificarCitaPageModule)
+  },
+  {
+    path: 'detalles-cita',
+    loadChildren: () => import('./pages/detalles-cita/detalles-cita.module').then( m => m.DetallesCitaPageModule)
+  },
+  {
+    path: 'medic-home',
+    loadChildren: () => import('./pages/medic-home/medic-home.module').then( m => m.MedicHomePageModule)
+
+  },
+  {
+    path: 'preferencias-de-usuario',
+    loadChildren: () => import('./pages/preferencias-de-usuario/preferencias-de-usuario.module').then( m => m.PreferenciasDeUsuarioPageModule)
+  },
+    {
+    path: 'perfil-de-usuario',
+    loadChildren: () => import('./pages/perfil/perfil.module').then(m => m.PerfilPageModule)
+    },
+  {
+
+    path: 'medic-home',
+    loadChildren: () => import('./pages/medic-home/medic-home.module').then( m => m.MedicHomePageModule)
+
+  },
+  {
+    path: 'medic/home/patient/:id',
+    loadChildren: () => import('./pages/patient/patient.module').then( m => m.PatientPageModule)
+  },
+  {
+    path: 'medic/home/patient/:id/seccion-fisica',
+    loadChildren: () => import('./pages/medico-seccion-fisica/medico-seccion-fisica.module').then( m => m.MedicoSeccionFisicaPageModule)
+  },
+  {
+    path: 'medic/home/patient/:id/seccion-mental',
+    loadChildren: () => import('./pages/medico-seccion-mental/medico-seccion-mental.module').then( m => m.MedicoSeccionMentalPageModule)
+  },
+  {
+    path: 'medico-seccion-mental/:id',
+    loadChildren: () => import('./pages/medico-diario-mental-detalles/medico-diario-mental-detalles.module').then( m => m.MedicoDiarioMentalDetallesPageModule)
+  },
+
+  {
+    path: 'medico-seccion-fisico/:id',
+    loadChildren: () => import('./pages/medico-diario-fisico-detalles/medico-diario-fisico-detalles.module').then( m => m.MedicoDiarioFisicoDetallesPageModule)
+  },
+    {
+    path: 'tyc',
+    loadChildren: () => import('./pages/tyc/tyc.module').then( m => m.tycPageModule)
+  },
+
+
+
+
 
 ];
 @NgModule({
@@ -95,3 +218,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
+

@@ -25,6 +25,11 @@
           añadirle al programa.
         </p>
         <br>
+
+        <p>
+          Al utilizar esta aplicación, aceptas a nuestros términos y condiciones.
+          Para leer nuestros términos y condiciones <a target="_self" href="tyc">Términos y Condiciones</a>.
+        </p>
         <!--
         <p>
           Al utilizar esta aplicación, aceptas a nuestros términos de servicio.
@@ -38,6 +43,9 @@
     <ng-template #login_register>
       <ion-button expand="block" [routerLink] = "['/users/register']">
         Registrarse
+      </ion-button>
+      <ion-button expand="block" [routerLink] = "['medics/register']">
+        Registrarse como médico
       </ion-button>
       <ion-button expand="block" [routerLink] = "['/users/login']">
         Iniciar sesión
