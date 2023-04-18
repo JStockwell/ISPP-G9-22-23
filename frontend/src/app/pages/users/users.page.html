@@ -88,8 +88,8 @@
           <ion-label class="txt" position="stacked">Teléfono</ion-label>
           <ion-input type = "tel" [(ngModel)]="form.tel" placeholder="612345678" name = "tel" value="tel" required #tel="ngModel" [ngClass]="{ 'is-invalid': f.submitted && tel.errors }" ></ion-input>
         </ion-item>
-        <div class="invalid-feedback error" *ngIf="email.errors && f.submitted">
-          <div *ngIf="email.errors['required']">Se necesita un número de teléfono</div>
+        <div class="invalid-feedback error" *ngIf="tel.errors && f.submitted">
+          <div *ngIf="tel.errors['required']">Se necesita un número de teléfono</div>
         </div>
 
         

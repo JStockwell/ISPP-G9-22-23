@@ -76,7 +76,7 @@ export class NewAnalyticPage implements OnInit {
       max_value: this.umbralAlto,
       patient_id: this.getIdUser(),
     }
-
+    console.log(dataMetricEntry)
     
     const ans = this.newAnalyticService.postMetricEntry(dataMetricEntry).subscribe({
       next: res => {
