@@ -143,6 +143,10 @@ const routes: Routes = [
     path: 'medico-seccion-fisico/:id',
     loadChildren: () => import('./pages/medico-diario-fisico-detalles/medico-diario-fisico-detalles.module').then( m => m.MedicoDiarioFisicoDetallesPageModule)
   },
+  {
+    path: 'tyc',
+    loadChildren: () => import('./pages/tyc/tyc.module').then( m => m.tycPageModule)
+  }
 
 
   
