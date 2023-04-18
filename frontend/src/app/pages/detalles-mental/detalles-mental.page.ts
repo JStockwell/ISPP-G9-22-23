@@ -131,6 +131,7 @@ type mentalEntry = {
   weather: string,
   food: string,
   sleep:string,
+  period_now: boolean,
   positive_thoughts:string,
   negative_thoughts:string,
   patient_id:null

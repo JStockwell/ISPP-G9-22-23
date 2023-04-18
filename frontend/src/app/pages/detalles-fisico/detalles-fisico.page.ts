@@ -128,6 +128,7 @@ type physicalEntry = {
   state: string,
   body_parts: string,
   notes: string,
+  period_now: boolean,
   patient_id: null,
   done_exercise: null
 }

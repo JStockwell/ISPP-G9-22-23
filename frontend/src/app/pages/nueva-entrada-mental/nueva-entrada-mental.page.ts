@@ -27,6 +27,7 @@ export class NuevaEntradaMentalPage implements OnInit{
   tiempo:string | undefined
   ppositivos:string | undefined
   pnegativos:string | undefined
+  reglaHoy:boolean | undefined
   regla:boolean | undefined
   today = new Date();
   errorMessage = '';
@@ -72,7 +73,7 @@ export class NuevaEntradaMentalPage implements OnInit{
       weather : this.tiempo,
       food: this.comida,
       sleep: this.suenyo,
-      period_now : this.regla,
+      period_now : this.reglaHoy,
       positive_thoughts: this.ppositivos,
       negative_thoughts: this.pnegativos,
       notes: this.notas,

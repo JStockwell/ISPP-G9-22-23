@@ -34,6 +34,14 @@
       </ion-row>
     </div>
 
+    <div style="text-align: center;" *ngIf="entrada.period_now">
+        
+      <h3 style="font-weight: bold;">
+        Regla: Sí
+        
+      </h3>       
+    </div>
+
     <div style="text-align: center"><h3><b>Notas</b></h3></div>
     <div style="text-align: center; margin-bottom: 10px">{{ entrada.notes}}</div>
   </ion-card>
