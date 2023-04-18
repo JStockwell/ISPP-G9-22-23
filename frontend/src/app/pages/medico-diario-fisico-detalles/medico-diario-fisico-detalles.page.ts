@@ -19,9 +19,9 @@ export class MedicoDiarioFisicoDetallesPage implements OnInit {
   constructor(private service:DetallesFisicoService, private route: ActivatedRoute, private navCtrl: NavController, private analiticasService: AnaliticasService) { }
 
   ngOnInit() {
-    let id_entrada = this.route.snapshot.paramMap.get('id2');
+    let id_entrada = this.route.snapshot.paramMap.get('id');
     console.log(id_entrada)
-    this.service.getEntradaFisica2(1).subscribe({
+    this.service.getEntradaFisica2(id_entrada).subscribe({
       next: data =>{
         this.entrada = data
         if(this.entrada.body_parts) {
