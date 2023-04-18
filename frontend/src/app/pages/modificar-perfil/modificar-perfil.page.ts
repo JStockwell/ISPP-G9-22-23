@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ModificarPerfilService } from 'src/app/services/modificar-perfil.service';
 import { UsersService } from 'src/app/services/users.service';
 import { NavController } from '@ionic/angular';
@@ -9,6 +10,7 @@ import { NavController } from '@ionic/angular';
     styleUrls: ['./modificar-perfil.page.scss'],
 })
 export class ModificarPerfilPage implements OnInit {
+    entrada !: EntradaPerfil
     birthdate: string| any= '';
     tel: string | any = '';
     username: string | any='';
@@ -16,18 +18,21 @@ export class ModificarPerfilPage implements OnInit {
     name: string | any='';
     surname: string | any='';
 
-    constructor(private userService: UsersService, private service: ModificarPerfilService, private navCtrl: NavController) {}
+    constructor(private route:ActivatedRoute, private userService: UsersService, private service: ModificarPerfilService, private navCtrl: NavController) {}
 
     ngOnInit(): void {
-        let usuario = this.userService.UserData().subscribe((res)=>{
-            console.log("res infouser, ", res);
-            this.birthdate=res.birthdate;
-            this.tel= res.tel;
-            this.username=res.user.username;
-            this.email=res.user.email;
-            this.name=res.user.first_name;
-            this.surname=res.user.last_name;
-
+        let id = this.getUserId();
+        let usuario = this.service.getEntradaUser(id).subscribe({
+            next:data=>{
+                console.log("res infouser, ", data);
+                this.entrada = data as EntradaPerfil;
+                this.birthdate=this.entrada.birthdate;
+                this.tel= this.entrada.tel;
+                this.username=this.entrada.user.username;
+                this.email=this.entrada.user.email;
+                this.name=this.entrada.user.first_name;
+                this.surname=this.entrada.user.last_name;
+            }
           });
     }
 
@@ -50,17 +55,32 @@ export class ModificarPerfilPage implements OnInit {
     }
 
     editarPerfil():void{
-
+        console.log("entramos metodo");
         let dataEntry: any;
+        let usuario = this.service.getEntradaUser(this.getUserId());
       
         dataEntry = {
-            id: this.getUserId(),
-            birthdate: this.birthdate,
+            first_name: this.name,
+            last_name: this.surname,
             tel: this.tel,
-            username: this.username,
+            birthdate: this.birthdate,
+            /*premium_account: ,
+            share_physical_entries: ,
+            share_mental_entries: ,
+            share_metrics: ,
+            share_appointments: ,
+            has_period: ,*/
             email: this.email,
-            name: this.name,
-            surname: this.surname,
+            username: this.username,
+            id: this.getUserId(),
+            /*birthdate: this.birthdate,
+            tel: this.tel,*/
+           /* user: {
+                username: this.username,
+                email: this.email,
+                first_name: this.name,
+                last_name: this.surname,
+            }*/
         };
       
         this.service.modifyDatosPerfil(this.getUserId(),dataEntry).subscribe({
@@ -82,8 +102,10 @@ type EntradaPerfil = {
     id : any;
     birthdate: string;
     tel: string;
-    username: string;
-    email: string;
-    name: string;
-    surname: string;
+    user : {
+        username: string;
+        first_name: string;
+        last_name: string;
+        email: string;
+    }
   }
