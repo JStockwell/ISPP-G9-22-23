@@ -15,7 +15,10 @@ export class PerfilPage implements OnInit {
     email: string | any='';
     name: string | any='';
     surname: string | any='';
+    code: string| any= '';
+
     isModalOpen= false;
+
 
     constructor(private userService: UsersService) {}
 
@@ -51,6 +54,8 @@ export class PerfilPage implements OnInit {
             this.email=res.user.email;
             this.name=res.user.first_name;
             this.surname=res.user.last_name;
+            this.code=res.code;
+            console.log("code", this.code);
 
           });
     }
