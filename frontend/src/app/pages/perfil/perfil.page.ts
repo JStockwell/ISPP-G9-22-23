@@ -77,9 +77,7 @@ export class PerfilPage implements OnInit {
 
       this.userService.deleteUser(idEntrada).subscribe({
         next: res => {
-          console.log(res);
-          document.location.href="/users/register"
-          window.location.href = "/users/register"
+          this.cerrarsesion();
         },error: err => {
           console.log(err)
         }
