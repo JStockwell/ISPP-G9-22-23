@@ -94,6 +94,11 @@
         </ion-segment>
       </ion-item>
 
+      <ion-item lines = "none"color = "light" *ngIf="regla==true">
+        <ion-label>¿Tienes la regla?</ion-label>
+        <ion-toggle color="primary" [(ngModel)]="reglaHoy" [checked]="false"></ion-toggle>
+      </ion-item>
+
       <ion-item color = "light" lines = "none">
         <ion-label class = "txt" style="margin-top: 5%;" position="stacked">Pensamientos positivos</ion-label>
         <ion-textarea [(ngModel)]="ppositivos" rows= "3" placeholder="Escribe aquí los pensamientos positivos que has tenido en el día de hoy." type="text"></ion-textarea>
