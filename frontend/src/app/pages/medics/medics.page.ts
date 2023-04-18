@@ -80,4 +80,6 @@ export class MedicsPage implements OnInit {
     window.location.href="medic/home"
   }
 
+   
+
 }
