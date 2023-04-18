@@ -93,6 +93,12 @@ const routes: Routes = [
         loadChildren: () => import('../pages/perfil/perfil.module').then( m => m.PerfilPageModule)
       },
       {
+
+        path: 'perfil/info',
+        loadChildren: () => import('../pages/info/info.module').then( m => m.InfoPageModule)
+      }
+      
+
         path: 'medic/home/patient/:id',
         loadChildren: () => import('../pages/patient/patient.module').then( m => m.PatientPageModule)
       },
