@@ -1,7 +1,10 @@
 <ion-header>
     <ion-toolbar color="primary">
-      <ion-title>Perfil</ion-title>
-    </ion-toolbar>
+        <ion-title>Perfil</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="setOpen(true)">Borrar Cuenta</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
   </ion-header>
 
   <ion-content class="ion-padding" color ="light">
@@ -42,5 +45,28 @@
     <ion-button [routerLink] = "['/app/Tabs/perfil/info']">
         Acerda de nosotros
     </ion-button>
+
+   
+
+    
+    <ion-modal [isOpen]="isModalOpen">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar color="primary">
+            <ion-title>Borrar cuenta</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="setOpen(false)">Cerrar</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <p>
+            Estás a punto de borra de manera definitiva tu cuenta la aplicación HematoDia, si estás seguro pulse el botón de abajo. Este es un cambio irreversible
+          </p>
+
+          <ion-button  expand="block" class = "btacceder" color="primary" (click)="eliminarUsuario( getUserId() )" >Borrar Cuenta </ion-button>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
 
   </ion-content>

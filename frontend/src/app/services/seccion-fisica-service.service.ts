@@ -34,6 +34,24 @@ export class SeccionFisicaServiceService implements HttpInterceptor{
     }
     return new Observable<any>;
   }
+  getEntradasFisicasPaciente(id_paciente:any):Observable<any>{
+    if(this.uService.isLoggedIn()){
+      var ck = localStorage.getItem('auth-user')
+      if(ck!=null){
+        var tk = JSON.parse(ck);
+        var res = [];
+        for(var i in tk){
+          res.push(tk[i]);
+        }
+        let headers = new HttpHeaders()
+        headers = headers.set('Authorization', 'Token '+res[0])
+
+        return this.http.get(API_URL + `diary_entries/physical_entry/patient/${id_paciente}`,{'headers':headers})
+      }
+    }
+    return new Observable<any>;
+  }
+
 
   deleteEntry(idEntry:any): Observable<any>{
     if(this.uService.isLoggedIn()){
