@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
 
+
 @Component({
     selector: 'app-perfil',
     templateUrl: './perfil.page.html',
@@ -14,6 +15,7 @@ export class PerfilPage implements OnInit {
     email: string | any='';
     name: string | any='';
     surname: string | any='';
+    isModalOpen= false;
 
     constructor(private userService: UsersService) {}
 
@@ -51,5 +53,36 @@ export class PerfilPage implements OnInit {
             this.surname=res.user.last_name;
 
           });
+    }
+
+    cerrarsesion(){
+      
+      this.userService.logout().subscribe(
+        (data) =>{
+          localStorage.clear();
+          window.location.href=""
+        },
+        error =>{
+          console.log(error)
+        }
+        );
+      }  
+
+
+    setOpen(isOpen: boolean) {
+      this.isModalOpen = isOpen;
+    }
+
+    eliminarUsuario(idEntrada: any) {
+
+      this.userService.deleteUser(idEntrada).subscribe({
+        next: res => {
+          console.log(res);
+          document.location.href="/users/register"
+          window.location.href = "/users/register"
+        },error: err => {
+          console.log(err)
+        }
+      })
     }
 }

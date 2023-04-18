@@ -70,7 +70,6 @@ export class UsersPage implements OnInit {
     }
     else{
       var campo = <HTMLElement>document.getElementById("invalid-r")
-      console.log(campo)
       campo.style.display = "block";
       campo.style.paddingLeft = "5%";
     }
