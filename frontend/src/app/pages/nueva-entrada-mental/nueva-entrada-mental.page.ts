@@ -43,6 +43,7 @@ export class NuevaEntradaMentalPage implements OnInit{
   ngOnInit() {
     var aux = this.today.toLocaleDateString("es-ES", { weekday: 'long'});
     this.dtAux = aux.charAt(0).toUpperCase() + aux.substring(1) + ', ' + this.today.toLocaleDateString();
+    this.getRegla();
   }
 
   goBack(){
@@ -139,7 +140,8 @@ export class NuevaEntradaMentalPage implements OnInit{
       
       next: data => {
         console.log(data.has_period)
-        return data.has_period;
+        this.regla = data.has_period;
+
         
       },
       error: err => {

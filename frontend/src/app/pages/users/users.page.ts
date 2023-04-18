@@ -19,7 +19,7 @@ export class UsersPage implements OnInit {
     last_name:null,
     email:null,
     tel:null,
-    has_period: null,
+    has_period: false,
     birthdate:null
   }
   

@@ -94,7 +94,7 @@
         </ion-segment>
       </ion-item>
 
-      <ion-item color = "warning" *ngIf="getRegla()">
+      <ion-item color = "warning" *ngIf="regla==true">
         <ion-label>¿Tienes la regla?</ion-label>
         <ion-toggle color="primary" [(ngModel)]="regla" [checked]="false"></ion-toggle>
       </ion-item>
