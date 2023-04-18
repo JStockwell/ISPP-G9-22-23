@@ -20,7 +20,7 @@ const routes: Routes = [
         loadChildren: () => import('../pages/detalles-analitica/detalles-analitica.module').then( m => m.DetallesAnaliticaPageModule)
       },
       {
-        path: 'seccion-fisica',
+        path: 'seccion-fisica', 
         loadChildren: () => import('../pages/seccion-fisica/seccion-fisica.module').then( m => m.SeccionFisicaPageModule)
       },
       {
@@ -92,7 +92,21 @@ const routes: Routes = [
         path: 'perfil',
         loadChildren: () => import('../pages/perfil/perfil.module').then( m => m.PerfilPageModule)
       },
-      
+      {
+
+        path: 'perfil/info',
+        loadChildren: () => import('../pages/info/info.module').then( m => m.InfoPageModule)
+      },
+      {
+
+        path: 'medic/home/patient/:id',
+        loadChildren: () => import('../pages/patient/patient.module').then( m => m.PatientPageModule)
+      },
+      {
+        path: 'medic/home/patient/:id/seccion-fisica', 
+        loadChildren: () => import('../pages/seccion-fisica/seccion-fisica.module').then( m => m.SeccionFisicaPageModule)
+      },
+    
     ]
   },
   {

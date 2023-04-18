@@ -88,8 +88,8 @@
           <ion-label class="txt" position="stacked">Teléfono</ion-label>
           <ion-input type = "tel" [(ngModel)]="form.tel" placeholder="612345678" name = "tel" value="tel" required #tel="ngModel" [ngClass]="{ 'is-invalid': f.submitted && tel.errors }" ></ion-input>
         </ion-item>
-        <div class="invalid-feedback error" *ngIf="email.errors && f.submitted">
-          <div *ngIf="email.errors['required']">Se necesita un número de teléfono</div>
+        <div class="invalid-feedback error" *ngIf="tel.errors && f.submitted">
+          <div *ngIf="tel.errors['required']">Se necesita un número de teléfono</div>
         </div>
 
         
@@ -100,6 +100,11 @@
         <div class="invalid-feedback error" *ngIf="birthdate.errors && f.submitted">
           <div *ngIf="birthdate.errors['required']">Se necesita la fecha de nacimiento</div>
         </div>
+
+        <ion-item color = "light" lines="none">
+          <ion-label class="txt" type="date" position="stacked">¿Tienes la regla?</ion-label>
+          <ion-toggle color="primary" [(ngModel)]="form.has_period" value = "has_period" name = "has_period" #has_period="ngModel" [checked]="false" ></ion-toggle>
+        </ion-item>
         
 
         <ion-button color="primary" expand="block" type = "submit" >
@@ -109,10 +114,14 @@
         <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
           ¡El registro ha fallado!<br />{{ errorMessage }}
         </div>
+       
       </form>
-    
-
+      
     </div>
-  
+    <ion-fab color = "primary" style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
+      <ion-fab-button  color = "primary" [routerLink]="['']">
+        <ion-icon name="arrow-back-circle-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
   
 </ion-content>

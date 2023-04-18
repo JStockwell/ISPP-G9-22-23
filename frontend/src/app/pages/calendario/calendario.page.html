@@ -28,10 +28,10 @@
           <ion-text color="primary" [routerLink]="['/app/Tabs/calendario/detalles-cita/'+item.id]">
             <u>Tiene una cita agendada para las <b>{{ item.time }}h</b></u>
           </ion-text>
-          <ion-button color="dark" [routerLink]="['/app/Tabs/calendario/'+item.id+'/edit']">
+          <ion-button color="primary" [routerLink]="['/app/Tabs/calendario/'+item.id+'/edit']">
             Editar
           </ion-button>
-          <ion-button color="dark" (click)="eliminarCita(item.id)">
+          <ion-button color="primary" (click)="eliminarCita(item.id)">
             Borrar
           </ion-button>
         </ion-item>
@@ -40,7 +40,7 @@
   </ion-card>
 
   <ion-fab style = "padding-inline-end: 2.5%;" slot="fixed" size="small" vertical="bottom" horizontal="end">
-    <ion-fab-button color = "secondary" (click)="nuevaCita()">
+    <ion-fab-button color = "primary" (click)="nuevaCita()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

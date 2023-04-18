@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Página de paciente</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div *ngIf="permiteAnaliticas()">
+    <ion-button color="primary" expand="block" [routerLink]="['seccion-fisica']">
+    Ver analíticas
+  </ion-button></div>
+
+<div *ngIf="permiteDiarioFisico()">
+<ion-button color="primary" expand="block" [routerLink]="['seccion-fisica']">
+  Ver diario físico
+</ion-button></div>
+<div *ngIf="permiteDiarioMental()"><ion-button color="primary" expand="block" [routerLink]="['seccion-mental']">
+  Ver diario emocional
+</ion-button></div>
+
+
+
+<ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
+  <ion-fab-button  color = "primary" (click)="goBack()">
+    <ion-icon name="arrow-back-circle-outline"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+</ion-content>

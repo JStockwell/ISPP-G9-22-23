@@ -46,14 +46,14 @@
         <div *ngIf="descripcion.errors['maxlength']">La descripción no puede superar los 200 caracteres.</div>
       </div>
       
-      <ion-button color="dark" expand="block" type="submit">
+      <ion-button color="primary" expand="block" type="submit">
         Confirmar
       </ion-button>
     </ion-card>
   </form>
 
   <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
-    <ion-fab-button  color = "secondary" (click)="goBack()">
+    <ion-fab-button  color = "primary" (click)="goBack()">
       <ion-icon name="arrow-back-circle-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>

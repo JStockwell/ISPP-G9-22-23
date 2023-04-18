@@ -19,6 +19,7 @@ export class UsersPage implements OnInit {
     last_name:null,
     email:null,
     tel:null,
+    has_period: false,
     birthdate:null
   }
   
@@ -63,14 +64,14 @@ export class UsersPage implements OnInit {
           });
         },
         error: err => {
-          this.errorMessage=err.error.message;
+          this.errorMessage=err.error.error;
           this.isSignUpFailed = true;
+          console.log(err)
         }
       })
     }
     else{
       var campo = <HTMLElement>document.getElementById("invalid-r")
-      console.log(campo)
       campo.style.display = "block";
       campo.style.paddingLeft = "5%";
     }

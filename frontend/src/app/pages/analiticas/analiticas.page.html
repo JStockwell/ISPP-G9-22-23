@@ -10,13 +10,19 @@
     <div *ngFor="let item of analiticas">
       <ion-card
         button
-        color="warning"
         [routerLink]="['/app/Tabs/Analytics/Details/'+item.id]"
-      >
+        style = "color:white">
+
         <ion-label style="text-align: center">
           <h1 style="margin-top: 5%; margin-bottom: 1.5%; color: black">
-            {{ item.info.name }}
+            {{ item.info.name }} 
+            
+              <img *ngIf="item.favorite==true"   src = "/assets/images/star.png" width="8%">
+            
+         
           </h1>
+          
+          
           <div *ngFor="let measure of mediciones">
             <ion-item *ngIf="measure.metric.id == item.id" color="warning">
               <ion-label class="ion-text-wrap"
@@ -48,12 +54,14 @@
     </div>
   </ng-template>
 
+
   <ng-template #noEntradas>
     <div style="font-weight: bold; font-size: x-large; text-align: center">
       <img src="https://static.thenounproject.com/png/2902077-200.png" class="imagen-vacia" alt="">
       <div style="opacity: .2;"> No hay analíticas todavía </div>
     </div>
   </ng-template>
+
 
   <ion-fab style="padding-inline-end: 2.5%" slot="fixed" size="small" vertical="bottom" horizontal="end">
     <ion-fab-button color="primary" [routerLink]="['/app/Tabs/Analytics/New']">

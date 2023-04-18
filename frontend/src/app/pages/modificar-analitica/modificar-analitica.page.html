@@ -16,19 +16,26 @@
       <ion-label position="floating">Umbral Alto</ion-label>
       <ion-input [(ngModel)]="umbralAlto" placeholder="Valor alto a no superar en {{ unidad }} " type="number"></ion-input>
     </ion-item>
+
     <ion-item style = "padding-bottom: 5%" color = "warning">
       <ion-label position="floating">Umbral Bajo</ion-label>
       <ion-input [(ngModel)]="umbralBajo" placeholder="Valor bajo a no superar en {{ unidad }}" type="number"></ion-input>
     </ion-item>
+
+    <ion-item color = "warning" lines = "none">
+      <ion-label text-wrap class = "txt" position = "stacked">Añadir a favoritas</ion-label>
+      <ion-toggle color="primary" [(ngModel)]="favorita" [checked]="false" ></ion-toggle>
+
+    </ion-item>
     
-    <ion-button  color="dark" expand="block" (click)="modificarAnalitica()">
+    <ion-button  color="primary" expand="block" (click)="modificarAnalitica()">
       Modificar analítica
     </ion-button>
   </ion-card>
   
 
   <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
-    <ion-fab-button  color = "secondary" (click)="goBack()">
+    <ion-fab-button  color = "primary" (click)="goBack()">
       <ion-icon name="arrow-back-circle-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
