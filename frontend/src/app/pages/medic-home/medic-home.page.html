@@ -9,9 +9,12 @@
   <div style="margin-top: 6%; text-align: left; margin-left: 6%; margin-bottom: 4%;">
     <ion-label display="block" position="floating">Esta es la página de inicio exclusiva para médicos donde pueden ver un listado de sus pacientes</ion-label>
   </div>
-  
+  <ion-button expand="block" style = "margin-left: auto; margin-top: 10%;   margin-right: auto; width:60%;" (click)="cerrarsesion()">
+    Cerrar sesión
 
-    <ion-button color="primary" expand="block" [routerLink]="['/users/medics/patients/New']">
+  </ion-button>
+
+    <ion-button color="primary"style = "margin-left: auto; margin-top: 7%; margin-botton:5%;   margin-right: auto; width:60%;" expand="block" [routerLink]="['/users/medics/patients/New']">
       Añadir paciente
     </ion-button>
 
