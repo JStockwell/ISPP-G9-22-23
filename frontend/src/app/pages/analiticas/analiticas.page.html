@@ -15,7 +15,11 @@
 
         <ion-label style="text-align: center">
           <h1 style="margin-top: 5%; margin-bottom: 1.5%; color: black">
-            {{ item.info.name }} <ion-icon class="icono" *ngIf="item.favorite==true" name="star-outline"></ion-icon>
+            {{ item.info.name }} 
+            
+              <img *ngIf="item.favorite==true"   src = "/assets/images/star.png" width="8%">
+            
+         
           </h1>
           
           
