@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Analíticas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color = "light">
+
+  <ion-card color="warning" style="margin-top:30px;margin-bottom:90px">
+    <ion-label style="text-align: center">
+      <h1 style="margin-top: 5%; margin-bottom: 5%; color: black">
+        {{ analitica.info.name }}
+      </h1>
+    </ion-label>
+    <div class="tabs">
+      <button color = "primary" class="tab-button" (click)="changeTab($event, 'Datos')" id="default">Datos</button>
+      <button color = "primary" class="tab-button" (click)="changeTab($event, 'Grafica')">Gráfica</button>
+    </div>
+    <br>
+    <div class="tabcontent" id="Datos">
+      <div *ngFor="let medicion of mediciones" >
+        <ion-item *ngIf="medicion.metric.id == analitica.id" color="warning">
+          <ion-label class="ion-text-wrap"
+            >{{ medicion.value}} {{analitica.info.unit}} ({{medicion.date}})
+          </ion-label>
+        </ion-item>
+       
+      
+      </div>
+    </div>
+    <div class="tabcontent" id="Grafica" style = "height:375px">
+      <canvas id="chr{{id}}" style="width:100%;max-width:700px; height: auto;" ></canvas>
+    </div>
+  </ion-card>
+  
+  <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
+    <ion-fab-button  color = "primary" (click)="goBack()">
+      <ion-icon name="arrow-back-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  
+  <ion-fab
+  style="padding-inline-end: 5%"
+  slot="fixed"
+  vertical="bottom"
+  horizontal="end"
+>
+
+</ion-fab>
+</ion-content>

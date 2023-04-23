@@ -48,6 +48,26 @@ export class AnaliticasService implements HttpInterceptor {
     return new Observable<any>();
   }
 
+  getAnaliticas2(patientid:any): Observable<any> {
+    if (this.uService.isLoggedIn()) {
+      var ck = localStorage.getItem("auth-user");
+      if (ck != null) {
+        var tk = JSON.parse(ck);
+        var res = [];
+        for (var i in tk) {
+          res.push(tk[i]);
+        }
+        let headers = new HttpHeaders();
+        headers = headers.set("Authorization", "Token " + res[0]);
+        return this.http.get(
+          API_URL + "metrics/metrics/patient/" + patientid + "/",
+          { headers: headers }
+        );
+      }
+    }
+    return new Observable<any>();
+  }
+
   getAnaliticaDetails(): Observable<any> {
     if (this.uService.isLoggedIn()) {
       var ck = localStorage.getItem("auth-user");
@@ -68,6 +88,28 @@ export class AnaliticasService implements HttpInterceptor {
     }
     return new Observable<any>();
   }
+
+  getAnaliticaDetails2(idpaciente:any): Observable<any> {
+    if (this.uService.isLoggedIn()) {
+      var ck = localStorage.getItem("auth-user");
+      if (ck != null) {
+        var tk = JSON.parse(ck);
+        var res = [];
+        for (var i in tk) {
+          res.push(tk[i]);
+        }
+        let headers = new HttpHeaders();
+        headers = headers.set("Authorization", "Token " + res[0]);
+
+        return this.http.get(
+          API_URL + "metrics/measures/patient/" + idpaciente + "/",
+          { headers: headers }
+        );
+      }
+    }
+    return new Observable<any>();
+  }
+
   getLatestDetails(metricId: any): Observable<any> {
     if (this.uService.isLoggedIn()) {
       var ck = localStorage.getItem("auth-user");
@@ -84,6 +126,32 @@ export class AnaliticasService implements HttpInterceptor {
           API_URL +
             "metrics/measures/patient/" +
             res[1] +
+            "/metric/" +
+            metricId +
+            "/",
+          { headers: headers }
+        );
+      }
+    }
+    return new Observable<any>();
+  }
+
+  getLatestDetails2(metricId: any, idpaciente:any): Observable<any> {
+    if (this.uService.isLoggedIn()) {
+      var ck = localStorage.getItem("auth-user");
+      if (ck != null) {
+        var tk = JSON.parse(ck);
+        var res = [];
+        for (var i in tk) {
+          res.push(tk[i]);
+        }
+        let headers = new HttpHeaders();
+        headers = headers.set("Authorization", "Token " + res[0]);
+
+        return this.http.get(
+          API_URL +
+            "metrics/measures/patient/" +
+            idpaciente +
             "/metric/" +
             metricId +
             "/",

@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Analíticas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" color="light">
+  <div *ngIf="existsAnaliticas(); then renderEntradas else noEntradas"></div>
+  <ng-template #renderEntradas>
+    <div *ngFor="let item of analiticas">
+      <ion-card
+        button
+        color="warning"
+        [routerLink]="['/medico-detalles-analiticas/'+item.id]"
+      >
+        <ion-label style="text-align: center">
+          <h1 style="margin-top: 5%; margin-bottom: 1.5%; color: black">
+            {{ item.info.name }}
+          </h1>
+          <div *ngFor="let measure of mediciones">
+            <ion-item *ngIf="measure.metric.id == item.id" color="warning">
+              <ion-label class="ion-text-wrap"
+                >{{ measure.value}} {{item.info.unit}} ({{measure.date}})</ion-label
+              >
+            </ion-item>
+          </div>
+          <p
+            style="
+              text-align: center;
+              margin-top: 5%;
+              color: black;
+            "
+          >
+            Últimas 10 entradas
+          </p>
+        </ion-label>
+        <div style = "height:300px" ><canvas  id="chart{{item.id}}" style="width:100%;max-width:700px; height: auto;"></canvas></div>
+      </ion-card>
+
+    </div>
+  </ng-template>
+
+  <ng-template #noEntradas>
+    <div style="font-weight: bold; font-size: x-large; text-align: center">
+      <img src="https://static.thenounproject.com/png/2902077-200.png" class="imagen-vacia" alt="">
+      <div style="opacity: .2;"> No hay analíticas todavía </div>
+    </div>
+  </ng-template>
+
+  <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
+    <ion-fab-button  color = "primary" (click)="goBack()">
+      <ion-icon name="arrow-back-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+

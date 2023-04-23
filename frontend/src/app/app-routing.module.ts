@@ -134,6 +134,7 @@ const routes: Routes = [
     path: 'medic/home/patient/:id/seccion-mental',
     loadChildren: () => import('./pages/medico-seccion-mental/medico-seccion-mental.module').then( m => m.MedicoSeccionMentalPageModule)
   },
+
   {
     path: 'medico-seccion-mental/:id',
     loadChildren: () => import('./pages/medico-diario-mental-detalles/medico-diario-mental-detalles.module').then( m => m.MedicoDiarioMentalDetallesPageModule)
@@ -143,7 +144,15 @@ const routes: Routes = [
     path: 'medico-seccion-fisico/:id',
     loadChildren: () => import('./pages/medico-diario-fisico-detalles/medico-diario-fisico-detalles.module').then( m => m.MedicoDiarioFisicoDetallesPageModule)
   },
+  {
+    path: 'medic/home/patient/:id/medico-analiticas',
+    loadChildren: () => import('./pages/medico-analiticas/medico-analiticas.module').then( m => m.MedicoAnaliticasPageModule)
+  },
 
+  {
+    path: 'medico-detalles-analiticas/:id',
+    loadChildren: () => import('./pages/medico-detalles-analitica/medico-detalles-analitica.module').then( m => m.MedicoAnaliticasDetallesPageModule)
+  },
 
   
  
