@@ -5,6 +5,7 @@ import Chart from 'chart.js/auto';
 import {UsersService} from '../../services/users.service'
 import { CalendarioService } from 'src/app/services/calendario.service';
 import { eventos } from '../../services/settings';
+import { min } from 'rxjs';
 
 
 
@@ -124,6 +125,7 @@ export class AnaliticasPage implements OnInit {
         const values: String[] = [];
         const dataLower: any[] = [];
         const dataUpper: any[] = [];
+        
         for( const medicion of this.medicionesAux){
           if(medicion.metric.id == analitica.id){
             let date:Date = medicion.date;
@@ -131,11 +133,32 @@ export class AnaliticasPage implements OnInit {
             const aux = date.toString().substring(0,10);
             dates.push(aux);
             values.push(medicion.value);
+
             dataLower.push(medicion.metric.min_value);
             dataUpper.push(medicion.metric.max_value);
           }
           
         }
+
+
+        if(dataLower.length==0 || dataUpper.length==0){
+          dataLower.push(analitica.min_value);
+          dataLower.push(analitica.min_value);
+          dataUpper.push(analitica.max_value);
+          dataUpper.push(analitica.max_value);
+          dates.push('')
+          dates.push('')
+        }
+        else if(dataLower.length<=1 || dataUpper.length<=1){
+          dataLower.push(analitica.min_value);
+
+          dataUpper.push(analitica.max_value);
+
+          dates.push('')
+        }
+        
+
+       
         Chart.defaults.color = 'black';
         Chart.defaults.backgroundColor = '#f4f5f9';
 
@@ -196,8 +219,8 @@ type measure = {
   date: any,
   metric:{
     id: null,
-    min_value:null,
-    max_value:null,
+    min_value:any,
+    max_value:any,
     info:{
       name:null,
       unit:null
