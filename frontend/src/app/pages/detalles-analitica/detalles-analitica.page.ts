@@ -125,6 +125,21 @@ export class DetallesAnaliticaPage implements OnInit {
           dataUpper.push(medicion.metric.max_value);
         }
       }
+      if(dataLower.length==0 || dataUpper.length==0){
+        dataLower.push(this.analitica.min_value);
+        dataLower.push(this.analitica.min_value);
+        dataUpper.push(this.analitica.max_value);
+        dataUpper.push(this.analitica.max_value);
+        dates.push('')
+        dates.push('')
+      }
+      else if(dataLower.length<=1 || dataUpper.length<=1){
+        dataLower.push(this.analitica.min_value);
+
+        dataUpper.push(this.analitica.max_value);
+
+        dates.push('')
+      }
       Chart.defaults.color = "black";
       Chart.defaults.backgroundColor = "#f4f5f9";
   
