@@ -40,6 +40,23 @@
       </ion-row>
     </div>
 
+    <div style="text-align: center">
+      <ion-row>
+        <ion-col>
+          <h3><b>
+            ¿Has echo deporte?:
+            <div *ngIf="entrada.done_exercise then exercise_yes else exercise_no"></div>
+            <ng-template #exercise_yes>
+              <p>Sí</p>
+            </ng-template>
+            <ng-template #exercise_no>
+              <p>No</p>
+            </ng-template>
+          </b></h3>
+        </ion-col>
+      </ion-row>
+    </div>
+
     <div style="text-align: center;" *ngIf="entrada.period_now">
         
       <h3 style="font-weight: bold;">
