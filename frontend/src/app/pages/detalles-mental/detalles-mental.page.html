@@ -62,11 +62,11 @@
   </ion-card>
 
   <div style = "display: inline;">
-    <ion-button  class = "updateBtn" [routerLink]="['/app/Tabs/seccion-mental/'+entrada.id+'/edit']">
+    <ion-button  class = "updateBtn" [routerLink]="['/app/Tabs/seccion-mental/'+getId()+'/edit']">
       <img src="/assets/images/Edit.png" style="height: 1.5rem;">
     </ion-button>
 
-    <ion-button  class = "deleteBtn" color="primary" (click)="eliminarEntradaMental( entrada.id )" >
+    <ion-button  class = "deleteBtn" color="primary" (click)="eliminarEntradaMental( getId() )" >
       <img src="/assets/images/Trash.png" style="height: 1.5rem;">
     </ion-button>
   </div> 

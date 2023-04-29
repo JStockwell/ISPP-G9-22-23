@@ -133,6 +133,10 @@ export class DetallesMentalPage implements OnInit {
     })
   }
 
+    getId(){
+    return this.route.snapshot.paramMap.get("id");
+  }
+
 }
 
 type mentalEntry = {
