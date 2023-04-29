@@ -28,7 +28,7 @@
           <ion-row>
             <ion-col>
               <h3 style="font-weight: bold;">
-                ¿Qúe me duele?:
+                ¿Qué me duele?:
                 <div *ngIf="item.body_parts then body_parts_view else body_parts_default"></div>
                 <ng-template #body_parts_view>
                   <img *ngFor="let part of splitParts(item.body_parts)" class ="emoji" src="{{getImagenDolor(part)}}" style="width: 3rem;" >

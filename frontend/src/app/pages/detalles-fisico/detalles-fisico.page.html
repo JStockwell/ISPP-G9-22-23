@@ -27,7 +27,7 @@
       <ion-row>
         <ion-col>
           <h3><b>
-            ¿Qúe me duele?:
+            ¿Qué me duele?:
             <div *ngIf="entrada.body_parts then body_parts_view else body_parts_default"></div>
             <ng-template #body_parts_view>
               <img *ngFor="let part of splitParts(entrada.body_parts)" class ="emoji" src="{{getImagenDolor(part)}}" style="width: 3rem;" >
@@ -68,6 +68,15 @@
     <div style="text-align: center"><h3><b>Notas</b></h3></div>
     <div style="text-align: center; padding-bottom: 10%;">{{ entrada.notes}}</div>
   </ion-card>
+  <div style = "display: inline">
+    <ion-button  class = "updateBtn" [routerLink]="['/app/Tabs/seccion-fisica/'+getId()+'/edit']">
+      <img src="/assets/images/Edit.png" style="height: 1.5rem;">
+    </ion-button>
+
+    <ion-button  class = "deleteBtn" color="primary" (click)="eliminarEntradaFisica( getId() )" >
+      <img src="/assets/images/Trash.png" style="height: 1.5rem;">
+    </ion-button>
+  </div>  
   <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
     <ion-fab-button  color = "primary" (click)="goBack()">
       <ion-icon name="arrow-back-circle-outline"></ion-icon>
