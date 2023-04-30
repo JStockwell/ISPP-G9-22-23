@@ -41,8 +41,6 @@ export class PreferenciasDeUsuarioPage implements OnInit {
 
     });
     
-    
-
   }
 
   editarPreferenciasUsuario():void{
