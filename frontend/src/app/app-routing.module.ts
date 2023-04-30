@@ -150,7 +150,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'medico-detalles-analiticas/:id',
+    path: 'medico-detalles-analiticas/:id/:patientid',
     loadChildren: () => import('./pages/medico-detalles-analitica/medico-detalles-analitica.module').then( m => m.MedicoAnaliticasDetallesPageModule)
   },
 

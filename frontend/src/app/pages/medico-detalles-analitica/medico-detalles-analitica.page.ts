@@ -13,6 +13,7 @@ import { AnaliticasService } from 'src/app/services/analiticas.service';
   styleUrls: ["./medico-detalles-analitica.page.scss"],
 })
 export class MedicoDetallesAnaliticaPage implements OnInit {
+
   nombreAnalitica?: String;
 
   chart: any;
@@ -32,7 +33,7 @@ export class MedicoDetallesAnaliticaPage implements OnInit {
   constructor(private route: ActivatedRoute, private navCtrl: NavController, public router: Router, private service:DetalleAnaliticasService, private analiticaService:AnaliticasService) {}
 
   ngOnInit() {
-    let idpaciente = this.route.snapshot.paramMap.get('id')
+    let idpaciente = this.route.snapshot.paramMap.get('patientid')
     this.id = this.route.snapshot.params["id"];
     this.service.getDetallesAnaliticas(this.route.snapshot.paramMap.get("id")).subscribe({
       next: data=>{
@@ -48,6 +49,7 @@ export class MedicoDetallesAnaliticaPage implements OnInit {
   }
 
   createDetails(idpaciente:any){
+    console.log(idpaciente)
     this.analiticaService.getAnaliticaDetails2(idpaciente).subscribe({
       next: data =>{
         for(var metric of data){
@@ -58,12 +60,11 @@ export class MedicoDetallesAnaliticaPage implements OnInit {
       },
       error:err=>{
         console.log(err.error.message)
+        console.log("aquí")
       }
     })
 
-    
-
-    this.analiticaService.getLatestDetails(this.id).subscribe({
+    this.analiticaService.getLatestDetails2(this.id, idpaciente).subscribe({
       next: data => {
         const data2 = data.reverse();
         for(var metric of data2){
@@ -74,8 +75,7 @@ export class MedicoDetallesAnaliticaPage implements OnInit {
           
           this.medicionesAux.push(metric)
         }
-        let id = this.route.snapshot.params["id"];
-        this.createChart(id);
+        this.createChart(this.id);
       },
       error:err => {
         console.log(err.error.message)
@@ -107,7 +107,6 @@ export class MedicoDetallesAnaliticaPage implements OnInit {
 
 
   createChart(id: any) {
-
     const dates: String[] = [];
     const values: String[] = [];
     let str = "chr"+id;

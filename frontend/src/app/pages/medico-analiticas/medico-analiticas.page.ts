@@ -18,6 +18,7 @@ export class MedicoAnaliticasPage implements OnInit {
   bars: any;
   colorArray: any;
   errorMessage = '';
+  idpaciente:any;
   //BORRAR eso más adelante cuando ya estén las llamadas
   analiticas = new Array<analitica>
   mediciones = new Array<measure>
@@ -26,8 +27,8 @@ export class MedicoAnaliticasPage implements OnInit {
 
 
   ngOnInit() {
-    let idpaciente = this.route.snapshot.paramMap.get('id')
-    this.createAnaliticas(idpaciente)
+    this.idpaciente = this.route.snapshot.paramMap.get('id')
+    this.createAnaliticas(this.idpaciente)
     
     // PARA PODER INICIALIZAR LA VARIABLE DE EVENTOS SIN ENTRAR EN LA VISTA DE CALENDARIO
     this.calendarioService.setEventosList();

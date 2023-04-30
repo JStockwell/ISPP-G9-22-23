@@ -89,7 +89,7 @@ export class AnaliticasService implements HttpInterceptor {
     return new Observable<any>();
   }
 
-  getAnaliticaDetails2(idpaciente:any): Observable<any> {
+  getAnaliticaDetails2(identrada:any): Observable<any> {
     if (this.uService.isLoggedIn()) {
       var ck = localStorage.getItem("auth-user");
       if (ck != null) {
@@ -102,7 +102,7 @@ export class AnaliticasService implements HttpInterceptor {
         headers = headers.set("Authorization", "Token " + res[0]);
 
         return this.http.get(
-          API_URL + "metrics/measures/patient/" + idpaciente + "/",
+          API_URL + "metrics/measures/patient/" + identrada + "/",
           { headers: headers }
         );
       }
