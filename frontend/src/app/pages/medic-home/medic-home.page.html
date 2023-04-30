@@ -1,23 +1,26 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Página inicio médicos</ion-title>
+    <ion-title>Página de bienvenida</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color = "light">
 
-  <div style="margin-top: 6%; text-align: left; margin-left: 6%; margin-bottom: 4%;">
-    <ion-label display="block" position="floating">Esta es la página de inicio exclusiva para médicos donde pueden ver un listado de sus pacientes</ion-label>
-  </div>
-  <ion-button expand="block" style = "margin-left: auto; margin-top: 10%;   margin-right: auto; width:60%;" (click)="cerrarsesion()">
-    Cerrar sesión
+  <div style = "display:flex ;">
 
-  </ion-button>
-
-    <ion-button color="primary"style = "margin-left: auto; margin-top: 7%; margin-botton:5%;   margin-right: auto; width:60%;" expand="block" [routerLink]="['/users/medics/patients/New']">
+    <ion-button color="primary"style = "margin-left: auto; margin-top: 10%;    margin-right: auto; width:40%;" expand="block" [routerLink]="['/users/medics/patients/New']">
       Añadir paciente
     </ion-button>
-
+    <ion-button expand="block" style = "margin-left: auto; margin-top: 10%;   margin-right: auto; width:40%;" (click)="cerrarsesion()">
+      Cerrar sesión
+  
+    </ion-button>
+  </div>
+  
+  <div style = "padding-top: 3%;margin: auto; margin-bottom: 10%; ;margin-left: 19%; margin-right: auto;">
+    <H1 >Listado de pacientes</H1>
+  </div>
+  
   <div *ngIf="existsPatients(); then renderPatients else noPatients"></div>
   <ng-template #renderPatients>
     <div *ngFor="let item of pacientes">

@@ -1,23 +1,28 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Página de paciente</ion-title>
+    <ion-title>Paciente</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color = "light">
 
   <div *ngIf="permiteAnaliticas()">
-    <ion-button color="primary" expand="block" [routerLink]="['medico-analiticas']">
+
+    <ion-button style = "margin: auto; margin-top: 40%; width: 65%; " color="primary" expand="block" [routerLink]="['seccion-fisica']">
+
     Ver analíticas
   </ion-button></div>
 
-<div *ngIf="permiteDiarioFisico()">
-<ion-button color="primary" expand="block" [routerLink]="['seccion-fisica']">
-  Ver diario físico
-</ion-button></div>
-<div *ngIf="permiteDiarioMental()"><ion-button color="primary" expand="block" [routerLink]="['seccion-mental']">
-  Ver diario emocional
-</ion-button></div>
+  <div *ngIf="permiteDiarioFisico()">
+    <ion-button style = "margin: auto; margin-top: 10%; width: 65%; " color="primary" expand="block" [routerLink]="['seccion-fisica']">
+      Ver diario físico
+    </ion-button>
+  </div>
+  <div *ngIf="permiteDiarioMental()">
+    <ion-button  style = "margin: auto; margin-top: 10%; width: 65%; "color="primary" expand="block" [routerLink]="['seccion-mental']">
+      Ver diario emocional
+    </ion-button>
+  </div>
 
 
 
