@@ -6,7 +6,7 @@
 
 <ion-content color = "light">
 
-  <ion-card  style="margin-top:30px;margin-bottom:90px;color: white;">
+  <ion-card color="warning" style="margin-top:30px;margin-bottom:90px">
     <ion-label style="text-align: center">
       <h1 style="margin-top: 5%; margin-bottom: 5%; color: black">
         {{ analitica.info.name }}
@@ -23,12 +23,6 @@
           <ion-label class="ion-text-wrap"
             >{{ medicion.value}} {{analitica.info.unit}} ({{medicion.date}})
           </ion-label>
-          <ion-button [routerLink]="['/app/Tabs/Analytics/Details/'+medicion.id+'/Details/edit']">
-            <img src="/assets/images/Edit.png" style="height: 1.5rem;">
-          </ion-button>
-          <ion-button color="primary" (click)="eliminarDetalles( medicion.id )" style = "width:18%" >
-            Borrar
-          </ion-button>
         </ion-item>
        
       
@@ -40,19 +34,17 @@
   </ion-card>
   
   <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
-    <ion-fab-button  color = "primary" [routerLink]="['/app/Tabs/Analytics']">
+    <ion-fab-button  color = "primary" (click)="goBack()">
       <ion-icon name="arrow-back-circle-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+  
   <ion-fab
   style="padding-inline-end: 5%"
   slot="fixed"
   vertical="bottom"
   horizontal="end"
 >
-  <ion-fab-button color="primary" [routerLink]="['/app/Tabs/Analytics/Details/'+analitica.id+'/New']">
 
-    <ion-icon name="add"></ion-icon>
-  </ion-fab-button>
 </ion-fab>
 </ion-content>

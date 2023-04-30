@@ -33,6 +33,7 @@
     <ion-item color = "light" lines = "none">
       <ion-label text-wrap  class = "txt" position="stacked">¿Te duele en alguna zona del cuerpo?</ion-label>
       <ion-select style = "background-color: white;border-radius:15px"[(ngModel)]="dolores" multiple="true" placeholder="Selecciona">
+        <ion-select-option value="">No me duele nada</ion-select-option>
         <ion-select-option value="HEAD">Cabeza</ion-select-option>
         <ion-select-option value="NECK">Cuello</ion-select-option>
         <ion-select-option value="SHOULDER">Hombro</ion-select-option>

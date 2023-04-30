@@ -25,7 +25,7 @@ export class PatientPage implements OnInit {
 
   }
 
-    goBack(){
+  goBack(){
     this.navCtrl.pop(); 
   }
 

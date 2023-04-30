@@ -48,7 +48,7 @@ export class NuevaEntradaFisicaPage implements OnInit {
   painsToString(dolores: any) {
     const json = JSON.stringify(dolores);
     const string: string[] = JSON.parse(json);
-    const result = string.join(',');
+    const result = string.filter(pain => pain!='').join(',');
 
     return result;
   }

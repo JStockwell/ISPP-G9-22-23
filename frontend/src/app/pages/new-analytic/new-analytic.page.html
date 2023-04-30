@@ -14,15 +14,16 @@
       </ion-select>
     </ion-item>
     <ion-item color = "light" lines = "none">
-      <ion-label class = "txt" position="stacked">Umbral Alto</ion-label>
-      <ion-input [(ngModel)]="umbralAlto" placeholder="Valor alto a no superar" type="number"></ion-input>
-      <ion-badge class="ion-badge" >{{ getMetricUnit() }}</ion-badge>
-    </ion-item>
-    <ion-item color = "light" lines = "none">
       <ion-label class = "txt" position="stacked">Umbral Bajo</ion-label>
       <ion-input [(ngModel)]="umbralBajo" placeholder="Valor bajo a no superar" type="number"></ion-input>
       <ion-badge class="ion-badge" >{{ getMetricUnit() }}</ion-badge>
     </ion-item>
+    <ion-item color = "light" lines = "none">
+      <ion-label class = "txt" position="stacked">Umbral Alto</ion-label>
+      <ion-input [(ngModel)]="umbralAlto" placeholder="Valor alto a no superar" type="number"></ion-input>
+      <ion-badge class="ion-badge" >{{ getMetricUnit() }}</ion-badge>
+    </ion-item>
+    
     
     <ion-button  color="primary" expand="block" (click)="crearNuevaAnalitica()">
       Crear analítica

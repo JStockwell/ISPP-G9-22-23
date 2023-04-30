@@ -8,11 +8,12 @@ import { DetalleAnaliticasService } from 'src/app/services/detalle-analiticas.se
 import { AnaliticasService } from 'src/app/services/analiticas.service';
 
 @Component({
-  selector: "app-detalles-analitica",
-  templateUrl: "./detalles-analitica.page.html",
-  styleUrls: ["./detalles-analitica.page.scss"],
+  selector: "app-medico-detalles-analitica",
+  templateUrl: "./medico-detalles-analitica.page.html",
+  styleUrls: ["./medico-detalles-analitica.page.scss"],
 })
-export class DetallesAnaliticaPage implements OnInit {
+export class MedicoDetallesAnaliticaPage implements OnInit {
+
   nombreAnalitica?: String;
 
   chart: any;
@@ -32,11 +33,12 @@ export class DetallesAnaliticaPage implements OnInit {
   constructor(private route: ActivatedRoute, private navCtrl: NavController, public router: Router, private service:DetalleAnaliticasService, private analiticaService:AnaliticasService) {}
 
   ngOnInit() {
+    let idpaciente = this.route.snapshot.paramMap.get('patientid')
     this.id = this.route.snapshot.params["id"];
     this.service.getDetallesAnaliticas(this.route.snapshot.paramMap.get("id")).subscribe({
       next: data=>{
         this.analitica=data;
-        this.createDetails();
+        this.createDetails(idpaciente);
       },
       error:err=>{
         console.log(err.error.message)
@@ -46,8 +48,9 @@ export class DetallesAnaliticaPage implements OnInit {
     defaultTab?.click();
   }
 
-  createDetails(){
-    this.analiticaService.getAnaliticaDetails().subscribe({
+  createDetails(idpaciente:any){
+    console.log(idpaciente)
+    this.analiticaService.getAnaliticaDetails2(idpaciente).subscribe({
       next: data =>{
         for(var metric of data){
           let date:Date = metric.date;
@@ -57,12 +60,11 @@ export class DetallesAnaliticaPage implements OnInit {
       },
       error:err=>{
         console.log(err.error.message)
+        console.log("aquí")
       }
     })
 
-    
-
-    this.analiticaService.getLatestDetails(this.id).subscribe({
+    this.analiticaService.getLatestDetails2(this.id, idpaciente).subscribe({
       next: data => {
         const data2 = data.reverse();
         for(var metric of data2){
@@ -73,8 +75,7 @@ export class DetallesAnaliticaPage implements OnInit {
           
           this.medicionesAux.push(metric)
         }
-        let id = this.route.snapshot.params["id"];
-        this.createChart(id);
+        this.createChart(this.id);
       },
       error:err => {
         console.log(err.error.message)
@@ -106,7 +107,6 @@ export class DetallesAnaliticaPage implements OnInit {
 
 
   createChart(id: any) {
-
     const dates: String[] = [];
     const values: String[] = [];
     let str = "chr"+id;
@@ -124,21 +124,6 @@ export class DetallesAnaliticaPage implements OnInit {
           dataLower.push(medicion.metric.min_value);
           dataUpper.push(medicion.metric.max_value);
         }
-      }
-      if(dataLower.length==0 || dataUpper.length==0){
-        dataLower.push(this.analitica.min_value);
-        dataLower.push(this.analitica.min_value);
-        dataUpper.push(this.analitica.max_value);
-        dataUpper.push(this.analitica.max_value);
-        dates.push('')
-        dates.push('')
-      }
-      else if(dataLower.length<=1 || dataUpper.length<=1){
-        dataLower.push(this.analitica.min_value);
-
-        dataUpper.push(this.analitica.max_value);
-
-        dates.push('')
       }
       Chart.defaults.color = "black";
       Chart.defaults.backgroundColor = "#f4f5f9";
