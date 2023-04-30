@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color = "primary">
+    <ion-title>Datos de la empresa</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class = "ion-padding" color = "light">
+  <ion-card style = "color:white; margin-bottom: 15%;">
+    <h1 style="color:black; text-align: center; margin-top: 12%;">Información general</h1>
+    <div style = "display: inline;">
+      <p style = "text-align: justify; color:black; margin-left: 7%;margin-right: 7%; margin-top: 14%; margin-bottom: 10%; font-size: 18px; line-height: 23px; text-justify: inter-word;">
+        Somos el grupo 9 de la asignatura de Ingeniería del software y práctica profesional
+        de la Universidad de Sevilla, y este es un proyecto desarrollado en colaboración con la ONG 
+        Asociación Marco Luna. <br> <br> Nuestro objetivo es desarrollar una aplicación que permita a todo tipo de pacientes, especialmente
+        a los que sufren de cáncer, llevar un seguimiento de forma cómoda y simple acerca de su estado y que a la vez
+        les permita compartir dicha información con sus médicos para facilitar su tratamiento, si así lo desean. Queremos que nuestra
+        aplicación sea como un compañero para estos momentos tan complicados.
+  
+      </p>
+    </div>
+    
+    <h1 style="color:black; text-align: center; margin-top: 12%;">Información de contacto</h1>
+    <p style = "color:#0b2645;text-align: center; margin-bottom: 10%; font-size: 15px; line-height: 23px;">
+      isppgrupo9@gmail.com
+    </p>
+  </ion-card>
+  <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
+    <ion-fab-button  color = "primary" (click)="goBack()">
+      <ion-icon name="arrow-back-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

@@ -121,6 +121,22 @@ export class DetallesMentalPage implements OnInit {
   
   }
 
+  eliminarEntradaMental(idEntrada: any) {
+    this.service.deleteEntry(idEntrada).subscribe({
+      next: res => {
+        console.log(res);
+        document.location.href="/app/Tabs/seccion-mental"
+        window.location.href = "/app/Tabs/seccion-mental"
+      },error: err => {
+        console.log(err)
+      }
+    })
+  }
+
+    getId(){
+    return this.route.snapshot.paramMap.get("id");
+  }
+
 }
 
 type mentalEntry = {
@@ -131,6 +147,7 @@ type mentalEntry = {
   weather: string,
   food: string,
   sleep:string,
+  period_now: boolean,
   positive_thoughts:string,
   negative_thoughts:string,
   patient_id:null

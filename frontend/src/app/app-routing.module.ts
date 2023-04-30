@@ -123,6 +123,64 @@ const routes: Routes = [
 
   },
   {
+    path: 'info',
+    loadChildren: () => import('./pages/info/info.module').then( m => m.InfoPageModule)
+  },
+
+  {
+    path: 'users',
+    loadChildren: () => import('./pages/users/users.module').then( m => m.UsersPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+  },
+
+  {
+    path: 'calendario',
+    loadChildren: () => import('./pages/calendario/calendario.module').then( m => m.CalendarioPageModule)
+  },
+  {
+    path: 'nueva-cita',
+    loadChildren: () => import('./pages/nueva-cita/nueva-cita.module').then( m => m.NuevaCitaPageModule)
+  },
+  {
+    path: 'modificar-fisico',
+    loadChildren: () => import('./pages/modificar-fisico/modificar-fisico.module').then( m => m.ModificarFisicoPageModule)
+  },
+  {
+    path: 'modificar-detalles',
+    loadChildren: () => import('./pages/modificar-detalles/modificar-detalles.module').then( m => m.ModificarDetallesPageModule)
+
+  },
+  {
+    path: 'modificar-cita',
+    loadChildren: () => import('./pages/modificar-cita/modificar-cita.module').then( m => m.ModificarCitaPageModule)
+  },
+  {
+    path: 'detalles-cita',
+    loadChildren: () => import('./pages/detalles-cita/detalles-cita.module').then( m => m.DetallesCitaPageModule)
+  },
+  {
+    path: 'medic-home',
+    loadChildren: () => import('./pages/medic-home/medic-home.module').then( m => m.MedicHomePageModule)
+
+  },
+  {
+    path: 'preferencias-de-usuario',
+    loadChildren: () => import('./pages/preferencias-de-usuario/preferencias-de-usuario.module').then( m => m.PreferenciasDeUsuarioPageModule)
+  },
+    {
+    path: 'perfil-de-usuario',
+    loadChildren: () => import('./pages/perfil/perfil.module').then(m => m.PerfilPageModule)
+    },
+  {
+
+    path: 'medic-home',
+    loadChildren: () => import('./pages/medic-home/medic-home.module').then( m => m.MedicHomePageModule)
+
+  },
+  {
     path: 'medic/home/patient/:id',
     loadChildren: () => import('./pages/patient/patient.module').then( m => m.PatientPageModule)
   },
@@ -148,19 +206,16 @@ const routes: Routes = [
     path: 'medic/home/patient/:id/medico-analiticas',
     loadChildren: () => import('./pages/medico-analiticas/medico-analiticas.module').then( m => m.MedicoAnaliticasPageModule)
   },
+  {
+    path: 'tyc',
+    loadChildren: () => import('./pages/tyc/tyc.module').then( m => m.tycPageModule)
+  },
 
   {
     path: 'medico-detalles-analiticas/:id/:patientid',
     loadChildren: () => import('./pages/medico-detalles-analitica/medico-detalles-analitica.module').then( m => m.MedicoAnaliticasDetallesPageModule)
   },
 
-  
- 
-
- 
-
-
-   
 
 
 
@@ -172,3 +227,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
+

@@ -42,13 +42,21 @@ export class UsersService {
       if(ck!=null){
         var tk = JSON.parse(ck);
         var res = [];
+        let isMedic = false;
         for(var i in tk){
+          if(i==='medic id'){
+            console.log('medico');
+            isMedic = true;
+          }
           res.push(tk[i]);
         }
         let headers = new HttpHeaders()
         headers = headers.set('Authorization', 'Token '+res[0])
-
-        return this.http.get(API_URL + `users/patients/${res[1]}/`,{'headers':headers})
+        if(isMedic){
+          return this.http.get(API_URL + `users/medics/${res[1]}/`,{'headers':headers})
+        }else{
+          return this.http.get(API_URL + `users/patients/${res[1]}/`,{'headers':headers})
+        }
       }
     }
     return new Observable<any>;
@@ -75,7 +83,22 @@ export class UsersService {
     return this.http.post(API_URL+'users/login/',user,httpOptions);
   }
   logout(): Observable<any> {
-    return this.http.post(API_URL+ 'signout', { }, httpOptions);
+
+    if(this.isLoggedIn()){
+      var ck = localStorage.getItem('auth-user')
+      if(ck!=null){
+        var tk = JSON.parse(ck);
+        var res = [];
+        for(var i in tk){
+          res.push(tk[i]);
+        }
+        let headers = new HttpHeaders()
+        headers = headers.set('Authorization', 'Token '+res[0])
+
+        return this.http.get(API_URL + `users/logout/`,{'headers':headers})
+      }
+    }
+    return new Observable<any>;
   }
 
   public UserData(): Observable<any> {
@@ -117,6 +140,26 @@ export class UsersService {
   }
   return new Observable<any>;
     
+  }
+
+  deleteUser(idEntry:any): Observable<any>{
+
+    if(this.isLoggedIn()){
+      var ck = localStorage.getItem('auth-user')
+      if(ck != null){
+        var tk = JSON.parse(ck);
+        var res = [];
+        for(var i in tk){
+          res.push(tk[i]);
+        }
+        let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
+        headers=headers.set('Authorization','Token '+res[0])
+
+        return this.http.delete(`${API_URL}users/patients/${idEntry}`, {'headers':headers});
+      }
+
+    }
+    return new Observable<any>;
   }
 
 }

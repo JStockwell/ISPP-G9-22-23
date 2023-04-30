@@ -27,8 +27,31 @@
       <ion-row>
         <ion-col>
           <h3><b>
-            ¿Qúe me duele?:
-            <img *ngFor="let part of splitParts(entrada.body_parts)" class ="emoji" src="{{getImagenDolor(part)}}" style="width: 3rem;" >
+            ¿Qué me duele?:
+            <div *ngIf="entrada.body_parts then body_parts_view else body_parts_default"></div>
+            <ng-template #body_parts_view>
+              <img *ngFor="let part of splitParts(entrada.body_parts)" class ="emoji" src="{{getImagenDolor(part)}}" style="width: 3rem;" >
+            </ng-template>
+            <ng-template #body_parts_default>
+              <p>No me duele nada</p>
+            </ng-template>
+          </b></h3>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <div style="text-align: center">
+      <ion-row>
+        <ion-col>
+          <h3><b>
+            ¿Has echo deporte?:
+            <div *ngIf="entrada.done_exercise then exercise_yes else exercise_no"></div>
+            <ng-template #exercise_yes>
+              <p>Sí</p>
+            </ng-template>
+            <ng-template #exercise_no>
+              <p>No</p>
+            </ng-template>
           </b></h3>
         </ion-col>
       </ion-row>

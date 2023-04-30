@@ -47,16 +47,20 @@
 
         <ion-segment [(ngModel)]="suenyo" scrollable>
           <ion-segment-button value="DEEP">
-            <img src="/assets/images/slumber.png">
+            <img src="/assets/images/slumber.png" style="width: 90px;">
+            <ion-label  style = "color: black; font-size: 10px;">Profundo</ion-label>
           </ion-segment-button>
           <ion-segment-button value="NORMAL">
-            <img src="/assets/images/sleeping.png">
+            <img src="/assets/images/sleeping.png" style="width: 90px;">
+            <ion-label  style = "color: black;font-size: 10px;" >Normal</ion-label>
           </ion-segment-button>
           <ion-segment-button value="LIGHT">
-            <img src="/assets/images/light-sleep.png">
+            <img src="/assets/images/light-sleep.png" style="width: 90px;">
+            <ion-label  style = "color: black;font-size: 10px;" >Ligero</ion-label>
           </ion-segment-button>
           <ion-segment-button value="NONE">
-            <img src="/assets/images/insomnia.png">
+            <img src="/assets/images/insomnia.png" style="width: 90px;">
+            <ion-label  style = "color: black; font-size: 10px;" >Insomnio</ion-label>
           </ion-segment-button>
         </ion-segment>
       </ion-item>
@@ -68,15 +72,19 @@
         <ion-segment [(ngModel)]="comida" scrollable>
           <ion-segment-button value="HEALTHY">
             <img src="/assets/images/salad.png">
+            <ion-label  style = "color: black;font-size: 10px;" >Saludable</ion-label>
           </ion-segment-button>
           <ion-segment-button value="NORMAL">
             <img src="/assets/images/normal-food.png">
+            <ion-label  style = "color: black;font-size: 10px;" >Normal</ion-label>
           </ion-segment-button>
           <ion-segment-button value="FAST">
             <img src="/assets/images/hamburger.png">
+            <ion-label  style = "color: black;font-size: 10px;" >Basura</ion-label>
           </ion-segment-button>
           <ion-segment-button value="NONE">
             <img src="/assets/images/plato.png">
+            <ion-label  style = "color: black;font-size: 10px;" >Ayuno</ion-label>
           </ion-segment-button>
         </ion-segment>
       </ion-item>
@@ -104,8 +112,17 @@
         </ion-segment>
       </ion-item>
 
+
+      <ion-item lines = "none"color = "light" *ngIf="regla==true">
+        <ion-label>¿Tienes la regla?</ion-label>
+        <ion-toggle color="primary" [(ngModel)]="reglaHoy" [checked]="false"></ion-toggle>
+      </ion-item>
+
+
+
       <ion-item color = "light" lines = "none">
         <ion-label class = "txt"  style="margin-top: 5%;" position="stacked" >Pensamientos positivos</ion-label>
+
         <ion-textarea [(ngModel)]="ppositivos" rows= "3" placeholder="Escribe aquí los pensamientos positivos que has tenido en el día de hoy." type="text"></ion-textarea>
       </ion-item>
 

@@ -1,3 +1,16 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-content>
+    <ion-router-outlet></ion-router-outlet>
+  </ion-content>
+  <ion-footer *ngIf="!isPremium">
+    <ion-toolbar>
+      <div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+      </div>
+    </ion-toolbar>
+  </ion-footer>
 </ion-app>

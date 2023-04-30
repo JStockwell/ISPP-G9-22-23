@@ -16,7 +16,7 @@ const httpOptions = {
   styleUrls: ['./new-analytic.page.scss'],
 })
 export class NewAnalyticPage implements OnInit {
-  metrics:any[] | undefined
+  metrics:any[] = [];
   
   nombre:string | undefined
   unidad:string | undefined

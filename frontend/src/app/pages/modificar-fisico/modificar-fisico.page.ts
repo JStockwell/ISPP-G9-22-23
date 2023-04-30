@@ -5,6 +5,7 @@ import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 registerLocaleData(localeEs, 'es');
 import { NavController } from '@ionic/angular';
+import { UsersService } from '../../services/users.service';
 
 @Component({
   selector: 'app-modificar-fisico',
@@ -18,11 +19,13 @@ export class ModificarFisicoPage implements OnInit {
   estadoFisico:string | any = '';
   dolores:string | any = '';
   deporte:boolean | any = false;
+  regla:boolean | any;
+  reglaHoy: boolean | any;
   notas:string | any = '';
   today:string | any = '';
   dtAux:String = ""
 
-  constructor(private route:ActivatedRoute, private service:ModificarFisicoService, private navCtrl: NavController) { }
+  constructor(private route:ActivatedRoute, private service:ModificarFisicoService, private navCtrl: NavController, private uService: UsersService) { }
 
   ngOnInit() {
     let id = this.route.snapshot.paramMap.get('id')
@@ -32,6 +35,7 @@ export class ModificarFisicoPage implements OnInit {
         this.estadoFisico = this.entrada.state;
         this.dolores = this.entrada.body_parts.split(',');
         this.deporte = this.entrada.done_exercise;
+        this.reglaHoy = this.entrada.period_now;
         this.notas = this.entrada.notes;
         this.today = this.entrada.date;
         let Aux:Date = new Date(this.today);
@@ -41,17 +45,38 @@ export class ModificarFisicoPage implements OnInit {
       error:err=>{
         console.log(err.error.message);
       }
+
     })
+    this.getRegla();
   }
   goBack(){
     this.navCtrl.pop(); 
+  }
+
+  getRegla(){
+   
+    this.uService.getUserData().subscribe({
+      
+      next: data => {
+        console.log(data.has_period)
+        this.regla = data.has_period;
+
+        
+      },
+      error: err => {
+        console.log(err);
+
+      }
+      
+    })
+    
   }
 
   painsToString(dolores: any) {
     const json = JSON.stringify(dolores);
     const string: string[] = JSON.parse(json);
     if(string.length>1){
-      const result = string.join(',');
+      const result = string.filter(pain => pain!='').join(',');
       return result;
     }
     return string[0];
@@ -69,6 +94,7 @@ export class ModificarFisicoPage implements OnInit {
         date: this.today,
         state: this.estadoFisico,
         body_parts: " ",
+        period_now: this.reglaHoy,
         done_exercise: this.deporte,
         patient_id: this.service.getIdUser(),
       };
@@ -78,6 +104,7 @@ export class ModificarFisicoPage implements OnInit {
         date: this.today,
         state: this.estadoFisico,
         body_parts: parts,
+        period_now: this.reglaHoy,
         done_exercise: this.deporte,
         patient_id: this.service.getIdUser(),
       };
@@ -104,6 +131,7 @@ type EntradaFisica = {
   date: string,
   state: string,
   body_parts: string,
+  period_now: boolean,
   notes: string,
   patient_id: null,
   done_exercise: boolean

@@ -6,7 +6,7 @@
 
 <ion-content color = "light">
 
-  <ion-card color="warning" style="margin-top:30px;margin-bottom:90px">
+  <ion-card  style="margin-top:30px;margin-bottom:90px;color: white;">
     <ion-label style="text-align: center">
       <h1 style="margin-top: 5%; margin-bottom: 5%; color: black">
         {{ analitica.info.name }}
@@ -26,7 +26,7 @@
           <ion-button [routerLink]="['/app/Tabs/Analytics/Details/'+medicion.id+'/Details/edit']">
             <img src="/assets/images/Edit.png" style="height: 1.5rem;">
           </ion-button>
-          <ion-button color="dark" (click)="eliminarDetalles( medicion.id )" >
+          <ion-button color="primary" (click)="eliminarDetalles( medicion.id )" style = "width:18%" >
             Borrar
           </ion-button>
         </ion-item>

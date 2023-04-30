@@ -33,6 +33,7 @@
     <ion-item color = "light" lines = "none">
       <ion-label text-wrap  class = "txt" position="stacked">¿Te duele en alguna zona del cuerpo?</ion-label>
       <ion-select style = "background-color: white;border-radius:15px"[(ngModel)]="dolores" multiple="true" placeholder="Selecciona">
+        <ion-select-option value="">No me duele nada</ion-select-option>
         <ion-select-option value="HEAD">Cabeza</ion-select-option>
         <ion-select-option value="NECK">Cuello</ion-select-option>
         <ion-select-option value="SHOULDER">Hombro</ion-select-option>
@@ -55,9 +56,17 @@
       <ion-toggle color="primary" [(ngModel)]="deporte" [checked]="false" ></ion-toggle>
 
     </ion-item>
+
+
+    <ion-item color = "light" lines = "none" *ngIf="regla==true">
+        <ion-label>¿Tienes la regla?</ion-label>
+        <ion-toggle color="primary" [(ngModel)]="reglaHoy" [checked]="false"></ion-toggle>
+      </ion-item>
+
     <ion-item color = "light" lines = "none">
       <ion-label class = "txt" position="stacked">Notas</ion-label>
       <ion-textarea style = "background-color: white;" [(ngModel)]="notas" placeholder="Desarrolla aquí como te sientes y el deporte que hayas hecho." type="text"></ion-textarea>
+
     </ion-item>
     
     <ion-button color="primary" expand="block" (click)="crearEntradaFisica()">
