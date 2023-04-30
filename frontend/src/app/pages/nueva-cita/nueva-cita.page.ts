@@ -91,7 +91,6 @@ export class NuevaCitaPage implements OnInit {
     
     this.nuevaCitaService.postEntry(dataEntry).subscribe({
       next: dataEntry => {
-     
         document.location.href = "/app/Tabs/calendario"
         window.location.href = "/app/Tabs/calendario"
       },
