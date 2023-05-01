@@ -30,8 +30,7 @@ export class MedicoAnaliticasPage implements OnInit {
     this.idpaciente = this.route.snapshot.paramMap.get('id')
     this.createAnaliticas(this.idpaciente)
     
-    // PARA PODER INICIALIZAR LA VARIABLE DE EVENTOS SIN ENTRAR EN LA VISTA DE CALENDARIO
-    this.calendarioService.setEventosList();
+
    }
 
    goBack(){

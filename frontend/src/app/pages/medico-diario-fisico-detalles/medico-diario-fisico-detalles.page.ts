@@ -20,7 +20,6 @@ export class MedicoDiarioFisicoDetallesPage implements OnInit {
 
   ngOnInit() {
     let id_entrada = this.route.snapshot.paramMap.get('id');
-    console.log(id_entrada)
     this.service.getEntradaFisica2(id_entrada).subscribe({
       next: data =>{
         this.entrada = data

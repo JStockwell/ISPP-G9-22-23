@@ -23,7 +23,6 @@ export class DetallesMentalPage implements OnInit {
         this.entrada = data;
         this.replaceSaltosLinea(this.entrada);
         let Aux:Date = new Date(this.entrada.date);
-        console.log(Aux)
         var aux2 = Aux.toLocaleDateString("es-ES", { weekday: 'long'})
         this.dtAux = aux2.charAt(0).toUpperCase() + aux2.substring(1) + ', ' + Aux.toLocaleDateString();;
 
@@ -124,7 +123,6 @@ export class DetallesMentalPage implements OnInit {
   eliminarEntradaMental(idEntrada: any) {
     this.service.deleteEntry(idEntrada).subscribe({
       next: res => {
-        console.log(res);
         document.location.href="/app/Tabs/seccion-mental"
         window.location.href = "/app/Tabs/seccion-mental"
       },error: err => {

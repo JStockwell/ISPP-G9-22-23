@@ -25,7 +25,6 @@ export class SeccionFisicaPage implements OnInit {
         handler: ()=>{
           this.fisicoService.deleteEntry(idEntrada).subscribe({
             next: res => {
-              console.log(res);
               document.location.href="/app/Tabs/seccion-fisica"
               window.location.href = "/app/Tabs/seccion-fisica"
             },error: err => {
@@ -62,7 +61,7 @@ async loadEntradasDiarioFisico(){
       this.fisicoService.getEntradasFisicas().subscribe((res) =>{
         for(var entrada of res){
           let Aux:Date = new Date(entrada.date);
-          console.log(Aux)
+
           var aux2 = Aux.toLocaleDateString("es-ES", { weekday: 'long'})
           entrada.dtAux = aux2.charAt(0).toUpperCase() + aux2.substring(1) + ', ' + Aux.toLocaleDateString();
           this.entries.push(entrada);

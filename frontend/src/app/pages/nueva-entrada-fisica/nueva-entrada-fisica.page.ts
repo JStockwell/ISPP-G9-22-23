@@ -72,10 +72,8 @@ export class NuevaEntradaFisicaPage implements OnInit {
     this.uService.getUserData().subscribe({
       
       next: data => {
-        console.log(data.has_period)
-        this.regla = data.has_period;
 
-        
+        this.regla = data.has_period;
       },
       error: err => {
         console.log(err);
@@ -114,7 +112,7 @@ export class NuevaEntradaFisicaPage implements OnInit {
       dataEntry["notes"]=this.notas;
     }
     
-    console.log(dataEntry);
+
     this.nuevaEntradFisicaService.postEntry(dataEntry).subscribe({
       next: dataEntry => {
         document.location.href="/app/Tabs/seccion-fisica"

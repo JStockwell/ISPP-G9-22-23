@@ -30,7 +30,7 @@ export class MedicHomePage implements OnInit {
     this.HomeMedicService.getPacientes().subscribe((res)=> {
       for(var entrada of res){
         this.pacientes.push(entrada);
-        console.log(entrada)
+
       }
       loading.dismiss();
   
