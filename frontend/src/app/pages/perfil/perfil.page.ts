@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
 
+
 @Component({
     selector: 'app-perfil',
     templateUrl: './perfil.page.html',
@@ -14,16 +15,17 @@ export class PerfilPage implements OnInit {
     email: string | any='';
     name: string | any='';
     surname: string | any='';
-    code: string | any= '';
+    code: string| any= '';
+
+    isModalOpen= false;
+
 
     constructor(private userService: UsersService) {}
 
     ngOnInit(): void {
-        console.log("uid, ", this.getUserId());
-        //console.log("datos usuario", this.getInfoUser());
+
         this.getInfoUser();
-        console.log("datos usuario");
-        console.log("on init", this.birthdate);
+
     }
 
     getUserId(){
@@ -42,7 +44,7 @@ export class PerfilPage implements OnInit {
 
     getInfoUser() {
         let usuario = this.userService.UserData().subscribe((res)=>{
-            console.log("res infouser, ", res);
+
             this.id=res.id;
             this.birthdate=res.birthdate;
             this.tel= res.tel;
@@ -50,7 +52,37 @@ export class PerfilPage implements OnInit {
             this.email=res.user.email;
             this.name=res.user.first_name;
             this.surname=res.user.last_name;
-            this.code = res.code;
+            this.code=res.code;
+
           });
+    }
+
+    cerrarsesion(){
+      
+      this.userService.logout().subscribe(
+        (data) =>{
+          localStorage.clear();
+          window.location.href=""
+        },
+        error =>{
+          console.log(error)
+        }
+        );
+      }  
+
+
+    setOpen(isOpen: boolean) {
+      this.isModalOpen = isOpen;
+    }
+
+    eliminarUsuario(idEntrada: any) {
+
+      this.userService.deleteUser(idEntrada).subscribe({
+        next: res => {
+          this.cerrarsesion();
+        },error: err => {
+          console.log(err)
+        }
+      })
     }
 }

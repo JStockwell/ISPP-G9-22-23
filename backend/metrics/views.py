@@ -34,7 +34,7 @@ class MetricListInfo(APIView):
             responses={'200':MetricInfoSerializer}
     )
     def get(self, request):
-        metrics_info = MetricInfo.objects.all()
+        metrics_info = MetricInfo.objects.all().order_by("name")
         serializer = MetricInfoSerializer(metrics_info, many=True)
         return Response(serializer.data)
     
@@ -52,7 +52,7 @@ class NotUsedMetricInfoByPatient(APIView):
         metrics = Metric.objects.filter(patient = patient)
         metrics_info = [metric.info for metric in metrics]
         metrics_info = list(dict.fromkeys(metrics_info))
-        all_metrics_info = list(MetricInfo.objects.all())
+        all_metrics_info = list(MetricInfo.objects.all().order_by("name"))
         serializer = MetricInfoSerializer([x for x in all_metrics_info if x not in metrics_info], many=True)
         return Response(serializer.data)
 

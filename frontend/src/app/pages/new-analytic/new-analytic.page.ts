@@ -16,7 +16,7 @@ const httpOptions = {
   styleUrls: ['./new-analytic.page.scss'],
 })
 export class NewAnalyticPage implements OnInit {
-  metrics:any[] | undefined
+  metrics:any[] = [];
   
   nombre:string | undefined
   unidad:string | undefined
@@ -85,10 +85,9 @@ export class NewAnalyticPage implements OnInit {
           value: this.valor,
           patient_id: this.getIdUser(),
         }
-        console.log(dataMeasureEntry)
+
         this.newAnalyticService.postMeasureEntry(dataMeasureEntry).subscribe({
           next: res => {
-            console.log(res);
           }, error: err => {
             console.log(err);
           }

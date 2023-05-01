@@ -10,6 +10,7 @@ registerLocaleData(localeEs, 'es');
 import { AlertController } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { resolve } from 'chart.js/dist/helpers/helpers.options';
 
 @Component({
   selector: 'app-nueva-entrada-mental',
@@ -26,6 +27,8 @@ export class NuevaEntradaMentalPage implements OnInit{
   tiempo:string | undefined
   ppositivos:string | undefined
   pnegativos:string | undefined
+  reglaHoy:boolean | undefined
+  regla:boolean | undefined
   today = new Date();
   errorMessage = '';
   errorMessageEstado = '';
@@ -41,6 +44,7 @@ export class NuevaEntradaMentalPage implements OnInit{
   ngOnInit() {
     var aux = this.today.toLocaleDateString("es-ES", { weekday: 'long'});
     this.dtAux = aux.charAt(0).toUpperCase() + aux.substring(1) + ', ' + this.today.toLocaleDateString();
+    this.getRegla();
   }
 
   goBack(){
@@ -69,16 +73,17 @@ export class NuevaEntradaMentalPage implements OnInit{
       weather : this.tiempo,
       food: this.comida,
       sleep: this.suenyo,
+      period_now : this.reglaHoy,
       positive_thoughts: this.ppositivos,
       negative_thoughts: this.pnegativos,
       notes: this.notas,
       patient_id: this.getIdUser(),
     }
-    console.log(dataEntry);
+
     
     this.nuevaEntradaMentalService.postEntry(dataEntry).subscribe({
       next: dataEntry => {
-        console.log(dataEntry);
+
         document.location.href="/app/Tabs/seccion-mental"
         window.location.href = "/app/Tabs/seccion-mental"
       },
@@ -129,5 +134,21 @@ export class NuevaEntradaMentalPage implements OnInit{
     }
   }
 
+  
+  getRegla(){
+   
+    this.uService.getUserData().subscribe({
+      
+      next: data => {
+        this.regla = data.has_period; 
+      },
+      error: err => {
+        console.log(err);
+
+      }
+      
+    })
+    
+  }
 
 }

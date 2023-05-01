@@ -16,7 +16,6 @@ export class PaginaInicialService {
     if(this.uService.isLoggedIn()){
 
       var ck = localStorage.getItem('auth-user');
-      console.log(ck);
       
 
       if(ck!=null){

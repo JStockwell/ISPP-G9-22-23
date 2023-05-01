@@ -25,6 +25,8 @@ export class NuevaEntradaFisicaPage implements OnInit {
   dolores:string | any = '';
   deporte:boolean | any = false;
   notas:string | any = '';
+  regla:boolean | undefined
+  reglaHoy:boolean | undefined
   today = new Date();
   dtAux:string = "";
   errorMessage = '';
@@ -36,7 +38,7 @@ export class NuevaEntradaFisicaPage implements OnInit {
     
     var aux = this.today.toLocaleDateString("es-ES", { weekday: 'long'});
     this.dtAux = aux.charAt(0).toUpperCase() + aux.substring(1) + ', ' + this.today.toLocaleDateString();
-    
+    this.getRegla();
   }
 
   goBack(){
@@ -46,7 +48,7 @@ export class NuevaEntradaFisicaPage implements OnInit {
   painsToString(dolores: any) {
     const json = JSON.stringify(dolores);
     const string: string[] = JSON.parse(json);
-    const result = string.join(',');
+    const result = string.filter(pain => pain!='').join(',');
 
     return result;
   }
@@ -64,6 +66,23 @@ export class NuevaEntradaFisicaPage implements OnInit {
       }
     }
   }
+
+  getRegla(){
+   
+    this.uService.getUserData().subscribe({
+      
+      next: data => {
+
+        this.regla = data.has_period;
+      },
+      error: err => {
+        console.log(err);
+
+      }
+      
+    })
+    
+  }
   
   crearEntradaFisica(): void{
     let parts = ''
@@ -76,6 +95,7 @@ export class NuevaEntradaFisicaPage implements OnInit {
         date: this.today.toISOString().split('T')[0],
         state: this.estadoFisico,
         done_exercise: this.deporte,
+        period_now : this.reglaHoy,
         patient_id: this.getIdUser(),
       };
     }else{
@@ -83,6 +103,7 @@ export class NuevaEntradaFisicaPage implements OnInit {
         date: this.today.toISOString().split('T')[0],
         state: this.estadoFisico,
         body_parts: parts,
+        period_now : this.reglaHoy,
         done_exercise: this.deporte,
         patient_id: this.getIdUser(),
       };
@@ -91,7 +112,7 @@ export class NuevaEntradaFisicaPage implements OnInit {
       dataEntry["notes"]=this.notas;
     }
     
-    console.log(dataEntry);
+
     this.nuevaEntradFisicaService.postEntry(dataEntry).subscribe({
       next: dataEntry => {
         document.location.href="/app/Tabs/seccion-fisica"

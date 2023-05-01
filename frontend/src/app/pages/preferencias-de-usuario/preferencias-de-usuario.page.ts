@@ -26,7 +26,7 @@ export class PreferenciasDeUsuarioPage implements OnInit {
 
   ngOnInit() {
     let usuario = this.uService.UserData().subscribe((res)=>{
-      console.log(res);
+
       this.share_mental_entries = res.share_mental_entries;
       this.share_metrics= res.share_metrics;
       this.share_physical_entries = res.share_physical_entries;
@@ -41,8 +41,6 @@ export class PreferenciasDeUsuarioPage implements OnInit {
 
     });
     
-    
-
   }
 
   editarPreferenciasUsuario():void{
@@ -71,7 +69,7 @@ export class PreferenciasDeUsuarioPage implements OnInit {
         console.log(err.error.message);
       }
     })
-    console.log(dataEntry);
+
 
   }
 

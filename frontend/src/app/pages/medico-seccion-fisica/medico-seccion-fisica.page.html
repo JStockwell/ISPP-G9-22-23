@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title> Diario Físico </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" color = "light">
+  <div *ngIf="existsEntradas(); then renderEntradas else noEntradas"></div>
+  <ng-template #renderEntradas>
+    <div *ngFor="let item of entries">
+      <ion-card color="warning" *ngIf="entries !=0" [routerLink]="['/medico-seccion-fisico/'+item.id]">
+
+        <div style="text-align: center;">
+          <div style="text-align: right; margin-right: 15px; margin-top: 20px"></div>
+          <h1 style="text-align: center; padding-bottom: 2%; font-weight: bold;">{{ item.dtAux }}</h1>
+        </div>
+
+        <div style="text-align: center">
+          <ion-row>
+            <ion-col>
+              <h3 style="font-weight: bold;">
+                Estado físico: <img  class ="emoji" src="{{getImagenEstado(item.state)}}"  style="width: 3rem;" >
+              </h3>
+            </ion-col>
+          </ion-row>
+        </div>
+
+        <div style="text-align: center">
+          <ion-row>
+            <ion-col>
+              <h3 style="font-weight: bold;">
+                ¿Qué me duele?:
+                <div *ngIf="item.body_parts then body_parts_view else body_parts_default"></div>
+                <ng-template #body_parts_view>
+                  <img *ngFor="let part of splitParts(item.body_parts)" class ="emoji" src="{{getImagenDolor(part)}}" style="width: 3rem;" >
+                </ng-template>
+                <ng-template #body_parts_default>
+                  <p>No me duele nada</p>
+                </ng-template>
+              </h3>
+            </ion-col>
+          </ion-row>
+        </div>
+      </ion-card>
+      
+      
+    </div>
+  </ng-template>
+
+  <ng-template #noEntradas>
+    <div style="font-weight: bold; font-size: x-large; text-align: center">     
+
+      <img src="https://static.thenounproject.com/png/2902077-200.png" class="imagen-vacia" alt="">
+      <div style="opacity: .2;"> No hay entradas todavía </div>
+      
+    </div>
+  </ng-template>
+ <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
+  <ion-fab-button  color = "primary" (click)="goBack()">
+    <ion-icon name="arrow-back-circle-outline"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+
+</ion-content>

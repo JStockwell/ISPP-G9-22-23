@@ -5,6 +5,7 @@ import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 registerLocaleData(localeEs, 'es');
 import { NavController } from '@ionic/angular';
+import { UsersService } from '../../services/users.service';
 
 
 @Component({
@@ -22,12 +23,14 @@ export class ModificarMentalPage implements OnInit{
   notas:string | any='';
   comida:string | any='';
   tiempo:string | any='';
+  regla:boolean | any;
+  reglaHoy: boolean | any;
   ppositivos:string | any='';
   pnegativos:string | any='';
   today : string | any ='';
   dtAux : String = "";
 
-  constructor(private route:ActivatedRoute, private service:ModificarMentalService,private navCtrl: NavController) {}
+  constructor(private route:ActivatedRoute, private service:ModificarMentalService,private navCtrl: NavController, private uService: UsersService) {}
 
   ngOnInit() {
     let id = this.route.snapshot.paramMap.get('id')
@@ -39,6 +42,7 @@ export class ModificarMentalPage implements OnInit{
         this.notas = this.entrada.notes;
         this.comida = this.entrada.food
         this.tiempo = this.entrada.weather
+        this.reglaHoy = this.entrada.period_now;
         this.ppositivos = this.entrada.positive_thoughts
         this.pnegativos = this.entrada.negative_thoughts
         this.today = this.entrada.date;
@@ -50,10 +54,28 @@ export class ModificarMentalPage implements OnInit{
         console.log(err.error.message);
       }
     })
+    this.getRegla();
   }
 
   goBack(){
     this.navCtrl.pop(); 
+  }
+
+  getRegla(){
+   
+    this.uService.getUserData().subscribe({
+      
+      next: data => {
+        this.regla = data.has_period;
+ 
+      },
+      error: err => {
+        console.log(err);
+
+      }
+      
+    })
+    
   }
  editarEntradaMental():void{
 
@@ -65,6 +87,7 @@ export class ModificarMentalPage implements OnInit{
     state: this.estadoFisico,
     sleep: this.suenyo,
     food: this.comida,
+    period_now: this.reglaHoy,
     weather: this.tiempo,
     patient_id: this.service.getIdUser(),
 
@@ -84,14 +107,12 @@ export class ModificarMentalPage implements OnInit{
 
   this.service.modifyEntradasMental(this.route.snapshot.paramMap.get('id'),dataEntry).subscribe({
     next:data=>{
-      window.location.href = '/app/Tabs/DiarioEmocional';
+      window.location.href = '/app/Tabs/seccion-mental';
     },
     error:err=>{
       console.log(err.error.message);
     }
   })
-
-  console.log(dataEntry);
 }
 
 }
@@ -105,6 +126,7 @@ type EntradaMental = {
   food: string,
   weather: string
   notes: string,
+  period_now: boolean,
   positive_thoughts: string,
   negative_thoughts: string,
   patient_id: null,

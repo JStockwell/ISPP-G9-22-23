@@ -8,7 +8,7 @@
   <div *ngIf="existsEntradas(); then renderEntradas else noEntradas"></div>
   <ng-template #renderEntradas>
     <div *ngFor="let item of entries">
-      <ion-card color="warning" *ngIf="entries !=0" [routerLink]="['/app/Tabs/seccion-fisica/'+item.id]">
+      <ion-card color="warning" style ="margin-bottom: 5%;"    *ngIf="entries !=0" [routerLink]="['/app/Tabs/seccion-fisica/'+item.id]">
 
         <div style="text-align: center;">
           <div style="text-align: right; margin-right: 15px; margin-top: 20px"></div>
@@ -24,19 +24,25 @@
             </ion-col>
           </ion-row>
         </div>
-
-        <div *ngIf="item.body_parts" style="text-align: center">
+        <div style="text-align: center; margin-bottom: 10%;">
           <ion-row>
             <ion-col>
               <h3 style="font-weight: bold;">
-                ¿Qúe me duele?:
-                <img *ngFor="let part of splitParts(item.body_parts)" class ="emoji" src="{{getImagenDolor(part)}}" style="width: 3rem;" >
+                ¿Qué me duele?:
+                <div *ngIf="item.body_parts then body_parts_view else body_parts_default"></div>
+                <ng-template #body_parts_view>
+                  <img *ngFor="let part of splitParts(item.body_parts)" class ="emoji" src="{{getImagenDolor(part)}}" style="width: 3rem;" >
+                </ng-template>
+                <ng-template #body_parts_default>
+                  <p>No me duele nada</p>
+                </ng-template>
               </h3>
             </ion-col>
           </ion-row>
         </div>
       </ion-card>
-      <div style = "display: inline;">
+
+      <div style = "display: inline">
         <ion-button  class = "updateBtn" [routerLink]="['/app/Tabs/seccion-fisica/'+item.id+'/edit']">
           <img src="/assets/images/Edit.png" style="height: 1.5rem;">
         </ion-button>

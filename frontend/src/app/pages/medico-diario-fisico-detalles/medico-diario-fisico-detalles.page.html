@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Entrada física</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card color="warning" *ngIf="entrada!=undefined||entrada!=null">
+    <div style="text-align: center;">
+      <div style="text-align: right; margin-right: 15px; margin-top: 20px">
+        
+      </div>
+      <h3 style="margin-top: 0px"><b>{{ dtAux }}</b></h3>
+    </div>
+
+    <div style="text-align: center">
+      <ion-row>
+        <ion-col>
+          <h3><b>
+            Estado físico: <img src="{{getImagenEstado(entrada.state)}}"  style="width: 3rem;" >
+          </b></h3>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <div style="text-align: center">
+      <ion-row>
+        <ion-col>
+          <h3><b>
+            ¿Qué me duele?:
+            <div *ngIf="entrada.body_parts then body_parts_view else body_parts_default"></div>
+            <ng-template #body_parts_view>
+              <img *ngFor="let part of splitParts(entrada.body_parts)" class ="emoji" src="{{getImagenDolor(part)}}" style="width: 3rem;" >
+            </ng-template>
+            <ng-template #body_parts_default>
+              <p>No me duele nada</p>
+            </ng-template>
+          </b></h3>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <div style="text-align: center">
+      <ion-row>
+        <ion-col>
+          <h3><b>
+            ¿Has echo deporte?:
+            <div *ngIf="entrada.done_exercise then exercise_yes else exercise_no"></div>
+            <ng-template #exercise_yes>
+              <p>Sí</p>
+            </ng-template>
+            <ng-template #exercise_no>
+              <p>No</p>
+            </ng-template>
+          </b></h3>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <div style="text-align: center"><h3><b>Notas</b></h3></div>
+    <div style="text-align: center; margin-bottom: 10px">{{ entrada.notes}}</div>
+  </ion-card>
+  <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
+    <ion-fab-button  color = "primary" (click)="goBack()">
+      <ion-icon name="arrow-back-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

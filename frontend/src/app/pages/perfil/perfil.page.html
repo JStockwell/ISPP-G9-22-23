@@ -1,56 +1,86 @@
 <ion-header>
     <ion-toolbar color="primary">
-      <ion-title>Perfil</ion-title>
-    </ion-toolbar>
+        <ion-title>Perfil</ion-title>
+       
+      </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding" color ="light">
+ 
     <div class = "ct">
-        <form name = "form">
-          <ion-item color = "light"  lines = "none">
-            <ion-label class="txt" for = "username" position="stacked">Nombre de usuario</ion-label>
-            <ion-input value={{username}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
-          </ion-item>
-  
-          <ion-item color = "light"  lines = "none">
-              <ion-label class="txt" for = "username" position="stacked">Nombre</ion-label>
-              <ion-input value={{name}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
-          </ion-item>
-  
-          <ion-item color = "light"  lines = "none">
-              <ion-label class="txt" for = "username" position="stacked">Apellidos</ion-label>
-              <ion-input value={{surname}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
-          </ion-item>
-  
-          <ion-item color = "light"  lines = "none">
-              <ion-label class="txt" for = "username" position="stacked">Fecha de nacimiento</ion-label>
-              <ion-input value={{birthdate}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
-          </ion-item>
-  
-          <ion-item color = "light"  lines = "none">
-              <ion-label class="txt" for = "username" position="stacked">Telefono</ion-label>
-              <ion-input value={{tel}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
-          </ion-item>
-  
-          <ion-item color = "light"  lines = "none">
-              <ion-label class="txt" for = "username" position="stacked">Email</ion-label>
-              <ion-input value={{email}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
-          </ion-item>
-
-          <ion-item color = "light"  lines = "none">
-            <ion-label class="txt" for = "username" position="stacked">Code</ion-label>
-            <ion-input value={{code}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
+      <form name = "form">
+        <ion-item color = "light"  lines = "none">
+          <ion-label class="txt" for = "username" position="stacked">Nombre de usuario</ion-label>
+          <ion-input value={{username}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
         </ion-item>
+
+        <ion-item color = "light"  lines = "none">
+            <ion-label class="txt" for = "username" position="stacked">Nombre</ion-label>
+            <ion-input value={{name}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
+        </ion-item>
+
+        <ion-item color = "light"  lines = "none">
+            <ion-label class="txt" for = "username" position="stacked">Apellidos</ion-label>
+            <ion-input value={{surname}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
+        </ion-item>
+
+        <ion-item color = "light"  lines = "none">
+            <ion-label class="txt" for = "username" position="stacked">Fecha de nacimiento</ion-label>
+            <ion-input value={{birthdate}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
+        </ion-item>
+
+        <ion-item color = "light"  lines = "none">
+            <ion-label class="txt" for = "username" position="stacked">Telefono</ion-label>
+            <ion-input value={{tel}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
+        </ion-item>
+
+        <ion-item color = "light"  lines = "none">
+            <ion-label class="txt" for = "username" position="stacked">Email</ion-label>
+            <ion-input value={{email}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
+        </ion-item>
+
+        <ion-item color = "light"  lines = "none">
+          <ion-label class="txt" for = "username" position="stacked">Code</ion-label>
+          <ion-input value={{code}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
+      </ion-item>
+  
+      </form>
+    </div>
+
+    <ion-button style = "width: 60%; margin-top: 10%;margin-left: auto; margin-right: auto;" expand="block" [routerLink] = "['/preferencias-de-usuario']">
+      Editar preferencias
+    </ion-button>
+    <ion-button style = "width: 60%; margin-top: 10%;margin-left: auto; margin-right: auto;" expand = "block" (click)="setOpen(true)">Borrar Cuenta</ion-button>
+
+
+    <ion-button style = "margin-left: auto;margin-right: auto; width:60%; margin-top: 10%;" expand = "block" [routerLink] = "['/app/Tabs/perfil/info']">
+      Acerca de nosotros
+    </ion-button>    
     
-        </form>
-      </div>
 
+    <ion-button expand="block" style = "margin-left: auto; margin-top: 10%;   margin-right: auto; width:60%;" (click)="cerrarsesion()">
+      Cerrar sesión
 
-    <ion-button expand="block" [routerLink] = "['/preferencias-de-usuario']">
-        Preferencias de usuario
     </ion-button>
 
-    <ion-button expand="block" [routerLink] = "['/editar-datos-perfil']">
-        Editar datos
-    </ion-button>
+    
+    <ion-modal [isOpen]="isModalOpen">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar color="primary">
+            <ion-title>Borrar cuenta</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="setOpen(false)">Cerrar</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <p>
+            Estás a punto de borra de manera definitiva tu cuenta la aplicación HematoDia, si estás seguro pulse el botón de abajo. Este es un cambio irreversible
+          </p>
+
+          <ion-button  expand="block" class = "btacceder" color="primary" (click)="eliminarUsuario( getUserId() )" >Borrar Cuenta </ion-button>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
 
   </ion-content>

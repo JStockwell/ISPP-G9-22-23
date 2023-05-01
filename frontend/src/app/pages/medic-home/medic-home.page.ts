@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MedicHomeService } from '../../services/medic-home.service';
 import { LoadingController } from '@ionic/angular';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-medic-home',
@@ -11,7 +12,7 @@ export class MedicHomePage implements OnInit {
 
   pacientes: any=[];
 
-  constructor(private HomeMedicService: MedicHomeService, private loadingCtrl: LoadingController) { }
+  constructor(private HomeMedicService: MedicHomeService,private userService: UsersService, private loadingCtrl: LoadingController) { }
 
   ngOnInit() {
     this.loadPacientes();
@@ -29,7 +30,7 @@ export class MedicHomePage implements OnInit {
     this.HomeMedicService.getPacientes().subscribe((res)=> {
       for(var entrada of res){
         this.pacientes.push(entrada);
-        console.log(entrada)
+
       }
       loading.dismiss();
   
@@ -44,6 +45,18 @@ export class MedicHomePage implements OnInit {
       return false;
     }
   }
+  cerrarsesion(){
+      
+    this.userService.logout().subscribe(
+      (data) =>{
+        localStorage.clear();
+        window.location.href=""
+      },
+      error =>{
+        console.log(error)
+      }
+      );
+    } 
 
 }
 
