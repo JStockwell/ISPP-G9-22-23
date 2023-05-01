@@ -7,7 +7,7 @@ describe('ModificarPerfilPage', () => {
   let component: ModificarPerfilPage;
   let fixture: ComponentFixture<ModificarPerfilPage>;
 
-  beforeEach(async () => {
+  beforeEach(waitForAsync( () => {
     TestBed.configureTestingModule({
       declarations: [ModificarPerfilPage],
       imports: [IonicModule.forRoot()]
@@ -16,7 +16,7 @@ describe('ModificarPerfilPage', () => {
     fixture = TestBed.createComponent(ModificarPerfilPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();

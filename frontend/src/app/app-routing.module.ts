@@ -113,6 +113,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/preferencias-de-usuario/preferencias-de-usuario.module').then( m => m.PreferenciasDeUsuarioPageModule)
   },
   {
+    path: 'modificar-perfil',
+    loadChildren: () => import('./pages/modificar-perfil/modificar-perfil.module').then( m => m.ModificarPerfilPageModule)
+  },
+  {
   path: 'perfil-de-usuario',
   loadChildren: () => import('./pages/perfil/perfil.module').then(m => m.PerfilPageModule)
   },

@@ -13,7 +13,7 @@ import { ModificarPerfilPage } from './modificar-perfil.page';
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule.forRoot(),
+    IonicModule,
     ModificarPerfilPageRoutingModule
   ],
   declarations: [ModificarPerfilPage]
