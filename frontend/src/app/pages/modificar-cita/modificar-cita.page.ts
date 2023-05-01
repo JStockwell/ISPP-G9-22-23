@@ -99,11 +99,11 @@ export class ModificarCitaPage implements OnInit {
       time: this.parsearHora(new Date(this.form.fechaYHora)),
       patient_id: this.getUserId(),
     }
-    console.log(dataEntry);
+
     
     this.modificarCitaService.updateEntry(this.route.snapshot.paramMap.get('id'), dataEntry).subscribe({
       next: dataEntry => {
-        console.log(dataEntry);
+
         document.location.href = "/app/Tabs/calendario"
         window.location.href = "/app/Tabs/calendario"
       },

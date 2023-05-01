@@ -37,11 +37,11 @@ export class NuevoPacienteMedicoPage implements OnInit {
         code : this.code,
         pk_medic : this.getIdUser(),
     }
-    console.log(dataEntry)
+
 
     this.NuevoPacienteMedicoService.postPatient(dataEntry).subscribe({
         next: dataEntry => {
-          console.log(dataEntry);
+
           document.location.href="/medic/home"
           window.location.href = "/medic/home"
         },

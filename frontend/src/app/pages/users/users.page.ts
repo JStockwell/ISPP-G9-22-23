@@ -52,7 +52,6 @@ export class UsersPage implements OnInit {
           this.loginCredentials.password = this.form.password;
           this.uService.login(this.loginCredentials).subscribe({
             next: data => {
-              console.log(data)
               this.uService.saveUser(data);
               this.reloadPage();
             },

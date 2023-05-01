@@ -76,7 +76,7 @@ export class NewAnalyticPage implements OnInit {
       max_value: this.umbralAlto,
       patient_id: this.getIdUser(),
     }
-    console.log(dataMetricEntry)
+
     
     const ans = this.newAnalyticService.postMetricEntry(dataMetricEntry).subscribe({
       next: res => {
@@ -85,10 +85,9 @@ export class NewAnalyticPage implements OnInit {
           value: this.valor,
           patient_id: this.getIdUser(),
         }
-        console.log(dataMeasureEntry)
+
         this.newAnalyticService.postMeasureEntry(dataMeasureEntry).subscribe({
           next: res => {
-            console.log(res);
           }, error: err => {
             console.log(err);
           }

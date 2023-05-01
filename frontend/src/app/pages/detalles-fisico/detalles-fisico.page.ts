@@ -59,7 +59,6 @@ export class DetallesFisicoPage implements OnInit {
         handler: ()=>{
           this.fisicoService.deleteEntry(idEntrada).subscribe({
             next: res => {
-              console.log(res);
               document.location.href="/app/Tabs/seccion-fisica"
               window.location.href = "/app/Tabs/seccion-fisica"
             },error: err => {

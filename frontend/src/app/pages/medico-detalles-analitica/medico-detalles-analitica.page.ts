@@ -49,7 +49,7 @@ export class MedicoDetallesAnaliticaPage implements OnInit {
   }
 
   createDetails(idpaciente:any){
-    console.log(idpaciente)
+
     this.analiticaService.getAnaliticaDetails2(idpaciente).subscribe({
       next: data =>{
         for(var metric of data){
@@ -60,7 +60,7 @@ export class MedicoDetallesAnaliticaPage implements OnInit {
       },
       error:err=>{
         console.log(err.error.message)
-        console.log("aquí")
+
       }
     })
 
@@ -172,7 +172,6 @@ export class MedicoDetallesAnaliticaPage implements OnInit {
   eliminarDetalles(idEntrada: any) {
     this.analiticaService.deleteEntry(idEntrada).subscribe({
       next: res => {
-        console.log(res);
         document.location.href="/app/Tabs/Analytics/Details/"+ this.route.snapshot.paramMap.get('id')
         window.location.href = "/app/Tabs/Analytics/Details/"+ this.route.snapshot.paramMap.get('id')
       },error: err => {

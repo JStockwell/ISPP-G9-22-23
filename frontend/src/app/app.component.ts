@@ -23,7 +23,7 @@ export class AppComponent implements OnInit{
       testingDevices:['YOURTESTINGDEVICE'],
       initializeForTesting: true
     })
-    console.log(status)
+
   }
 
   async showBanner(){

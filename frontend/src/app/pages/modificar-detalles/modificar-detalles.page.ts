@@ -48,7 +48,7 @@ export class ModificarDetallesPage implements OnInit{
     let id = this.route.snapshot.paramMap.get('id')
     this.service.getEntradasAnaliticas(id).subscribe({
       next:data=>{
-        console.log(data);
+
         this.entrada = data as EntradaAnalitica;
         this.form.valor = this.entrada.value;
   },
@@ -78,7 +78,6 @@ modificarDetalles():void{
         }
       })
 
-      console.log(dataEntry);
 }
 goBack(){
     this.navCtrl.pop(); 

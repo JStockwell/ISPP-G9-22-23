@@ -66,10 +66,8 @@ export class ModificarMentalPage implements OnInit{
     this.uService.getUserData().subscribe({
       
       next: data => {
-        console.log(data.has_period)
         this.regla = data.has_period;
-
-        
+ 
       },
       error: err => {
         console.log(err);
@@ -115,8 +113,6 @@ export class ModificarMentalPage implements OnInit{
       console.log(err.error.message);
     }
   })
-
-  console.log(dataEntry);
 }
 
 }

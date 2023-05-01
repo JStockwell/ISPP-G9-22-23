@@ -187,7 +187,6 @@ export class DetallesAnaliticaPage implements OnInit {
   eliminarDetalles(idEntrada: any) {
     this.analiticaService.deleteEntry(idEntrada).subscribe({
       next: res => {
-        console.log(res);
         document.location.href="/app/Tabs/Analytics/Details/"+ this.route.snapshot.paramMap.get('id')
         window.location.href = "/app/Tabs/Analytics/Details/"+ this.route.snapshot.paramMap.get('id')
       },error: err => {
