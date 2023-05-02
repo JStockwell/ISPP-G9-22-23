@@ -28,23 +28,30 @@
     <ul>
         <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Código: {{code}}</ion-label>
     </ul> 
+    <ul>
+        <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Cuenta premium: {{premium_account ? 'Sí' : 'No'}}</ion-label>
+    </ul> 
 
     <ion-button style = "width: 60%; margin-top: 10%;margin-left: auto; margin-right: auto;" expand="block" [routerLink] = "['/preferencias-de-usuario']">
       Editar preferencias
     </ion-button>
-    <ion-button style = "width: 60%; margin-top: 10%;margin-left: auto; margin-right: auto;" expand = "block" (click)="setOpen(true)">Borrar Cuenta</ion-button>
 
+    <!-- ESTE BOTÓN REDIRIGIRÍA A LAS STORES PARA LA COMPRA DE LA VERSIÓN PREMIUM DE HEMATODIA -->
+    <ion-button *ngIf="!premium_account" style = "margin-left: auto;margin-right: auto; width:60%; margin-top: 10%;" expand = "block">
+      Comprar premium | 1,99€
+    </ion-button>
+
+    <ion-button style = "width: 60%; margin-top: 10%;margin-left: auto; margin-right: auto;" expand = "block" (click)="setOpen(true)">
+      Borrar Cuenta
+    </ion-button>
 
     <ion-button style = "margin-left: auto;margin-right: auto; width:60%; margin-top: 10%;" expand = "block" [routerLink] = "['/app/Tabs/perfil/info']">
       Acerca de nosotros
     </ion-button>    
-    
 
     <ion-button expand="block" style = "margin-left: auto; margin-top: 10%;   margin-right: auto; width:60%;" (click)="cerrarsesion()">
       Cerrar sesión
-
     </ion-button>
-
     
     <ion-modal [isOpen]="isModalOpen">
       <ng-template>
