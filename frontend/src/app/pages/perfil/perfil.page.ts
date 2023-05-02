@@ -25,7 +25,7 @@ export class PerfilPage implements OnInit {
     products: IAPProduct[] = [];
 
     constructor(private plt: Platform, private userService: UsersService, private alertController: AlertController, private store: InAppPurchase2, private ref: ChangeDetectorRef) {
-      this.plt.ready().then(() => {
+      /* this.plt.ready().then(() => {
         this.store.verbosity = this.store.DEBUG;
 
         this.registerProducts();
@@ -35,7 +35,7 @@ export class PerfilPage implements OnInit {
           this.products = this.store.products;
           this.ref.detectChanges();
         });
-      });      
+      }); */
     }
 
     ngOnInit(): void {
@@ -44,7 +44,7 @@ export class PerfilPage implements OnInit {
 
     }
 
-    registerProducts() {
+/*     registerProducts() {
       this.store.register({
         id: PRODUCT_PREMIUM_KEY,
         type: this.store.NON_CONSUMABLE,
@@ -90,7 +90,7 @@ export class PerfilPage implements OnInit {
         message,
         buttons: ['OK']
       })
-    }
+    } */
 
     getUserId(){
         if(this.userService.isLoggedIn()){
