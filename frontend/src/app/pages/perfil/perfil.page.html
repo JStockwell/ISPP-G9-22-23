@@ -4,30 +4,51 @@
        
       </ion-toolbar>
   </ion-header>
-
   <ion-content class="ion-padding" color ="light">
-    
-    <ul>
-        <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Nombre de usuario: {{username}}</ion-label>
-    </ul>
-    <ul>
-        <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Nombre: {{name}}</ion-label>
-    </ul>
-    <ul>
-        <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Apellidos: {{surname}}</ion-label>
-    </ul>
-    <ul>
-        <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Fecha nacimiento: {{birthdate}}</ion-label>
-    </ul> 
-    <ul>
-        <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Telefono: {{tel}}</ion-label>
-    </ul>  
-    <ul>
-        <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Email: {{email}}</ion-label>
-    </ul> 
-    <ul>
-        <ion-label style = "padding-inline-start: 6%;" display="block" position="floating">Código: {{code}}</ion-label>
-    </ul> 
+ 
+    <div class = "ct">
+      <form name = "form">
+        <ion-item color = "light"  lines = "none">
+          <ion-label class="txt" for = "username" position="stacked">Nombre de usuario</ion-label>
+          <ion-input value={{username}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
+        </ion-item>
+
+        <ion-item color = "light"  lines = "none">
+            <ion-label class="txt" for = "username" position="stacked">Nombre</ion-label>
+            <ion-input value={{name}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
+        </ion-item>
+
+        <ion-item color = "light"  lines = "none">
+            <ion-label class="txt" for = "username" position="stacked">Apellidos</ion-label>
+            <ion-input value={{surname}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
+        </ion-item>
+
+        <ion-item color = "light"  lines = "none">
+            <ion-label class="txt" for = "username" position="stacked">Fecha de nacimiento</ion-label>
+            <ion-input value={{birthdate}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
+        </ion-item>
+
+        <ion-item color = "light"  lines = "none">
+            <ion-label class="txt" for = "username" position="stacked">Telefono</ion-label>
+            <ion-input value={{tel}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
+        </ion-item>
+
+        <ion-item color = "light"  lines = "none">
+            <ion-label class="txt" for = "username" position="stacked">Email</ion-label>
+            <ion-input value={{email}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
+        </ion-item>
+
+        <ion-item color = "light"  lines = "none">
+          <ion-label class="txt" for = "username" position="stacked">Code</ion-label>
+          <ion-input value={{code}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
+      </ion-item>
+  
+      </form>
+    </div>
+
+    <ion-button style = "width: 60%; margin-top: 10%;margin-left: auto; margin-right: auto;" expand="block" [routerLink] = "['/modificar-perfil']">
+      Editar perfil
+    </ion-button>
 
     <ion-button style = "width: 60%; margin-top: 10%;margin-left: auto; margin-right: auto;" expand="block" [routerLink] = "['/preferencias-de-usuario']">
       Editar preferencias
