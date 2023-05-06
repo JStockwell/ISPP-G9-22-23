@@ -25,7 +25,7 @@ export class PatientPage implements OnInit {
 
   }
 
-    goBack(){
+  goBack(){
     this.navCtrl.pop(); 
   }
 
@@ -65,7 +65,7 @@ export class PatientPage implements OnInit {
         this.share_physical_entries= res.share_physical_entries;
         this.share_mental_entries= res.share_mental_entries;
         this.share_metrics= res.share_metrics;;
-      console.log(res)
+
       
       loading.dismiss();
   

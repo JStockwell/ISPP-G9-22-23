@@ -39,7 +39,7 @@ export class PaginaInicialPage implements OnInit {
     let resultado = false;
     if(this.uService.isLoggedIn()){
     var ck = localStorage.getItem('auth-user');
-    console.log(ck);
+
     
       if(ck!=null){
         var tk = JSON.parse(ck);
@@ -49,7 +49,7 @@ export class PaginaInicialPage implements OnInit {
             resultado = true;
           }
         }
-        console.log(resultado);
+
         
         return resultado
       }

@@ -36,4 +36,6 @@ export class DetalleAnaliticasService implements HttpInterceptor{
     return new Observable<any>
   }
 
+  
+
 }

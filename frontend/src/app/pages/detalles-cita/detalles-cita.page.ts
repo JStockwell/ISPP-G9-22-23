@@ -37,7 +37,6 @@ export class DetallesCitaPage implements OnInit {
     this.detallesCitaService.getCita(idCita).subscribe({
       next: data =>{
         this.entrada = data
-        console.log(this.entrada)
 
         let Aux:Date = new Date(this.entrada.date);
         var aux2 = Aux.toLocaleDateString("es-ES", { weekday: 'long'})
@@ -55,7 +54,7 @@ export class DetallesCitaPage implements OnInit {
   eliminarCita(idEntrada: any) {
     this.calendarioService.deleteAppointment(idEntrada).subscribe({
       next: res => {
-        console.log(res);
+
         document.location.href="/app/Tabs/calendario"
         window.location.href = "/app/Tabs/calendario"
       },error: err => {

@@ -79,11 +79,11 @@ export class NuevaEntradaMentalPage implements OnInit{
       notes: this.notas,
       patient_id: this.getIdUser(),
     }
-    console.log(dataEntry);
+
     
     this.nuevaEntradaMentalService.postEntry(dataEntry).subscribe({
       next: dataEntry => {
-        console.log(dataEntry);
+
         document.location.href="/app/Tabs/seccion-mental"
         window.location.href = "/app/Tabs/seccion-mental"
       },
@@ -140,10 +140,7 @@ export class NuevaEntradaMentalPage implements OnInit{
     this.uService.getUserData().subscribe({
       
       next: data => {
-        console.log(data.has_period)
-        this.regla = data.has_period;
-
-        
+        this.regla = data.has_period; 
       },
       error: err => {
         console.log(err);

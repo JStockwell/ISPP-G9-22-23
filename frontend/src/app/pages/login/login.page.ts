@@ -28,7 +28,6 @@ export class LoginPage implements OnInit {
     
     this.uService.login(this.form).subscribe({
       next: data => {
-        console.log(data)
         this.uService.saveUser(data);
         this.isLoggedIn = true;
         this.reloadPage();
@@ -57,7 +56,7 @@ export class LoginPage implements OnInit {
     let resultado = false;
     if(this.uService.isLoggedIn()){
     var ck = localStorage.getItem('auth-user');
-    console.log(ck);
+
     
       if(ck!=null){
         var tk = JSON.parse(ck);
@@ -66,7 +65,6 @@ export class LoginPage implements OnInit {
             resultado = true;
           }
         }
-        console.log(resultado);
         
         return resultado
       }

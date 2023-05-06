@@ -45,11 +45,9 @@ export class MedicoSeccionMentalPage implements OnInit {
     this.diarioEmocionalService.getDiarioEmocionalPaciente(id_paciente).subscribe((res)=> {
       for(var entrada of res){
         let Aux:Date = new Date(entrada.date);
-        console.log(Aux)
         var aux2 = Aux.toLocaleDateString("es-ES", { weekday: 'long'})
         entrada.dtAux = aux2.charAt(0).toUpperCase() + aux2.substring(1) + ', ' + Aux.toLocaleDateString();
         this.entries.push(entrada);
-        console.log(entrada)
       }
       loading.dismiss();
   
@@ -146,7 +144,6 @@ export class MedicoSeccionMentalPage implements OnInit {
   eliminarEntradaMental(idEntrada: any) {
     this.diarioEmocionalService.deleteEntry(idEntrada).subscribe({
       next: res => {
-        console.log(res);
         document.location.href="/app/Tabs/seccion-mental"
         window.location.href = "/app/Tabs/seccion-mental"
       },error: err => {

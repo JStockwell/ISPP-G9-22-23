@@ -48,7 +48,7 @@ export class NuevaEntradaFisicaPage implements OnInit {
   painsToString(dolores: any) {
     const json = JSON.stringify(dolores);
     const string: string[] = JSON.parse(json);
-    const result = string.join(',');
+    const result = string.filter(pain => pain!='').join(',');
 
     return result;
   }
@@ -72,10 +72,8 @@ export class NuevaEntradaFisicaPage implements OnInit {
     this.uService.getUserData().subscribe({
       
       next: data => {
-        console.log(data.has_period)
-        this.regla = data.has_period;
 
-        
+        this.regla = data.has_period;
       },
       error: err => {
         console.log(err);
@@ -114,7 +112,7 @@ export class NuevaEntradaFisicaPage implements OnInit {
       dataEntry["notes"]=this.notas;
     }
     
-    console.log(dataEntry);
+
     this.nuevaEntradFisicaService.postEntry(dataEntry).subscribe({
       next: dataEntry => {
         document.location.href="/app/Tabs/seccion-fisica"

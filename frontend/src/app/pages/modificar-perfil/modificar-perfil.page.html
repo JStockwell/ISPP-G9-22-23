@@ -1,0 +1,67 @@
+<ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Modificar datos de Perfil</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding" color ="light">
+    <div class = "ct">
+      <form *ngIf= "!isSuccessful" name = "form" (ngSubmit)="f.form.valid && editarPerfil()" #f = "ngForm" novalidate>
+        
+  
+        <ion-item color = "light" lines = "none">
+          <ion-label class="txt" position="stacked">Nombre</ion-label>
+          <ion-input [(ngModel)]="form.first_name"placeholder="Introduce tu nombre" value="first_name" name = "first_name" required maxlength="150" #first_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && first_name.errors }"></ion-input>
+        </ion-item>
+        <div  class="invalid-feedback error" *ngIf="first_name.errors && f.submitted">
+          <div *ngIf="first_name.errors['required']">Nombre requerido</div>
+          <div *ngIf="first_name.errors['maxlength']">
+            El nombre puede tener como máximo 150 caracteres
+          </div>
+        </div>
+  
+        <ion-item color = "light" lines = "none">
+          <ion-label class="txt" position="stacked">Apellidos</ion-label>
+          <ion-input [(ngModel)]="form.last_name"placeholder="Introduce tus apellidos" value = "last_name" name = "last_name" required maxlength = "150" #last_name = "ngModel"[ngClass]="{ 'is-invalid': f.submitted && last_name.errors }" ></ion-input>
+        </ion-item>
+        <div  class="invalid-feedback error" *ngIf="last_name.errors && f.submitted">
+          <div *ngIf="last_name.errors['required']">Apellidos requeridos</div>
+          <div *ngIf="last_name.errors['maxlength']">
+            Los apellidos puede tener como máximo 150 caracteres
+          </div>
+        </div>
+  
+        <ion-item color = "light" lines = "none">
+          <ion-label class="txt" type="date" position="stacked">Fecha de nacimiento</ion-label>
+          <ion-input type = "date" [(ngModel)]="form.birthdate"   name = "birthdate" required #birthdate = "ngModel" [ngClass] = "{ 'is-invalid': f.submitted && birthdate.errors }"></ion-input>
+        </ion-item>
+        <div class="invalid-feedback error" *ngIf="birthdate.errors && f.submitted">
+          <div *ngIf="birthdate.errors['required']">Se necesita la fecha de nacimiento</div>
+        </div>
+  
+        <ion-item color = "light" lines = "none">
+          <ion-label class="txt" position="stacked">Teléfono</ion-label>
+          <ion-input type = "tel" [(ngModel)]="form.tel" placeholder="612345678" name = "tel" value="tel" required #tel="ngModel" [ngClass]="{ 'is-invalid': f.submitted && tel.errors }" ></ion-input>
+        </ion-item>
+        <div class="invalid-feedback error" *ngIf="tel.errors && f.submitted">
+          <div *ngIf="tel.errors['required']">Se necesita un número de teléfono</div>
+        </div>
+  
+        <ion-item color = "light" lines = "none">
+          <ion-label class="txt" position="stacked" text-wrap style = "text-align: justify;">Recuerda modificar tus preferencias tras modificar tu perfil</ion-label>
+        </ion-item>
+        </form>
+      </div>
+
+      
+
+      <ion-button expand="block" (click)="editarPerfil()">
+        Modificar entrada
+      </ion-button>
+
+      <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
+        <ion-fab-button  color = "primary" (click)="goBack()">
+          <ion-icon name="arrow-back-circle-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+
+  </ion-content>

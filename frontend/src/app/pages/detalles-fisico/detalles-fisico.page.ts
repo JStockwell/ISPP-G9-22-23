@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DetallesFisicoService } from 'src/app/services/detalles-fisico.service';
-import { NavController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { AnaliticasService } from 'src/app/services/analiticas.service';
+import { SeccionFisicaServiceService } from 'src/app/services/seccion-fisica-service.service';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class DetallesFisicoPage implements OnInit {
   entrada!:physicalEntry
   dtAux:String = ""
 
-  constructor(private service:DetallesFisicoService, private route: ActivatedRoute, private navCtrl: NavController, private analiticasService: AnaliticasService) {}
+  constructor(private service:DetallesFisicoService, private route: ActivatedRoute, private navCtrl: NavController, private analiticasService: AnaliticasService, private alertController:AlertController, private fisicoService:SeccionFisicaServiceService) {}
 
   ngOnInit() {
     this.service.getEntradaFisica(this.route.snapshot.paramMap.get("id")).subscribe({
@@ -40,8 +41,41 @@ export class DetallesFisicoPage implements OnInit {
     })
   }
 
+  getId(){
+    return this.route.snapshot.paramMap.get("id");
+  }
+
   goBack(){
     this.navCtrl.pop(); 
+  }
+
+  async eliminarEntradaFisica(idEntrada: any) {
+    const alert = await this.alertController.create({
+      header:'Confirme',
+      message:'¿Está seguro de que quiere borrar esta entrada en el diario físico?',
+      buttons:[{
+        text:'Sí',
+        role:'yes',
+        handler: ()=>{
+          this.fisicoService.deleteEntry(idEntrada).subscribe({
+            next: res => {
+              document.location.href="/app/Tabs/seccion-fisica"
+              window.location.href = "/app/Tabs/seccion-fisica"
+            },error: err => {
+              console.log(err)
+            }
+          })
+        }
+      }, {
+        text:'No',
+        role:'no',
+        handler: ()=>{
+          return null;
+        }
+      }]
+    })
+
+    await alert.present();
   }
 
   bodyPartsNotEmpty = () =>{

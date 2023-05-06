@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SeccionFisicaServiceService } from 'src/app/services/seccion-fisica-service.service';
-import { LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { AnaliticasService } from 'src/app/services/analiticas.service';
 
 @Component({
@@ -13,18 +13,35 @@ export class SeccionFisicaPage implements OnInit {
   id: any
   entries: any = [];
 
-  constructor(private fisicoService: SeccionFisicaServiceService, private loadingCtrl: LoadingController, private analiticasService: AnaliticasService) { }
+  constructor(private fisicoService: SeccionFisicaServiceService, private loadingCtrl: LoadingController, private analiticasService: AnaliticasService, private alertController:AlertController) { }
 
-  eliminarEntradaFisica(idEntrada: any) {
-    this.fisicoService.deleteEntry(idEntrada).subscribe({
-      next: res => {
-        console.log(res);
-        document.location.href="/app/Tabs/seccion-fisica"
-        window.location.href = "/app/Tabs/seccion-fisica"
-      },error: err => {
-        console.log(err)
-      }
+  async eliminarEntradaFisica(idEntrada: any) {
+    const alert = await this.alertController.create({
+      header:'Confirme',
+      message:'¿Está seguro de que quiere borrar esta entrada en el diario físico?',
+      buttons:[{
+        text:'Sí',
+        role:'yes',
+        handler: ()=>{
+          this.fisicoService.deleteEntry(idEntrada).subscribe({
+            next: res => {
+              document.location.href="/app/Tabs/seccion-fisica"
+              window.location.href = "/app/Tabs/seccion-fisica"
+            },error: err => {
+              console.log(err)
+            }
+          })
+        }
+      }, {
+        text:'No',
+        role:'no',
+        handler: ()=>{
+          return null;
+        }
+      }]
     })
+
+    await alert.present();
   }
 
   ngOnInit() {
@@ -44,7 +61,7 @@ async loadEntradasDiarioFisico(){
       this.fisicoService.getEntradasFisicas().subscribe((res) =>{
         for(var entrada of res){
           let Aux:Date = new Date(entrada.date);
-          console.log(Aux)
+
           var aux2 = Aux.toLocaleDateString("es-ES", { weekday: 'long'})
           entrada.dtAux = aux2.charAt(0).toUpperCase() + aux2.substring(1) + ', ' + Aux.toLocaleDateString();
           this.entries.push(entrada);

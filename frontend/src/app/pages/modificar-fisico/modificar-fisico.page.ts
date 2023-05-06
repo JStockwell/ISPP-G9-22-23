@@ -58,10 +58,7 @@ export class ModificarFisicoPage implements OnInit {
     this.uService.getUserData().subscribe({
       
       next: data => {
-        console.log(data.has_period)
-        this.regla = data.has_period;
-
-        
+        this.regla = data.has_period; 
       },
       error: err => {
         console.log(err);
@@ -76,7 +73,7 @@ export class ModificarFisicoPage implements OnInit {
     const json = JSON.stringify(dolores);
     const string: string[] = JSON.parse(json);
     if(string.length>1){
-      const result = string.join(',');
+      const result = string.filter(pain => pain!='').join(',');
       return result;
     }
     return string[0];
@@ -121,7 +118,6 @@ export class ModificarFisicoPage implements OnInit {
       }
     })
     
-    console.log(dataEntry);
   }
 
 }

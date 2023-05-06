@@ -45,7 +45,6 @@ export class UsersService {
         let isMedic = false;
         for(var i in tk){
           if(i==='medic id'){
-            console.log('medico');
             isMedic = true;
           }
           res.push(tk[i]);

@@ -44,7 +44,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/analiticas/analiticas.module').then( m => m.AnaliticasPageModule)
   },
   {
-    path: 'seccion-mental',
+    path: 'Diario Emocional',
     loadChildren: () => import('./tab2/tab2.module').then(m => m.Tab2PageModule)
   },
   {
@@ -112,10 +112,19 @@ const routes: Routes = [
     path: 'preferencias-de-usuario',
     loadChildren: () => import('./pages/preferencias-de-usuario/preferencias-de-usuario.module').then( m => m.PreferenciasDeUsuarioPageModule)
   },
-    {
-    path: 'perfil-de-usuario',
-    loadChildren: () => import('./pages/perfil/perfil.module').then(m => m.PerfilPageModule)
-    },
+  {
+    path: 'modificar-perfil',
+    loadChildren: () => import('./pages/modificar-perfil/modificar-perfil.module').then( m => m.ModificarPerfilPageModule)
+  },
+  {
+  path: 'perfil-de-usuario',
+  loadChildren: () => import('./pages/perfil/perfil.module').then(m => m.PerfilPageModule)
+  },
+  {
+    path: 'editar-datos-perfil',
+    loadChildren: () => import('./pages/modificar-perfil/modificar-perfil.module').then(m => m.ModificarPerfilPageModule)
+  },
+
   {
 
     path: 'medic-home',
@@ -192,6 +201,7 @@ const routes: Routes = [
     path: 'medic/home/patient/:id/seccion-mental',
     loadChildren: () => import('./pages/medico-seccion-mental/medico-seccion-mental.module').then( m => m.MedicoSeccionMentalPageModule)
   },
+
   {
     path: 'medico-seccion-mental/:id',
     loadChildren: () => import('./pages/medico-diario-mental-detalles/medico-diario-mental-detalles.module').then( m => m.MedicoDiarioMentalDetallesPageModule)
@@ -201,11 +211,19 @@ const routes: Routes = [
     path: 'medico-seccion-fisico/:id',
     loadChildren: () => import('./pages/medico-diario-fisico-detalles/medico-diario-fisico-detalles.module').then( m => m.MedicoDiarioFisicoDetallesPageModule)
   },
-    {
+  {
+    path: 'medic/home/patient/:id/medico-analiticas',
+    loadChildren: () => import('./pages/medico-analiticas/medico-analiticas.module').then( m => m.MedicoAnaliticasPageModule)
+  },
+  {
     path: 'tyc',
     loadChildren: () => import('./pages/tyc/tyc.module').then( m => m.tycPageModule)
   },
 
+  {
+    path: 'medico-detalles-analiticas/:id/:patientid',
+    loadChildren: () => import('./pages/medico-detalles-analitica/medico-detalles-analitica.module').then( m => m.MedicoAnaliticasDetallesPageModule)
+  },
 
 
 

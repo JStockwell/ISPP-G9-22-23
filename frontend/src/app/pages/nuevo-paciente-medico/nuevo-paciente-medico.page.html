@@ -5,27 +5,20 @@
   </ion-header>
   
   <ion-content class="ion-padding" color ="light">
-    <ion-card color = "warning">
-
-      
-        
-        <ion-item color = "warning">
-            <ion-label position="floating">Introduce el código de un paciente</ion-label>
-            <ion-textarea [(ngModel)]="code"  placeholder="3434" type="text"></ion-textarea>
-        </ion-item>
-     
-      
-     
-      
+    <div class = "ct">      
+      <ion-label class = "txt" position="stacked" style = "padding-top: 10%;">Introduce el código del paciente</ion-label>
+      <ion-item color = "light" lines = "none" style = "margin-top: 10%;">  
+        <ion-textarea [(ngModel)]="code"  placeholder="3434" type="text"></ion-textarea>
+      </ion-item>
       
       <ion-button  color="primary" expand="block" (click)="enlazarPaciente()">
         Enlazar
       </ion-button>
-    </ion-card>
+    </div>
     
   
     <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
-      <ion-fab-button  color = "secondary" (click)="goBack()">
+      <ion-fab-button  color = "primary" (click)="goBack()">
         <ion-icon name="arrow-back-circle-outline"></ion-icon>
       </ion-fab-button>
     </ion-fab>
