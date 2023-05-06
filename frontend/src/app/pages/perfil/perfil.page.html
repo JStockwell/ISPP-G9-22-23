@@ -45,7 +45,7 @@
 
         <ion-item color = "light"  lines = "none">
           <ion-label class="txt" for = "username" position="stacked">Cuenta premium</ion-label>
-          <ion-input readonly name = "username" minlength="3" required maxlength="50">{{premium_account ? 'Sí' : 'No'}}</ion-input>
+          <ion-input  value = {{premium_account}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
         </ion-item>
   
       </form>

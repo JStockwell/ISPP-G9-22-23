@@ -9,15 +9,6 @@
     font-size: large;
 
 }
-ion-input{
-    margin-top: 3%;
-    --padding-start: 10px;
-    --background: white;
-    border-radius:15px; 
-    
-
-
-}
 ion-item{
     background-color: "light";
     color:"light";
@@ -28,6 +19,14 @@ ion-item{
         --padding-start: 15px;
     }
 }
+
+ion-input{
+    margin-top: 3%;
+    --padding-start: 10px;
+    --background: white;
+    border-radius:15px; 
+}
+
 
 ion-button{
 

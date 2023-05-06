@@ -105,7 +105,7 @@ export class ModificarPerfilPage implements OnInit {
       
         this.modificarPerfilService.modifyDatosPerfil(this.getUserId(),dataEntry).subscribe({
             next:data=>{
-                window.location.href = '/app/Tabs/perfil';
+                window.location.href = '/preferencias-de-usuario';
             },
             error:err=>{
                 console.log(err.error.message);

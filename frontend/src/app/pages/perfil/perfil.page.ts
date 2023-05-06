@@ -19,7 +19,7 @@ export class PerfilPage implements OnInit {
     name: string | any='';
     surname: string | any='';
     code: string| any= '';
-    premium_account: boolean | any = '';
+    premium_account: string | any = '';
 
     isModalOpen= false;
     products: IAPProduct[] = [];
@@ -117,8 +117,12 @@ export class PerfilPage implements OnInit {
             this.name=res.user.first_name;
             this.surname=res.user.last_name;
             this.code=res.code;
-            this.premium_account=res.premium_account;
-
+            if(res.premium_account == true){
+              this.premium_account="Sí"
+            }
+            else{
+              this.premium_account="No"
+            }
           });
     }
 
