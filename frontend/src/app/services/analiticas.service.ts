@@ -215,6 +215,18 @@ export class AnaliticasService implements HttpInterceptor {
     return chain;
   }
 
+  dateFormatter_measure(date: Date): string {
+    const localTime = new Date(date.getTime());
+  
+    const day = localTime.getDate().toString().padStart(2, '0');
+    const month = (localTime.getMonth() + 1).toString().padStart(2, '0');
+    const year = localTime.getFullYear().toString();
+    const hour = localTime.getHours().toString().padStart(2, '0');
+    const minute = localTime.getMinutes().toString().padStart(2, '0');
+  
+    return `${day}-${month}-${year} ${hour}:${minute} h`;
+  }
+
   dateFormatter_entradas(date: Date): string {
     var chain = "";
     var fecha = date.toString();
