@@ -91,8 +91,8 @@ export class AnaliticasPage implements OnInit {
     this.analiticasService.getLatestDetails(analitica.id).subscribe({
       next: data =>{
         for(var metric of data){
-          let date:Date = metric.date;
-          metric.date=this.analiticasService.dateFormatter(date);
+          let date:Date = new Date(metric.date);
+          metric.date = this.analiticasService.dateFormatter_measure(date)
           this.mediciones.push(metric);
         }
         const data2 = data.reverse();

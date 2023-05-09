@@ -29,7 +29,7 @@
         </ion-item>
 
         <ion-item color = "light"  lines = "none">
-            <ion-label class="txt" for = "username" position="stacked">Telefono</ion-label>
+            <ion-label class="txt" for = "username" position="stacked">Teléfono</ion-label>
             <ion-input value={{tel}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
         </ion-item>
 
@@ -39,7 +39,7 @@
         </ion-item>
 
         <ion-item color = "light"  lines = "none">
-          <ion-label class="txt" for = "username" position="stacked">Code</ion-label>
+          <ion-label class="txt" for = "username" position="stacked">Código de paciente</ion-label>
           <ion-input value={{code}} readonly name = "username" minlength="3" required maxlength="50"></ion-input>
         </ion-item>
 
@@ -95,5 +95,11 @@
         </ion-content>
       </ng-template>
     </ion-modal>
+
+    <ion-fab style="padding-inline-end: 2.5%" slot="fixed" size="small" vertical="bottom" horizontal="end">
+      <ion-fab-button color="primary" [routerLink]="['/app/Tabs/calendario']">
+        <ion-icon name="calendar-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
 
   </ion-content>

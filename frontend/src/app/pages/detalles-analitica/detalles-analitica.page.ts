@@ -50,8 +50,8 @@ export class DetallesAnaliticaPage implements OnInit {
     this.analiticaService.getAnaliticaDetails().subscribe({
       next: data =>{
         for(var metric of data){
-          let date:Date = metric.date;
-          metric.date = this.analiticaService.dateFormatter(date)
+          let date:Date = new Date(metric.date);
+          metric.date = this.analiticaService.dateFormatter_measure(date)
           this.mediciones.push(metric)
         }
       },
@@ -60,13 +60,12 @@ export class DetallesAnaliticaPage implements OnInit {
       }
     })
 
-    
-
     this.analiticaService.getLatestDetails(this.id).subscribe({
       next: data => {
         const data2 = data.reverse();
         for(var metric of data2){
-          let date: Date = metric.date;
+          let date: Date =  new Date(metric.date);
+          date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
           const aux = date.toString().substring(0,10);
 
           metric.date = aux

@@ -21,7 +21,10 @@
       Ver diario emocional
     </ion-button>
   </div>
-
+  <div *ngIf="!permiteDiarioMental() && !permiteAnaliticas() && !permiteDiarioFisico()" style="font-weight: bold; font-size: x-large; text-align: center">
+    <img src="https://static.thenounproject.com/png/2902077-200.png" class="imagen-vacia" alt="">
+    <div style="opacity: .2;"> El paciente no ha permitido compartir ninguno de sus datos </div>
+  </div>
 
 
 <ion-fab style = "padding-inline-start: 5%;" slot = "fixed" vertical = "bottom" horizontal = "beginning">
