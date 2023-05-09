@@ -43,7 +43,18 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<key>GADIsAdManagerApp</key>
 	<true/>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-4710417310239846~9381549816</string>
+	<key>SKAdNetworkItems</key>
+	<array>
+	<dict>
+		<key>SKAdNetworkIdentifier</key>
+		<string>cstr6suwn9.skadnetwork</string>
+	</dict>
+	</array>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Esto ayuda a la calidad de los anuncios que se le mostrarán</string>
 </dict>
 </plist>

@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  'android-banner-id': 'ca-app-pub-4710417310239846/9066140458'
+  'android-banner-id': 'ca-app-pub-4710417310239846/9066140458',
+  'ios-banner-id': 'ca-app-pub-4710417310239846/1432271986'
 };
 
 /*

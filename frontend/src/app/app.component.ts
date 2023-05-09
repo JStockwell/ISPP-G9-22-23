@@ -27,7 +27,7 @@ export class AppComponent implements OnInit{
   }
 
   async showBanner(){
-    const adId = isPlatform('android') ? 'android-banner-id': ''
+    const adId = isPlatform('android') ? 'android-banner-id': 'ios-banner-id'
 
     const options: BannerAdOptions = {
       adId: adId,
