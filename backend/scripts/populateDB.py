@@ -94,6 +94,12 @@ def run():
 
     m29 = MetricInfo(name='Transaminasas', unit='UI/L')
     m29.save()
+    
+    m30 = MetricInfo(name='Tensión (baja/mínima)', unit='mmHg')
+    m30.save()
+    
+    m31 = MetricInfo(name='Tensión (alta/máxima)', unit='mmHg')
+    m31.save()
 
     superuser = User.objects.create_superuser(username='admin', email='admin@example.com', password='adminpassword')
     superuser.save()
