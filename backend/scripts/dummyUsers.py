@@ -18,7 +18,7 @@ def run():
                                       share_physical_entries=True, share_metrics=True)
     patient2.save()
 
-    user3 = User.objects.create_user(username='paciente3', email='mail3@mail.com', first_name='Enrique', last_name='Ramírez'. password='paciente3')
+    user3 = User.objects.create_user(username='paciente3', email='mail3@mail.com', first_name='Enrique', last_name='Ramírez', password='paciente3')
     patient3 = Patient.objects.create(user=user3, tel='123456777', birthdate='2000-01-03', premium_account=True)
     patient3.save()
 
